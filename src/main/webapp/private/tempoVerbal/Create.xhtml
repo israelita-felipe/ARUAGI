@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -12,17 +11,12 @@
             <h:form id="TempoVerbalCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tempoVerbalController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateTempoVerbalLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{tempoVerbalController.selected.id}" title="#{bundle.CreateTempoVerbalTitle_id}" required="true" requiredMessage="#{bundle.CreateTempoVerbalRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.CreateTempoVerbalLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{tempoVerbalController.selected.descricao}" title="#{bundle.CreateTempoVerbalTitle_descricao}" required="true" requiredMessage="#{bundle.CreateTempoVerbalRequiredMessage_descricao}"/>
-                        <p:outputLabel value="#{bundle.CreateTempoVerbalLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{tempoVerbalController.selected.usuario}" title="#{bundle.CreateTempoVerbalTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.CreateTempoVerbalLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{tempoVerbalController.selected.status}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tempoVerbalController.create}" value="#{bundle.Save}" update="display,:TempoVerbalListForm:datalist,:growl" oncomplete="handleSubmit(args,'TempoVerbalCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="TempoVerbalCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

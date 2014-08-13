@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -29,33 +29,23 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClassificacaoGramaticalTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListClassificacaoGramaticalTitle_nome}"/>
                             </f:facet>
                             <h:outputText value="#{item.nome}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListClassificacaoGramaticalTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListClassificacaoGramaticalTitle_status}"/>
-                            </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
-                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{classificacaoGramaticalController.prepareCreate}" update=":ClassificacaoGramaticalCreateForm" oncomplete="PF('ClassificacaoGramaticalCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ClassificacaoGramaticalViewForm" oncomplete="PF('ClassificacaoGramaticalViewDialog').show()" disabled="#{empty classificacaoGramaticalController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ClassificacaoGramaticalEditForm" oncomplete="PF('ClassificacaoGramaticalEditDialog').show()" disabled="#{empty classificacaoGramaticalController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{classificacaoGramaticalController.destroy}" update=":growl,datalist" disabled="#{empty classificacaoGramaticalController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ClassificacaoGramaticalEditForm" oncomplete="PF('ClassificacaoGramaticalEditDialog').show()" disabled="#{empty classificacaoGramaticalController.selected || classificacaoGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{classificacaoGramaticalController.destroy}" update=":growl,datalist" disabled="#{empty classificacaoGramaticalController.selected || classificacaoGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

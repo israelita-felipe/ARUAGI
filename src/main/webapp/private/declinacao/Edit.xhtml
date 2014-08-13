@@ -12,17 +12,16 @@
             <h:form id="DeclinacaoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{declinacaoController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditDeclinacaoLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{declinacaoController.selected.id}" title="#{bundle.EditDeclinacaoTitle_id}" required="true" requiredMessage="#{bundle.EditDeclinacaoRequiredMessage_id}"/>
+
+                        <p:outputLabel value="#{bundle.CreateDeclinacaoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{declinacaoController.selected.id}" title="#{bundle.CreateDeclinacaoTitle_id}" required="true" requiredMessage="#{bundle.CreateDeclinacaoRequiredMessage_id}"/>
+
+
                         <p:outputLabel value="#{bundle.EditDeclinacaoLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{declinacaoController.selected.descricao}" title="#{bundle.EditDeclinacaoTitle_descricao}" required="true" requiredMessage="#{bundle.EditDeclinacaoRequiredMessage_descricao}"/>
-                        <p:outputLabel value="#{bundle.EditDeclinacaoLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{declinacaoController.selected.usuario}" title="#{bundle.EditDeclinacaoTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.EditDeclinacaoLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{declinacaoController.selected.status}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{declinacaoController.update}" value="#{bundle.Save}" update="display,:DeclinacaoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DeclinacaoEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="DeclinacaoEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

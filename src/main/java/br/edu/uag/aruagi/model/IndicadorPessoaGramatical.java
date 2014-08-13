@@ -24,6 +24,7 @@ public class IndicadorPessoaGramatical implements java.io.Serializable {
     private TempoVerbal tempoVerbal;
     private String descricao;
     private Integer usuario;
+    private Boolean status;
 
     public IndicadorPessoaGramatical() {
     }
@@ -55,23 +56,25 @@ public class IndicadorPessoaGramatical implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pessoa_gramatical", nullable = false, insertable = false, updatable = false)
     public PessoaGramatical getPessoaGramatical() {
         return this.pessoaGramatical;
     }
 
     public void setPessoaGramatical(PessoaGramatical pessoaGramatical) {
+        this.id.setPessoaGramatical(pessoaGramatical.getId());
         this.pessoaGramatical = pessoaGramatical;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tempo_verbal", nullable = false, insertable = false, updatable = false)
     public TempoVerbal getTempoVerbal() {
         return this.tempoVerbal;
     }
 
     public void setTempoVerbal(TempoVerbal tempoVerbal) {
+        this.id.setTempoVerbal(tempoVerbal.getId());
         this.tempoVerbal = tempoVerbal;
     }
 
@@ -91,6 +94,15 @@ public class IndicadorPessoaGramatical implements java.io.Serializable {
 
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return this.status;
     }
 
     @Override

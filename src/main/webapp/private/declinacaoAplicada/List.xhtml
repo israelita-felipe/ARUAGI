@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -31,31 +31,28 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDeclinacaoAplicadaTitle_palavraLatim}"/>
                             </f:facet>
-                            <h:outputText value="#{item.palavraLatim}"/>
+                            <h:outputText value="#{item.palavraLatim.palavra}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDeclinacaoAplicadaTitle_declinacao}"/>
                             </f:facet>
-                            <h:outputText value="#{item.declinacao}"/>
+                            <h:outputText value="#{item.declinacao.id}ª declinação"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDeclinacaoAplicadaTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListDeclinacaoAplicadaTitle_status}"/>
-                            </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
-                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{declinacaoAplicadaController.prepareCreate}" update=":DeclinacaoAplicadaCreateForm" oncomplete="PF('DeclinacaoAplicadaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DeclinacaoAplicadaViewForm" oncomplete="PF('DeclinacaoAplicadaViewDialog').show()" disabled="#{empty declinacaoAplicadaController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DeclinacaoAplicadaEditForm" oncomplete="PF('DeclinacaoAplicadaEditDialog').show()" disabled="#{empty declinacaoAplicadaController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{declinacaoAplicadaController.destroy}" update=":growl,datalist" disabled="#{empty declinacaoAplicadaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DeclinacaoAplicadaEditForm" oncomplete="PF('DeclinacaoAplicadaEditDialog').show()" disabled="#{empty declinacaoAplicadaController.selected || declinacaoAplicadaController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{declinacaoAplicadaController.destroy}" update=":growl,datalist" disabled="#{empty declinacaoAplicadaController.selected || declinacaoAplicadaController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

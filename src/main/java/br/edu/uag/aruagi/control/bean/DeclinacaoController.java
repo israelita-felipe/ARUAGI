@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -68,9 +67,9 @@ public class DeclinacaoController implements Serializable {
     }
 
     public List<Declinacao> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+        getFacade().begin();
+        items = getFacade().findAll();
+        getFacade().end();
         return items;
     }
 
@@ -79,23 +78,16 @@ public class DeclinacaoController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction == PersistAction.CREATE) {
+                    getSelected().setStatus(Boolean.TRUE);
+                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
+                    getFacade().create(selected);
+                } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -112,17 +104,11 @@ public class DeclinacaoController implements Serializable {
     }
 
     public List<Declinacao> getItemsAvailableSelectMany() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
+        return getItems();
     }
 
     public List<Declinacao> getItemsAvailableSelectOne() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
+        return getItems();
     }
 
     @FacesConverter(forClass = Declinacao.class)

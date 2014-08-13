@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -12,17 +11,12 @@
             <h:form id="FrasePortuguesCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{frasePortuguesController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateFrasePortuguesLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{frasePortuguesController.selected.id}" title="#{bundle.CreateFrasePortuguesTitle_id}" required="true" requiredMessage="#{bundle.CreateFrasePortuguesRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.CreateFrasePortuguesLabel_frase}" for="frase" />
                         <p:inputText id="frase" value="#{frasePortuguesController.selected.frase}" title="#{bundle.CreateFrasePortuguesTitle_frase}" required="true" requiredMessage="#{bundle.CreateFrasePortuguesRequiredMessage_frase}"/>
-                        <p:outputLabel value="#{bundle.CreateFrasePortuguesLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{frasePortuguesController.selected.usuario}" title="#{bundle.CreateFrasePortuguesTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.CreateFrasePortuguesLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{frasePortuguesController.selected.status}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{frasePortuguesController.create}" value="#{bundle.Save}" update="display,:FrasePortuguesListForm:datalist,:growl" oncomplete="handleSubmit(args,'FrasePortuguesCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="FrasePortuguesCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -12,27 +12,28 @@
             <h:form id="IndicadorPessoaGramaticalEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{indicadorPessoaGramaticalController.selected != null}">
+
                         <p:outputLabel value="#{bundle.EditIndicadorPessoaGramaticalLabel_pessoaGramatical}" for="pessoaGramatical" />
                         <p:selectOneMenu id="pessoaGramatical" value="#{indicadorPessoaGramaticalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.EditIndicadorPessoaGramaticalRequiredMessage_pessoaGramatical}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"
                                            var="pessoaGramaticalItem"
+                                           itemLabel="#{pessoaGramaticalItem.id}ª pessoa - #{pessoaGramaticalItem.flexao}"
                                            itemValue="#{pessoaGramaticalItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.EditIndicadorPessoaGramaticalLabel_tempoVerbal}" for="tempoVerbal" />
                         <p:selectOneMenu id="tempoVerbal" value="#{indicadorPessoaGramaticalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.EditIndicadorPessoaGramaticalRequiredMessage_tempoVerbal}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"
                                            var="tempoVerbalItem"
+                                           itemLabel="#{tempoVerbalItem.descricao}"
                                            itemValue="#{tempoVerbalItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.EditIndicadorPessoaGramaticalLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{indicadorPessoaGramaticalController.selected.descricao}" title="#{bundle.EditIndicadorPessoaGramaticalTitle_descricao}" required="true" requiredMessage="#{bundle.EditIndicadorPessoaGramaticalRequiredMessage_descricao}"/>
-                        <p:outputLabel value="#{bundle.EditIndicadorPessoaGramaticalLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{indicadorPessoaGramaticalController.selected.usuario}" title="#{bundle.EditIndicadorPessoaGramaticalTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{indicadorPessoaGramaticalController.update}" value="#{bundle.Save}" update="display,:IndicadorPessoaGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'IndicadorPessoaGramaticalEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="IndicadorPessoaGramaticalEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -54,23 +54,25 @@ public class DeclinacaoAplicada implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra", nullable = false, insertable = false, updatable = false)
     public PalavraLatim getPalavraLatim() {
         return this.palavraLatim;
     }
 
     public void setPalavraLatim(PalavraLatim palavraLatim) {
+        this.id.setPalavra(palavraLatim.getId());
         this.palavraLatim = palavraLatim;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "declinacao", nullable = false, insertable = false, updatable = false)
     public Declinacao getDeclinacao() {
         return this.declinacao;
     }
 
     public void setDeclinacao(Declinacao declinacao) {
+        this.id.setDeclinacao(declinacao.getId());
         this.declinacao = declinacao;
     }
 

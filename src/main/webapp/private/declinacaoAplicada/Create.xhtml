@@ -11,26 +11,25 @@
         <p:dialog id="DeclinacaoAplicadaCreateDlg" widgetVar="DeclinacaoAplicadaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDeclinacaoAplicadaTitle}">
             <h:form id="DeclinacaoAplicadaCreateForm">
                 <h:panelGroup id="display">
+                    
                     <p:panelGrid columns="2" rendered="#{declinacaoAplicadaController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateDeclinacaoAplicadaLabel_palavraLatim}" for="palavraLatim" />
                         <p:selectOneMenu id="palavraLatim" value="#{declinacaoAplicadaController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditDeclinacaoAplicadaRequiredMessage_palavraLatim}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
+                                           itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateDeclinacaoAplicadaLabel_declinacao}" for="declinacao" />
                         <p:selectOneMenu id="declinacao" value="#{declinacaoAplicadaController.selected.declinacao}" required="true" requiredMessage="#{bundle.EditDeclinacaoAplicadaRequiredMessage_declinacao}">
                             <f:selectItems value="#{declinacaoController.itemsAvailableSelectOne}"
                                            var="declinacaoItem"
+                                           itemLabel="#{declinacaoItem.id}ª declinação"                                           
                                            itemValue="#{declinacaoItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateDeclinacaoAplicadaLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{declinacaoAplicadaController.selected.usuario}" title="#{bundle.CreateDeclinacaoAplicadaTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.CreateDeclinacaoAplicadaLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{declinacaoAplicadaController.selected.status}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{declinacaoAplicadaController.create}" value="#{bundle.Save}" update="display,:DeclinacaoAplicadaListForm:datalist,:growl" oncomplete="handleSubmit(args,'DeclinacaoAplicadaCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="DeclinacaoAplicadaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -12,17 +12,12 @@
             <h:form id="ClassificacaoGramaticalEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{classificacaoGramaticalController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditClassificacaoGramaticalLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{classificacaoGramaticalController.selected.id}" title="#{bundle.EditClassificacaoGramaticalTitle_id}" required="true" requiredMessage="#{bundle.EditClassificacaoGramaticalRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.EditClassificacaoGramaticalLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{classificacaoGramaticalController.selected.nome}" title="#{bundle.EditClassificacaoGramaticalTitle_nome}" required="true" requiredMessage="#{bundle.EditClassificacaoGramaticalRequiredMessage_nome}"/>
-                        <p:outputLabel value="#{bundle.EditClassificacaoGramaticalLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{classificacaoGramaticalController.selected.usuario}" title="#{bundle.EditClassificacaoGramaticalTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.EditClassificacaoGramaticalLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{classificacaoGramaticalController.selected.status}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{classificacaoGramaticalController.update}" value="#{bundle.Save}" update="display,:ClassificacaoGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ClassificacaoGramaticalEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ClassificacaoGramaticalEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

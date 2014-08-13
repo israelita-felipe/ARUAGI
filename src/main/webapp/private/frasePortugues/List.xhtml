@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -29,33 +29,23 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListFrasePortuguesTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListFrasePortuguesTitle_frase}"/>
                             </f:facet>
                             <h:outputText value="#{item.frase}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListFrasePortuguesTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListFrasePortuguesTitle_status}"/>
-                            </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
-                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{frasePortuguesController.prepareCreate}" update=":FrasePortuguesCreateForm" oncomplete="PF('FrasePortuguesCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":FrasePortuguesViewForm" oncomplete="PF('FrasePortuguesViewDialog').show()" disabled="#{empty frasePortuguesController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":FrasePortuguesEditForm" oncomplete="PF('FrasePortuguesEditDialog').show()" disabled="#{empty frasePortuguesController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{frasePortuguesController.destroy}" update=":growl,datalist" disabled="#{empty frasePortuguesController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":FrasePortuguesEditForm" oncomplete="PF('FrasePortuguesEditDialog').show()" disabled="#{empty frasePortuguesController.selected || frasePortuguesController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{frasePortuguesController.destroy}" update=":growl,datalist" disabled="#{empty frasePortuguesController.selected || frasePortuguesController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +17,7 @@ import javax.faces.convert.FacesConverter;
 
 public class IndicadorPessoaGramaticalController implements Serializable {
 
-    private IndicadorPessoaGramaticalFacade facade = new IndicadorPessoaGramaticalFacade();
+    private final IndicadorPessoaGramaticalFacade facade = new IndicadorPessoaGramaticalFacade();
     private List<IndicadorPessoaGramatical> items = null;
     private IndicadorPessoaGramatical selected;
 
@@ -81,24 +80,17 @@ public class IndicadorPessoaGramaticalController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if(persistAction == PersistAction.CREATE){
+                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
+                    getSelected().setStatus(Boolean.TRUE);
+                    getFacade().create(selected);
+                }else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
-            } catch (Exception ex) {
+            }catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
