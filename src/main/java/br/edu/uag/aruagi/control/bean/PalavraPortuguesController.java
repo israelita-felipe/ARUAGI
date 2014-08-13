@@ -1,9 +1,9 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.model.Facade.PalavraPortuguesFacade;
+import br.edu.uag.aruagi.control.Facade.PalavraPortuguesFacade;
 import br.edu.uag.aruagi.model.PalavraPortugues;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;

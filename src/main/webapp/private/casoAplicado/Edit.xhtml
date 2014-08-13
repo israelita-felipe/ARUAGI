@@ -12,6 +12,7 @@
             <h:form id="CasoAplicadoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{casoAplicadoController.selected != null}">
+                       
                         <p:outputLabel value="#{bundle.EditCasoAplicadoLabel_palavraLatim}" for="palavraLatim" />
                         <p:selectOneMenu id="palavraLatim" value="#{casoAplicadoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditCasoAplicadoRequiredMessage_palavraLatim}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
@@ -19,6 +20,7 @@
                                            var="palavraLatimItem"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{bundle.EditCasoAplicadoLabel_caso}" for="caso" />
                         <p:selectOneMenu id="caso" value="#{casoAplicadoController.selected.caso}" required="true" requiredMessage="#{bundle.EditCasoAplicadoRequiredMessage_caso}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
@@ -26,13 +28,9 @@
                                            var="casoItem"
                                            itemValue="#{casoItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditCasoAplicadoLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{casoAplicadoController.selected.usuario}" title="#{bundle.EditCasoAplicadoTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.EditCasoAplicadoLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{casoAplicadoController.selected.status}" />
+                                                
                     </p:panelGrid>
                     <p:commandButton actionListener="#{casoAplicadoController.update}" value="#{bundle.Save}" update="display,:CasoAplicadoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CasoAplicadoEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="CasoAplicadoEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

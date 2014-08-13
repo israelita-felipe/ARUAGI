@@ -1,9 +1,9 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.model.Facade.UsuarioFacade;
+import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
 import br.edu.uag.aruagi.model.Usuario;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;

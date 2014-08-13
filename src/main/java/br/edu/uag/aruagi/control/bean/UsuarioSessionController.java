@@ -1,9 +1,9 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.util.cript.SHA256;
-import br.edu.uag.aruagi.model.Facade.UsuarioFacade;
+import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
 import br.edu.uag.aruagi.model.Usuario;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;

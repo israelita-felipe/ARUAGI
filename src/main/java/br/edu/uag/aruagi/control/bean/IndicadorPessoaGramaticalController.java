@@ -1,10 +1,10 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.model.Facade.IndicadorPessoaGramaticalFacade;
+import br.edu.uag.aruagi.control.Facade.IndicadorPessoaGramaticalFacade;
 import br.edu.uag.aruagi.model.IndicadorPessoaGramatical;
 import br.edu.uag.aruagi.model.IndicadorPessoaGramaticalId;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;

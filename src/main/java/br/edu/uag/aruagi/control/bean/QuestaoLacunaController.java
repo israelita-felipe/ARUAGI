@@ -1,9 +1,9 @@
 package ufrpe.uag.control;
 
-import br.edu.uag.aruagi.model.Facade.QuestaoLacunaFacade;
+import br.edu.uag.aruagi.control.Facade.QuestaoLacunaFacade;
 import br.edu.uag.aruagi.model.QuestaoLacuna;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;

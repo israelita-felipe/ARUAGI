@@ -1,9 +1,9 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.ClassificacaoGramatical;
-import br.edu.uag.aruagi.model.Facade.ClassificacaoGramaticalFacade;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.Facade.ClassificacaoGramaticalFacade;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;

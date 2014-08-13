@@ -1,10 +1,11 @@
 package br.edu.uag.aruagi.control.bean;
 
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.util.support.DateTime;
 import br.edu.uag.aruagi.model.Acesso;
-import br.edu.uag.aruagi.model.Facade.AcessoFacade;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.Facade.AcessoFacade;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -17,7 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class AcessoController implements Serializable {
+public class AcessoController implements Serializable, InterfaceController<Acesso, Integer> {
 
     private AcessoFacade facade = new AcessoFacade();
     private List<Acesso> items = null;
@@ -81,12 +82,14 @@ public class AcessoController implements Serializable {
         return (i + 1);
     }
 
+    @Override
     public Acesso prepareCreate() {
         selected = new Acesso();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AcessoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -94,10 +97,12 @@ public class AcessoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AcessoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AcessoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -106,6 +111,7 @@ public class AcessoController implements Serializable {
         }
     }
 
+    @Override
     public List<Acesso> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -141,6 +147,7 @@ public class AcessoController implements Serializable {
         return a;
     }
 
+    @Override
     public List<Acesso> getItemsAvailableSelectMany() {
         getFacade().begin();
         List<Acesso> a = getFacade().findAll();
@@ -148,6 +155,7 @@ public class AcessoController implements Serializable {
         return a;
     }
 
+    @Override
     public List<Acesso> getItemsAvailableSelectOne() {
         getFacade().begin();
         List<Acesso> a = getFacade().findAll();

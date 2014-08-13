@@ -2,9 +2,9 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.AplicacaoFrase;
 import br.edu.uag.aruagi.model.AplicacaoFraseId;
-import br.edu.uag.aruagi.model.Facade.AplicacaoFraseFacade;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil;
-import br.edu.uag.aruagi.model.controller.util.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.Facade.AplicacaoFraseFacade;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;
