@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeclinacaoAplicadaEditDlg" widgetVar="DeclinacaoAplicadaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDeclinacaoAplicadaTitle}">
+            <h:form id="DeclinacaoAplicadaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{declinacaoAplicadaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDeclinacaoAplicadaLabel_palavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" value="#{declinacaoAplicadaController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditDeclinacaoAplicadaRequiredMessage_palavraLatim}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
+                                           var="palavraLatimItem"
+                                           itemValue="#{palavraLatimItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDeclinacaoAplicadaLabel_declinacao}" for="declinacao" />
+                        <p:selectOneMenu id="declinacao" value="#{declinacaoAplicadaController.selected.declinacao}" required="true" requiredMessage="#{bundle.EditDeclinacaoAplicadaRequiredMessage_declinacao}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{declinacaoController.itemsAvailableSelectOne}"
+                                           var="declinacaoItem"
+                                           itemValue="#{declinacaoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDeclinacaoAplicadaLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{declinacaoAplicadaController.selected.usuario}" title="#{bundle.EditDeclinacaoAplicadaTitle_usuario}" />
+                        <p:outputLabel value="#{bundle.EditDeclinacaoAplicadaLabel_status}" for="status" />
+                        <p:selectBooleanCheckbox id="status" value="#{declinacaoAplicadaController.selected.status}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{declinacaoAplicadaController.update}" value="#{bundle.Save}" update="display,:DeclinacaoAplicadaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DeclinacaoAplicadaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DeclinacaoAplicadaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

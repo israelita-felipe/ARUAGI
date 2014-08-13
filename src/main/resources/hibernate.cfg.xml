@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory name="hibernate_session_factory">
+      
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/ARUAGI</property>
+    <property name="hibernate.connection.username">postgres</property>
+    <property name="hibernate.connection.password">aruagi</property>
+    
+    <mapping class="br.edu.uag.aruagi.model.CasoAplicado"/>
+    <mapping class="br.edu.uag.aruagi.model.PalavrasClassificadasId"/>
+    <mapping class="br.edu.uag.aruagi.model.NivelAcesso"/>
+    <mapping class="br.edu.uag.aruagi.model.Radical"/>
+    <mapping class="br.edu.uag.aruagi.model.AplicacaoFrase"/>
+    <mapping class="br.edu.uag.aruagi.model.FrasePortugues"/>
+    <mapping class="br.edu.uag.aruagi.model.QuestaoDeclinacao"/>
+    <mapping class="br.edu.uag.aruagi.model.AplicacaoFraseId"/>
+    <mapping class="br.edu.uag.aruagi.model.QuestaoGramatical"/>
+    <mapping class="br.edu.uag.aruagi.model.TraduzPalavraId"/>
+    <mapping class="br.edu.uag.aruagi.model.LinksQuestaoId"/>
+    <mapping class="br.edu.uag.aruagi.model.Postagem"/>
+    <mapping class="br.edu.uag.aruagi.model.TraduzPalavra"/>
+    <mapping class="br.edu.uag.aruagi.model.Acesso"/>
+    <mapping class="br.edu.uag.aruagi.model.ClassificacaoGramatical"/>
+    <mapping class="br.edu.uag.aruagi.model.ListaQuestao"/>
+    <mapping class="br.edu.uag.aruagi.model.PalavrasClassificadas"/>
+    <mapping class="br.edu.uag.aruagi.model.Declinacao"/>
+    <mapping class="br.edu.uag.aruagi.model.AtividadeQuestao"/>
+    <mapping class="br.edu.uag.aruagi.model.FraseLatim"/>
+    <mapping class="br.edu.uag.aruagi.model.IndicadorPessoaGramaticalId"/>
+    <mapping class="br.edu.uag.aruagi.model.DeclinacaoAplicadaId"/>
+    <mapping class="br.edu.uag.aruagi.model.IndicadorTempoVerbal"/>
+    <mapping class="br.edu.uag.aruagi.model.TraduzFraseId"/>
+    <mapping class="br.edu.uag.aruagi.model.Usuario"/>
+    <mapping class="br.edu.uag.aruagi.model.QuestaoTraduzFrase"/>
+    <mapping class="br.edu.uag.aruagi.model.PalavraPortugues"/>
+    <mapping class="br.edu.uag.aruagi.model.VideosPostagem"/>
+    <mapping class="br.edu.uag.aruagi.model.PalavrasDeclinadasId"/>
+    <mapping class="br.edu.uag.aruagi.model.Videos"/>
+    <mapping class="br.edu.uag.aruagi.model.PalavraLatim"/>
+    <mapping class="br.edu.uag.aruagi.model.DeclinacaoAplicada"/>
+    <mapping class="br.edu.uag.aruagi.model.CasoAplicadoId"/>
+    <mapping class="br.edu.uag.aruagi.model.QuestaoLacuna"/>
+    <mapping class="br.edu.uag.aruagi.model.IndicadorTempoVerbalId"/>
+    <mapping class="br.edu.uag.aruagi.model.Caso"/>
+    <mapping class="br.edu.uag.aruagi.model.TipoQuestao"/>
+    <mapping class="br.edu.uag.aruagi.model.LinksQuestao"/>
+    <mapping class="br.edu.uag.aruagi.model.NivelQuestao"/>
+    <mapping class="br.edu.uag.aruagi.model.IndicadorPessoaGramatical"/>
+    <mapping class="br.edu.uag.aruagi.model.PessoaGramatical"/>
+    <mapping class="br.edu.uag.aruagi.model.TraduzFrase"/>
+    <mapping class="br.edu.uag.aruagi.model.QuestaoTraduzPalavra"/>
+    <mapping class="br.edu.uag.aruagi.model.PalavrasDeclinadas"/>
+    <mapping class="br.edu.uag.aruagi.model.Lacuna"/>
+    <mapping class="br.edu.uag.aruagi.model.TempoVerbal"/>
+  </session-factory>
+</hibernate-configuration>

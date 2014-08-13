@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CasoViewDlg" widgetVar="CasoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCasoTitle}">
+            <h:form id="CasoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{casoController.selected != null}">
+                        
+                        <h:outputText value="#{bundle.ViewCasoLabel_id}"/>
+                        <h:outputText value="#{casoController.selected.id}" title="#{bundle.ViewCasoTitle_id}"/>
+                        
+                        <h:outputText value="#{bundle.ViewCasoLabel_descricao}"/>
+                        <h:outputText value="#{casoController.selected.descricao}" title="#{bundle.ViewCasoTitle_descricao}"/>
+                        
+                        <h:outputText value="#{bundle.ViewCasoLabel_usuario}"/>
+                        <h:outputText value="#{casoController.selected.usuario}" title="#{bundle.ViewCasoTitle_usuario}"/>
+                        
+                        <h:outputText value="#{bundle.ViewCasoLabel_status}"/>
+                        <p:selectBooleanCheckbox value="#{casoController.selected.status}" disabled="true"/>
+                    
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PostagemEditDlg" widgetVar="PostagemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPostagemTitle}">
+            <h:form id="PostagemEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{postagemController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPostagemLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{postagemController.selected.id}" title="#{bundle.EditPostagemTitle_id}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditPostagemLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{postagemController.selected.titulo}" title="#{bundle.EditPostagemTitle_titulo}" />
+                        <p:outputLabel value="#{bundle.EditPostagemLabel_link}" for="link" />
+                        <p:inputText id="link" value="#{postagemController.selected.link}" title="#{bundle.EditPostagemTitle_link}" />
+                        <p:outputLabel value="#{bundle.EditPostagemLabel_data}" for="data" />
+                        <p:calendar id="data" pattern="MM/dd/yyyy" value="#{postagemController.selected.data}" title="#{bundle.EditPostagemTitle_data}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_data}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPostagemLabel_conteudo}" for="conteudo" />
+                        <p:inputText id="conteudo" value="#{postagemController.selected.conteudo}" title="#{bundle.EditPostagemTitle_conteudo}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_conteudo}"/>
+                        <p:outputLabel value="#{bundle.EditPostagemLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{postagemController.selected.usuario}" title="#{bundle.EditPostagemTitle_usuario}" />
+                        <p:outputLabel value="#{bundle.EditPostagemLabel_status}" for="status" />
+                        <p:selectBooleanCheckbox id="status" value="#{postagemController.selected.status}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.Save}" update="display,:PostagemListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PostagemEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

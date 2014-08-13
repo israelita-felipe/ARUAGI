@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PessoaGramaticalCreateDlg" widgetVar="PessoaGramaticalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePessoaGramaticalTitle}">
+            <h:form id="PessoaGramaticalCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pessoaGramaticalController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{pessoaGramaticalController.selected.id}" title="#{bundle.CreatePessoaGramaticalTitle_id}" required="true" requiredMessage="#{bundle.CreatePessoaGramaticalRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_descricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{pessoaGramaticalController.selected.descricao}" title="#{bundle.CreatePessoaGramaticalTitle_descricao}" required="true" requiredMessage="#{bundle.CreatePessoaGramaticalRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_flexao}" for="flexao" />
+                        <p:inputText id="flexao" value="#{pessoaGramaticalController.selected.flexao}" title="#{bundle.CreatePessoaGramaticalTitle_flexao}" required="true" requiredMessage="#{bundle.CreatePessoaGramaticalRequiredMessage_flexao}"/>
+                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{pessoaGramaticalController.selected.usuario}" title="#{bundle.CreatePessoaGramaticalTitle_usuario}" />
+                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_status}" for="status" />
+                        <p:selectBooleanCheckbox id="status" value="#{pessoaGramaticalController.selected.status}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pessoaGramaticalController.create}" value="#{bundle.Save}" update="display,:PessoaGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args,'PessoaGramaticalCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PessoaGramaticalCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

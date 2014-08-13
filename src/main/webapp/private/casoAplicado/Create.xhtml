@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CasoAplicadoCreateDlg" widgetVar="CasoAplicadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCasoAplicadoTitle}">
+            <h:form id="CasoAplicadoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{casoAplicadoController.selected != null}">
+                        
+                        <p:outputLabel value="#{bundle.CreateCasoAplicadoLabel_palavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" value="#{casoAplicadoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditCasoAplicadoRequiredMessage_palavraLatim}">
+                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
+                                           var="palavraLatimItem"
+                                           itemValue="#{palavraLatimItem}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{bundle.CreateCasoAplicadoLabel_caso}" for="caso" />
+                        <p:selectOneMenu id="caso" value="#{casoAplicadoController.selected.caso}" required="true" requiredMessage="#{bundle.EditCasoAplicadoRequiredMessage_caso}">
+                            <f:selectItems value="#{casoController.itemsAvailableSelectOne}"
+                                           var="casoItem"
+                                           itemValue="#{casoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{casoAplicadoController.create}" value="#{bundle.Save}" update="display,:CasoAplicadoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CasoAplicadoCreateDialog');"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

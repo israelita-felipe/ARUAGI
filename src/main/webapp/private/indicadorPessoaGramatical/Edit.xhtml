@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="IndicadorPessoaGramaticalEditDlg" widgetVar="IndicadorPessoaGramaticalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditIndicadorPessoaGramaticalTitle}">
+            <h:form id="IndicadorPessoaGramaticalEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{indicadorPessoaGramaticalController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditIndicadorPessoaGramaticalLabel_pessoaGramatical}" for="pessoaGramatical" />
+                        <p:selectOneMenu id="pessoaGramatical" value="#{indicadorPessoaGramaticalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.EditIndicadorPessoaGramaticalRequiredMessage_pessoaGramatical}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"
+                                           var="pessoaGramaticalItem"
+                                           itemValue="#{pessoaGramaticalItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditIndicadorPessoaGramaticalLabel_tempoVerbal}" for="tempoVerbal" />
+                        <p:selectOneMenu id="tempoVerbal" value="#{indicadorPessoaGramaticalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.EditIndicadorPessoaGramaticalRequiredMessage_tempoVerbal}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"
+                                           var="tempoVerbalItem"
+                                           itemValue="#{tempoVerbalItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditIndicadorPessoaGramaticalLabel_descricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{indicadorPessoaGramaticalController.selected.descricao}" title="#{bundle.EditIndicadorPessoaGramaticalTitle_descricao}" required="true" requiredMessage="#{bundle.EditIndicadorPessoaGramaticalRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.EditIndicadorPessoaGramaticalLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{indicadorPessoaGramaticalController.selected.usuario}" title="#{bundle.EditIndicadorPessoaGramaticalTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{indicadorPessoaGramaticalController.update}" value="#{bundle.Save}" update="display,:IndicadorPessoaGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'IndicadorPessoaGramaticalEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="IndicadorPessoaGramaticalEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

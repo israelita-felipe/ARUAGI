@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuestaoTraduzFraseCreateDlg" widgetVar="QuestaoTraduzFraseCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateQuestaoTraduzFraseTitle}">
+            <h:form id="QuestaoTraduzFraseCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{questaoTraduzFraseController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzFraseLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{questaoTraduzFraseController.selected.id}" title="#{bundle.CreateQuestaoTraduzFraseTitle_id}" required="true" requiredMessage="#{bundle.CreateQuestaoTraduzFraseRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzFraseLabel_fraseLatim}" for="fraseLatim" />
+                        <p:selectOneMenu id="fraseLatim" value="#{questaoTraduzFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.EditQuestaoTraduzFraseRequiredMessage_fraseLatim}">
+                            <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
+                                           var="fraseLatimItem"
+                                           itemValue="#{fraseLatimItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzFraseLabel_nivelQuestao}" for="nivelQuestao" />
+                        <p:selectOneMenu id="nivelQuestao" value="#{questaoTraduzFraseController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoTraduzFraseRequiredMessage_nivelQuestao}">
+                            <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
+                                           var="nivelQuestaoItem"
+                                           itemValue="#{nivelQuestaoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzFraseLabel_enunciado}" for="enunciado" />
+                        <p:inputText id="enunciado" value="#{questaoTraduzFraseController.selected.enunciado}" title="#{bundle.CreateQuestaoTraduzFraseTitle_enunciado}" />
+                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzFraseLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{questaoTraduzFraseController.selected.titulo}" title="#{bundle.CreateQuestaoTraduzFraseTitle_titulo}" />
+                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzFraseLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{questaoTraduzFraseController.selected.usuario}" title="#{bundle.CreateQuestaoTraduzFraseTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{questaoTraduzFraseController.create}" value="#{bundle.Save}" update="display,:QuestaoTraduzFraseListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestaoTraduzFraseCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestaoTraduzFraseCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

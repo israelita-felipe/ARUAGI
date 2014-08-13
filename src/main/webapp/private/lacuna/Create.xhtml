@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LacunaCreateDlg" widgetVar="LacunaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateLacunaTitle}">
+            <h:form id="LacunaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{lacunaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateLacunaLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{lacunaController.selected.id}" title="#{bundle.CreateLacunaTitle_id}" required="true" requiredMessage="#{bundle.CreateLacunaRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateLacunaLabel_caso}" for="caso" />
+                        <p:selectOneMenu id="caso" value="#{lacunaController.selected.caso}" required="true" requiredMessage="#{bundle.EditLacunaRequiredMessage_caso}">
+                            <f:selectItems value="#{casoController.itemsAvailableSelectOne}"
+                                           var="casoItem"
+                                           itemValue="#{casoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateLacunaLabel_questaoLacuna}" for="questaoLacuna" />
+                        <p:selectOneMenu id="questaoLacuna" value="#{lacunaController.selected.questaoLacuna}" required="true" requiredMessage="#{bundle.EditLacunaRequiredMessage_questaoLacuna}">
+                            <f:selectItems value="#{questaoLacunaController.itemsAvailableSelectOne}"
+                                           var="questaoLacunaItem"
+                                           itemValue="#{questaoLacunaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateLacunaLabel_inicio}" for="inicio" />
+                        <p:inputText id="inicio" value="#{lacunaController.selected.inicio}" title="#{bundle.CreateLacunaTitle_inicio}" />
+                        <p:outputLabel value="#{bundle.CreateLacunaLabel_fim}" for="fim" />
+                        <p:inputText id="fim" value="#{lacunaController.selected.fim}" title="#{bundle.CreateLacunaTitle_fim}" />
+                        <p:outputLabel value="#{bundle.CreateLacunaLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{lacunaController.selected.usuario}" title="#{bundle.CreateLacunaTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{lacunaController.create}" value="#{bundle.Save}" update="display,:LacunaListForm:datalist,:growl" oncomplete="handleSubmit(args,'LacunaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="LacunaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

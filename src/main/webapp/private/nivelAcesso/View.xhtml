@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NivelAcessoViewDlg" widgetVar="NivelAcessoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNivelAcessoTitle}">
+            <h:form id="NivelAcessoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{nivelAcessoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewNivelAcessoLabel_id}"/>
+                        <h:outputText value="#{nivelAcessoController.selected.id}" title="#{bundle.ViewNivelAcessoTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewNivelAcessoLabel_linkAcesso}"/>
+                        <h:outputText value="#{nivelAcessoController.selected.linkAcesso}" title="#{bundle.ViewNivelAcessoTitle_linkAcesso}"/>
+                        <h:outputText value="#{bundle.ViewNivelAcessoLabel_descricao}"/>
+                        <h:outputText value="#{nivelAcessoController.selected.descricao}" title="#{bundle.ViewNivelAcessoTitle_descricao}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="NivelAcessoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

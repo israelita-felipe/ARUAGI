@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TraduzPalavraViewDlg" widgetVar="TraduzPalavraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTraduzPalavraTitle}">
+            <h:form id="TraduzPalavraViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{traduzPalavraController.selected != null}">
+                        <h:outputText value="#{bundle.ViewTraduzPalavraLabel_palavraPortugues}"/>
+                        <h:outputText value="#{traduzPalavraController.selected.palavraPortugues}" title="#{bundle.ViewTraduzPalavraTitle_palavraPortugues}"/>
+                        <h:outputText value="#{bundle.ViewTraduzPalavraLabel_palavraLatim}"/>
+                        <h:outputText value="#{traduzPalavraController.selected.palavraLatim}" title="#{bundle.ViewTraduzPalavraTitle_palavraLatim}"/>
+                        <h:outputText value="#{bundle.ViewTraduzPalavraLabel_usuario}"/>
+                        <h:outputText value="#{traduzPalavraController.selected.usuario}" title="#{bundle.ViewTraduzPalavraTitle_usuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="TraduzPalavraViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

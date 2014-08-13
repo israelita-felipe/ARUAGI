@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuestaoTraduzPalavraViewDlg" widgetVar="QuestaoTraduzPalavraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewQuestaoTraduzPalavraTitle}">
+            <h:form id="QuestaoTraduzPalavraViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{questaoTraduzPalavraController.selected != null}">
+                        <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_id}"/>
+                        <h:outputText value="#{questaoTraduzPalavraController.selected.id}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_palavraLatim}"/>
+                        <h:outputText value="#{questaoTraduzPalavraController.selected.palavraLatim}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_palavraLatim}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_nivelQuestao}"/>
+                        <h:outputText value="#{questaoTraduzPalavraController.selected.nivelQuestao}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_nivelQuestao}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_titulo}"/>
+                        <h:outputText value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_titulo}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_enunciado}"/>
+                        <h:outputText value="#{questaoTraduzPalavraController.selected.enunciado}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_enunciado}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_usuario}"/>
+                        <h:outputText value="#{questaoTraduzPalavraController.selected.usuario}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_usuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="QuestaoTraduzPalavraViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

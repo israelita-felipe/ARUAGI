@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="ARUAGI" match-schema="public"/>
+  <table-filter match-name="pessoa_gramatical"/>
+  <table-filter match-name="declinacao_aplicada"/>
+  <table-filter match-name="palavras_classificadas"/>
+  <table-filter match-name="palavras_declinadas"/>
+  <table-filter match-name="traduz_palavra"/>
+  <table-filter match-name="caso"/>
+  <table-filter match-name="acesso"/>
+  <table-filter match-name="questao_traduz_palavra"/>
+  <table-filter match-name="frase_latim"/>
+  <table-filter match-name="tipo_questao"/>
+  <table-filter match-name="palavra_latim"/>
+  <table-filter match-name="nivel_acesso"/>
+  <table-filter match-name="palavra_portugues"/>
+  <table-filter match-name="declinacao"/>
+  <table-filter match-name="traduz_frase"/>
+  <table-filter match-name="caso_aplicado"/>
+  <table-filter match-name="links_questao"/>
+  <table-filter match-name="videos_postagem"/>
+  <table-filter match-name="atividade_questao"/>
+  <table-filter match-name="classificacao_gramatical"/>
+  <table-filter match-name="postagem"/>
+  <table-filter match-name="questao_declinacao"/>
+  <table-filter match-name="aplicacao_frase"/>
+  <table-filter match-name="nivel_questao"/>
+  <table-filter match-name="usuario"/>
+  <table-filter match-name="frase_portugues"/>
+  <table-filter match-name="tempo_verbal"/>
+  <table-filter match-name="questao_traduz_frase"/>
+  <table-filter match-name="indicador_pessoa_gramatical"/>
+  <table-filter match-name="questao_gramatical"/>
+  <table-filter match-name="radical"/>
+  <table-filter match-name="lacuna"/>
+  <table-filter match-name="indicador_tempo_verbal"/>
+  <table-filter match-name="videos"/>
+  <table-filter match-name="questao_lacuna"/>
+  <table-filter match-name="lista_questao"/>
+</hibernate-reverse-engineering>

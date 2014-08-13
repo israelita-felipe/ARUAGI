@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TraduzPalavraCreateDlg" widgetVar="TraduzPalavraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTraduzPalavraTitle}">
+            <h:form id="TraduzPalavraCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{traduzPalavraController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateTraduzPalavraLabel_palavraPortugues}" for="palavraPortugues" />
+                        <p:selectOneMenu id="palavraPortugues" value="#{traduzPalavraController.selected.palavraPortugues}" required="true" requiredMessage="#{bundle.EditTraduzPalavraRequiredMessage_palavraPortugues}">
+                            <f:selectItems value="#{palavraPortuguesController.itemsAvailableSelectOne}"
+                                           var="palavraPortuguesItem"
+                                           itemValue="#{palavraPortuguesItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateTraduzPalavraLabel_palavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" value="#{traduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditTraduzPalavraRequiredMessage_palavraLatim}">
+                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
+                                           var="palavraLatimItem"
+                                           itemValue="#{palavraLatimItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateTraduzPalavraLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{traduzPalavraController.selected.usuario}" title="#{bundle.CreateTraduzPalavraTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{traduzPalavraController.create}" value="#{bundle.Save}" update="display,:TraduzPalavraListForm:datalist,:growl" oncomplete="handleSubmit(args,'TraduzPalavraCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TraduzPalavraCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

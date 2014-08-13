@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuestaoLacunaEditDlg" widgetVar="QuestaoLacunaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditQuestaoLacunaTitle}">
+            <h:form id="QuestaoLacunaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{questaoLacunaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditQuestaoLacunaLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{questaoLacunaController.selected.id}" title="#{bundle.EditQuestaoLacunaTitle_id}" required="true" requiredMessage="#{bundle.EditQuestaoLacunaRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditQuestaoLacunaLabel_fraseLatim}" for="fraseLatim" />
+                        <p:selectOneMenu id="fraseLatim" value="#{questaoLacunaController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.EditQuestaoLacunaRequiredMessage_fraseLatim}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
+                                           var="fraseLatimItem"
+                                           itemValue="#{fraseLatimItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditQuestaoLacunaLabel_nivelQuestao}" for="nivelQuestao" />
+                        <p:selectOneMenu id="nivelQuestao" value="#{questaoLacunaController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoLacunaRequiredMessage_nivelQuestao}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
+                                           var="nivelQuestaoItem"
+                                           itemValue="#{nivelQuestaoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditQuestaoLacunaLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{questaoLacunaController.selected.titulo}" title="#{bundle.EditQuestaoLacunaTitle_titulo}" />
+                        <p:outputLabel value="#{bundle.EditQuestaoLacunaLabel_enunciado}" for="enunciado" />
+                        <p:inputText id="enunciado" value="#{questaoLacunaController.selected.enunciado}" title="#{bundle.EditQuestaoLacunaTitle_enunciado}" />
+                        <p:outputLabel value="#{bundle.EditQuestaoLacunaLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{questaoLacunaController.selected.usuario}" title="#{bundle.EditQuestaoLacunaTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{questaoLacunaController.update}" value="#{bundle.Save}" update="display,:QuestaoLacunaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'QuestaoLacunaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestaoLacunaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

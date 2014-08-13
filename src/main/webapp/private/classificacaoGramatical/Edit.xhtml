@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClassificacaoGramaticalEditDlg" widgetVar="ClassificacaoGramaticalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditClassificacaoGramaticalTitle}">
+            <h:form id="ClassificacaoGramaticalEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{classificacaoGramaticalController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditClassificacaoGramaticalLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{classificacaoGramaticalController.selected.id}" title="#{bundle.EditClassificacaoGramaticalTitle_id}" required="true" requiredMessage="#{bundle.EditClassificacaoGramaticalRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditClassificacaoGramaticalLabel_nome}" for="nome" />
+                        <p:inputText id="nome" value="#{classificacaoGramaticalController.selected.nome}" title="#{bundle.EditClassificacaoGramaticalTitle_nome}" required="true" requiredMessage="#{bundle.EditClassificacaoGramaticalRequiredMessage_nome}"/>
+                        <p:outputLabel value="#{bundle.EditClassificacaoGramaticalLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{classificacaoGramaticalController.selected.usuario}" title="#{bundle.EditClassificacaoGramaticalTitle_usuario}" />
+                        <p:outputLabel value="#{bundle.EditClassificacaoGramaticalLabel_status}" for="status" />
+                        <p:selectBooleanCheckbox id="status" value="#{classificacaoGramaticalController.selected.status}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{classificacaoGramaticalController.update}" value="#{bundle.Save}" update="display,:ClassificacaoGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ClassificacaoGramaticalEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ClassificacaoGramaticalEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

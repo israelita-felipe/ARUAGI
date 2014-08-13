@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AtividadeQuestaoCreateDlg" widgetVar="AtividadeQuestaoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAtividadeQuestaoTitle}">
+            <h:form id="AtividadeQuestaoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{atividadeQuestaoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateAtividadeQuestaoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{atividadeQuestaoController.selected.id}" title="#{bundle.CreateAtividadeQuestaoTitle_id}" required="true" requiredMessage="#{bundle.CreateAtividadeQuestaoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateAtividadeQuestaoLabel_tipoQuestao}" for="tipoQuestao" />
+                        <p:selectOneMenu id="tipoQuestao" value="#{atividadeQuestaoController.selected.tipoQuestao}" required="true" requiredMessage="#{bundle.EditAtividadeQuestaoRequiredMessage_tipoQuestao}">
+                            <f:selectItems value="#{tipoQuestaoController.itemsAvailableSelectOne}"
+                                           var="tipoQuestaoItem"
+                                           itemValue="#{tipoQuestaoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateAtividadeQuestaoLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{atividadeQuestaoController.selected.titulo}" title="#{bundle.CreateAtividadeQuestaoTitle_titulo}" />
+                        <p:outputLabel value="#{bundle.CreateAtividadeQuestaoLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{atividadeQuestaoController.selected.usuario}" title="#{bundle.CreateAtividadeQuestaoTitle_usuario}" />
+                        <p:outputLabel value="#{bundle.CreateAtividadeQuestaoLabel_descricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{atividadeQuestaoController.selected.descricao}" title="#{bundle.CreateAtividadeQuestaoTitle_descricao}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{atividadeQuestaoController.create}" value="#{bundle.Save}" update="display,:AtividadeQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args,'AtividadeQuestaoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AtividadeQuestaoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

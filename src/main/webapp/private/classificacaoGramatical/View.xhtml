@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClassificacaoGramaticalViewDlg" widgetVar="ClassificacaoGramaticalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewClassificacaoGramaticalTitle}">
+            <h:form id="ClassificacaoGramaticalViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{classificacaoGramaticalController.selected != null}">
+                        <h:outputText value="#{bundle.ViewClassificacaoGramaticalLabel_id}"/>
+                        <h:outputText value="#{classificacaoGramaticalController.selected.id}" title="#{bundle.ViewClassificacaoGramaticalTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewClassificacaoGramaticalLabel_nome}"/>
+                        <h:outputText value="#{classificacaoGramaticalController.selected.nome}" title="#{bundle.ViewClassificacaoGramaticalTitle_nome}"/>
+                        <h:outputText value="#{bundle.ViewClassificacaoGramaticalLabel_usuario}"/>
+                        <h:outputText value="#{classificacaoGramaticalController.selected.usuario}" title="#{bundle.ViewClassificacaoGramaticalTitle_usuario}"/>
+                        <h:outputText value="#{bundle.ViewClassificacaoGramaticalLabel_status}"/>
+                        <p:selectBooleanCheckbox value="#{classificacaoGramaticalController.selected.status}" disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ClassificacaoGramaticalViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

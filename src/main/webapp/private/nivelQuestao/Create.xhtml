@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NivelQuestaoCreateDlg" widgetVar="NivelQuestaoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateNivelQuestaoTitle}">
+            <h:form id="NivelQuestaoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{nivelQuestaoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{nivelQuestaoController.selected.id}" title="#{bundle.CreateNivelQuestaoTitle_id}" required="true" requiredMessage="#{bundle.CreateNivelQuestaoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_descricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.CreateNivelQuestaoTitle_descricao}" required="true" requiredMessage="#{bundle.CreateNivelQuestaoRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_observacoes}" for="observacoes" />
+                        <p:inputText id="observacoes" value="#{nivelQuestaoController.selected.observacoes}" title="#{bundle.CreateNivelQuestaoTitle_observacoes}" />
+                        <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{nivelQuestaoController.selected.usuario}" title="#{bundle.CreateNivelQuestaoTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{nivelQuestaoController.create}" value="#{bundle.Save}" update="display,:NivelQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args,'NivelQuestaoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="NivelQuestaoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

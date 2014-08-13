@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PalavraPortuguesViewDlg" widgetVar="PalavraPortuguesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPalavraPortuguesTitle}">
+            <h:form id="PalavraPortuguesViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{palavraPortuguesController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPalavraPortuguesLabel_id}"/>
+                        <h:outputText value="#{palavraPortuguesController.selected.id}" title="#{bundle.ViewPalavraPortuguesTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewPalavraPortuguesLabel_palavra}"/>
+                        <h:outputText value="#{palavraPortuguesController.selected.palavra}" title="#{bundle.ViewPalavraPortuguesTitle_palavra}"/>
+                        <h:outputText value="#{bundle.ViewPalavraPortuguesLabel_usuario}"/>
+                        <h:outputText value="#{palavraPortuguesController.selected.usuario}" title="#{bundle.ViewPalavraPortuguesTitle_usuario}"/>
+                        <h:outputText value="#{bundle.ViewPalavraPortuguesLabel_status}"/>
+                        <p:selectBooleanCheckbox value="#{palavraPortuguesController.selected.status}" disabled="true"/>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

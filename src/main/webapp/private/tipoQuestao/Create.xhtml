@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoQuestaoCreateDlg" widgetVar="TipoQuestaoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTipoQuestaoTitle}">
+            <h:form id="TipoQuestaoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoQuestaoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateTipoQuestaoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{tipoQuestaoController.selected.id}" title="#{bundle.CreateTipoQuestaoTitle_id}" required="true" requiredMessage="#{bundle.CreateTipoQuestaoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateTipoQuestaoLabel_descricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{tipoQuestaoController.selected.descricao}" title="#{bundle.CreateTipoQuestaoTitle_descricao}" required="true" requiredMessage="#{bundle.CreateTipoQuestaoRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.CreateTipoQuestaoLabel_nomeTabelaBanco}" for="nomeTabelaBanco" />
+                        <p:inputText id="nomeTabelaBanco" value="#{tipoQuestaoController.selected.nomeTabelaBanco}" title="#{bundle.CreateTipoQuestaoTitle_nomeTabelaBanco}" />
+                        <p:outputLabel value="#{bundle.CreateTipoQuestaoLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{tipoQuestaoController.selected.usuario}" title="#{bundle.CreateTipoQuestaoTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoQuestaoController.create}" value="#{bundle.Save}" update="display,:TipoQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipoQuestaoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoQuestaoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

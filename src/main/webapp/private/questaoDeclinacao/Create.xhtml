@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuestaoDeclinacaoCreateDlg" widgetVar="QuestaoDeclinacaoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateQuestaoDeclinacaoTitle}">
+            <h:form id="QuestaoDeclinacaoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{questaoDeclinacaoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateQuestaoDeclinacaoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{questaoDeclinacaoController.selected.id}" title="#{bundle.CreateQuestaoDeclinacaoTitle_id}" required="true" requiredMessage="#{bundle.CreateQuestaoDeclinacaoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestaoDeclinacaoLabel_declinacao}" for="declinacao" />
+                        <p:selectOneMenu id="declinacao" value="#{questaoDeclinacaoController.selected.declinacao}" required="true" requiredMessage="#{bundle.EditQuestaoDeclinacaoRequiredMessage_declinacao}">
+                            <f:selectItems value="#{declinacaoController.itemsAvailableSelectOne}"
+                                           var="declinacaoItem"
+                                           itemValue="#{declinacaoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateQuestaoDeclinacaoLabel_palavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" value="#{questaoDeclinacaoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditQuestaoDeclinacaoRequiredMessage_palavraLatim}">
+                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
+                                           var="palavraLatimItem"
+                                           itemValue="#{palavraLatimItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateQuestaoDeclinacaoLabel_caso}" for="caso" />
+                        <p:selectOneMenu id="caso" value="#{questaoDeclinacaoController.selected.caso}" required="true" requiredMessage="#{bundle.EditQuestaoDeclinacaoRequiredMessage_caso}">
+                            <f:selectItems value="#{casoController.itemsAvailableSelectOne}"
+                                           var="casoItem"
+                                           itemValue="#{casoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateQuestaoDeclinacaoLabel_nivelQuestao}" for="nivelQuestao" />
+                        <p:selectOneMenu id="nivelQuestao" value="#{questaoDeclinacaoController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoDeclinacaoRequiredMessage_nivelQuestao}">
+                            <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
+                                           var="nivelQuestaoItem"
+                                           itemValue="#{nivelQuestaoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateQuestaoDeclinacaoLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{questaoDeclinacaoController.selected.titulo}" title="#{bundle.CreateQuestaoDeclinacaoTitle_titulo}" />
+                        <p:outputLabel value="#{bundle.CreateQuestaoDeclinacaoLabel_enunciado}" for="enunciado" />
+                        <p:inputText id="enunciado" value="#{questaoDeclinacaoController.selected.enunciado}" title="#{bundle.CreateQuestaoDeclinacaoTitle_enunciado}" />
+                        <p:outputLabel value="#{bundle.CreateQuestaoDeclinacaoLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{questaoDeclinacaoController.selected.usuario}" title="#{bundle.CreateQuestaoDeclinacaoTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{questaoDeclinacaoController.create}" value="#{bundle.Save}" update="display,:QuestaoDeclinacaoListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestaoDeclinacaoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestaoDeclinacaoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

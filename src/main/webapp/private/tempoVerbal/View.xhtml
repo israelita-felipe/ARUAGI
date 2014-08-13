@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TempoVerbalViewDlg" widgetVar="TempoVerbalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTempoVerbalTitle}">
+            <h:form id="TempoVerbalViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tempoVerbalController.selected != null}">
+                        <h:outputText value="#{bundle.ViewTempoVerbalLabel_id}"/>
+                        <h:outputText value="#{tempoVerbalController.selected.id}" title="#{bundle.ViewTempoVerbalTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewTempoVerbalLabel_descricao}"/>
+                        <h:outputText value="#{tempoVerbalController.selected.descricao}" title="#{bundle.ViewTempoVerbalTitle_descricao}"/>
+                        <h:outputText value="#{bundle.ViewTempoVerbalLabel_usuario}"/>
+                        <h:outputText value="#{tempoVerbalController.selected.usuario}" title="#{bundle.ViewTempoVerbalTitle_usuario}"/>
+                        <h:outputText value="#{bundle.ViewTempoVerbalLabel_status}"/>
+                        <p:selectBooleanCheckbox value="#{tempoVerbalController.selected.status}" disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="TempoVerbalViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

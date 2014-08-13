@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AtividadeQuestaoEditDlg" widgetVar="AtividadeQuestaoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditAtividadeQuestaoTitle}">
+            <h:form id="AtividadeQuestaoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{atividadeQuestaoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditAtividadeQuestaoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{atividadeQuestaoController.selected.id}" title="#{bundle.EditAtividadeQuestaoTitle_id}" required="true" requiredMessage="#{bundle.EditAtividadeQuestaoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditAtividadeQuestaoLabel_tipoQuestao}" for="tipoQuestao" />
+                        <p:selectOneMenu id="tipoQuestao" value="#{atividadeQuestaoController.selected.tipoQuestao}" required="true" requiredMessage="#{bundle.EditAtividadeQuestaoRequiredMessage_tipoQuestao}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoQuestaoController.itemsAvailableSelectOne}"
+                                           var="tipoQuestaoItem"
+                                           itemValue="#{tipoQuestaoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditAtividadeQuestaoLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{atividadeQuestaoController.selected.titulo}" title="#{bundle.EditAtividadeQuestaoTitle_titulo}" />
+                        <p:outputLabel value="#{bundle.EditAtividadeQuestaoLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{atividadeQuestaoController.selected.usuario}" title="#{bundle.EditAtividadeQuestaoTitle_usuario}" />
+                        <p:outputLabel value="#{bundle.EditAtividadeQuestaoLabel_descricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{atividadeQuestaoController.selected.descricao}" title="#{bundle.EditAtividadeQuestaoTitle_descricao}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{atividadeQuestaoController.update}" value="#{bundle.Save}" update="display,:AtividadeQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AtividadeQuestaoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AtividadeQuestaoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

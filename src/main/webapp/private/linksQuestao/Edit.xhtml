@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LinksQuestaoEditDlg" widgetVar="LinksQuestaoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditLinksQuestaoTitle}">
+            <h:form id="LinksQuestaoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{linksQuestaoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditLinksQuestaoLabel_listaQuestao}" for="listaQuestao" />
+                        <p:selectOneMenu id="listaQuestao" value="#{linksQuestaoController.selected.listaQuestao}" required="true" requiredMessage="#{bundle.EditLinksQuestaoRequiredMessage_listaQuestao}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{listaQuestaoController.itemsAvailableSelectOne}"
+                                           var="listaQuestaoItem"
+                                           itemValue="#{listaQuestaoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditLinksQuestaoLabel_postagem}" for="postagem" />
+                        <p:selectOneMenu id="postagem" value="#{linksQuestaoController.selected.postagem}" required="true" requiredMessage="#{bundle.EditLinksQuestaoRequiredMessage_postagem}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{postagemController.itemsAvailableSelectOne}"
+                                           var="postagemItem"
+                                           itemValue="#{postagemItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditLinksQuestaoLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{linksQuestaoController.selected.usuario}" title="#{bundle.EditLinksQuestaoTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{linksQuestaoController.update}" value="#{bundle.Save}" update="display,:LinksQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'LinksQuestaoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="LinksQuestaoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

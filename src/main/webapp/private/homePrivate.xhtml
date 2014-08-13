@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <!-- SCRIPT DE REQUISICAO DO FACEBOOK -->
+        <script>
+            fb_root(document, 'script', 'facebook-jssdk');
+        </script>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north">
+                <h:form id="menuForm">
+                    <p:menubar>
+                        <p:menuitem value="HOME" outcome="/index" icon="ui-icon-home"/>
+                        <p:submenu label="MANUTENÇÃO">
+                            <p:menuitem value="Acesso" outcome="./acesso/List.xhtml" />
+                            <p:menuitem value="AplicacaoFrase" outcome="./aplicacaoFrase/List.xhtml" />
+                            <p:menuitem value="AtividadeQuestao" outcome="./atividadeQuestao/List.xhtml" />
+                            <p:menuitem value="Caso" outcome="./caso/List.xhtml" />
+                            <p:menuitem value="CasoAplicado" outcome="./casoAplicado/List.xhtml" />
+                            <p:menuitem value="ClassificacaoGramatical" outcome="./classificacaoGramatical/List.xhtml" />
+                            <p:menuitem value="Declinacao" outcome="./declinacao/List.xhtml" />
+                            <p:menuitem value="DeclinacaoAplicada" outcome="./declinacaoAplicada/List.xhtml" />
+                            <p:menuitem value="FraseLatim" outcome="./fraseLatim/List.xhtml" />
+                            <p:menuitem value="FrasePortugues" outcome="./frasePortugues/List.xhtml" />
+                            <p:menuitem value="IndicadorPessoaGramatical" outcome="./indicadorPessoaGramatical/List.xhtml" />
+                            <p:menuitem value="IndicadorTempoVerbal" outcome="./indicadorTempoVerbal/List.xhtml" />
+                            <p:menuitem value="Lacuna" outcome="./lacuna/List.xhtml" />
+                            <p:menuitem value="LinksQuestao" outcome="./linksQuestao/List.xhtml" />
+                            <p:menuitem value="ListaQuestao" outcome="./listaQuestao/List.xhtml" />
+                            <p:menuitem value="NivelAcesso" outcome="./nivelAcesso/List.xhtml" />
+                            <p:menuitem value="NivelQuestao" outcome="./nivelQuestao/List.xhtml" />
+                            <p:menuitem value="PalavraLatim" outcome="./palavraLatim/List.xhtml" />
+                            <p:menuitem value="PalavraPortugues" outcome="./palavraPortugues/List.xhtml" />
+                            <p:menuitem value="PalavrasClassificadas" outcome="./palavrasClassificadas/List.xhtml" />
+                            <p:menuitem value="PalavrasDeclinadas" outcome="./palavrasDeclinadas/List.xhtml" />
+                            <p:menuitem value="PessoaGramatical" outcome="./pessoaGramatical/List.xhtml" />
+                            <p:menuitem value="Postagem" outcome="./postagem/List.xhtml" />
+                            <p:menuitem value="QuestaoDeclinacao" outcome="./questaoDeclinacao/List.xhtml" />
+                            <p:menuitem value="QuestaoGramatical" outcome="./questaoGramatical/List.xhtml" />
+                            <p:menuitem value="QuestaoLacuna" outcome="./questaoLacuna/List.xhtml" />
+                            <p:menuitem value="QuestaoTraduzFrase" outcome="./questaoTraduzFrase/List.xhtml" />
+                            <p:menuitem value="QuestaoTraduzPalavra" outcome="./questaoTraduzPalavra/List.xhtml" />
+                            <p:menuitem value="Radical" outcome="./radical/List.xhtml" />
+                            <p:menuitem value="TempoVerbal" outcome="./tempoVerbal/List.xhtml" />
+                            <p:menuitem value="TipoQuestao" outcome="./tipoQuestao/List.xhtml" />
+                            <p:menuitem value="TraduzFrase" outcome="./traduzFrase/List.xhtml" />
+                            <p:menuitem value="TraduzPalavra" outcome="./traduzPalavra/List.xhtml" />
+                            <p:menuitem value="Usuario" outcome="./usuario/List.xhtml" />
+                            <p:menuitem value="Videos" outcome="./videos/List.xhtml" />
+                            <p:menuitem value="VideosPostagem" outcome="./videosPostagem/List.xhtml" />
+                        </p:submenu>
+                    </p:menubar>
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <h:form id="campoPostagem">
+                    <p:panel toggleable="true" header="Sua postagem">
+                        <center>
+                            <p:inputText id="titulo" value="#{postagemController.selected.titulo}" placeholder="Digite o título de sua postagem" required="true"/>
+                        </center>
+                        <p:separator/>
+
+                        <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton actionListener="#{postagemController.create()}" value="#{bundle.Salvar}" update="titulo,conteudo,:postagens:datagrid"/>                    
+                            <p:commandButton actionListener="#{postagemController.prepareCreate()}" value="#{bundle.AcaoCancelar}" update="titulo,conteudo"/>                    
+                        </f:facet>
+                    </p:panel>
+                </h:form>
+                <h:form id="postagens">
+                    <p:dataGrid id="datagrid"  value="#{postagemController.timeLine}" var="itemAtual" columns="1" emptyMessage="Nenhuma postagem adicionada" paginator="true" rows="20">
+                        <p:panel header="#{itemAtual.titulo}" toggleable="true" toggleTitle="Detalhes" collapsed="true">
+                            <h:outputText value="#{itemAtual.conteudo}" escape="false"/>
+                            <p:dataGrid value="#{itemAtual.videosPostagems}" var="videosAtuais" emptyMessage="Nenhum vídeos para esta postagem" columns="1" paginator="true" rows="1">
+                                <p:panel footer="#{videosAtuais.videos.descricao}">
+                                    <center>
+                                        <p:media value="#{videosAtuais.videos.link}" width="600" height="400" player="flash"/>                                      
+                                    </center>
+                                </p:panel>
+                            </p:dataGrid>                
+                            <f:facet name="actions">  
+                                <h:outputFormat value="#{itemAtual.data}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputFormat>                        
+                            </f:facet>   
+
+                            <f:facet name="footer" rendered="#{itemAtual.usuario!= usuarioSessionController.selected.id}">
+
+                                <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome}"/>
+                                <p:outputLabel value=" | "/>
+                                <p:commandLink value="Excluir" action="#{postagemController.destroy()}"  update="datagrid">
+                                    <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
+                                </p:commandLink>
+                                <p:outputLabel value=" | "/>
+                                <p:commandLink value="Editar"  update=":campoPostagem:titulo,:campoPostagem:conteudo,datagrid">
+                                    <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
+                                </p:commandLink>
+
+                            </f:facet>
+                        </p:panel>                                 
+                    </p:dataGrid>                                    
+                </h:form>        
+                <!-- COMENTARIOS DO FACEBOOK                     -->
+                <div class="fb-comments" align="center"
+                     data-href="https://www.facebook.com/FacebookDevelopers"
+                     data-numposts="10"
+                     data-colorscheme="light"
+                     title="Comentários do facebook"
+                     /> 
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+

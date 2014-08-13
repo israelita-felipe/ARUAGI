@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FrasePortuguesEditDlg" widgetVar="FrasePortuguesEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditFrasePortuguesTitle}">
+            <h:form id="FrasePortuguesEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{frasePortuguesController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditFrasePortuguesLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{frasePortuguesController.selected.id}" title="#{bundle.EditFrasePortuguesTitle_id}" required="true" requiredMessage="#{bundle.EditFrasePortuguesRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditFrasePortuguesLabel_frase}" for="frase" />
+                        <p:inputText id="frase" value="#{frasePortuguesController.selected.frase}" title="#{bundle.EditFrasePortuguesTitle_frase}" required="true" requiredMessage="#{bundle.EditFrasePortuguesRequiredMessage_frase}"/>
+                        <p:outputLabel value="#{bundle.EditFrasePortuguesLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{frasePortuguesController.selected.usuario}" title="#{bundle.EditFrasePortuguesTitle_usuario}" />
+                        <p:outputLabel value="#{bundle.EditFrasePortuguesLabel_status}" for="status" />
+                        <p:selectBooleanCheckbox id="status" value="#{frasePortuguesController.selected.status}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{frasePortuguesController.update}" value="#{bundle.Save}" update="display,:FrasePortuguesListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FrasePortuguesEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="FrasePortuguesEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

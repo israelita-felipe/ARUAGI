@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuestaoGramaticalViewDlg" widgetVar="QuestaoGramaticalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewQuestaoGramaticalTitle}">
+            <h:form id="QuestaoGramaticalViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{questaoGramaticalController.selected != null}">
+                        <h:outputText value="#{bundle.ViewQuestaoGramaticalLabel_id}"/>
+                        <h:outputText value="#{questaoGramaticalController.selected.id}" title="#{bundle.ViewQuestaoGramaticalTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoGramaticalLabel_pessoaGramatical}"/>
+                        <h:outputText value="#{questaoGramaticalController.selected.pessoaGramatical}" title="#{bundle.ViewQuestaoGramaticalTitle_pessoaGramatical}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoGramaticalLabel_tempoVerbal}"/>
+                        <h:outputText value="#{questaoGramaticalController.selected.tempoVerbal}" title="#{bundle.ViewQuestaoGramaticalTitle_tempoVerbal}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoGramaticalLabel_palavraLatim}"/>
+                        <h:outputText value="#{questaoGramaticalController.selected.palavraLatim}" title="#{bundle.ViewQuestaoGramaticalTitle_palavraLatim}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoGramaticalLabel_nivelQuestao}"/>
+                        <h:outputText value="#{questaoGramaticalController.selected.nivelQuestao}" title="#{bundle.ViewQuestaoGramaticalTitle_nivelQuestao}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoGramaticalLabel_enunciado}"/>
+                        <h:outputText value="#{questaoGramaticalController.selected.enunciado}" title="#{bundle.ViewQuestaoGramaticalTitle_enunciado}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoGramaticalLabel_titulo}"/>
+                        <h:outputText value="#{questaoGramaticalController.selected.titulo}" title="#{bundle.ViewQuestaoGramaticalTitle_titulo}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoGramaticalLabel_usuario}"/>
+                        <h:outputText value="#{questaoGramaticalController.selected.usuario}" title="#{bundle.ViewQuestaoGramaticalTitle_usuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="QuestaoGramaticalViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

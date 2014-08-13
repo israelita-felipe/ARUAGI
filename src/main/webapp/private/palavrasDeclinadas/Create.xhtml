@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PalavrasDeclinadasCreateDlg" widgetVar="PalavrasDeclinadasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePalavrasDeclinadasTitle}">
+            <h:form id="PalavrasDeclinadasCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{palavrasDeclinadasController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePalavrasDeclinadasLabel_palavraLatimByPalavraDeclinada}" for="palavraLatimByPalavraDeclinada" />
+                        <p:selectOneMenu id="palavraLatimByPalavraDeclinada" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraDeclinada}" required="true" requiredMessage="#{bundle.EditPalavrasDeclinadasRequiredMessage_palavraLatimByPalavraDeclinada}">
+                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
+                                           var="palavraLatimByPalavraDeclinadaItem"
+                                           itemValue="#{palavraLatimByPalavraDeclinadaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePalavrasDeclinadasLabel_palavraLatimByPalavraLatim}" for="palavraLatimByPalavraLatim" />
+                        <p:selectOneMenu id="palavraLatimByPalavraLatim" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraLatim}" required="true" requiredMessage="#{bundle.EditPalavrasDeclinadasRequiredMessage_palavraLatimByPalavraLatim}">
+                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
+                                           var="palavraLatimByPalavraLatimItem"
+                                           itemValue="#{palavraLatimByPalavraLatimItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePalavrasDeclinadasLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{palavrasDeclinadasController.selected.usuario}" title="#{bundle.CreatePalavrasDeclinadasTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{palavrasDeclinadasController.create}" value="#{bundle.Save}" update="display,:PalavrasDeclinadasListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavrasDeclinadasCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PalavrasDeclinadasCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

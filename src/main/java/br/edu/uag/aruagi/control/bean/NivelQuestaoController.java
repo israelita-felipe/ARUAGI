@@ -1,0 +1,163 @@
+package br.edu.uag.aruagi.control.bean;
+
+import br.edu.uag.aruagi.model.Facade.NivelQuestaoFacade;
+import br.edu.uag.aruagi.model.NivelQuestao;
+import br.edu.uag.aruagi.model.controller.util.JsfUtil;
+import br.edu.uag.aruagi.model.controller.util.JsfUtil.PersistAction;
+import java.io.Serializable;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJBException;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
+
+public class NivelQuestaoController implements Serializable {
+
+    private NivelQuestaoFacade facade = new NivelQuestaoFacade();
+    private List<NivelQuestao> items = null;
+    private NivelQuestao selected;
+
+    public NivelQuestaoController() {
+    }
+
+    public NivelQuestao getSelected() {
+        return selected;
+    }
+
+    public void setSelected(NivelQuestao selected) {
+        this.selected = selected;
+    }
+
+    protected void setEmbeddableKeys() {
+    }
+
+    protected void initializeEmbeddableKey() {
+    }
+
+    private NivelQuestaoFacade getFacade() {
+        return facade;
+    }
+
+    public NivelQuestao prepareCreate() {
+        selected = new NivelQuestao();
+        initializeEmbeddableKey();
+        return selected;
+    }
+
+    public void create() {
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NivelQuestaoCreated"));
+        if (!JsfUtil.isValidationFailed()) {
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    public void update() {
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("NivelQuestaoUpdated"));
+    }
+
+    public void destroy() {
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NivelQuestaoDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    public List<NivelQuestao> getItems() {
+        getFacade().begin();
+        items = getFacade().findAll();
+        getFacade().end();
+        return items;
+    }
+
+    private void persist(PersistAction persistAction, String successMessage) {
+        getFacade().begin();
+        if (selected != null) {
+            setEmbeddableKeys();
+            try {
+                if (persistAction != PersistAction.DELETE) {
+                    getFacade().edit(selected);
+                } else {
+                    getFacade().remove(selected);
+                }
+                JsfUtil.addSuccessMessage(successMessage);
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            }
+        }
+        getFacade().end();
+    }
+
+    public NivelQuestao getNivelQuestao(int id) {
+        getFacade().begin();
+        NivelQuestao nq = getFacade().find(id);
+        getFacade().end();
+        return nq;
+    }
+
+    public List<NivelQuestao> getItemsAvailableSelectMany() {
+        return getItems();
+    }
+
+    public List<NivelQuestao> getItemsAvailableSelectOne() {
+        return getItems();
+    }
+
+    @FacesConverter(forClass = NivelQuestao.class)
+    public static class NivelQuestaoControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            NivelQuestaoController controller = (NivelQuestaoController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "nivelQuestaoController");
+            return controller.getNivelQuestao(getKey(value));
+        }
+
+        int getKey(String value) {
+            int key;
+            key = Integer.parseInt(value);
+            return key;
+        }
+
+        String getStringKey(int value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof NivelQuestao) {
+                NivelQuestao o = (NivelQuestao) object;
+                return getStringKey(o.getId());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), NivelQuestao.class.getName()});
+                return null;
+            }
+        }
+
+    }
+
+}

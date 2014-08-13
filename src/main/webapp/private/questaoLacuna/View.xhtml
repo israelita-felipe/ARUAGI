@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuestaoLacunaViewDlg" widgetVar="QuestaoLacunaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewQuestaoLacunaTitle}">
+            <h:form id="QuestaoLacunaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{questaoLacunaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_id}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.id}" title="#{bundle.ViewQuestaoLacunaTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_fraseLatim}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.fraseLatim}" title="#{bundle.ViewQuestaoLacunaTitle_fraseLatim}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_nivelQuestao}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.nivelQuestao}" title="#{bundle.ViewQuestaoLacunaTitle_nivelQuestao}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_titulo}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.titulo}" title="#{bundle.ViewQuestaoLacunaTitle_titulo}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_enunciado}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.enunciado}" title="#{bundle.ViewQuestaoLacunaTitle_enunciado}"/>
+                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_usuario}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.usuario}" title="#{bundle.ViewQuestaoLacunaTitle_usuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="QuestaoLacunaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

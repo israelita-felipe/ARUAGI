@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RadicalCreateDlg" widgetVar="RadicalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRadicalTitle}">
+            <h:form id="RadicalCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{radicalController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateRadicalLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{radicalController.selected.id}" title="#{bundle.CreateRadicalTitle_id}" required="true" requiredMessage="#{bundle.CreateRadicalRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateRadicalLabel_pessoaGramatical}" for="pessoaGramatical" />
+                        <p:selectOneMenu id="pessoaGramatical" value="#{radicalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.EditRadicalRequiredMessage_pessoaGramatical}">
+                            <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"
+                                           var="pessoaGramaticalItem"
+                                           itemValue="#{pessoaGramaticalItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRadicalLabel_tempoVerbal}" for="tempoVerbal" />
+                        <p:selectOneMenu id="tempoVerbal" value="#{radicalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.EditRadicalRequiredMessage_tempoVerbal}">
+                            <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"
+                                           var="tempoVerbalItem"
+                                           itemValue="#{tempoVerbalItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRadicalLabel_palavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" value="#{radicalController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditRadicalRequiredMessage_palavraLatim}">
+                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
+                                           var="palavraLatimItem"
+                                           itemValue="#{palavraLatimItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRadicalLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{radicalController.selected.usuario}" title="#{bundle.CreateRadicalTitle_usuario}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{radicalController.create}" value="#{bundle.Save}" update="display,:RadicalListForm:datalist,:growl" oncomplete="handleSubmit(args,'RadicalCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RadicalCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
