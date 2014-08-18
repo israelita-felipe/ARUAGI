@@ -58,7 +58,7 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_latim", nullable = false)
     public PalavraLatim getPalavraLatim() {
         return this.palavraLatim;
@@ -68,7 +68,7 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
         this.palavraLatim = palavraLatim;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nivel", nullable = false)
     public NivelQuestao getNivelQuestao() {
         return this.nivelQuestao;

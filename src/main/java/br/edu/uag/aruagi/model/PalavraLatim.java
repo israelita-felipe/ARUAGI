@@ -201,11 +201,11 @@ public class PalavraLatim implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + this.id;
-        hash = 67 * hash + (this.palavra != null ? this.palavra.hashCode() : 0);
-        hash = 67 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
-        hash = 67 * hash + (this.status != null ? this.status.hashCode() : 0);
+        int hash = 3;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + (this.palavra != null ? this.palavra.hashCode() : 0);
+        hash = 97 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 97 * hash + (this.status != null ? this.status.hashCode() : 0);
         return hash;
     }
 
@@ -232,10 +232,4 @@ public class PalavraLatim implements java.io.Serializable {
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return String.valueOf(getId());
-    }
-
 }

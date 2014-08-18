@@ -12,19 +12,18 @@
             <h:form id="PessoaGramaticalCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pessoaGramaticalController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{pessoaGramaticalController.selected.id}" title="#{bundle.CreatePessoaGramaticalTitle_id}" required="true" requiredMessage="#{bundle.CreatePessoaGramaticalRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{pessoaGramaticalController.selected.descricao}" title="#{bundle.CreatePessoaGramaticalTitle_descricao}" required="true" requiredMessage="#{bundle.CreatePessoaGramaticalRequiredMessage_descricao}"/>
+
                         <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_flexao}" for="flexao" />
-                        <p:inputText id="flexao" value="#{pessoaGramaticalController.selected.flexao}" title="#{bundle.CreatePessoaGramaticalTitle_flexao}" required="true" requiredMessage="#{bundle.CreatePessoaGramaticalRequiredMessage_flexao}"/>
-                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{pessoaGramaticalController.selected.usuario}" title="#{bundle.CreatePessoaGramaticalTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{pessoaGramaticalController.selected.status}" />
+                        <p:selectOneMenu id="flexao" value="#{pessoaGramaticalController.selected.flexao}" required="true" requiredMessage="#{bundle.CreatePessoaGramaticalRequiredMessage_flexao}">
+                            <f:selectItem itemLabel="Singular" itemValue="Singular"/>
+                            <f:selectItem itemLabel="Plural" itemValue="Plural"/>
+                        </p:selectOneMenu>
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{pessoaGramaticalController.create}" value="#{bundle.Save}" update="display,:PessoaGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args,'PessoaGramaticalCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PessoaGramaticalCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

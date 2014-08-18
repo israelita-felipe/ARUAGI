@@ -12,23 +12,25 @@
             <h:form id="TraduzFraseCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{traduzFraseController.selected != null}">
+
                         <p:outputLabel value="#{bundle.CreateTraduzFraseLabel_fraseLatim}" for="fraseLatim" />
                         <p:selectOneMenu id="fraseLatim" value="#{traduzFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.EditTraduzFraseRequiredMessage_fraseLatim}">
                             <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
                                            var="fraseLatimItem"
+                                           itemLabel="#{fraseLatimItem.frase}"
                                            itemValue="#{fraseLatimItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.CreateTraduzFraseLabel_frasePortugues}" for="frasePortugues" />
                         <p:selectOneMenu id="frasePortugues" value="#{traduzFraseController.selected.frasePortugues}" required="true" requiredMessage="#{bundle.EditTraduzFraseRequiredMessage_frasePortugues}">
                             <f:selectItems value="#{frasePortuguesController.itemsAvailableSelectOne}"
                                            var="frasePortuguesItem"
+                                           itemLabel="#{frasePortuguesItem.frase}"
                                            itemValue="#{frasePortuguesItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateTraduzFraseLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{traduzFraseController.selected.usuario}" title="#{bundle.CreateTraduzFraseTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{traduzFraseController.create}" value="#{bundle.Save}" update="display,:TraduzFraseListForm:datalist,:growl" oncomplete="handleSubmit(args,'TraduzFraseCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="TraduzFraseCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

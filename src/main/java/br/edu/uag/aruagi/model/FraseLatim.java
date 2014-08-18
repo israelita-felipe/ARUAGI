@@ -122,4 +122,38 @@ public class FraseLatim implements java.io.Serializable {
         this.questaoLacunas = questaoLacunas;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + this.id;
+        hash = 31 * hash + (this.frase != null ? this.frase.hashCode() : 0);
+        hash = 31 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 31 * hash + (this.status != null ? this.status.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FraseLatim other = (FraseLatim) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if ((this.frase == null) ? (other.frase != null) : !this.frase.equals(other.frase)) {
+            return false;
+        }
+        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
+            return false;
+        }
+        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
+            return false;
+        }
+        return true;
+    }
+
 }

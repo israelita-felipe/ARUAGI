@@ -24,6 +24,8 @@ public class Radical implements java.io.Serializable {
     private TempoVerbal tempoVerbal;
     private PalavraLatim palavraLatim;
     private Integer usuario;
+    private String radical;
+    private Boolean status;
 
     public Radical() {
     }
@@ -54,7 +56,7 @@ public class Radical implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pessoa_gramatical", nullable = false)
     public PessoaGramatical getPessoaGramatical() {
         return this.pessoaGramatical;
@@ -64,7 +66,7 @@ public class Radical implements java.io.Serializable {
         this.pessoaGramatical = pessoaGramatical;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tempo_verbal", nullable = false)
     public TempoVerbal getTempoVerbal() {
         return this.tempoVerbal;
@@ -74,7 +76,7 @@ public class Radical implements java.io.Serializable {
         this.tempoVerbal = tempoVerbal;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_latim", nullable = false)
     public PalavraLatim getPalavraLatim() {
         return this.palavraLatim;
@@ -93,14 +95,34 @@ public class Radical implements java.io.Serializable {
         this.usuario = usuario;
     }
 
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+
+    @Column(name = "radical")
+    public String getRadical() {
+        return radical;
+    }
+
+    public void setRadical(String radical) {
+        this.radical = radical;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 61 * hash + this.id;
-        hash = 61 * hash + (this.pessoaGramatical != null ? this.pessoaGramatical.hashCode() : 0);
-        hash = 61 * hash + (this.tempoVerbal != null ? this.tempoVerbal.hashCode() : 0);
-        hash = 61 * hash + (this.palavraLatim != null ? this.palavraLatim.hashCode() : 0);
-        hash = 61 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        int hash = 7;
+        hash = 79 * hash + this.id;
+        hash = 79 * hash + (this.pessoaGramatical != null ? this.pessoaGramatical.hashCode() : 0);
+        hash = 79 * hash + (this.tempoVerbal != null ? this.tempoVerbal.hashCode() : 0);
+        hash = 79 * hash + (this.palavraLatim != null ? this.palavraLatim.hashCode() : 0);
+        hash = 79 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 79 * hash + (this.radical != null ? this.radical.hashCode() : 0);
+        hash = 79 * hash + (this.status != null ? this.status.hashCode() : 0);
         return hash;
     }
 
@@ -128,7 +150,12 @@ public class Radical implements java.io.Serializable {
         if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
             return false;
         }
+        if ((this.radical == null) ? (other.radical != null) : !this.radical.equals(other.radical)) {
+            return false;
+        }
+        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
+            return false;
+        }
         return true;
-    }
-
+    }    
 }

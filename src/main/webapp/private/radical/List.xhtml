@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -29,39 +29,51 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListRadicalTitle_id}"/>
+                                <h:outputText value="Radical"/>
                             </f:facet>
-                            <h:outputText value="#{item.id}"/>
+                            <h:outputText value="#{item.radical}"/>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRadicalTitle_pessoaGramatical}"/>
                             </f:facet>
-                            <h:outputText value="#{item.pessoaGramatical}"/>
+                            <h:outputText value="#{item.pessoaGramatical.descricao}"/>
                         </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPessoaGramaticalTitle_flexao}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.pessoaGramatical.flexao}"/>
+                        </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRadicalTitle_tempoVerbal}"/>
                             </f:facet>
-                            <h:outputText value="#{item.tempoVerbal}"/>
+                            <h:outputText value="#{item.tempoVerbal.descricao}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRadicalTitle_palavraLatim}"/>
                             </f:facet>
-                            <h:outputText value="#{item.palavraLatim}"/>
+                            <h:outputText value="#{item.palavraLatim.palavra}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRadicalTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{radicalController.prepareCreate}" update=":RadicalCreateForm" oncomplete="PF('RadicalCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RadicalViewForm" oncomplete="PF('RadicalViewDialog').show()" disabled="#{empty radicalController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RadicalEditForm" oncomplete="PF('RadicalEditDialog').show()" disabled="#{empty radicalController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{radicalController.destroy}" update=":growl,datalist" disabled="#{empty radicalController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RadicalEditForm" oncomplete="PF('RadicalEditDialog').show()" disabled="#{empty radicalController.selected || radicalController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{radicalController.destroy}" update=":growl,datalist" disabled="#{empty radicalController.selected || radicalController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

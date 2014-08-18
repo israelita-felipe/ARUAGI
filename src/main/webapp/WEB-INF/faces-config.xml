@@ -204,6 +204,11 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
+        <managed-bean-name>questaoTraduzPalavraController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.bean.QuestaoTraduzPalavraController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
         <managed-bean-name>radicalController</managed-bean-name>
         <managed-bean-class>br.edu.uag.aruagi.control.bean.RadicalController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>

@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -31,13 +31,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListIndicadorTempoVerbalTitle_pessoaGramatical}"/>
                             </f:facet>
-                            <h:outputText value="#{item.pessoaGramatical}"/>
+                            <h:outputText value="#{item.pessoaGramatical.id}ª pessoa do #{item.pessoaGramatical.flexao}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListIndicadorTempoVerbalTitle_tempoVerbal}"/>
                             </f:facet>
-                            <h:outputText value="#{item.tempoVerbal}"/>
+                            <h:outputText value="#{item.tempoVerbal.descricao}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -49,13 +49,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListIndicadorTempoVerbalTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{indicadorTempoVerbalController.prepareCreate}" update=":IndicadorTempoVerbalCreateForm" oncomplete="PF('IndicadorTempoVerbalCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":IndicadorTempoVerbalViewForm" oncomplete="PF('IndicadorTempoVerbalViewDialog').show()" disabled="#{empty indicadorTempoVerbalController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":IndicadorTempoVerbalEditForm" oncomplete="PF('IndicadorTempoVerbalEditDialog').show()" disabled="#{empty indicadorTempoVerbalController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{indicadorTempoVerbalController.destroy}" update=":growl,datalist" disabled="#{empty indicadorTempoVerbalController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":IndicadorTempoVerbalEditForm" oncomplete="PF('IndicadorTempoVerbalEditDialog').show()" disabled="#{empty indicadorTempoVerbalController.selected || indicadorTempoVerbalController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{indicadorTempoVerbalController.destroy}" update=":growl,datalist" disabled="#{empty indicadorTempoVerbalController.selected || indicadorTempoVerbalController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

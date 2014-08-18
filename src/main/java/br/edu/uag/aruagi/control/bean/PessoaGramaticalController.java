@@ -16,7 +16,7 @@ import javax.faces.convert.FacesConverter;
 
 public class PessoaGramaticalController implements Serializable {
     
-    private PessoaGramaticalFacade facade = new PessoaGramaticalFacade();
+    private final PessoaGramaticalFacade facade = new PessoaGramaticalFacade();
     private List<PessoaGramatical> items = null;
     private PessoaGramatical selected;
     

@@ -12,29 +12,31 @@
             <h:form id="QuestaoTraduzPalavraCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{questaoTraduzPalavraController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{questaoTraduzPalavraController.selected.id}" title="#{bundle.CreateQuestaoTraduzPalavraTitle_id}" required="true" requiredMessage="#{bundle.CreateQuestaoTraduzPalavraRequiredMessage_id}"/>
+
+                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.CreateQuestaoTraduzPalavraTitle_titulo}" />
+
+                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_enunciado}" for="enunciado" />
+                        <p:editor id="enunciado" value="#{questaoTraduzPalavraController.selected.enunciado}" required="true"/>
+
                         <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_palavraLatim}" for="palavraLatim" />
                         <p:selectOneMenu id="palavraLatim" value="#{questaoTraduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditQuestaoTraduzPalavraRequiredMessage_palavraLatim}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
+                                           itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_nivelQuestao}" for="nivelQuestao" />
                         <p:selectOneMenu id="nivelQuestao" value="#{questaoTraduzPalavraController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoTraduzPalavraRequiredMessage_nivelQuestao}">
                             <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
                                            var="nivelQuestaoItem"
+                                           itemLabel="#{nivelQuestaoItem.descricao}"
                                            itemValue="#{nivelQuestaoItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_titulo}" for="titulo" />
-                        <p:inputText id="titulo" value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.CreateQuestaoTraduzPalavraTitle_titulo}" />
-                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_enunciado}" for="enunciado" />
-                        <p:inputText id="enunciado" value="#{questaoTraduzPalavraController.selected.enunciado}" title="#{bundle.CreateQuestaoTraduzPalavraTitle_enunciado}" />
-                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{questaoTraduzPalavraController.selected.usuario}" title="#{bundle.CreateQuestaoTraduzPalavraTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{questaoTraduzPalavraController.create}" value="#{bundle.Save}" update="display,:QuestaoTraduzPalavraListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestaoTraduzPalavraCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestaoTraduzPalavraCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

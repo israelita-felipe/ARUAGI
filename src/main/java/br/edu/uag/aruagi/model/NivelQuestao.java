@@ -85,7 +85,7 @@ public class NivelQuestao implements java.io.Serializable {
         this.usuario = usuario;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nivelQuestao", targetEntity = QuestaoTraduzPalavra.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "nivelQuestao", targetEntity = QuestaoTraduzPalavra.class)
     public Set getQuestaoTraduzPalavras() {
         return this.questaoTraduzPalavras;
     }
@@ -94,7 +94,7 @@ public class NivelQuestao implements java.io.Serializable {
         this.questaoTraduzPalavras = questaoTraduzPalavras;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nivelQuestao", targetEntity = QuestaoGramatical.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "nivelQuestao", targetEntity = QuestaoGramatical.class)
     public Set getQuestaoGramaticals() {
         return this.questaoGramaticals;
     }
@@ -103,7 +103,7 @@ public class NivelQuestao implements java.io.Serializable {
         this.questaoGramaticals = questaoGramaticals;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nivelQuestao", targetEntity = QuestaoTraduzFrase.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "nivelQuestao", targetEntity = QuestaoTraduzFrase.class)
     public Set getQuestaoTraduzFrases() {
         return this.questaoTraduzFrases;
     }
@@ -112,7 +112,7 @@ public class NivelQuestao implements java.io.Serializable {
         this.questaoTraduzFrases = questaoTraduzFrases;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nivelQuestao", targetEntity = QuestaoLacuna.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "nivelQuestao", targetEntity = QuestaoLacuna.class)
     public Set getQuestaoLacunas() {
         return this.questaoLacunas;
     }
@@ -121,7 +121,7 @@ public class NivelQuestao implements java.io.Serializable {
         this.questaoLacunas = questaoLacunas;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nivelQuestao", targetEntity = QuestaoDeclinacao.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "nivelQuestao", targetEntity = QuestaoDeclinacao.class)
     public Set getQuestaoDeclinacaos() {
         return this.questaoDeclinacaos;
     }

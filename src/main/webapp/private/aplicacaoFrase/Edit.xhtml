@@ -12,27 +12,25 @@
             <h:form id="AplicacaoFraseEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{aplicacaoFraseController.selected != null}">
+
                         <p:outputLabel value="#{bundle.EditAplicacaoFraseLabel_fraseLatim}" for="fraseLatim" />
                         <p:selectOneMenu id="fraseLatim" value="#{aplicacaoFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.EditAplicacaoFraseRequiredMessage_fraseLatim}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
                                            var="fraseLatimItem"
+                                           itemLabel="#{fraseLatimItem.frase}"
                                            itemValue="#{fraseLatimItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.EditAplicacaoFraseLabel_palavraLatim}" for="palavraLatim" />
                         <p:selectOneMenu id="palavraLatim" value="#{aplicacaoFraseController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditAplicacaoFraseRequiredMessage_palavraLatim}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
+                                           itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditAplicacaoFraseLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{aplicacaoFraseController.selected.usuario}" title="#{bundle.EditAplicacaoFraseTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.EditAplicacaoFraseLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{aplicacaoFraseController.selected.status}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{aplicacaoFraseController.update}" value="#{bundle.Save}" update="display,:AplicacaoFraseListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AplicacaoFraseEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="AplicacaoFraseEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

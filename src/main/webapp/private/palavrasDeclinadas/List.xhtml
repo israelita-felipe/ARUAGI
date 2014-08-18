@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -31,25 +31,25 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPalavrasDeclinadasTitle_palavraLatimByPalavraDeclinada}"/>
                             </f:facet>
-                            <h:outputText value="#{item.palavraLatimByPalavraDeclinada}"/>
+                            <h:outputText value="#{item.palavraLatimByPalavraDeclinada.palavra}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPalavrasDeclinadasTitle_palavraLatimByPalavraLatim}"/>
                             </f:facet>
-                            <h:outputText value="#{item.palavraLatimByPalavraLatim}"/>
+                            <h:outputText value="#{item.palavraLatimByPalavraLatim.palavra}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPalavrasDeclinadasTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{palavrasDeclinadasController.prepareCreate}" update=":PalavrasDeclinadasCreateForm" oncomplete="PF('PalavrasDeclinadasCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PalavrasDeclinadasViewForm" oncomplete="PF('PalavrasDeclinadasViewDialog').show()" disabled="#{empty palavrasDeclinadasController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PalavrasDeclinadasEditForm" oncomplete="PF('PalavrasDeclinadasEditDialog').show()" disabled="#{empty palavrasDeclinadasController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{palavrasDeclinadasController.destroy}" update=":growl,datalist" disabled="#{empty palavrasDeclinadasController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PalavrasDeclinadasEditForm" oncomplete="PF('PalavrasDeclinadasEditDialog').show()" disabled="#{empty palavrasDeclinadasController.selected || palavrasDeclinadasController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{palavrasDeclinadasController.destroy}" update=":growl,datalist" disabled="#{empty palavrasDeclinadasController.selected || palavrasDeclinadasController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

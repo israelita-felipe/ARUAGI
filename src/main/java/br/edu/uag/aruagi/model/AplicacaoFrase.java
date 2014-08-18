@@ -18,22 +18,22 @@ import javax.persistence.Table;
 @Table(name = "aplicacao_frase", schema = "public"
 )
 public class AplicacaoFrase implements java.io.Serializable {
-
+    
     private AplicacaoFraseId id;
     private FraseLatim fraseLatim;
     private PalavraLatim palavraLatim;
     private Integer usuario;
     private Boolean status;
-
+    
     public AplicacaoFrase() {
     }
-
+    
     public AplicacaoFrase(AplicacaoFraseId id, FraseLatim fraseLatim, PalavraLatim palavraLatim) {
         this.id = id;
         this.fraseLatim = fraseLatim;
         this.palavraLatim = palavraLatim;
     }
-
+    
     public AplicacaoFrase(AplicacaoFraseId id, FraseLatim fraseLatim, PalavraLatim palavraLatim, Integer usuario, Boolean status) {
         this.id = id;
         this.fraseLatim = fraseLatim;
@@ -41,7 +41,7 @@ public class AplicacaoFrase implements java.io.Serializable {
         this.usuario = usuario;
         this.status = status;
     }
-
+    
     @EmbeddedId
     @AttributeOverrides({
         @AttributeOverride(name = "palavraLatim", column = @Column(name = "palavra_latim", nullable = false)),
@@ -49,49 +49,51 @@ public class AplicacaoFrase implements java.io.Serializable {
     public AplicacaoFraseId getId() {
         return this.id;
     }
-
+    
     public void setId(AplicacaoFraseId id) {
         this.id = id;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "frase_latim", nullable = false, insertable = false, updatable = false)
     public FraseLatim getFraseLatim() {
         return this.fraseLatim;
     }
-
+    
     public void setFraseLatim(FraseLatim fraseLatim) {
+        this.id.setFraseLatim(fraseLatim.getId());
         this.fraseLatim = fraseLatim;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_latim", nullable = false, insertable = false, updatable = false)
     public PalavraLatim getPalavraLatim() {
         return this.palavraLatim;
     }
-
+    
     public void setPalavraLatim(PalavraLatim palavraLatim) {
+        this.id.setPalavraLatim(palavraLatim.getId());
         this.palavraLatim = palavraLatim;
     }
-
+    
     @Column(name = "usuario")
     public Integer getUsuario() {
         return this.usuario;
     }
-
+    
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
-
+    
     @Column(name = "status")
     public Boolean getStatus() {
         return this.status;
     }
-
+    
     public void setStatus(Boolean status) {
         this.status = status;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -102,7 +104,7 @@ public class AplicacaoFrase implements java.io.Serializable {
         hash = 37 * hash + (this.status != null ? this.status.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -129,5 +131,5 @@ public class AplicacaoFrase implements java.io.Serializable {
         }
         return true;
     }
-
+    
 }

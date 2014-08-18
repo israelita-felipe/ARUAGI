@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -50,6 +52,7 @@ public class PessoaGramatical implements java.io.Serializable {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;
@@ -95,7 +98,7 @@ public class PessoaGramatical implements java.io.Serializable {
         this.status = status;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoaGramatical", targetEntity = IndicadorTempoVerbal.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pessoaGramatical", targetEntity = IndicadorTempoVerbal.class)
     public Set getIndicadorTempoVerbals() {
         return this.indicadorTempoVerbals;
     }
@@ -104,7 +107,7 @@ public class PessoaGramatical implements java.io.Serializable {
         this.indicadorTempoVerbals = indicadorTempoVerbals;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoaGramatical", targetEntity = IndicadorPessoaGramatical.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pessoaGramatical", targetEntity = IndicadorPessoaGramatical.class)
     public Set getIndicadorPessoaGramaticals() {
         return this.indicadorPessoaGramaticals;
     }
@@ -113,7 +116,7 @@ public class PessoaGramatical implements java.io.Serializable {
         this.indicadorPessoaGramaticals = indicadorPessoaGramaticals;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoaGramatical", targetEntity = Radical.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pessoaGramatical", targetEntity = Radical.class)
     public Set getRadicals() {
         return this.radicals;
     }
@@ -122,7 +125,7 @@ public class PessoaGramatical implements java.io.Serializable {
         this.radicals = radicals;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoaGramatical", targetEntity = QuestaoGramatical.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pessoaGramatical", targetEntity = QuestaoGramatical.class)
     public Set getQuestaoGramaticals() {
         return this.questaoGramaticals;
     }

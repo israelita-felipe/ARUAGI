@@ -12,27 +12,28 @@
             <h:form id="IndicadorTempoVerbalEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{indicadorTempoVerbalController.selected != null}">
+                       
                         <p:outputLabel value="#{bundle.EditIndicadorTempoVerbalLabel_pessoaGramatical}" for="pessoaGramatical" />
                         <p:selectOneMenu id="pessoaGramatical" value="#{indicadorTempoVerbalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.EditIndicadorTempoVerbalRequiredMessage_pessoaGramatical}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"
                                            var="pessoaGramaticalItem"
+                                           itemLabel="#{pessoaGramaticalItem.id}ª pessoa - #{pessoaGramaticalItem.flexao}"
                                            itemValue="#{pessoaGramaticalItem}"/>
                         </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{bundle.EditIndicadorTempoVerbalLabel_tempoVerbal}" for="tempoVerbal" />
                         <p:selectOneMenu id="tempoVerbal" value="#{indicadorTempoVerbalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.EditIndicadorTempoVerbalRequiredMessage_tempoVerbal}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"
                                            var="tempoVerbalItem"
+                                           itemLabel="#{tempoVerbalItem.descricao}"
                                            itemValue="#{tempoVerbalItem}"/>
                         </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{bundle.EditIndicadorTempoVerbalLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{indicadorTempoVerbalController.selected.descricao}" title="#{bundle.EditIndicadorTempoVerbalTitle_descricao}" required="true" requiredMessage="#{bundle.EditIndicadorTempoVerbalRequiredMessage_descricao}"/>
-                        <p:outputLabel value="#{bundle.EditIndicadorTempoVerbalLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{indicadorTempoVerbalController.selected.usuario}" title="#{bundle.EditIndicadorTempoVerbalTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{indicadorTempoVerbalController.update}" value="#{bundle.Save}" update="display,:IndicadorTempoVerbalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'IndicadorTempoVerbalEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="IndicadorTempoVerbalEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -10,57 +10,56 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 public class PalavrasClassificadasController implements Serializable {
-
+    
     private PalavrasClassificadasFacade facade = new PalavrasClassificadasFacade();
     private List<PalavrasClassificadas> items = null;
     private PalavrasClassificadas selected;
-
+    
     public PalavrasClassificadasController() {
     }
-
+    
     public PalavrasClassificadas getSelected() {
         return selected;
     }
-
+    
     public void setSelected(PalavrasClassificadas selected) {
         this.selected = selected;
     }
-
+    
     protected void setEmbeddableKeys() {
     }
-
+    
     protected void initializeEmbeddableKey() {
         selected.setId(new PalavrasClassificadasId());
     }
-
+    
     private PalavrasClassificadasFacade getFacade() {
         return facade;
     }
-
+    
     public PalavrasClassificadas prepareCreate() {
         selected = new PalavrasClassificadas();
         initializeEmbeddableKey();
         return selected;
     }
-
+    
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PalavrasClassificadasCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-
+    
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PalavrasClassificadasUpdated"));
     }
-
+    
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PalavrasClassificadasDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -68,36 +67,29 @@ public class PalavrasClassificadasController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-
+    
     public List<PalavrasClassificadas> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
         getFacade().end();
         return items;
     }
-
+    
     private void persist(PersistAction persistAction, String successMessage) {
         getFacade().begin();
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction == PersistAction.CREATE) {
+                    getSelected().setStatus(Boolean.TRUE);
+                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
+                    getFacade().create(selected);
+                } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -105,28 +97,28 @@ public class PalavrasClassificadasController implements Serializable {
         }
         getFacade().end();
     }
-
+    
     public PalavrasClassificadas getPalavrasClassificadas(PalavrasClassificadasId id) {
         getFacade().begin();
         PalavrasClassificadas pc = getFacade().find(id);
         getFacade().end();
         return pc;
     }
-
+    
     public List<PalavrasClassificadas> getItemsAvailableSelectMany() {
         return getItems();
     }
-
+    
     public List<PalavrasClassificadas> getItemsAvailableSelectOne() {
         return getItems();
     }
-
+    
     @FacesConverter(forClass = PalavrasClassificadas.class)
     public static class PalavrasClassificadasControllerConverter implements Converter {
-
+        
         private static final String SEPARATOR = "#";
         private static final String SEPARATOR_ESCAPED = "\\#";
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -136,7 +128,7 @@ public class PalavrasClassificadasController implements Serializable {
                     getValue(facesContext.getELContext(), null, "palavrasClassificadasController");
             return controller.getPalavrasClassificadas(getKey(value));
         }
-
+        
         PalavrasClassificadasId getKey(String value) {
             PalavrasClassificadasId key;
             String values[] = value.split(SEPARATOR_ESCAPED);
@@ -145,7 +137,7 @@ public class PalavrasClassificadasController implements Serializable {
             key.setClassificacao(Integer.parseInt(values[1]));
             return key;
         }
-
+        
         String getStringKey(PalavrasClassificadasId value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value.getPalavraLatim());
@@ -153,7 +145,7 @@ public class PalavrasClassificadasController implements Serializable {
             sb.append(value.getClassificacao());
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -167,7 +159,7 @@ public class PalavrasClassificadasController implements Serializable {
                 return null;
             }
         }
-
+        
     }
-
+    
 }

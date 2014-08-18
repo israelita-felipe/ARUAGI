@@ -18,28 +18,29 @@ import javax.persistence.Table;
 @Table(name = "traduz_frase", schema = "public"
 )
 public class TraduzFrase implements java.io.Serializable {
-
+    
     private TraduzFraseId id;
     private FraseLatim fraseLatim;
     private FrasePortugues frasePortugues;
     private Integer usuario;
-
+    private Boolean status;
+    
     public TraduzFrase() {
     }
-
+    
     public TraduzFrase(TraduzFraseId id, FraseLatim fraseLatim, FrasePortugues frasePortugues) {
         this.id = id;
         this.fraseLatim = fraseLatim;
         this.frasePortugues = frasePortugues;
     }
-
+    
     public TraduzFrase(TraduzFraseId id, FraseLatim fraseLatim, FrasePortugues frasePortugues, Integer usuario) {
         this.id = id;
         this.fraseLatim = fraseLatim;
         this.frasePortugues = frasePortugues;
         this.usuario = usuario;
     }
-
+    
     @EmbeddedId
     @AttributeOverrides({
         @AttributeOverride(name = "fraseLatim", column = @Column(name = "frase_latim", nullable = false)),
@@ -47,40 +48,51 @@ public class TraduzFrase implements java.io.Serializable {
     public TraduzFraseId getId() {
         return this.id;
     }
-
+    
     public void setId(TraduzFraseId id) {
         this.id = id;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "frase_latim", nullable = false, insertable = false, updatable = false)
     public FraseLatim getFraseLatim() {
         return this.fraseLatim;
     }
-
+    
     public void setFraseLatim(FraseLatim fraseLatim) {
+        this.id.setFraseLatim(fraseLatim.getId());
         this.fraseLatim = fraseLatim;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "frase_portugues", nullable = false, insertable = false, updatable = false)
     public FrasePortugues getFrasePortugues() {
         return this.frasePortugues;
     }
-
+    
     public void setFrasePortugues(FrasePortugues frasePortugues) {
+        this.id.setFrasePortugues(frasePortugues.getId());
         this.frasePortugues = frasePortugues;
     }
-
+    
     @Column(name = "usuario")
     public Integer getUsuario() {
         return this.usuario;
     }
-
+    
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
-
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -90,7 +102,7 @@ public class TraduzFrase implements java.io.Serializable {
         hash = 37 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -114,5 +126,5 @@ public class TraduzFrase implements java.io.Serializable {
         }
         return true;
     }
-
+    
 }

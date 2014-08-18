@@ -12,25 +12,25 @@
             <h:form id="PalavrasClassificadasEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{palavrasClassificadasController.selected != null}">
+
                         <p:outputLabel value="#{bundle.EditPalavrasClassificadasLabel_palavraLatim}" for="palavraLatim" />
                         <p:selectOneMenu id="palavraLatim" value="#{palavrasClassificadasController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditPalavrasClassificadasRequiredMessage_palavraLatim}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
+                                           itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.EditPalavrasClassificadasLabel_classificacaoGramatical}" for="classificacaoGramatical" />
                         <p:selectOneMenu id="classificacaoGramatical" value="#{palavrasClassificadasController.selected.classificacaoGramatical}" required="true" requiredMessage="#{bundle.EditPalavrasClassificadasRequiredMessage_classificacaoGramatical}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{classificacaoGramaticalController.itemsAvailableSelectOne}"
                                            var="classificacaoGramaticalItem"
+                                           itemLabel="#{classificacaoGramaticalItem.nome}"
                                            itemValue="#{classificacaoGramaticalItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditPalavrasClassificadasLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{palavrasClassificadasController.selected.usuario}" title="#{bundle.EditPalavrasClassificadasTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{palavrasClassificadasController.update}" value="#{bundle.Save}" update="display,:PalavrasClassificadasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PalavrasClassificadasEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PalavrasClassificadasEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

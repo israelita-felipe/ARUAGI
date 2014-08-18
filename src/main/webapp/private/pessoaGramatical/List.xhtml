@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -29,12 +29,6 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPessoaGramaticalTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPessoaGramaticalTitle_descricao}"/>
                             </f:facet>
                             <h:outputText value="#{item.descricao}"/>
@@ -49,19 +43,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPessoaGramaticalTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPessoaGramaticalTitle_status}"/>
-                            </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pessoaGramaticalController.prepareCreate}" update=":PessoaGramaticalCreateForm" oncomplete="PF('PessoaGramaticalCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PessoaGramaticalViewForm" oncomplete="PF('PessoaGramaticalViewDialog').show()" disabled="#{empty pessoaGramaticalController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PessoaGramaticalEditForm" oncomplete="PF('PessoaGramaticalEditDialog').show()" disabled="#{empty pessoaGramaticalController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{pessoaGramaticalController.destroy}" update=":growl,datalist" disabled="#{empty pessoaGramaticalController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PessoaGramaticalEditForm" oncomplete="PF('PessoaGramaticalEditDialog').show()" disabled="#{empty pessoaGramaticalController.selected || pessoaGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{pessoaGramaticalController.destroy}" update=":growl,datalist" disabled="#{empty pessoaGramaticalController.selected || pessoaGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

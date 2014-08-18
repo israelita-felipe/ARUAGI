@@ -21,11 +21,10 @@
                         <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_titulo}"/>
                         <h:outputText value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_titulo}"/>
                         <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_enunciado}"/>
-                        <h:outputText value="#{questaoTraduzPalavraController.selected.enunciado}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_enunciado}"/>
+                        <p:editor value="#{questaoTraduzPalavraController.selected.enunciado}" disabled="true" controls="" width="600"/>
                         <h:outputText value="#{bundle.ViewQuestaoTraduzPalavraLabel_usuario}"/>
                         <h:outputText value="#{questaoTraduzPalavraController.selected.usuario}" title="#{bundle.ViewQuestaoTraduzPalavraTitle_usuario}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="QuestaoTraduzPalavraViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

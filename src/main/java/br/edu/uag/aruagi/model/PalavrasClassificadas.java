@@ -18,28 +18,29 @@ import javax.persistence.Table;
 @Table(name = "palavras_classificadas", schema = "public"
 )
 public class PalavrasClassificadas implements java.io.Serializable {
-
+    
     private PalavrasClassificadasId id;
     private PalavraLatim palavraLatim;
     private ClassificacaoGramatical classificacaoGramatical;
     private Integer usuario;
-
+    private Boolean status;
+    
     public PalavrasClassificadas() {
     }
-
+    
     public PalavrasClassificadas(PalavrasClassificadasId id, PalavraLatim palavraLatim, ClassificacaoGramatical classificacaoGramatical) {
         this.id = id;
         this.palavraLatim = palavraLatim;
         this.classificacaoGramatical = classificacaoGramatical;
     }
-
+    
     public PalavrasClassificadas(PalavrasClassificadasId id, PalavraLatim palavraLatim, ClassificacaoGramatical classificacaoGramatical, Integer usuario) {
         this.id = id;
         this.palavraLatim = palavraLatim;
         this.classificacaoGramatical = classificacaoGramatical;
         this.usuario = usuario;
     }
-
+    
     @EmbeddedId
     @AttributeOverrides({
         @AttributeOverride(name = "palavraLatim", column = @Column(name = "palavra_latim", nullable = false)),
@@ -47,40 +48,51 @@ public class PalavrasClassificadas implements java.io.Serializable {
     public PalavrasClassificadasId getId() {
         return this.id;
     }
-
+    
     public void setId(PalavrasClassificadasId id) {
         this.id = id;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_latim", nullable = false, insertable = false, updatable = false)
     public PalavraLatim getPalavraLatim() {
         return this.palavraLatim;
     }
-
+    
     public void setPalavraLatim(PalavraLatim palavraLatim) {
+        this.id.setPalavraLatim(palavraLatim.getId());
         this.palavraLatim = palavraLatim;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "classificacao", nullable = false, insertable = false, updatable = false)
     public ClassificacaoGramatical getClassificacaoGramatical() {
         return this.classificacaoGramatical;
     }
-
+    
     public void setClassificacaoGramatical(ClassificacaoGramatical classificacaoGramatical) {
+        this.id.setClassificacao(classificacaoGramatical.getId());
         this.classificacaoGramatical = classificacaoGramatical;
     }
-
+    
     @Column(name = "usuario")
     public Integer getUsuario() {
         return this.usuario;
     }
-
+    
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
-
+    
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -90,7 +102,7 @@ public class PalavrasClassificadas implements java.io.Serializable {
         hash = 97 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -114,5 +126,5 @@ public class PalavrasClassificadas implements java.io.Serializable {
         }
         return true;
     }
-
+    
 }

@@ -31,31 +31,28 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAplicacaoFraseTitle_fraseLatim}"/>
                             </f:facet>
-                            <h:outputText value="#{item.fraseLatim}"/>
+                            <h:outputText value="#{item.fraseLatim.frase}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAplicacaoFraseTitle_palavraLatim}"/>
                             </f:facet>
-                            <h:outputText value="#{item.palavraLatim}"/>
+                            <h:outputText value="#{item.palavraLatim.palavra}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAplicacaoFraseTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAplicacaoFraseTitle_status}"/>
-                            </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
-                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{aplicacaoFraseController.prepareCreate}" update=":AplicacaoFraseCreateForm" oncomplete="PF('AplicacaoFraseCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AplicacaoFraseViewForm" oncomplete="PF('AplicacaoFraseViewDialog').show()" disabled="#{empty aplicacaoFraseController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AplicacaoFraseEditForm" oncomplete="PF('AplicacaoFraseEditDialog').show()" disabled="#{empty aplicacaoFraseController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{aplicacaoFraseController.destroy}" update=":growl,datalist" disabled="#{empty aplicacaoFraseController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AplicacaoFraseEditForm" oncomplete="PF('AplicacaoFraseEditDialog').show()" disabled="#{empty aplicacaoFraseController.selected || aplicacaoFraseController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{aplicacaoFraseController.destroy}" update=":growl,datalist" disabled="#{empty aplicacaoFraseController.selected || aplicacaoFraseController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

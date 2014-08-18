@@ -18,7 +18,7 @@ import javax.faces.convert.FacesConverter;
 
 public class AplicacaoFraseController implements Serializable {
 
-    private AplicacaoFraseFacade facade = new AplicacaoFraseFacade();
+    private final AplicacaoFraseFacade facade = new AplicacaoFraseFacade();
     private List<AplicacaoFrase> items = null;
     private AplicacaoFrase selected;
 
@@ -70,9 +70,9 @@ public class AplicacaoFraseController implements Serializable {
     }
 
     public List<AplicacaoFrase> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+        getFacade().begin();
+        items = getFacade().findAll();
+        getFacade().end();
         return items;
     }
 
@@ -81,13 +81,17 @@ public class AplicacaoFraseController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction == PersistAction.CREATE) {
+                    getSelected().setStatus(Boolean.TRUE);
+                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
+                    getFacade().create(selected);
+                } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
@@ -103,17 +107,11 @@ public class AplicacaoFraseController implements Serializable {
     }
 
     public List<AplicacaoFrase> getItemsAvailableSelectMany() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
+        return getItems();
     }
 
     public List<AplicacaoFrase> getItemsAvailableSelectOne() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
+        return getItems();
     }
 
     @FacesConverter(forClass = AplicacaoFrase.class)
