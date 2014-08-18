@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.QuestaoGramaticalFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.QuestaoGramatical;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class QuestaoGramaticalController implements Serializable {
+public class QuestaoGramaticalController implements Serializable, InterfaceController<QuestaoGramatical, Integer> {
 
-    private QuestaoGramaticalFacade facade = new QuestaoGramaticalFacade();
+    private final QuestaoGramaticalFacade facade = new QuestaoGramaticalFacade();
     private List<QuestaoGramatical> items = null;
     private QuestaoGramatical selected;
 
@@ -42,12 +43,14 @@ public class QuestaoGramaticalController implements Serializable {
         return facade;
     }
 
+    @Override
     public QuestaoGramatical prepareCreate() {
         selected = new QuestaoGramatical();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoGramaticalCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +58,12 @@ public class QuestaoGramaticalController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoGramaticalUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuestaoGramaticalDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,6 +72,7 @@ public class QuestaoGramaticalController implements Serializable {
         }
     }
 
+    @Override
     public List<QuestaoGramatical> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -111,10 +117,12 @@ public class QuestaoGramaticalController implements Serializable {
         return qg;
     }
 
+    @Override
     public List<QuestaoGramatical> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<QuestaoGramatical> getItemsAvailableSelectOne() {
         return getItems();
     }

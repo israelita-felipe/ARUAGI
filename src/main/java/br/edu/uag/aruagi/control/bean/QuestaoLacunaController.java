@@ -1,6 +1,7 @@
 package ufrpe.uag.control;
 
 import br.edu.uag.aruagi.control.Facade.QuestaoLacunaFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.QuestaoLacuna;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class QuestaoLacunaController implements Serializable {
+public class QuestaoLacunaController implements Serializable, InterfaceController<QuestaoLacuna, Integer> {
 
-    private QuestaoLacunaFacade facade = new QuestaoLacunaFacade();
+    private final QuestaoLacunaFacade facade = new QuestaoLacunaFacade();
     private List<QuestaoLacuna> items = null;
     private QuestaoLacuna selected;
 
@@ -42,12 +43,14 @@ public class QuestaoLacunaController implements Serializable {
         return facade;
     }
 
+    @Override
     public QuestaoLacuna prepareCreate() {
         selected = new QuestaoLacuna();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoLacunaCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +58,12 @@ public class QuestaoLacunaController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoLacunaUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuestaoLacunaDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,6 +72,7 @@ public class QuestaoLacunaController implements Serializable {
         }
     }
 
+    @Override
     public List<QuestaoLacuna> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -111,10 +117,12 @@ public class QuestaoLacunaController implements Serializable {
         return ql;
     }
 
+    @Override
     public List<QuestaoLacuna> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<QuestaoLacuna> getItemsAvailableSelectOne() {
         return getItems();
     }

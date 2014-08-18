@@ -3,6 +3,7 @@ package br.edu.uag.aruagi.control.bean;
 import br.edu.uag.aruagi.model.CasoAplicado;
 import br.edu.uag.aruagi.model.CasoAplicadoId;
 import br.edu.uag.aruagi.control.Facade.CasoAplicadoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class CasoAplicadoController implements Serializable {
+public class CasoAplicadoController implements Serializable, InterfaceController<CasoAplicado, CasoAplicadoId> {
 
     private final CasoAplicadoFacade facade = new CasoAplicadoFacade();
     private List<CasoAplicado> items = null;
@@ -43,12 +44,14 @@ public class CasoAplicadoController implements Serializable {
         return facade;
     }
 
+    @Override
     public CasoAplicado prepareCreate() {
         selected = new CasoAplicado();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CasoAplicadoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -56,10 +59,12 @@ public class CasoAplicadoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CasoAplicadoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("CasoAplicadoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -68,6 +73,7 @@ public class CasoAplicadoController implements Serializable {
         }
     }
 
+    @Override
     public List<CasoAplicado> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -105,10 +111,12 @@ public class CasoAplicadoController implements Serializable {
         return ca;
     }
 
+    @Override
     public List<CasoAplicado> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<CasoAplicado> getItemsAvailableSelectOne() {
         return getItems();
     }

@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.PalavraLatimFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.PalavraLatim;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -14,9 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class PalavraLatimController implements Serializable {
+public class PalavraLatimController implements Serializable, InterfaceController<PalavraLatim, Integer> {
 
-    private PalavraLatimFacade facade = new PalavraLatimFacade();
+    private final PalavraLatimFacade facade = new PalavraLatimFacade();
     private List<PalavraLatim> items = null;
     private PalavraLatim selected;
 
@@ -41,12 +42,14 @@ public class PalavraLatimController implements Serializable {
         return facade;
     }
 
+    @Override
     public PalavraLatim prepareCreate() {
         selected = new PalavraLatim();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PalavraLatimCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class PalavraLatimController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PalavraLatimUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PalavraLatimDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class PalavraLatimController implements Serializable {
         }
     }
 
+    @Override
     public List<PalavraLatim> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class PalavraLatimController implements Serializable {
         return pl;
     }
 
+    @Override
     public List<PalavraLatim> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<PalavraLatim> getItemsAvailableSelectOne() {
         return getItems();
     }

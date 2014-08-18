@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.VideosFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.Videos;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class VideosController implements Serializable {
+public class VideosController implements Serializable, InterfaceController<Videos, Integer> {
 
-    private VideosFacade facade = new VideosFacade();
+    private final VideosFacade facade = new VideosFacade();
     private List<Videos> items = null;
     private Videos selected;
 
@@ -42,12 +43,14 @@ public class VideosController implements Serializable {
         return facade;
     }
 
+    @Override
     public Videos prepareCreate() {
         selected = new Videos();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("VideosCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +58,12 @@ public class VideosController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("VideosUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("VideosDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,6 +72,7 @@ public class VideosController implements Serializable {
         }
     }
 
+    @Override
     public List<Videos> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -85,17 +91,6 @@ public class VideosController implements Serializable {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -111,10 +106,12 @@ public class VideosController implements Serializable {
         return v;
     }
 
+    @Override
     public List<Videos> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<Videos> getItemsAvailableSelectOne() {
         return getItems();
     }

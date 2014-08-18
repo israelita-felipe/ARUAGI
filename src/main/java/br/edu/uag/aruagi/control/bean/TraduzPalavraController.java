@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.TraduzPalavraFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.TraduzPalavra;
 import br.edu.uag.aruagi.model.TraduzPalavraId;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
@@ -16,9 +17,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class TraduzPalavraController implements Serializable {
+public class TraduzPalavraController implements Serializable, InterfaceController<TraduzPalavra, TraduzPalavraId> {
 
-    private TraduzPalavraFacade facade = new TraduzPalavraFacade();
+    private final TraduzPalavraFacade facade = new TraduzPalavraFacade();
     private List<TraduzPalavra> items = null;
     private TraduzPalavra selected;
 
@@ -44,12 +45,14 @@ public class TraduzPalavraController implements Serializable {
         return facade;
     }
 
+    @Override
     public TraduzPalavra prepareCreate() {
         selected = new TraduzPalavra();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TraduzPalavraCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -57,10 +60,12 @@ public class TraduzPalavraController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TraduzPalavraUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TraduzPalavraDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -69,6 +74,7 @@ public class TraduzPalavraController implements Serializable {
         }
     }
 
+    @Override
     public List<TraduzPalavra> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -113,10 +119,12 @@ public class TraduzPalavraController implements Serializable {
         return tp;
     }
 
+    @Override
     public List<TraduzPalavra> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<TraduzPalavra> getItemsAvailableSelectOne() {
         return getItems();
     }

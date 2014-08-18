@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.QuestaoTraduzPalavraFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.QuestaoTraduzPalavra;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -14,7 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class QuestaoTraduzPalavraController implements Serializable {
+public class QuestaoTraduzPalavraController implements Serializable, InterfaceController<QuestaoTraduzPalavra, Integer> {
 
     private final QuestaoTraduzPalavraFacade facade = new QuestaoTraduzPalavraFacade();
     private List<QuestaoTraduzPalavra> items = null;
@@ -41,12 +42,14 @@ public class QuestaoTraduzPalavraController implements Serializable {
         return facade;
     }
 
+    @Override
     public QuestaoTraduzPalavra prepareCreate() {
         selected = new QuestaoTraduzPalavra();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoTraduzPalavraCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class QuestaoTraduzPalavraController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoTraduzPalavraUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuestaoTraduzPalavraDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class QuestaoTraduzPalavraController implements Serializable {
         }
     }
 
+    @Override
     public List<QuestaoTraduzPalavra> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class QuestaoTraduzPalavraController implements Serializable {
         return qtp;
     }
 
+    @Override
     public List<QuestaoTraduzPalavra> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<QuestaoTraduzPalavra> getItemsAvailableSelectOne() {
         return getItems();
     }

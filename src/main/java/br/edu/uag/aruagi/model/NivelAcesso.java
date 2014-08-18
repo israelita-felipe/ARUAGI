@@ -70,22 +70,13 @@ public class NivelAcesso implements java.io.Serializable {
         this.descricao = descricao;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", targetEntity = Usuario.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", targetEntity = Usuario.class)
     public Set getUsuariosForIncluidoPor() {
         return this.usuariosForIncluidoPor;
     }
 
     public void setUsuariosForIncluidoPor(Set usuariosForIncluidoPor) {
         this.usuariosForIncluidoPor = usuariosForIncluidoPor;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nivelAcessoByNivelAcesso", targetEntity = Usuario.class)
-    public Set getUsuariosForNivelAcesso() {
-        return this.usuariosForNivelAcesso;
-    }
-
-    public void setUsuariosForNivelAcesso(Set usuariosForNivelAcesso) {
-        this.usuariosForNivelAcesso = usuariosForNivelAcesso;
     }
 
     @Override

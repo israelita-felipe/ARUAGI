@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.LinksQuestaoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.LinksQuestao;
 import br.edu.uag.aruagi.model.LinksQuestaoId;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
@@ -16,9 +17,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class LinksQuestaoController implements Serializable {
+public class LinksQuestaoController implements Serializable, InterfaceController<LinksQuestao, LinksQuestaoId> {
 
-    private LinksQuestaoFacade facade = new LinksQuestaoFacade();
+    private final LinksQuestaoFacade facade = new LinksQuestaoFacade();
     private List<LinksQuestao> items = null;
     private LinksQuestao selected;
 
@@ -44,12 +45,14 @@ public class LinksQuestaoController implements Serializable {
         return facade;
     }
 
+    @Override
     public LinksQuestao prepareCreate() {
         selected = new LinksQuestao();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("LinksQuestaoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -57,10 +60,12 @@ public class LinksQuestaoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("LinksQuestaoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("LinksQuestaoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -69,6 +74,7 @@ public class LinksQuestaoController implements Serializable {
         }
     }
 
+    @Override
     public List<LinksQuestao> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -113,10 +119,12 @@ public class LinksQuestaoController implements Serializable {
         return lq;
     }
 
+    @Override
     public List<LinksQuestao> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<LinksQuestao> getItemsAvailableSelectOne() {
         return getItems();
     }

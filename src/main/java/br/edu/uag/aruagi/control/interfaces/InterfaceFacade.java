@@ -13,6 +13,8 @@ import org.hibernate.criterion.DetachedCriteria;
 /**
  *
  * @author Israel Araújo
+ * @param <T>
+ * @param <ID>
  */
 public interface InterfaceFacade<T, ID extends Serializable> {
 

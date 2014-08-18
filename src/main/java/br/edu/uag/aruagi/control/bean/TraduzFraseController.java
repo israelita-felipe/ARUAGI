@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.TraduzFraseFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.TraduzFrase;
 import br.edu.uag.aruagi.model.TraduzFraseId;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class TraduzFraseController implements Serializable {
+public class TraduzFraseController implements Serializable, InterfaceController<TraduzFrase, TraduzFraseId> {
 
-    private TraduzFraseFacade facade = new TraduzFraseFacade();
+    private final TraduzFraseFacade facade = new TraduzFraseFacade();
     private List<TraduzFrase> items = null;
     private TraduzFrase selected;
 
@@ -43,12 +44,14 @@ public class TraduzFraseController implements Serializable {
         return facade;
     }
 
+    @Override
     public TraduzFrase prepareCreate() {
         selected = new TraduzFrase();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TraduzFraseCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -56,10 +59,12 @@ public class TraduzFraseController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TraduzFraseUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TraduzFraseDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -68,6 +73,7 @@ public class TraduzFraseController implements Serializable {
         }
     }
 
+    @Override
     public List<TraduzFrase> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -105,10 +111,12 @@ public class TraduzFraseController implements Serializable {
         return tf;
     }
 
+    @Override
     public List<TraduzFrase> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<TraduzFrase> getItemsAvailableSelectOne() {
         return getItems();
     }

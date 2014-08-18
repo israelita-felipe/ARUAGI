@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.TipoQuestaoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.TipoQuestao;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class TipoQuestaoController implements Serializable {
+public class TipoQuestaoController implements Serializable, InterfaceController<TipoQuestao, Integer> {
 
-    private TipoQuestaoFacade facade = new TipoQuestaoFacade();
+    private final TipoQuestaoFacade facade = new TipoQuestaoFacade();
     private List<TipoQuestao> items = null;
     private TipoQuestao selected;
 
@@ -42,12 +43,14 @@ public class TipoQuestaoController implements Serializable {
         return facade;
     }
 
+    @Override
     public TipoQuestao prepareCreate() {
         selected = new TipoQuestao();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TipoQuestaoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +58,12 @@ public class TipoQuestaoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TipoQuestaoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TipoQuestaoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,6 +72,7 @@ public class TipoQuestaoController implements Serializable {
         }
     }
 
+    @Override
     public List<TipoQuestao> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -111,10 +117,12 @@ public class TipoQuestaoController implements Serializable {
         return tq;
     }
 
+    @Override
     public List<TipoQuestao> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<TipoQuestao> getItemsAvailableSelectOne() {
         return getItems();
     }

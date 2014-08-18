@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.PessoaGramaticalFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.PessoaGramatical;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -14,7 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class PessoaGramaticalController implements Serializable {
+public class PessoaGramaticalController implements Serializable, InterfaceController<PessoaGramatical, Integer> {
     
     private final PessoaGramaticalFacade facade = new PessoaGramaticalFacade();
     private List<PessoaGramatical> items = null;
@@ -41,12 +42,14 @@ public class PessoaGramaticalController implements Serializable {
         return facade;
     }
     
+    @Override
     public PessoaGramatical prepareCreate() {
         selected = new PessoaGramatical();
         initializeEmbeddableKey();
         return selected;
     }
     
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PessoaGramaticalCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class PessoaGramaticalController implements Serializable {
         }
     }
     
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PessoaGramaticalUpdated"));
     }
     
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PessoaGramaticalDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class PessoaGramaticalController implements Serializable {
         }
     }
     
+    @Override
     public List<PessoaGramatical> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class PessoaGramaticalController implements Serializable {
         return pg;
     }
     
+    @Override
     public List<PessoaGramatical> getItemsAvailableSelectMany() {
         return getItems();
     }
     
+    @Override
     public List<PessoaGramatical> getItemsAvailableSelectOne() {
         return getItems();
     }

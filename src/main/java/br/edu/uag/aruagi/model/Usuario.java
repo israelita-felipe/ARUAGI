@@ -1,9 +1,6 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
-import br.edu.uag.aruagi.control.util.cript.SHA256;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -26,8 +23,7 @@ public class Usuario implements java.io.Serializable {
 
     private int id;
     private Usuario usuario;
-    private NivelAcesso nivelAcessoByIncluidoPor;
-    private NivelAcesso nivelAcessoByNivelAcesso;
+    private NivelAcesso nivelAcesso;
     private String nome;
     private String senha;
     private String login;
@@ -38,21 +34,19 @@ public class Usuario implements java.io.Serializable {
     public Usuario() {
     }
 
-    public Usuario(int id, Usuario usuario, NivelAcesso nivelAcessoByIncluidoPor, NivelAcesso nivelAcessoByNivelAcesso, String nome, String senha, String login) {
+    public Usuario(int id, Usuario usuario, NivelAcesso nivelAcesso, String nome, String senha, String login) {
         this.id = id;
         this.usuario = usuario;
-        this.nivelAcessoByIncluidoPor = nivelAcessoByIncluidoPor;
-        this.nivelAcessoByNivelAcesso = nivelAcessoByNivelAcesso;
+        this.nivelAcesso = nivelAcesso;
         this.nome = nome;
         this.senha = senha;
         this.login = login;
     }
 
-    public Usuario(int id, Usuario usuario, NivelAcesso nivelAcessoByIncluidoPor, NivelAcesso nivelAcessoByNivelAcesso, String nome, String senha, String login, String observacoes, Boolean status, Set usuarios) {
+    public Usuario(int id, Usuario usuario, NivelAcesso nivelAcesso, String nome, String senha, String login, String observacoes, Boolean status, Set usuarios) {
         this.id = id;
         this.usuario = usuario;
-        this.nivelAcessoByIncluidoPor = nivelAcessoByIncluidoPor;
-        this.nivelAcessoByNivelAcesso = nivelAcessoByNivelAcesso;
+        this.nivelAcesso = nivelAcesso;
         this.nome = nome;
         this.senha = senha;
         this.login = login;
@@ -83,23 +77,13 @@ public class Usuario implements java.io.Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "incluido_por", nullable = false, insertable = false, updatable = false)
-    public NivelAcesso getNivelAcessoByIncluidoPor() {
-        return this.nivelAcessoByIncluidoPor;
-    }
-
-    public void setNivelAcessoByIncluidoPor(NivelAcesso nivelAcessoByIncluidoPor) {
-        this.nivelAcessoByIncluidoPor = nivelAcessoByIncluidoPor;
-    }
-
-    @ManyToOne
     @JoinColumn(name = "nivel_acesso", nullable = false)
-    public NivelAcesso getNivelAcessoByNivelAcesso() {
-        return this.nivelAcessoByNivelAcesso;
+    public NivelAcesso getNivelAcesso() {
+        return this.nivelAcesso;
     }
 
-    public void setNivelAcessoByNivelAcesso(NivelAcesso nivelAcessoByNivelAcesso) {
-        this.nivelAcessoByNivelAcesso = nivelAcessoByNivelAcesso;
+    public void setNivelAcesso(NivelAcesso nivelAcesso) {
+        this.nivelAcesso = nivelAcesso;
     }
 
     @Column(name = "nome", nullable = false)
@@ -116,11 +100,11 @@ public class Usuario implements java.io.Serializable {
         return this.senha;
     }
 
-    public void setSenha(String senha){
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    @Column(name = "login", nullable = false)
+    @Column(name = "login", nullable = false, unique = true)
     public String getLogin() {
         return this.login;
     }
@@ -158,16 +142,12 @@ public class Usuario implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 61 * hash + this.id;
-        hash = 61 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
-        hash = 61 * hash + (this.nivelAcessoByIncluidoPor != null ? this.nivelAcessoByIncluidoPor.hashCode() : 0);
-        hash = 61 * hash + (this.nivelAcessoByNivelAcesso != null ? this.nivelAcessoByNivelAcesso.hashCode() : 0);
-        hash = 61 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 61 * hash + (this.senha != null ? this.senha.hashCode() : 0);
-        hash = 61 * hash + (this.login != null ? this.login.hashCode() : 0);
-        hash = 61 * hash + (this.observacoes != null ? this.observacoes.hashCode() : 0);
-        hash = 61 * hash + (this.status != null ? this.status.hashCode() : 0);
+        int hash = 7;
+        hash = 13 * hash + this.id;
+        hash = 13 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 13 * hash + (this.senha != null ? this.senha.hashCode() : 0);
+        hash = 13 * hash + (this.login != null ? this.login.hashCode() : 0);
+        hash = 13 * hash + (this.observacoes != null ? this.observacoes.hashCode() : 0);
         return hash;
     }
 
@@ -183,15 +163,6 @@ public class Usuario implements java.io.Serializable {
         if (this.id != other.id) {
             return false;
         }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        if (this.nivelAcessoByIncluidoPor != other.nivelAcessoByIncluidoPor && (this.nivelAcessoByIncluidoPor == null || !this.nivelAcessoByIncluidoPor.equals(other.nivelAcessoByIncluidoPor))) {
-            return false;
-        }
-        if (this.nivelAcessoByNivelAcesso != other.nivelAcessoByNivelAcesso && (this.nivelAcessoByNivelAcesso == null || !this.nivelAcessoByNivelAcesso.equals(other.nivelAcessoByNivelAcesso))) {
-            return false;
-        }
         if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
             return false;
         }
@@ -204,10 +175,7 @@ public class Usuario implements java.io.Serializable {
         if ((this.observacoes == null) ? (other.observacoes != null) : !this.observacoes.equals(other.observacoes)) {
             return false;
         }
-        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
-            return false;
-        }
         return true;
     }
-
+   
 }

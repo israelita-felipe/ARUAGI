@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.FrasePortuguesFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.FrasePortugues;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -14,9 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class FrasePortuguesController implements Serializable {
+public class FrasePortuguesController implements Serializable, InterfaceController<FrasePortugues, Integer> {
 
-    private FrasePortuguesFacade facade = new FrasePortuguesFacade();
+    private final FrasePortuguesFacade facade = new FrasePortuguesFacade();
     private List<FrasePortugues> items = null;
     private FrasePortugues selected;
 
@@ -41,12 +42,14 @@ public class FrasePortuguesController implements Serializable {
         return facade;
     }
 
+    @Override
     public FrasePortugues prepareCreate() {
         selected = new FrasePortugues();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("FrasePortuguesCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class FrasePortuguesController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("FrasePortuguesUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("FrasePortuguesDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class FrasePortuguesController implements Serializable {
         }
     }
 
+    @Override
     public List<FrasePortugues> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class FrasePortuguesController implements Serializable {
         return fp;
     }
 
+    @Override
     public List<FrasePortugues> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<FrasePortugues> getItemsAvailableSelectOne() {
         return getItems();
     }

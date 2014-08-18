@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.LacunaFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.Lacuna;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class LacunaController implements Serializable {
+public class LacunaController implements Serializable, InterfaceController<Lacuna, Integer> {
 
-    private LacunaFacade facade = new LacunaFacade();
+    private final LacunaFacade facade = new LacunaFacade();
     private List<Lacuna> items = null;
     private Lacuna selected;
 
@@ -42,12 +43,14 @@ public class LacunaController implements Serializable {
         return facade;
     }
 
+    @Override
     public Lacuna prepareCreate() {
         selected = new Lacuna();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("LacunaCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +58,12 @@ public class LacunaController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("LacunaUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("LacunaDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,6 +72,7 @@ public class LacunaController implements Serializable {
         }
     }
 
+    @Override
     public List<Lacuna> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -111,10 +117,12 @@ public class LacunaController implements Serializable {
         return l;
     }
 
+    @Override
     public List<Lacuna> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<Lacuna> getItemsAvailableSelectOne() {
         return getItems();
     }

@@ -3,6 +3,7 @@ package br.edu.uag.aruagi.control.bean;
 import br.edu.uag.aruagi.model.AplicacaoFrase;
 import br.edu.uag.aruagi.model.AplicacaoFraseId;
 import br.edu.uag.aruagi.control.Facade.AplicacaoFraseFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 
@@ -16,7 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class AplicacaoFraseController implements Serializable {
+public class AplicacaoFraseController implements Serializable, InterfaceController<AplicacaoFrase, AplicacaoFraseId> {
 
     private final AplicacaoFraseFacade facade = new AplicacaoFraseFacade();
     private List<AplicacaoFrase> items = null;
@@ -44,12 +45,14 @@ public class AplicacaoFraseController implements Serializable {
         return facade;
     }
 
+    @Override
     public AplicacaoFrase prepareCreate() {
         selected = new AplicacaoFrase();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AplicacaoFraseCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -57,10 +60,12 @@ public class AplicacaoFraseController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AplicacaoFraseUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AplicacaoFraseDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -69,6 +74,7 @@ public class AplicacaoFraseController implements Serializable {
         }
     }
 
+    @Override
     public List<AplicacaoFrase> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -106,10 +112,12 @@ public class AplicacaoFraseController implements Serializable {
         return af;
     }
 
+    @Override
     public List<AplicacaoFrase> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<AplicacaoFrase> getItemsAvailableSelectOne() {
         return getItems();
     }

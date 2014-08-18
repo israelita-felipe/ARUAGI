@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.FraseLatimFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.FraseLatim;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -14,7 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class FraseLatimController implements Serializable {
+public class FraseLatimController implements Serializable, InterfaceController<FraseLatim, Integer> {
 
     private final FraseLatimFacade facade = new FraseLatimFacade();
     private List<FraseLatim> items = null;
@@ -41,12 +42,14 @@ public class FraseLatimController implements Serializable {
         return facade;
     }
 
+    @Override
     public FraseLatim prepareCreate() {
         selected = new FraseLatim();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("FraseLatimCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class FraseLatimController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("FraseLatimUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("FraseLatimDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class FraseLatimController implements Serializable {
         }
     }
 
+    @Override
     public List<FraseLatim> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class FraseLatimController implements Serializable {
         return fl;
     }
 
+    @Override
     public List<FraseLatim> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<FraseLatim> getItemsAvailableSelectOne() {
         return getItems();
     }

@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.NivelAcessoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.NivelAcesso;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -9,15 +10,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class NivelAcessoController implements Serializable {
+public class NivelAcessoController implements Serializable, InterfaceController<NivelAcesso, Integer> {
 
-    private NivelAcessoFacade facade = new NivelAcessoFacade();
+    private final NivelAcessoFacade facade = new NivelAcessoFacade();
     private List<NivelAcesso> items = null;
     private NivelAcesso selected;
 
@@ -42,12 +42,14 @@ public class NivelAcessoController implements Serializable {
         return facade;
     }
 
+    @Override
     public NivelAcesso prepareCreate() {
         selected = new NivelAcesso();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NivelAcessoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +57,12 @@ public class NivelAcessoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("NivelAcessoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NivelAcessoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,6 +71,7 @@ public class NivelAcessoController implements Serializable {
         }
     }
 
+    @Override
     public List<NivelAcesso> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -79,23 +84,14 @@ public class NivelAcessoController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if(persistAction == PersistAction.CREATE){
+                    getFacade().create(selected);
+                }else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -111,10 +107,12 @@ public class NivelAcessoController implements Serializable {
         return na;
     }
 
+    @Override
     public List<NivelAcesso> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<NivelAcesso> getItemsAvailableSelectOne() {
         return getItems();
     }

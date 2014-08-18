@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.QuestaoDeclinacaoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.QuestaoDeclinacao;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class QuestaoDeclinacaoController implements Serializable {
+public class QuestaoDeclinacaoController implements Serializable, InterfaceController<QuestaoDeclinacao, Integer> {
 
-    private QuestaoDeclinacaoFacade facade = new QuestaoDeclinacaoFacade();
+    private final QuestaoDeclinacaoFacade facade = new QuestaoDeclinacaoFacade();
     private List<QuestaoDeclinacao> items = null;
     private QuestaoDeclinacao selected;
 
@@ -42,12 +43,14 @@ public class QuestaoDeclinacaoController implements Serializable {
         return facade;
     }
 
+    @Override
     public QuestaoDeclinacao prepareCreate() {
         selected = new QuestaoDeclinacao();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoDeclinacaoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +58,12 @@ public class QuestaoDeclinacaoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoDeclinacaoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("QuestaoDeclinacaoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,6 +72,7 @@ public class QuestaoDeclinacaoController implements Serializable {
         }
     }
 
+    @Override
     public List<QuestaoDeclinacao> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -111,10 +117,12 @@ public class QuestaoDeclinacaoController implements Serializable {
         return qd;
     }
 
+    @Override
     public List<QuestaoDeclinacao> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<QuestaoDeclinacao> getItemsAvailableSelectOne() {
         return getItems();
     }

@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.PalavrasClassificadasFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.PalavrasClassificadas;
 import br.edu.uag.aruagi.model.PalavrasClassificadasId;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class PalavrasClassificadasController implements Serializable {
-    
-    private PalavrasClassificadasFacade facade = new PalavrasClassificadasFacade();
+public class PalavrasClassificadasController implements Serializable, InterfaceController<PalavrasClassificadas, PalavrasClassificadasId> {
+
+    private final PalavrasClassificadasFacade facade = new PalavrasClassificadasFacade();
     private List<PalavrasClassificadas> items = null;
     private PalavrasClassificadas selected;
     
@@ -43,12 +44,14 @@ public class PalavrasClassificadasController implements Serializable {
         return facade;
     }
     
+    @Override
     public PalavrasClassificadas prepareCreate() {
         selected = new PalavrasClassificadas();
         initializeEmbeddableKey();
         return selected;
     }
     
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PalavrasClassificadasCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -56,10 +59,12 @@ public class PalavrasClassificadasController implements Serializable {
         }
     }
     
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PalavrasClassificadasUpdated"));
     }
     
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PalavrasClassificadasDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -68,6 +73,7 @@ public class PalavrasClassificadasController implements Serializable {
         }
     }
     
+    @Override
     public List<PalavrasClassificadas> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -105,10 +111,12 @@ public class PalavrasClassificadasController implements Serializable {
         return pc;
     }
     
+    @Override
     public List<PalavrasClassificadas> getItemsAvailableSelectMany() {
         return getItems();
     }
     
+    @Override
     public List<PalavrasClassificadas> getItemsAvailableSelectOne() {
         return getItems();
     }

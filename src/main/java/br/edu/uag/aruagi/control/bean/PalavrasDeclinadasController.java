@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.PalavrasDeclinadasFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.PalavrasDeclinadas;
 import br.edu.uag.aruagi.model.PalavrasDeclinadasId;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
@@ -15,7 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class PalavrasDeclinadasController implements Serializable {
+public class PalavrasDeclinadasController implements Serializable, InterfaceController<PalavrasDeclinadas, PalavrasDeclinadasId> {
 
     private final PalavrasDeclinadasFacade facade = new PalavrasDeclinadasFacade();
     private List<PalavrasDeclinadas> items = null;
@@ -43,12 +44,14 @@ public class PalavrasDeclinadasController implements Serializable {
         return facade;
     }
 
+    @Override
     public PalavrasDeclinadas prepareCreate() {
         selected = new PalavrasDeclinadas();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PalavrasDeclinadasCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -56,10 +59,12 @@ public class PalavrasDeclinadasController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PalavrasDeclinadasUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PalavrasDeclinadasDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -68,6 +73,7 @@ public class PalavrasDeclinadasController implements Serializable {
         }
     }
 
+    @Override
     public List<PalavrasDeclinadas> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -105,10 +111,12 @@ public class PalavrasDeclinadasController implements Serializable {
         return pd;
     }
 
+    @Override
     public List<PalavrasDeclinadas> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<PalavrasDeclinadas> getItemsAvailableSelectOne() {
         return getItems();
     }

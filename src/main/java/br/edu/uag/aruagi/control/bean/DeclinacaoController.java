@@ -2,6 +2,7 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.Declinacao;
 import br.edu.uag.aruagi.control.Facade.DeclinacaoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
@@ -14,9 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class DeclinacaoController implements Serializable {
+public class DeclinacaoController implements Serializable, InterfaceController<Declinacao, Integer> {
 
-    private DeclinacaoFacade facade = new DeclinacaoFacade();
+    private final DeclinacaoFacade facade = new DeclinacaoFacade();
     private List<Declinacao> items = null;
     private Declinacao selected;
 
@@ -41,12 +42,14 @@ public class DeclinacaoController implements Serializable {
         return facade;
     }
 
+    @Override
     public Declinacao prepareCreate() {
         selected = new Declinacao();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DeclinacaoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class DeclinacaoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DeclinacaoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("DeclinacaoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class DeclinacaoController implements Serializable {
         }
     }
 
+    @Override
     public List<Declinacao> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class DeclinacaoController implements Serializable {
         return d;
     }
 
+    @Override
     public List<Declinacao> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<Declinacao> getItemsAvailableSelectOne() {
         return getItems();
     }

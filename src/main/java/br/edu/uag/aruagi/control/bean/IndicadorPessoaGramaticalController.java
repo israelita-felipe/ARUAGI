@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.IndicadorPessoaGramaticalFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.IndicadorPessoaGramatical;
 import br.edu.uag.aruagi.model.IndicadorPessoaGramaticalId;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
@@ -15,7 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class IndicadorPessoaGramaticalController implements Serializable {
+public class IndicadorPessoaGramaticalController implements Serializable, InterfaceController<IndicadorPessoaGramatical, IndicadorPessoaGramaticalId> {
 
     private final IndicadorPessoaGramaticalFacade facade = new IndicadorPessoaGramaticalFacade();
     private List<IndicadorPessoaGramatical> items = null;
@@ -43,12 +44,14 @@ public class IndicadorPessoaGramaticalController implements Serializable {
         return facade;
     }
 
+    @Override
     public IndicadorPessoaGramatical prepareCreate() {
         selected = new IndicadorPessoaGramatical();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("IndicadorPessoaGramaticalCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -56,10 +59,12 @@ public class IndicadorPessoaGramaticalController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("IndicadorPessoaGramaticalUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("IndicadorPessoaGramaticalDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -68,6 +73,7 @@ public class IndicadorPessoaGramaticalController implements Serializable {
         }
     }
 
+    @Override
     public List<IndicadorPessoaGramatical> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -105,10 +111,12 @@ public class IndicadorPessoaGramaticalController implements Serializable {
         return ipg;
     }
 
+    @Override
     public List<IndicadorPessoaGramatical> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<IndicadorPessoaGramatical> getItemsAvailableSelectOne() {
         return getItems();
     }

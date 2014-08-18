@@ -3,6 +3,7 @@ package br.edu.uag.aruagi.control.bean;
 import br.edu.uag.aruagi.model.DeclinacaoAplicada;
 import br.edu.uag.aruagi.model.DeclinacaoAplicadaId;
 import br.edu.uag.aruagi.control.Facade.DeclinacaoAplicadaFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class DeclinacaoAplicadaController implements Serializable {
+public class DeclinacaoAplicadaController implements Serializable, InterfaceController<DeclinacaoAplicada, DeclinacaoAplicadaId> {
 
-    private DeclinacaoAplicadaFacade facade = new DeclinacaoAplicadaFacade();
+    private final DeclinacaoAplicadaFacade facade = new DeclinacaoAplicadaFacade();
     private List<DeclinacaoAplicada> items = null;
     private DeclinacaoAplicada selected;
 
@@ -43,12 +44,14 @@ public class DeclinacaoAplicadaController implements Serializable {
         return facade;
     }
 
+    @Override
     public DeclinacaoAplicada prepareCreate() {
         selected = new DeclinacaoAplicada();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DeclinacaoAplicadaCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -56,10 +59,12 @@ public class DeclinacaoAplicadaController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DeclinacaoAplicadaUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("DeclinacaoAplicadaDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -68,6 +73,7 @@ public class DeclinacaoAplicadaController implements Serializable {
         }
     }
 
+    @Override
     public List<DeclinacaoAplicada> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -105,10 +111,12 @@ public class DeclinacaoAplicadaController implements Serializable {
         return da;
     }
 
+    @Override
     public List<DeclinacaoAplicada> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<DeclinacaoAplicada> getItemsAvailableSelectOne() {
         return getItems();
     }

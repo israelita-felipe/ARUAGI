@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.RadicalFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.Radical;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -14,7 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class RadicalController implements Serializable {
+public class RadicalController implements Serializable, InterfaceController<Radical, Integer> {
 
     private final RadicalFacade facade = new RadicalFacade();
     private List<Radical> items = null;
@@ -41,12 +42,14 @@ public class RadicalController implements Serializable {
         return facade;
     }
 
+    @Override
     public Radical prepareCreate() {
         selected = new Radical();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RadicalCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class RadicalController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RadicalUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("RadicalDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class RadicalController implements Serializable {
         }
     }
 
+    @Override
     public List<Radical> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class RadicalController implements Serializable {
         return r;
     }
 
+    @Override
     public List<Radical> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<Radical> getItemsAvailableSelectOne() {
         return getItems();
     }

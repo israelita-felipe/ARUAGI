@@ -2,6 +2,7 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.Caso;
 import br.edu.uag.aruagi.control.Facade.CasoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
@@ -14,9 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class CasoController implements Serializable {
+public class CasoController implements Serializable, InterfaceController<Caso, Integer> {
 
-    private CasoFacade facade = new CasoFacade();
+    private final CasoFacade facade = new CasoFacade();
     private List<Caso> items = null;
     private Caso selected;
 
@@ -41,12 +42,14 @@ public class CasoController implements Serializable {
         return facade;
     }
 
+    @Override
     public Caso prepareCreate() {
         selected = new Caso();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CasoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class CasoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CasoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("CasoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class CasoController implements Serializable {
         }
     }
 
+    @Override
     public List<Caso> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class CasoController implements Serializable {
         return c;
     }
 
+    @Override
     public List<Caso> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<Caso> getItemsAvailableSelectOne() {
         return getItems();
     }

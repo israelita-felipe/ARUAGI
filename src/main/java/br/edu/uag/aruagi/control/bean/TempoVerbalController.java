@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.TempoVerbalFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.TempoVerbal;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -14,9 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class TempoVerbalController implements Serializable {
+public class TempoVerbalController implements Serializable, InterfaceController<TempoVerbal, Integer> {
 
-    private TempoVerbalFacade facade = new TempoVerbalFacade();
+    private final TempoVerbalFacade facade = new TempoVerbalFacade();
     private List<TempoVerbal> items = null;
     private TempoVerbal selected;
 
@@ -41,12 +42,14 @@ public class TempoVerbalController implements Serializable {
         return facade;
     }
 
+    @Override
     public TempoVerbal prepareCreate() {
         selected = new TempoVerbal();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TempoVerbalCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class TempoVerbalController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TempoVerbalUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TempoVerbalDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class TempoVerbalController implements Serializable {
         }
     }
 
+    @Override
     public List<TempoVerbal> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class TempoVerbalController implements Serializable {
         return tv;
     }
 
+    @Override
     public List<TempoVerbal> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<TempoVerbal> getItemsAvailableSelectOne() {
         return getItems();
     }

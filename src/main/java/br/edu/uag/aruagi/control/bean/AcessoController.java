@@ -76,8 +76,8 @@ public class AcessoController implements Serializable, InterfaceController<Acess
      */
     public Integer totalAcessos() {
         int i = 0;
-        for(Acesso a:getItems()){
-            i+=a.getAcessos();
+        for (Acesso a : getItems()) {
+            i += a.getAcessos();
         }
         return (i + 1);
     }
@@ -149,18 +149,12 @@ public class AcessoController implements Serializable, InterfaceController<Acess
 
     @Override
     public List<Acesso> getItemsAvailableSelectMany() {
-        getFacade().begin();
-        List<Acesso> a = getFacade().findAll();
-        getFacade().end();
-        return a;
+        return getItems();
     }
 
     @Override
     public List<Acesso> getItemsAvailableSelectOne() {
-        getFacade().begin();
-        List<Acesso> a = getFacade().findAll();
-        getFacade().end();
-        return a;
+        return getItems();
     }
 
     @FacesConverter(forClass = Acesso.class)

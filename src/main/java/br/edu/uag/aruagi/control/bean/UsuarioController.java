@@ -1,6 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.util.cript.SHA256;
 import br.edu.uag.aruagi.model.Usuario;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -15,11 +17,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class UsuarioController implements Serializable {
+public class UsuarioController implements Serializable, InterfaceController<Usuario, Integer> {
 
-    private UsuarioFacade facade;
+    private final UsuarioFacade facade = new UsuarioFacade();
     private List<Usuario> items = null;
     private Usuario selected;
+    private String confirmPass;
 
     public UsuarioController() {
     }
@@ -32,6 +35,14 @@ public class UsuarioController implements Serializable {
         this.selected = selected;
     }
 
+    public String getConfirmPass() {
+        return confirmPass;
+    }
+
+    public void setConfirmPass(String confirmPass) {
+        this.confirmPass = confirmPass;
+    }
+
     protected void setEmbeddableKeys() {
     }
 
@@ -42,12 +53,14 @@ public class UsuarioController implements Serializable {
         return facade;
     }
 
+    @Override
     public Usuario prepareCreate() {
         selected = new Usuario();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +68,12 @@ public class UsuarioController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("UsuarioDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,10 +82,11 @@ public class UsuarioController implements Serializable {
         }
     }
 
+    @Override
     public List<Usuario> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+        getFacade().begin();
+        items = getFacade().findAll();
+        getFacade().end();
         return items;
     }
 
@@ -79,12 +95,20 @@ public class UsuarioController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
+                if (confirmPass.equals(getSelected().getSenha())) {
+                    if (persistAction == PersistAction.CREATE) {
+                        getSelected().setSenha(SHA256.encode(getSelected().getSenha()));
+                        getSelected().setUsuario(UsuarioSessionController.getUserLogged());
+                        getFacade().create(selected);
+                    } else if (persistAction == PersistAction.UPDATE) {
+                        getFacade().edit(selected);
+                    } else {
+                        getFacade().remove(selected);
+                    }
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else {
-                    getFacade().remove(selected);
+                    throw new Exception("Senhas não conferem");
                 }
-                JsfUtil.addSuccessMessage(successMessage);
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -100,18 +124,14 @@ public class UsuarioController implements Serializable {
         return u;
     }
 
+    @Override
     public List<Usuario> getItemsAvailableSelectMany() {
-        this.facade.begin();
-        items = this.facade.findAll();
-        this.facade.end();
-        return items;
+        return getItems();
     }
 
+    @Override
     public List<Usuario> getItemsAvailableSelectOne() {
-        this.facade.begin();
-        items = this.facade.findAll();
-        this.facade.end();
-        return items;
+        return getItems();
     }
 
     @FacesConverter(forClass = Usuario.class)

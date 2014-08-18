@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.IndicadorTempoVerbalFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.IndicadorTempoVerbal;
 import br.edu.uag.aruagi.model.IndicadorTempoVerbalId;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
@@ -15,7 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class IndicadorTempoVerbalController implements Serializable {
+public class IndicadorTempoVerbalController implements Serializable, InterfaceController<IndicadorTempoVerbal, IndicadorTempoVerbalId> {
 
     private final IndicadorTempoVerbalFacade facade = new IndicadorTempoVerbalFacade();
     private List<IndicadorTempoVerbal> items = null;
@@ -43,12 +44,14 @@ public class IndicadorTempoVerbalController implements Serializable {
         return facade;
     }
 
+    @Override
     public IndicadorTempoVerbal prepareCreate() {
         selected = new IndicadorTempoVerbal();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("IndicadorTempoVerbalCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -56,10 +59,12 @@ public class IndicadorTempoVerbalController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("IndicadorTempoVerbalUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("IndicadorTempoVerbalDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -68,6 +73,7 @@ public class IndicadorTempoVerbalController implements Serializable {
         }
     }
 
+    @Override
     public List<IndicadorTempoVerbal> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -102,10 +108,12 @@ public class IndicadorTempoVerbalController implements Serializable {
         return getFacade().find(id);
     }
 
+    @Override
     public List<IndicadorTempoVerbal> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<IndicadorTempoVerbal> getItemsAvailableSelectOne() {
         return getItems();
     }

@@ -2,6 +2,7 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.AtividadeQuestao;
 import br.edu.uag.aruagi.control.Facade.AtividadeQuestaoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class AtividadeQuestaoController implements Serializable {
+public class AtividadeQuestaoController implements Serializable, InterfaceController<AtividadeQuestao, Integer> {
 
     private AtividadeQuestaoFacade facade = new AtividadeQuestaoFacade();
     private List<AtividadeQuestao> items = null;
@@ -41,12 +42,14 @@ public class AtividadeQuestaoController implements Serializable {
         return facade;
     }
 
+    @Override
     public AtividadeQuestao prepareCreate() {
         selected = new AtividadeQuestao();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AtividadeQuestaoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class AtividadeQuestaoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AtividadeQuestaoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AtividadeQuestaoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class AtividadeQuestaoController implements Serializable {
         }
     }
 
+    @Override
     public List<AtividadeQuestao> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -99,6 +105,7 @@ public class AtividadeQuestaoController implements Serializable {
         return aq;
     }
 
+    @Override
     public List<AtividadeQuestao> getItemsAvailableSelectMany() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -106,6 +113,7 @@ public class AtividadeQuestaoController implements Serializable {
         return items;
     }
 
+    @Override
     public List<AtividadeQuestao> getItemsAvailableSelectOne() {
         getFacade().begin();
         items = getFacade().findAll();

@@ -2,6 +2,7 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.ClassificacaoGramatical;
 import br.edu.uag.aruagi.control.Facade.ClassificacaoGramaticalFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
@@ -14,9 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class ClassificacaoGramaticalController implements Serializable {
+public class ClassificacaoGramaticalController implements Serializable, InterfaceController<ClassificacaoGramatical, Integer> {
     
-    private ClassificacaoGramaticalFacade facade = new ClassificacaoGramaticalFacade();
+    private final ClassificacaoGramaticalFacade facade = new ClassificacaoGramaticalFacade();
     private List<ClassificacaoGramatical> items = null;
     private ClassificacaoGramatical selected;
     
@@ -41,12 +42,14 @@ public class ClassificacaoGramaticalController implements Serializable {
         return facade;
     }
     
+    @Override
     public ClassificacaoGramatical prepareCreate() {
         selected = new ClassificacaoGramatical();
         initializeEmbeddableKey();
         return selected;
     }
     
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClassificacaoGramaticalCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -54,10 +57,12 @@ public class ClassificacaoGramaticalController implements Serializable {
         }
     }
     
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ClassificacaoGramaticalUpdated"));
     }
     
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ClassificacaoGramaticalDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -66,6 +71,7 @@ public class ClassificacaoGramaticalController implements Serializable {
         }
     }
     
+    @Override
     public List<ClassificacaoGramatical> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -103,10 +109,12 @@ public class ClassificacaoGramaticalController implements Serializable {
         return cg;
     }
     
+    @Override
     public List<ClassificacaoGramatical> getItemsAvailableSelectMany() {
         return getItems();
     }
     
+    @Override
     public List<ClassificacaoGramatical> getItemsAvailableSelectOne() {
         return getItems();
     }

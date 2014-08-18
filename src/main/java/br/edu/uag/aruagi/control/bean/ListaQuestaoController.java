@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.ListaQuestaoFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.ListaQuestao;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
@@ -15,9 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class ListaQuestaoController implements Serializable {
+public class ListaQuestaoController implements Serializable, InterfaceController<ListaQuestao, Integer> {
 
-    private ListaQuestaoFacade facade = new ListaQuestaoFacade();
+    private final ListaQuestaoFacade facade = new ListaQuestaoFacade();
     private List<ListaQuestao> items = null;
     private ListaQuestao selected;
 
@@ -42,12 +43,14 @@ public class ListaQuestaoController implements Serializable {
         return facade;
     }
 
+    @Override
     public ListaQuestao prepareCreate() {
         selected = new ListaQuestao();
         initializeEmbeddableKey();
         return selected;
     }
 
+    @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ListaQuestaoCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -55,10 +58,12 @@ public class ListaQuestaoController implements Serializable {
         }
     }
 
+    @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ListaQuestaoUpdated"));
     }
 
+    @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ListaQuestaoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -67,6 +72,7 @@ public class ListaQuestaoController implements Serializable {
         }
     }
 
+    @Override
     public List<ListaQuestao> getItems() {
         getFacade().begin();
         items = getFacade().findAll();
@@ -111,10 +117,12 @@ public class ListaQuestaoController implements Serializable {
         return lq;
     }
 
+    @Override
     public List<ListaQuestao> getItemsAvailableSelectMany() {
         return getItems();
     }
 
+    @Override
     public List<ListaQuestao> getItemsAvailableSelectOne() {
         return getItems();
     }
