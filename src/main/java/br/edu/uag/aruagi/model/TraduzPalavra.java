@@ -18,28 +18,29 @@ import javax.persistence.Table;
 @Table(name = "traduz_palavra", schema = "public"
 )
 public class TraduzPalavra implements java.io.Serializable {
-
+    
     private TraduzPalavraId id;
     private PalavraPortugues palavraPortugues;
     private PalavraLatim palavraLatim;
     private Integer usuario;
-
+    private Boolean status;
+    
     public TraduzPalavra() {
     }
-
+    
     public TraduzPalavra(TraduzPalavraId id, PalavraPortugues palavraPortugues, PalavraLatim palavraLatim) {
         this.id = id;
         this.palavraPortugues = palavraPortugues;
         this.palavraLatim = palavraLatim;
     }
-
+    
     public TraduzPalavra(TraduzPalavraId id, PalavraPortugues palavraPortugues, PalavraLatim palavraLatim, Integer usuario) {
         this.id = id;
         this.palavraPortugues = palavraPortugues;
         this.palavraLatim = palavraLatim;
         this.usuario = usuario;
     }
-
+    
     @EmbeddedId
     @AttributeOverrides({
         @AttributeOverride(name = "palavraLatim", column = @Column(name = "palavra_latim", nullable = false)),
@@ -47,50 +48,62 @@ public class TraduzPalavra implements java.io.Serializable {
     public TraduzPalavraId getId() {
         return this.id;
     }
-
+    
     public void setId(TraduzPalavraId id) {
         this.id = id;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_portugues", nullable = false, insertable = false, updatable = false)
     public PalavraPortugues getPalavraPortugues() {
         return this.palavraPortugues;
     }
-
+    
     public void setPalavraPortugues(PalavraPortugues palavraPortugues) {
+        this.getId().setPalavraPortugues(palavraPortugues.getId());
         this.palavraPortugues = palavraPortugues;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_latim", nullable = false, insertable = false, updatable = false)
     public PalavraLatim getPalavraLatim() {
         return this.palavraLatim;
     }
-
+    
     public void setPalavraLatim(PalavraLatim palavraLatim) {
+        this.getId().setPalavraLatim(palavraLatim.getId());
         this.palavraLatim = palavraLatim;
     }
-
+    
     @Column(name = "usuario")
     public Integer getUsuario() {
         return this.usuario;
     }
-
+    
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
-
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 47 * hash + (this.palavraPortugues != null ? this.palavraPortugues.hashCode() : 0);
-        hash = 47 * hash + (this.palavraLatim != null ? this.palavraLatim.hashCode() : 0);
-        hash = 47 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        int hash = 3;
+        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 29 * hash + (this.palavraPortugues != null ? this.palavraPortugues.hashCode() : 0);
+        hash = 29 * hash + (this.palavraLatim != null ? this.palavraLatim.hashCode() : 0);
+        hash = 29 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 29 * hash + (this.status != null ? this.status.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -112,7 +125,10 @@ public class TraduzPalavra implements java.io.Serializable {
         if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
             return false;
         }
+        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
+            return false;
+        }
         return true;
     }
-
+    
 }

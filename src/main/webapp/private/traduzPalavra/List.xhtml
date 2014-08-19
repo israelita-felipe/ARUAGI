@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -31,25 +31,25 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTraduzPalavraTitle_palavraPortugues}"/>
                             </f:facet>
-                            <h:outputText value="#{item.palavraPortugues}"/>
+                            <h:outputText value="#{item.palavraPortugues.palavra}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTraduzPalavraTitle_palavraLatim}"/>
                             </f:facet>
-                            <h:outputText value="#{item.palavraLatim}"/>
+                            <h:outputText value="#{item.palavraLatim.palavra}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTraduzPalavraTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{traduzPalavraController.prepareCreate}" update=":TraduzPalavraCreateForm" oncomplete="PF('TraduzPalavraCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TraduzPalavraViewForm" oncomplete="PF('TraduzPalavraViewDialog').show()" disabled="#{empty traduzPalavraController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TraduzPalavraEditForm" oncomplete="PF('TraduzPalavraEditDialog').show()" disabled="#{empty traduzPalavraController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{traduzPalavraController.destroy}" update=":growl,datalist" disabled="#{empty traduzPalavraController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TraduzPalavraEditForm" oncomplete="PF('TraduzPalavraEditDialog').show()" disabled="#{empty traduzPalavraController.selected || traduzPalavraController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{traduzPalavraController.destroy}" update=":growl,datalist" disabled="#{empty traduzPalavraController.selected || traduzPalavraController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

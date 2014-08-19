@@ -12,25 +12,25 @@
             <h:form id="TraduzPalavraEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{traduzPalavraController.selected != null}">
+
                         <p:outputLabel value="#{bundle.EditTraduzPalavraLabel_palavraPortugues}" for="palavraPortugues" />
                         <p:selectOneMenu id="palavraPortugues" value="#{traduzPalavraController.selected.palavraPortugues}" required="true" requiredMessage="#{bundle.EditTraduzPalavraRequiredMessage_palavraPortugues}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{palavraPortuguesController.itemsAvailableSelectOne}"
                                            var="palavraPortuguesItem"
+                                           itemLabel="#{palavraPortuguesItem.palavra}"
                                            itemValue="#{palavraPortuguesItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.EditTraduzPalavraLabel_palavraLatim}" for="palavraLatim" />
                         <p:selectOneMenu id="palavraLatim" value="#{traduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditTraduzPalavraRequiredMessage_palavraLatim}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
+                                           itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditTraduzPalavraLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{traduzPalavraController.selected.usuario}" title="#{bundle.EditTraduzPalavraTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{traduzPalavraController.update}" value="#{bundle.Save}" update="display,:TraduzPalavraListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TraduzPalavraEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="TraduzPalavraEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
