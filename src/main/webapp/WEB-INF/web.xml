@@ -30,6 +30,35 @@
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/private/*</url-pattern>
     </filter-mapping>
+    
+    <!-- FILTRO ADMIN -->
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>br.edu.uag.aruagi.control.util.filtros.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>        
+        <url-pattern>/private/administrador/*</url-pattern>
+    </filter-mapping>
+    
+    <!-- FILTRO XHTML -->
+    <filter>
+        <filter-name>XHTMLFilter</filter-name>
+        <filter-class>br.edu.uag.aruagi.control.util.filtros.XHTMLFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>XHTMLFilter</filter-name>        
+        <url-pattern>*.xhtml</url-pattern>
+    </filter-mapping>
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/public/Login.xhtml</form-login-page>
+            <form-error-page>/public/erro.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    
     <!-- tema primefaces 
     <context-param>
         <param-name>primefaces.THEME</param-name>

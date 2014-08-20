@@ -10,7 +10,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.servlet.http.HttpSession;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 
@@ -19,11 +18,11 @@ import org.hibernate.criterion.Property;
  * @author Israel Araújo
  */
 public class UsuarioSessionController implements Serializable {
-
+    
     private final UsuarioFacade facade = new UsuarioFacade();
-    private static Usuario selected;
+    private static Usuario selected = null;
     private boolean loged = false;
-
+    
     public UsuarioSessionController() {
         setSelected(new Usuario());
     }
@@ -54,11 +53,9 @@ public class UsuarioSessionController implements Serializable {
         setSelected(u);
         return "/private/homePrivate.xhtml?faces-redirect=true";
     }
-
+    
     public String doLogout() throws Exception {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        session.invalidate();
+        setLogged(false);
         return "/public/Login.xhtml?faces-redirect=true";
     }
 
@@ -75,33 +72,33 @@ public class UsuarioSessionController implements Serializable {
     public void setLogged(boolean isLoged) {
         this.loged = isLoged;
     }
-
+    
     public static Usuario getUserLogged() {
         return selected;
     }
-
+    
     public Usuario getSelected() {
         return selected;
     }
-
+    
     public void setSelected(Usuario selected) {
         UsuarioSessionController.selected = selected;
     }
-
+    
     public UsuarioFacade getFacade() {
         return facade;
     }
-
+    
     public Usuario getUsuario(int id) {
         getFacade().begin();
         Usuario u = getFacade().find(id);
         getFacade().end();
         return u;
     }
-
+    
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -111,19 +108,19 @@ public class UsuarioSessionController implements Serializable {
                     getValue(facesContext.getELContext(), null, "usuarioController");
             return controller.getUsuario(getKey(value));
         }
-
+        
         int getKey(String value) {
             int key;
             key = Integer.parseInt(value);
             return key;
         }
-
+        
         String getStringKey(int value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -137,7 +134,7 @@ public class UsuarioSessionController implements Serializable {
                 return null;
             }
         }
-
+        
     }
-
+    
 }

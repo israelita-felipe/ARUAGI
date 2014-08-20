@@ -9,6 +9,7 @@
     <h:head>
         <title><ui:insert name="title">Login</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="defaultHTML.css"/>
     </h:head>
 
 
@@ -32,18 +33,17 @@
 
                             <p:outputLabel value="#{bundle.Senha}" for="senha"/>
                             <h:inputSecret id="senha" value="#{usuarioSessionController.selected.senha}" required="true"/>
-                        </p:panelGrid>
-                        <p:separator/>
-                        <center>
                             <p:commandButton value="#{bundle.Logar}" action="#{usuarioSessionController.doLogin()}"/>
-                        </center>
+                            <p:commandLink value="Cadastre-se"/>
+                        </p:panelGrid>
                     </h:form>
                 </p:panelGrid>
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
-                <p:separator />
-                <p:outputLabel value="UNIVERSIDADE FEDERAL RURAL DE PERNAMBUCO - UFRPE - UNIDADE ACADÊMICA DE GARANHUNS - UAG"/>
+                <div class="footer">
+                    <p:outputLabel value="UNIVERSIDADE FEDERAL RURAL DE PERNAMBUCO - UFRPE - UNIDADE ACADÊMICA DE GARANHUNS - UAG"/>
+                </div>                                
             </p:layoutUnit>
 
         </p:layout> 
