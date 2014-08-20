@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <!-- HEAD COM IMPORTACAO DO CSS E JAVASCRIPT -->
     <h:head>
@@ -26,10 +27,13 @@
                         <center>
                             <p:outputLabel value="Autorização" for="loginGrid"/>
                         </center>
+                        <p:messages autoUpdate="true" closable="true"/>
                         <p:panelGrid id="loginGrid" columns="2">
 
                             <p:outputLabel value="#{bundle.Login}" for="login"/>
-                            <h:inputText id="login" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+                            <h:inputText id="login" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                                <f:validator validatorId="EmailValidator"/>
+                            </h:inputText>
 
                             <p:outputLabel value="#{bundle.Senha}" for="senha"/>
                             <h:inputSecret id="senha" value="#{usuarioSessionController.selected.senha}" required="true"/>

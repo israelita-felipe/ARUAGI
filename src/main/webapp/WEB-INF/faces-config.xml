@@ -238,4 +238,10 @@
         <managed-bean-class>br.edu.uag.aruagi.control.bean.VideosPostagemController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    
+    <!-- VALIDADORES -->
+    <validator>
+        <validator-id>EmailValidator</validator-id>
+        <validator-class>br.edu.uag.aruagi.control.util.validator.EmailValidator</validator-class>
+    </validator>
 </faces-config>

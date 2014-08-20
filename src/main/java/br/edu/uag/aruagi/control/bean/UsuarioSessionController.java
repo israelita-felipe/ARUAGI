@@ -2,6 +2,7 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.util.cript.SHA256;
 import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.model.Usuario;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -18,11 +19,11 @@ import org.hibernate.criterion.Property;
  * @author Israel Araújo
  */
 public class UsuarioSessionController implements Serializable {
-    
+
     private final UsuarioFacade facade = new UsuarioFacade();
     private static Usuario selected = null;
     private boolean loged = false;
-    
+
     public UsuarioSessionController() {
         setSelected(new Usuario());
     }
@@ -42,18 +43,23 @@ public class UsuarioSessionController implements Serializable {
         /**
          * verificando se o usuario existe e sua senha confere
          */
-        if (u == null || !u.getSenha().equals(SHA256.encode(getUserLogged().getSenha()))) {
-            FacesContext.getCurrentInstance().validationFailed();
-            return "/public/Login.xhtml?faces-redirect=true";
+        if (u != null) {
+            if (u.getSenha().equals(SHA256.encode(getUserLogged().getSenha()))) {
+                /**
+                 * retornamos a pagina de dados
+                 */
+                setLogged(true);
+                setSelected(u);
+                return "/private/homePrivate.xhtml?faces-redirect=true";
+            } else {
+                JsfUtil.addErrorMessage("Senhas não conferem");
+            }
+        } else {
+            JsfUtil.addErrorMessage("Usuário não cadastrado");
         }
-        /**
-         * retornamos a pagina de dados
-         */
-        setLogged(true);
-        setSelected(u);
-        return "/private/homePrivate.xhtml?faces-redirect=true";
+        return null;
     }
-    
+
     public String doLogout() throws Exception {
         setLogged(false);
         return "/public/Login.xhtml?faces-redirect=true";
@@ -72,33 +78,33 @@ public class UsuarioSessionController implements Serializable {
     public void setLogged(boolean isLoged) {
         this.loged = isLoged;
     }
-    
+
     public static Usuario getUserLogged() {
         return selected;
     }
-    
+
     public Usuario getSelected() {
         return selected;
     }
-    
+
     public void setSelected(Usuario selected) {
         UsuarioSessionController.selected = selected;
     }
-    
+
     public UsuarioFacade getFacade() {
         return facade;
     }
-    
+
     public Usuario getUsuario(int id) {
         getFacade().begin();
         Usuario u = getFacade().find(id);
         getFacade().end();
         return u;
     }
-    
+
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
-        
+
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -108,19 +114,19 @@ public class UsuarioSessionController implements Serializable {
                     getValue(facesContext.getELContext(), null, "usuarioController");
             return controller.getUsuario(getKey(value));
         }
-        
+
         int getKey(String value) {
             int key;
             key = Integer.parseInt(value);
             return key;
         }
-        
+
         String getStringKey(int value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-        
+
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -134,7 +140,7 @@ public class UsuarioSessionController implements Serializable {
                 return null;
             }
         }
-        
+
     }
-    
+
 }

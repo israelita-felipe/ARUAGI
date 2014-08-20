@@ -32,7 +32,7 @@ public class XHTMLFilter implements Filter {
         /**
          * redirecionando o usuario para a pagina de erro
          */
-        ((HttpServletResponse) response).sendRedirect(contextPath + "/public/erro.uag");
+        ((HttpServletResponse) response).sendRedirect(contextPath + "/public/advertencia/Erro.uag");
     }
 
     @Override
