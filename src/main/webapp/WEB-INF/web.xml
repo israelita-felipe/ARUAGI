@@ -57,9 +57,9 @@
         </location>
     </error-page>
     
-    <!-- tema primefaces 
+    <!-- tema primefaces -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>glass-x</param-value>
-    </context-param>-->
+        <param-value>bootstrap</param-value>
+    </context-param>
 </web-app>
