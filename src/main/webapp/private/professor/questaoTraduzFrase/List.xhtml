@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -29,45 +29,37 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoTraduzFraseTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoTraduzFraseTitle_fraseLatim}"/>
                             </f:facet>
-                            <h:outputText value="#{item.fraseLatim}"/>
+                            <h:outputText value="#{item.fraseLatim.frase}"/>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoTraduzFraseTitle_nivelQuestao}"/>
                             </f:facet>
-                            <h:outputText value="#{item.nivelQuestao}"/>
+                            <h:outputText value="#{item.nivelQuestao.descricao}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoTraduzFraseTitle_enunciado}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.enunciado}"/>
-                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoTraduzFraseTitle_titulo}"/>
                             </f:facet>
                             <h:outputText value="#{item.titulo}"/>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoTraduzFraseTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
+                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{questaoTraduzFraseController.prepareCreate}" update=":QuestaoTraduzFraseCreateForm" oncomplete="PF('QuestaoTraduzFraseCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":QuestaoTraduzFraseViewForm" oncomplete="PF('QuestaoTraduzFraseViewDialog').show()" disabled="#{empty questaoTraduzFraseController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":QuestaoTraduzFraseEditForm" oncomplete="PF('QuestaoTraduzFraseEditDialog').show()" disabled="#{empty questaoTraduzFraseController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{questaoTraduzFraseController.destroy}" update=":growl,datalist" disabled="#{empty questaoTraduzFraseController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":QuestaoTraduzFraseEditForm" oncomplete="PF('QuestaoTraduzFraseEditDialog').show()" disabled="#{empty questaoTraduzFraseController.selected || questaoTraduzFraseController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{questaoTraduzFraseController.destroy}" update=":growl,datalist" disabled="#{empty questaoTraduzFraseController.selected || questaoTraduzFraseController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

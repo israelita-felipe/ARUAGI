@@ -23,13 +23,7 @@
 
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.EditUsuarioTitle_nome}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_nome}"/>
-
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_senha}" for="senha" />
-                        <p:inputText id="senha" value="#{usuarioController.selected.senha}" title="#{bundle.EditUsuarioTitle_senha}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_senha}"/>
-
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_senha}" for="senhaConfirm" />
-                        <p:inputText id="senhaConfirm" value="#{usuarioController.confirmPass}" title="#{bundle.EditUsuarioTitle_senha}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_senha}"/>
-                        
+                       
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_login}" for="login" />
                         <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{bundle.EditUsuarioTitle_login}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_login}"/>
 

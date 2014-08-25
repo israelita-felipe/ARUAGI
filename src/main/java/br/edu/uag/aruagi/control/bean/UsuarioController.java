@@ -95,20 +95,20 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (confirmPass.equals(getSelected().getSenha())) {
-                    if (persistAction == PersistAction.CREATE) {
+                if (persistAction == PersistAction.CREATE) {
+                    if (confirmPass.equals(getSelected().getSenha())) {
                         getSelected().setSenha(SHA256.encode(getSelected().getSenha()));
                         getSelected().setUsuario(UsuarioSessionController.getUserLogged());
                         getFacade().create(selected);
-                    } else if (persistAction == PersistAction.UPDATE) {
-                        getFacade().edit(selected);
                     } else {
-                        getFacade().remove(selected);
+                        throw new Exception("Senhas não conferem");
                     }
-                    JsfUtil.addSuccessMessage(successMessage);
+                } else if (persistAction == PersistAction.UPDATE) {
+                    getFacade().edit(selected);
                 } else {
-                    throw new Exception("Senhas não conferem");
+                    getFacade().remove(selected);
                 }
+                JsfUtil.addSuccessMessage(successMessage);
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

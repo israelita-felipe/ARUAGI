@@ -34,7 +34,7 @@ public class AdminFilter implements Filter {
          */
         UsuarioSessionController user = (UsuarioSessionController) ((HttpServletRequest) request).getSession().getAttribute("usuarioSessionController");
         if (user.isLogged()) {
-            if (!UsuarioSessionController.getUserLogged().getNivelAcesso().getLinkAcesso().equals("adminstrador")) {
+            if (!UsuarioSessionController.getUserLogged().getNivelAcesso().getLinkAcesso().equals("administrador")) {
                 String contextPath = ((HttpServletRequest) request).getContextPath();
                 /**
                  * redirecionando o usuario para a pagina home

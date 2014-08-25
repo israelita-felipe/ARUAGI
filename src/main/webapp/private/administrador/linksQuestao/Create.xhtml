@@ -12,23 +12,23 @@
             <h:form id="LinksQuestaoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{linksQuestaoController.selected != null}">
+                    
                         <p:outputLabel value="#{bundle.CreateLinksQuestaoLabel_listaQuestao}" for="listaQuestao" />
                         <p:selectOneMenu id="listaQuestao" value="#{linksQuestaoController.selected.listaQuestao}" required="true" requiredMessage="#{bundle.EditLinksQuestaoRequiredMessage_listaQuestao}">
                             <f:selectItems value="#{listaQuestaoController.itemsAvailableSelectOne}"
                                            var="listaQuestaoItem"
                                            itemValue="#{listaQuestaoItem}"/>
                         </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{bundle.CreateLinksQuestaoLabel_postagem}" for="postagem" />
                         <p:selectOneMenu id="postagem" value="#{linksQuestaoController.selected.postagem}" required="true" requiredMessage="#{bundle.EditLinksQuestaoRequiredMessage_postagem}">
                             <f:selectItems value="#{postagemController.itemsAvailableSelectOne}"
                                            var="postagemItem"
                                            itemValue="#{postagemItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateLinksQuestaoLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{linksQuestaoController.selected.usuario}" title="#{bundle.CreateLinksQuestaoTitle_usuario}" />
+                    
                     </p:panelGrid>
                     <p:commandButton actionListener="#{linksQuestaoController.create}" value="#{bundle.Save}" update="display,:LinksQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args,'LinksQuestaoCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="LinksQuestaoCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -57,13 +57,6 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoTraduzPalavraTitle_enunciado}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.enunciado}" escape="false"/>
-                        </p:column>
-
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoTraduzPalavraTitle_usuario}"/>
                             </f:facet>
                             <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
