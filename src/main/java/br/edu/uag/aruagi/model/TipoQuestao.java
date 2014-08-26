@@ -92,7 +92,7 @@ public class TipoQuestao implements java.io.Serializable {
         this.usuario = usuario;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoQuestao", targetEntity = AtividadeQuestao.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tipoQuestao", targetEntity = AtividadeQuestao.class)
     public Set getAtividadeQuestaos() {
         return this.atividadeQuestaos;
     }

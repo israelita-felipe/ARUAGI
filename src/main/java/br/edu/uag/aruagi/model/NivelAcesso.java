@@ -6,8 +6,6 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,7 +22,6 @@ public class NivelAcesso implements java.io.Serializable {
     private String linkAcesso;
     private String descricao;
     private Set usuariosForIncluidoPor = new HashSet(0);
-    private Set usuariosForNivelAcesso = new HashSet(0);
 
     public NivelAcesso() {
     }
@@ -33,16 +30,14 @@ public class NivelAcesso implements java.io.Serializable {
         this.id = id;
     }
 
-    public NivelAcesso(int id, String linkAcesso, String descricao, Set usuariosForIncluidoPor, Set usuariosForNivelAcesso) {
+    public NivelAcesso(int id, String linkAcesso, String descricao, Set usuariosForIncluidoPor) {
         this.id = id;
         this.linkAcesso = linkAcesso;
         this.descricao = descricao;
         this.usuariosForIncluidoPor = usuariosForIncluidoPor;
-        this.usuariosForNivelAcesso = usuariosForNivelAcesso;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;

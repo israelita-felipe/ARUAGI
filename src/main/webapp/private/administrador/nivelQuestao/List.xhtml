@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -33,29 +33,26 @@
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListNivelQuestaoTitle_descricao}"/>
                             </f:facet>
                             <h:outputText value="#{item.descricao}"/>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListNivelQuestaoTitle_observacoes}"/>
                             </f:facet>
                             <h:outputText value="#{item.observacoes}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListNivelQuestaoTitle_usuario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
-                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{nivelQuestaoController.prepareCreate}" update=":NivelQuestaoCreateForm" oncomplete="PF('NivelQuestaoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":NivelQuestaoViewForm" oncomplete="PF('NivelQuestaoViewDialog').show()" disabled="#{empty nivelQuestaoController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":NivelQuestaoEditForm" oncomplete="PF('NivelQuestaoEditDialog').show()" disabled="#{empty nivelQuestaoController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{nivelQuestaoController.destroy}" update=":growl,datalist" disabled="#{empty nivelQuestaoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":NivelQuestaoEditForm" oncomplete="PF('NivelQuestaoEditDialog').show()" disabled="#{empty nivelQuestaoController.selected || nivelQuestaoController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{nivelQuestaoController.destroy}" update=":growl,datalist" disabled="#{empty nivelQuestaoController.selected || nivelQuestaoController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

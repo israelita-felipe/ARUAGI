@@ -84,10 +84,10 @@ public class NivelQuestaoController implements Serializable, InterfaceController
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if(persistAction == PersistAction.CREATE){
+                if (persistAction == PersistAction.CREATE) {
                     getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getFacade().create(selected);
-                }else if (persistAction == PersistAction.UPDATE) {
+                } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

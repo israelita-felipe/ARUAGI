@@ -84,9 +84,9 @@ public class NivelAcessoController implements Serializable, InterfaceController<
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if(persistAction == PersistAction.CREATE){
+                if (persistAction == PersistAction.CREATE) {
                     getFacade().create(selected);
-                }else if (persistAction == PersistAction.UPDATE) {
+                } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

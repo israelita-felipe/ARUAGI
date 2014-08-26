@@ -12,12 +12,16 @@
             <h:form id="NivelAcessoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{nivelAcessoController.selected != null}">
+
                         <p:outputLabel value="#{bundle.CreateNivelAcessoLabel_id}" for="id" />
                         <p:inputText id="id" value="#{nivelAcessoController.selected.id}" title="#{bundle.CreateNivelAcessoTitle_id}" required="true" requiredMessage="#{bundle.CreateNivelAcessoRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.CreateNivelAcessoLabel_linkAcesso}" for="linkAcesso" />
                         <p:inputText id="linkAcesso" value="#{nivelAcessoController.selected.linkAcesso}" title="#{bundle.CreateNivelAcessoTitle_linkAcesso}" />
+
                         <p:outputLabel value="#{bundle.CreateNivelAcessoLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{nivelAcessoController.selected.descricao}" title="#{bundle.CreateNivelAcessoTitle_descricao}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{nivelAcessoController.create}" value="#{bundle.Save}" update="display,:NivelAcessoListForm:datalist,:growl" oncomplete="handleSubmit(args,'NivelAcessoCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="NivelAcessoCreateDialog.hide()"/>

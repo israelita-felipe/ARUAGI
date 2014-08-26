@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -12,17 +11,15 @@
             <h:form id="TipoQuestaoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tipoQuestaoController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditTipoQuestaoLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{tipoQuestaoController.selected.id}" title="#{bundle.EditTipoQuestaoTitle_id}" required="true" requiredMessage="#{bundle.EditTipoQuestaoRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.EditTipoQuestaoLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{tipoQuestaoController.selected.descricao}" title="#{bundle.EditTipoQuestaoTitle_descricao}" required="true" requiredMessage="#{bundle.EditTipoQuestaoRequiredMessage_descricao}"/>
+
                         <p:outputLabel value="#{bundle.EditTipoQuestaoLabel_nomeTabelaBanco}" for="nomeTabelaBanco" />
                         <p:inputText id="nomeTabelaBanco" value="#{tipoQuestaoController.selected.nomeTabelaBanco}" title="#{bundle.EditTipoQuestaoTitle_nomeTabelaBanco}" />
-                        <p:outputLabel value="#{bundle.EditTipoQuestaoLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{tipoQuestaoController.selected.usuario}" title="#{bundle.EditTipoQuestaoTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tipoQuestaoController.update}" value="#{bundle.Save}" update="display,:TipoQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipoQuestaoEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoQuestaoEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
