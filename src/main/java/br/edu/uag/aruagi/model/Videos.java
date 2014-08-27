@@ -24,6 +24,7 @@ public class Videos implements java.io.Serializable {
     private String link;
     private String descricao;
     private Integer usuario;
+    private Boolean status;
     private Set videosPostagems = new HashSet(0);
 
     public Videos() {
@@ -44,7 +45,7 @@ public class Videos implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id", unique = true)
     public int getId() {
         return this.id;
     }
@@ -80,7 +81,7 @@ public class Videos implements java.io.Serializable {
         this.usuario = usuario;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "videos", targetEntity = VideosPostagem.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "videos", targetEntity = VideosPostagem.class)
     public Set getVideosPostagems() {
         return this.videosPostagems;
     }
@@ -89,13 +90,23 @@ public class Videos implements java.io.Serializable {
         this.videosPostagems = videosPostagems;
     }
 
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + this.id;
-        hash = 83 * hash + (this.link != null ? this.link.hashCode() : 0);
-        hash = 83 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
-        hash = 83 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        int hash = 7;
+        hash = 41 * hash + this.id;
+        hash = 41 * hash + (this.link != null ? this.link.hashCode() : 0);
+        hash = 41 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        hash = 41 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 41 * hash + (this.status != null ? this.status.hashCode() : 0);
         return hash;
     }
 
@@ -120,7 +131,11 @@ public class Videos implements java.io.Serializable {
         if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
             return false;
         }
+        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
+            return false;
+        }
         return true;
     }
 
+    
 }

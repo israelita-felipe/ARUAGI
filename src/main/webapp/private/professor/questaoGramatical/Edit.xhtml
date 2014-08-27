@@ -12,45 +12,44 @@
             <h:form id="QuestaoGramaticalEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{questaoGramaticalController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{questaoGramaticalController.selected.id}" title="#{bundle.EditQuestaoGramaticalTitle_id}" required="true" requiredMessage="#{bundle.EditQuestaoGramaticalRequiredMessage_id}"/>
+
+                        <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{questaoGramaticalController.selected.titulo}" title="#{bundle.EditQuestaoGramaticalTitle_titulo}" />
+
                         <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_pessoaGramatical}" for="pessoaGramatical" />
                         <p:selectOneMenu id="pessoaGramatical" value="#{questaoGramaticalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.EditQuestaoGramaticalRequiredMessage_pessoaGramatical}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"
                                            var="pessoaGramaticalItem"
+                                           itemLabel="#{pessoaGramaticalItem.id}ª pessoa : #{pessoaGramaticalItem.flexao}"
                                            itemValue="#{pessoaGramaticalItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_tempoVerbal}" for="tempoVerbal" />
                         <p:selectOneMenu id="tempoVerbal" value="#{questaoGramaticalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.EditQuestaoGramaticalRequiredMessage_tempoVerbal}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"
                                            var="tempoVerbalItem"
+                                           itemLabel="#{tempoVerbalItem.descricao}"                                           
                                            itemValue="#{tempoVerbalItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_palavraLatim}" for="palavraLatim" />
                         <p:selectOneMenu id="palavraLatim" value="#{questaoGramaticalController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditQuestaoGramaticalRequiredMessage_palavraLatim}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
+                                           itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_nivelQuestao}" for="nivelQuestao" />
                         <p:selectOneMenu id="nivelQuestao" value="#{questaoGramaticalController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoGramaticalRequiredMessage_nivelQuestao}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
                                            var="nivelQuestaoItem"
+                                           itemLabel="#{nivelQuestaoItem.descricao}"
                                            itemValue="#{nivelQuestaoItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_enunciado}" for="enunciado" />
-                        <p:inputText id="enunciado" value="#{questaoGramaticalController.selected.enunciado}" title="#{bundle.EditQuestaoGramaticalTitle_enunciado}" />
-                        <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_titulo}" for="titulo" />
-                        <p:inputText id="titulo" value="#{questaoGramaticalController.selected.titulo}" title="#{bundle.EditQuestaoGramaticalTitle_titulo}" />
-                        <p:outputLabel value="#{bundle.EditQuestaoGramaticalLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{questaoGramaticalController.selected.usuario}" title="#{bundle.EditQuestaoGramaticalTitle_usuario}" />
+                        <p:editor id="enunciado" value="#{questaoGramaticalController.selected.enunciado}"/>
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{questaoGramaticalController.update}" value="#{bundle.Save}" update="display,:QuestaoGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'QuestaoGramaticalEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestaoGramaticalEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

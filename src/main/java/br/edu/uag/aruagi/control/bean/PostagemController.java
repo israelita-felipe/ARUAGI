@@ -24,7 +24,6 @@ public class PostagemController implements Serializable, InterfaceController<Pos
     private Postagem selected;
 
     public PostagemController() {
-        prepareCreate();
     }
 
     public Postagem getSelected() {
@@ -97,6 +96,10 @@ public class PostagemController implements Serializable, InterfaceController<Pos
                     getSelected().setStatus(Boolean.TRUE);
                     getFacade().create(selected);
                 } else if (persistAction == PersistAction.UPDATE) {
+                    /**
+                     * atualizacao para a data de alteracao da postagem
+                     */
+                    getSelected().setData(DateTime.getCurrentDate());
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
@@ -107,7 +110,6 @@ public class PostagemController implements Serializable, InterfaceController<Pos
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
         }
-        prepareCreate();
         getFacade().end();
     }
 

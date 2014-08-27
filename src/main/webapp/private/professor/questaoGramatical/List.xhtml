@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -29,57 +29,51 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_pessoaGramatical}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.pessoaGramatical}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_tempoVerbal}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.tempoVerbal}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_palavraLatim}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.palavraLatim}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_nivelQuestao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nivelQuestao}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_enunciado}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.enunciado}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_titulo}"/>
                             </f:facet>
                             <h:outputText value="#{item.titulo}"/>
                         </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_pessoaGramatical}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.pessoaGramatical.id}ª pessoa : #{item.pessoaGramatical.flexao}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_tempoVerbal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tempoVerbal.descricao}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_palavraLatim}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.palavraLatim.palavra}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_nivelQuestao}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nivelQuestao.descricao}"/>
+                        </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoGramaticalTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{questaoGramaticalController.prepareCreate}" update=":QuestaoGramaticalCreateForm" oncomplete="PF('QuestaoGramaticalCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":QuestaoGramaticalViewForm" oncomplete="PF('QuestaoGramaticalViewDialog').show()" disabled="#{empty questaoGramaticalController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":QuestaoGramaticalEditForm" oncomplete="PF('QuestaoGramaticalEditDialog').show()" disabled="#{empty questaoGramaticalController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{questaoGramaticalController.destroy}" update=":growl,datalist" disabled="#{empty questaoGramaticalController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":QuestaoGramaticalEditForm" oncomplete="PF('QuestaoGramaticalEditDialog').show()" disabled="#{empty questaoGramaticalController.selected || questaoGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{questaoGramaticalController.destroy}" update=":growl,datalist" disabled="#{empty questaoGramaticalController.selected || questaoGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

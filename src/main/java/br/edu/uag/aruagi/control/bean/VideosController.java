@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -23,6 +22,7 @@ public class VideosController implements Serializable, InterfaceController<Video
     private Videos selected;
 
     public VideosController() {
+        prepareCreate();
     }
 
     public Videos getSelected() {
@@ -85,7 +85,11 @@ public class VideosController implements Serializable, InterfaceController<Video
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if(persistAction == PersistAction.CREATE){
+                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
+                    getSelected().setStatus(Boolean.TRUE);
+                    getFacade().create(selected);
+                }else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

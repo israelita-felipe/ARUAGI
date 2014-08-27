@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
 
@@ -12,23 +12,26 @@
             <h:form id="PostagemCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{postagemController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePostagemLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{postagemController.selected.id}" title="#{bundle.CreatePostagemTitle_id}" required="true" requiredMessage="#{bundle.CreatePostagemRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.CreatePostagemLabel_titulo}" for="titulo" />
                         <p:inputText id="titulo" value="#{postagemController.selected.titulo}" title="#{bundle.CreatePostagemTitle_titulo}" />
-                        <p:outputLabel value="#{bundle.CreatePostagemLabel_link}" for="link" />
-                        <p:inputText id="link" value="#{postagemController.selected.link}" title="#{bundle.CreatePostagemTitle_link}" />
-                        <p:outputLabel value="#{bundle.CreatePostagemLabel_data}" for="data" />
-                        <p:calendar id="data" pattern="MM/dd/yyyy" value="#{postagemController.selected.data}" title="#{bundle.EditPostagemTitle_data}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_data}" showOn="button"/>
+
                         <p:outputLabel value="#{bundle.CreatePostagemLabel_conteudo}" for="conteudo" />
-                        <p:inputText id="conteudo" value="#{postagemController.selected.conteudo}" title="#{bundle.CreatePostagemTitle_conteudo}" required="true" requiredMessage="#{bundle.CreatePostagemRequiredMessage_conteudo}"/>
-                        <p:outputLabel value="#{bundle.CreatePostagemLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{postagemController.selected.usuario}" title="#{bundle.CreatePostagemTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.CreatePostagemLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{postagemController.selected.status}" />
+                        <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.CreatePostagemRequiredMessage_conteudo}"/>
+
+                        <p:outputLabel for="videosPanel" value="Vídeos"/>
+                        <p:panelGrid columns="1" id="videosPanel">
+                            <f:facet name="header">
+                                <p:inputText id="busca" placeholder="Perquisa"/>
+                            </f:facet>
+                            <p:inputText id="urlVideo" value="#{videosController.selected.link}"/>
+                            <p:inputText id="descricaoVideo" value="#{videosController.selected.descricao}"/>
+                            <p:commandButton id="addVideoButton" value="#{bundle.Salvar}" actionListener="#{videosController.create}"/>
+                        </p:panelGrid>
+
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{postagemController.create}" value="#{bundle.Save}" update="display,:PostagemListForm:datalist,:growl" oncomplete="handleSubmit(args,'PostagemCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PostagemCreateDialog.hide()"/>
+
+                    <p:commandButton actionListener="#{postagemController.create}" value="#{bundle.Save}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args,'PostagemCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

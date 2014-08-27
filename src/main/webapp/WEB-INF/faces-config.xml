@@ -36,20 +36,13 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
-    <managed-bean>
-        <managed-bean-name>contadorAcessoController</managed-bean-name>
-        <managed-bean-class>
-            br.edu.uag.aruagi.control.bean.ContadorAcessoController
-        </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
+   
     <managed-bean>
         <managed-bean-name>postagemController</managed-bean-name>
         <managed-bean-class>
             br.edu.uag.aruagi.control.bean.PostagemController
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
     <managed-bean>
@@ -236,6 +229,11 @@
     <managed-bean>
         <managed-bean-name>videosPostagemController</managed-bean-name>
         <managed-bean-class>br.edu.uag.aruagi.control.bean.VideosPostagemController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>videosController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.bean.VideosController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     

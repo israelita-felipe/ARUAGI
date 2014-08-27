@@ -23,6 +23,7 @@ public class UsuarioSessionController implements Serializable {
     private final UsuarioFacade facade = new UsuarioFacade();
     private static Usuario selected = null;
     private boolean loged = false;
+    private boolean admin = false;
 
     public UsuarioSessionController() {
         setSelected(new Usuario());
@@ -77,6 +78,19 @@ public class UsuarioSessionController implements Serializable {
      */
     public void setLogged(boolean isLoged) {
         this.loged = isLoged;
+    }
+
+    /**
+     * verifica se é administrador
+     *
+     * @return
+     */
+    public boolean isAdmin() {
+        this.admin = false;
+        if (getSelected().getNivelAcesso().getLinkAcesso().equals("administrador")) {
+            this.admin = true;
+        }
+        return this.admin;
     }
 
     public static Usuario getUserLogged() {

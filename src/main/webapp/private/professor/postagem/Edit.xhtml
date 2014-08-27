@@ -12,23 +12,15 @@
             <h:form id="PostagemEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{postagemController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditPostagemLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{postagemController.selected.id}" title="#{bundle.EditPostagemTitle_id}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.EditPostagemLabel_titulo}" for="titulo" />
                         <p:inputText id="titulo" value="#{postagemController.selected.titulo}" title="#{bundle.EditPostagemTitle_titulo}" />
-                        <p:outputLabel value="#{bundle.EditPostagemLabel_link}" for="link" />
-                        <p:inputText id="link" value="#{postagemController.selected.link}" title="#{bundle.EditPostagemTitle_link}" />
-                        <p:outputLabel value="#{bundle.EditPostagemLabel_data}" for="data" />
-                        <p:calendar id="data" pattern="MM/dd/yyyy" value="#{postagemController.selected.data}" title="#{bundle.EditPostagemTitle_data}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_data}" showOn="button"/>
+
                         <p:outputLabel value="#{bundle.EditPostagemLabel_conteudo}" for="conteudo" />
-                        <p:inputText id="conteudo" value="#{postagemController.selected.conteudo}" title="#{bundle.EditPostagemTitle_conteudo}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_conteudo}"/>
-                        <p:outputLabel value="#{bundle.EditPostagemLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{postagemController.selected.usuario}" title="#{bundle.EditPostagemTitle_usuario}" />
-                        <p:outputLabel value="#{bundle.EditPostagemLabel_status}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{postagemController.selected.status}" />
+                        <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_conteudo}"/>
+
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.Save}" update="display,:PostagemListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PostagemEditDialog.hide()"/>
+                    <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.Save}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -64,7 +64,7 @@ public class QuestaoGramatical implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pessoa_gramatical", nullable = false)
     public PessoaGramatical getPessoaGramatical() {
         return this.pessoaGramatical;
@@ -74,7 +74,7 @@ public class QuestaoGramatical implements java.io.Serializable {
         this.pessoaGramatical = pessoaGramatical;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tempo_verbal", nullable = false)
     public TempoVerbal getTempoVerbal() {
         return this.tempoVerbal;
@@ -84,7 +84,7 @@ public class QuestaoGramatical implements java.io.Serializable {
         this.tempoVerbal = tempoVerbal;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_latim", nullable = false)
     public PalavraLatim getPalavraLatim() {
         return this.palavraLatim;
@@ -94,7 +94,7 @@ public class QuestaoGramatical implements java.io.Serializable {
         this.palavraLatim = palavraLatim;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nivel", nullable = false)
     public NivelQuestao getNivelQuestao() {
         return this.nivelQuestao;
