@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Redefinição de senha</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:messages autoUpdate="true" closable="true"/>
+            <p:panelGrid columns="2">
+                <f:facet name="header">
+                    <h:outputText value="Preencha todos os campos corretamente"/>
+                </f:facet>
+
+                <p:outputLabel for="currentPassword" value="Senha atual:"/>
+                <p:password id="currentPassword" value="#{usuarioSessionController.currentPass}"/>
+
+                <p:outputLabel for="newPassword" value="Nova senha"/>
+                <p:password id="newPassword" value="#{usuarioSessionController.newPass}"/>
+
+                <p:outputLabel for="retryNewPassword" value="Repita a nova senha"/>
+                <p:password id="retryNewPassword" value="#{usuarioSessionController.confirmNewPass}"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Salvar" ajax="false" action="#{usuarioSessionController.updatePassword}"/>
+                </f:facet>
+            </p:panelGrid>        
+        </h:form>
+    </h:body>
+</html>
+

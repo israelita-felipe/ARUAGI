@@ -5,6 +5,8 @@ import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.model.Usuario;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -24,6 +26,13 @@ public class UsuarioSessionController implements Serializable {
     private static Usuario selected = null;
     private boolean loged = false;
     private boolean admin = false;
+
+    /**
+     * campos para redefinição de senha
+     */
+    private String currentPass;
+    private String newPass;
+    private String confirmNewPass;
 
     public UsuarioSessionController() {
         setSelected(new Usuario());
@@ -64,6 +73,91 @@ public class UsuarioSessionController implements Serializable {
     public String doLogout() throws Exception {
         setLogged(false);
         return "/public/Login.xhtml?faces-redirect=true";
+    }
+
+    /**
+     * Atualiza a senha do usuário atual
+     *
+     * Update the current user's password
+     *
+     * @return
+     */
+    public String updatePassword() {
+        try {
+            String s = SHA256.encode(this.currentPass);
+            String nP = SHA256.encode(this.newPass);
+            String cNP = SHA256.encode(this.confirmNewPass);
+            if (s.equals(UsuarioSessionController.getUserLogged().getSenha())) {
+                if (nP.equals(cNP)) {
+                    getSelected().setSenha(nP);
+                    getFacade().begin();
+                    getFacade().edit(getSelected());
+                    getFacade().end();
+                    return doLogout();
+                } else {
+                    throw new IllegalArgumentException("nova senha e confirmação não correspondem");
+                }
+            } else {
+                throw new IllegalArgumentException("Sua senha de usuário incorreta");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            JsfUtil.addErrorMessage("Erro:\n" + e.getMessage());
+        } catch (UnsupportedEncodingException e) {
+            JsfUtil.addErrorMessage("Erro:\n" + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            JsfUtil.addErrorMessage("Erro:\n" + e.getMessage());
+        } catch (Exception ex) {
+            JsfUtil.addErrorMessage("Erro desconhecido:\n" + ex.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getCurrentPass() {
+        return currentPass;
+    }
+
+    /**
+     *
+     * @param currentPass
+     */
+    public void setCurrentPass(String currentPass) {
+        this.currentPass = currentPass;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getNewPass() {
+        return newPass;
+    }
+
+    /**
+     *
+     * @param newPass
+     */
+    public void setNewPass(String newPass) {
+        this.newPass = newPass;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getConfirmNewPass() {
+        return confirmNewPass;
+    }
+
+    /**
+     *
+     * @param confirmNewPass
+     */
+    public void setConfirmNewPass(String confirmNewPass) {
+        this.confirmNewPass = confirmNewPass;
     }
 
     /**

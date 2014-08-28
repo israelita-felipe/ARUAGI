@@ -51,7 +51,7 @@ public class VideosPostagem implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "videos", nullable = false)
     public Videos getVideos() {
         return this.videos;
@@ -61,7 +61,7 @@ public class VideosPostagem implements java.io.Serializable {
         this.videos = videos;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "postagem", nullable = false)
     public Postagem getPostagem() {
         return this.postagem;

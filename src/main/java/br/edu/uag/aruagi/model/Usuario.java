@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -95,7 +96,7 @@ public class Usuario implements java.io.Serializable {
         this.nome = nome;
     }
 
-    @Column(name = "senha", nullable = false, unique = true)
+    @Column(name = "senha", nullable = false)
     public String getSenha() {
         return this.senha;
     }
@@ -104,7 +105,7 @@ public class Usuario implements java.io.Serializable {
         this.senha = senha;
     }
 
-    @Column(name = "login", nullable = false, unique = true)
+    @Column(name = "login", nullable = false)
     public String getLogin() {
         return this.login;
     }
@@ -131,7 +132,7 @@ public class Usuario implements java.io.Serializable {
         this.status = status;
     }
 
-    @OneToMany(mappedBy = "usuario", targetEntity = Usuario.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", targetEntity = Usuario.class)
     public Set getUsuarios() {
         return this.usuarios;
     }

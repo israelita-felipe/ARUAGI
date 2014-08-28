@@ -19,7 +19,7 @@
             <p:layoutUnit position="north">
                 <h:form id="menuForm">
                     <!-- BARRA DE MENUS PRINCIPAL-->
-                    <p:menubar>
+                    <p:menubar>                        
                         <p:submenu label="MANUTENÇÃO" rendered="#{usuarioSessionController.admin}">
 
                             <p:menuitem value="Acesso" outcome="./administrador/acesso/List.xhtml" />
@@ -71,9 +71,16 @@
                             <p:menuitem value="Videos" outcome="./professor/videos/List.xhtml" />
 
                         </p:submenu>
+
                         <f:facet name="options">
-                            <p:commandButton value="Sair" ajax="false" action="#{usuarioSessionController.doLogout()}"/>
+                            <p:menuButton value="Perfil">
+                                <p:menuitem value="Atualizar informações"/>
+                                <p:menuitem value="Redefinir senha" outcome="./professor/senha/Redefinir.xhtml"/>
+                                <p:separator/>
+                                <p:menuitem value="Sair" ajax="false" action="#{usuarioSessionController.doLogout()}"/>
+                            </p:menuButton>
                         </f:facet>
+
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>
@@ -92,9 +99,14 @@
 
                             <h:outputText value="#{itemAtual.conteudo}" escape="false"/>
                             <p:dataGrid value="#{itemAtual.videosPostagems}" var="videosAtuais" emptyMessage="Nenhum vídeos para esta postagem" columns="1" paginator="true" rows="1">
-                                <p:panel footer="#{videosAtuais.videos.descricao}">
+                                <p:panel header="#{videosAtuais.videos.descricao}">
                                     <center>
-                                        <p:media value="#{videosAtuais.videos.link}" width="600" height="400" player="flash"/>                                      
+                                        <iframe width="340"
+                                                height="260"
+                                                src="//www.youtube.com/embed/#{videosAtuais.videos.link}?feature=player_embedded"
+                                                frameborder="0"
+                                                allowfullscreen="true">
+                                        </iframe>                                  
                                     </center>
                                 </p:panel>
                             </p:dataGrid>                
@@ -106,11 +118,11 @@
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </h:outputFormat>                        
                                 <p:outputLabel value=" | "/>
-                                <p:commandLink value="Excluir" action="#{postagemController.destroy}"  update="datalist">
+                                <p:commandLink value="Excluir" action="#{postagemController.destroy}"  update="datalist" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
                                     <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
                                 </p:commandLink>
                                 <p:outputLabel value=" | "/>
-                                <p:commandLink value="#{bundle.Edit}" update=":PostagemEditForm" oncomplete="PF('PostagemEditDialog').show()">
+                                <p:commandLink value="#{bundle.Edit}" update=":PostagemEditForm" oncomplete="PF('PostagemEditDialog').show()" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
                                     <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
                                 </p:commandLink>
 

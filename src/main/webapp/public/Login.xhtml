@@ -19,28 +19,35 @@
             <!-- LAYOUT DE INFORMACAO DE ACESSO -->
             <p:layoutUnit position="north" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
                 <p:panelGrid columns="3">
-                    <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="100" height="130"/>
-                    <p:panelGrid columns="1">
-                        <h:outputText value="ARUAGI - Software de Ensino de Língua Latina"/>
-                    </p:panelGrid>
-                    <h:form>
-                        <center>
-                            <p:outputLabel value="Autorização" for="loginGrid"/>
-                        </center>
+
+                    <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="100" height="130"/>                    
+
+                    <h:outputText value="ARUAGI - Software de Ensino de Língua Latina"/>
+
+                    <h:form >
                         <p:messages autoUpdate="true" closable="true"/>
                         <p:panelGrid id="loginGrid" columns="2">
 
+                            <f:facet name="header">
+                                <p:outputLabel value="Autorização"/>
+                            </f:facet>
+
                             <p:outputLabel value="#{bundle.Login}" for="login"/>
-                            <h:inputText id="login" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                            <p:inputText id="login" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                                 <f:validator validatorId="EmailValidator"/>
-                            </h:inputText>
+                            </p:inputText>
 
                             <p:outputLabel value="#{bundle.Senha}" for="senha"/>
-                            <h:inputSecret id="senha" value="#{usuarioSessionController.selected.senha}" required="true"/>
-                            <p:commandButton value="#{bundle.Logar}" action="#{usuarioSessionController.doLogin()}"/>
-                            <p:commandLink value="Cadastre-se"/>
+                            <p:password id="senha" value="#{usuarioSessionController.selected.senha}" required="true"/>
+
+                            <f:facet name="footer">
+                                <center>
+                                    <p:commandButton value="#{bundle.Logar}" action="#{usuarioSessionController.doLogin}"/>
+                                </center>
+                            </f:facet>
                         </p:panelGrid>
                     </h:form>
+
                 </p:panelGrid>
             </p:layoutUnit>
 

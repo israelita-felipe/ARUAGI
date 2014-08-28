@@ -15,7 +15,7 @@
 
         <ui:define name="body">
             <h:form id="VideosListForm">                
-                <p:dataGrid id="datalist" columns="4" value="#{videosController.items}" var="video" paginator="true">
+                <p:dataGrid id="datalist" columns="4" value="#{videosController.items}" var="video" paginator="true" rows="2">
                     <f:facet name="header">
                         <p:commandButton id="createButton" icon="ui-icon-plus" value="#{bundle.Create}" actionListener="#{videosController.prepareCreate}" update=":VideosCreateForm" oncomplete="PF('VideosCreateDialog').show()"/>
                         <p:inputText id="pesquisa" placeholder="Pesquisa"/>

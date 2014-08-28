@@ -25,6 +25,7 @@ public class VideosController implements Serializable, InterfaceController<Video
     private Videos selected;
 
     public VideosController() {
+        myVideos(0);
     }
 
     public Videos getSelected() {
@@ -54,7 +55,7 @@ public class VideosController implements Serializable, InterfaceController<Video
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("VideosCreated"));        
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("VideosCreated"));
     }
 
     @Override
@@ -82,10 +83,15 @@ public class VideosController implements Serializable, InterfaceController<Video
             setEmbeddableKeys();
             try {
                 if (persistAction == PersistAction.CREATE) {
+                    /**
+                     * prepara o link do vídeo para ser adicionado e utilizado
+                     * em um iFrame
+                     */
                     getSelected().setLink(StringManager.prepareLinkVideoIFrame(getSelected().getLink()));
                     getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getSelected().setStatus(Boolean.TRUE);
                     getFacade().create(selected);
+
                 } else if (persistAction == PersistAction.UPDATE) {
                     getSelected().setLink(StringManager.prepareLinkVideoIFrame(getSelected().getLink()));
                     getFacade().edit(selected);
@@ -99,6 +105,12 @@ public class VideosController implements Serializable, InterfaceController<Video
             }
         }
         getFacade().end();
+        if (getSelected().getId() != 0) {
+            /**
+             * criando uma postagem automática para o vídeo
+             */
+            AutoPostagemController.create(selected);
+        }
     }
 
     public Videos getVideos(int id) {
