@@ -11,7 +11,11 @@ package br.edu.uag.aruagi.control.util.support;
  */
 public class StringManager {
 
-    public static String prepareLinkVideo(String link) {
+    public static String prepareLinkVideoPrimeFaces(String link) {
         return link.replaceFirst("watch", "").replaceFirst("=", "/").replaceFirst("[?]", "");
+    }
+
+    public static String prepareLinkVideoIFrame(String link) {
+        return link.replaceFirst("https://www.youtube.com/watch", "").replaceFirst("[?]", "").replaceFirst("v=", "");
     }
 }

@@ -12,14 +12,14 @@
             <h:form id="QuestaoLacunaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{questaoLacunaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateQuestaoLacunaLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{questaoLacunaController.selected.id}" title="#{bundle.CreateQuestaoLacunaTitle_id}" required="true" requiredMessage="#{bundle.CreateQuestaoLacunaRequiredMessage_id}"/>
+
                         <p:outputLabel value="#{bundle.CreateQuestaoLacunaLabel_fraseLatim}" for="fraseLatim" />
                         <p:selectOneMenu id="fraseLatim" value="#{questaoLacunaController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.EditQuestaoLacunaRequiredMessage_fraseLatim}">
                             <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
                                            var="fraseLatimItem"
                                            itemValue="#{fraseLatimItem}"/>
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.CreateQuestaoLacunaLabel_nivelQuestao}" for="nivelQuestao" />
                         <p:selectOneMenu id="nivelQuestao" value="#{questaoLacunaController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoLacunaRequiredMessage_nivelQuestao}">
                             <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
@@ -28,13 +28,12 @@
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateQuestaoLacunaLabel_titulo}" for="titulo" />
                         <p:inputText id="titulo" value="#{questaoLacunaController.selected.titulo}" title="#{bundle.CreateQuestaoLacunaTitle_titulo}" />
+
                         <p:outputLabel value="#{bundle.CreateQuestaoLacunaLabel_enunciado}" for="enunciado" />
                         <p:inputText id="enunciado" value="#{questaoLacunaController.selected.enunciado}" title="#{bundle.CreateQuestaoLacunaTitle_enunciado}" />
-                        <p:outputLabel value="#{bundle.CreateQuestaoLacunaLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{questaoLacunaController.selected.usuario}" title="#{bundle.CreateQuestaoLacunaTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{questaoLacunaController.create}" value="#{bundle.Save}" update="display,:QuestaoLacunaListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestaoLacunaCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestaoLacunaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

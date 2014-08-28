@@ -17,22 +17,26 @@
                         <p:inputText id="titulo" value="#{postagemController.selected.titulo}" title="#{bundle.CreatePostagemTitle_titulo}" />
 
                         <p:outputLabel value="#{bundle.CreatePostagemLabel_conteudo}" for="conteudo" />
-                        <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.CreatePostagemRequiredMessage_conteudo}"/>
-
-                        <p:outputLabel for="videosPanel" value="Vídeos"/>
-                        <p:panelGrid columns="1" id="videosPanel">
-                            <f:facet name="header">
-                                <p:inputText id="busca" placeholder="Perquisa"/>
-                            </f:facet>
-                            <p:inputText id="urlVideo" value="#{videosController.selected.link}"/>
-                            <p:inputText id="descricaoVideo" value="#{videosController.selected.descricao}"/>
-                            <p:commandButton id="addVideoButton" value="#{bundle.Salvar}" actionListener="#{videosController.create}"/>
-                        </p:panelGrid>
+                        <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.CreatePostagemRequiredMessage_conteudo}"/>                        
 
                     </p:panelGrid>
 
+                    <p:dataGrid id="videoGrid" value="#{postagemController.selected.videosPostagems}" var="videoPostagem" paginator="true">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{videoPostagem.videos.descricao}"/>
+                            </f:facet>
+                            <p:media player="flash" value="#{videoPostagem.videos.link}"/>                        
+                            <f:facet name="footer">
+                                <p:commandButton value="Excluir" action="#{videosController.destroy()}" disabled="#{videoPostagem.usuario!=usuarioSessionController.selected.id}">
+                                    <f:setPropertyActionListener target="#{videosController.selected}" value="#{videoPostagem.videos}"/>
+                                </p:commandButton>
+                            </f:facet>
+                        </p:panel>
+                    </p:dataGrid>
+
                     <p:commandButton actionListener="#{postagemController.create}" value="#{bundle.Save}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args,'PostagemCreateDialog');"/>
-                </h:panelGroup>
+                </h:panelGroup>                
             </h:form>
         </p:dialog>
 

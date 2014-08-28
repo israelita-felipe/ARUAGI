@@ -63,9 +63,6 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
     @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     @Override

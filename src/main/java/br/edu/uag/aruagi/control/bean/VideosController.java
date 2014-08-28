@@ -5,6 +5,7 @@ import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.Videos;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.util.support.StringManager;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -14,6 +15,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Property;
 
 public class VideosController implements Serializable, InterfaceController<Videos, Integer> {
 
@@ -22,7 +25,6 @@ public class VideosController implements Serializable, InterfaceController<Video
     private Videos selected;
 
     public VideosController() {
-        prepareCreate();
     }
 
     public Videos getSelected() {
@@ -52,10 +54,7 @@ public class VideosController implements Serializable, InterfaceController<Video
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("VideosCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("VideosCreated"));        
     }
 
     @Override
@@ -74,10 +73,7 @@ public class VideosController implements Serializable, InterfaceController<Video
 
     @Override
     public List<Videos> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
+        return this.items;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -85,11 +81,13 @@ public class VideosController implements Serializable, InterfaceController<Video
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if(persistAction == PersistAction.CREATE){
+                if (persistAction == PersistAction.CREATE) {
+                    getSelected().setLink(StringManager.prepareLinkVideoIFrame(getSelected().getLink()));
                     getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getSelected().setStatus(Boolean.TRUE);
                     getFacade().create(selected);
-                }else if (persistAction == PersistAction.UPDATE) {
+                } else if (persistAction == PersistAction.UPDATE) {
+                    getSelected().setLink(StringManager.prepareLinkVideoIFrame(getSelected().getLink()));
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
@@ -108,6 +106,21 @@ public class VideosController implements Serializable, InterfaceController<Video
         Videos v = getFacade().find(id);
         getFacade().end();
         return v;
+    }
+
+    public List<Videos> myVideos(int id) {
+        if (id == 0) {
+            getFacade().begin();
+            this.items = getFacade().findAll();
+            getFacade().end();
+        } else {
+            DetachedCriteria query = DetachedCriteria.forClass(Videos.class);
+            query.add(Property.forName("usuario").eq(id));
+            getFacade().begin();
+            this.items = getFacade().getEntitiesByDetachedCriteria(query);
+            getFacade().end();
+        }
+        return this.items;
     }
 
     @Override

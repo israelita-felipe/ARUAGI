@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="./../../../resources/template.xhtml">
 
 
         <ui:define name="title">
@@ -14,56 +14,53 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="VideosListForm">
-                <p:panel header="#{bundle.ListVideosTitle}">
-                    <p:dataTable id="datalist" value="#{videosController.items}" var="item"
-                                 selectionMode="single" selection="#{videosController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
-
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVideosTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVideosTitle_link}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.link}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVideosTitle_descricao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descricao}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVideosTitle_usuario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{videosController.prepareCreate}" update=":VideosCreateForm" oncomplete="PF('VideosCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":VideosViewForm" oncomplete="PF('VideosViewDialog').show()" disabled="#{empty videosController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":VideosEditForm" oncomplete="PF('VideosEditDialog').show()" disabled="#{empty videosController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{videosController.destroy}" update=":growl,datalist" disabled="#{empty videosController.selected}"/>
+            <h:form id="VideosListForm">                
+                <p:dataGrid id="datalist" columns="4" value="#{videosController.items}" var="video" paginator="true">
+                    <f:facet name="header">
+                        <p:commandButton id="createButton" icon="ui-icon-plus" value="#{bundle.Create}" actionListener="#{videosController.prepareCreate}" update=":VideosCreateForm" oncomplete="PF('VideosCreateDialog').show()"/>
+                        <p:inputText id="pesquisa" placeholder="Pesquisa"/>
+                        <p:outputLabel value=" | "/>
+                        <p:commandButton value="Meus vídeos" actionListener="#{videosController.myVideos(usuarioSessionController.selected.id)}" update="datalist"/>
+                        <p:commandButton value="Todos os vídeos" actionListener="#{videosController.myVideos(0)}" update="datalist"/>
+                    </f:facet>
+                    <p:panel>
+                        <f:facet name="header">
+                            <h:outputText value="#{video.descricao}"/>
                         </f:facet>
-                    </p:dataTable>
-                </p:panel>
+                        <iframe width="240"
+                                height="160"
+                                src="//www.youtube.com/embed/#{video.link}?feature=player_embedded"
+                                frameborder="0"
+                                allowfullscreen="true">
+                        </iframe>                        
+                        <f:facet name="footer">
+
+                            <h:outputText value="Por: #{usuarioSessionController.getUsuario(video.usuario).nome}"/>
+
+                            <p:outputLabel value=" | "/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil"  update=":VideosEditForm" oncomplete="PF('VideosEditDialog').show()" disabled="#{video.usuario!=usuarioSessionController.selected.id}">
+                                <f:setPropertyActionListener target="#{videosController.selected}" value="#{video}"/>
+                            </p:commandButton>
+
+                            <p:outputLabel value=" | "/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  actionListener="#{videosController.destroy}" update=":growl,datalist" disabled="#{video.usuario!=usuarioSessionController.selected.id}">
+                                <f:setPropertyActionListener target="#{videosController.selected}" value="#{video}"/>
+                            </p:commandButton>
+
+                            <p:outputLabel value=" | "/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" update=":VideosViewForm" oncomplete="PF('VideosViewDialog').show()">
+                                <f:setPropertyActionListener target="#{videosController.selected}" value="#{video}"/>
+                            </p:commandButton>
+
+                        </f:facet>
+                    </p:panel>
+                </p:dataGrid>
             </h:form>
 
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+
         </ui:define>
     </ui:composition>
 

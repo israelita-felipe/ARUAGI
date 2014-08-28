@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -12,17 +11,15 @@
             <h:form id="VideosCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{videosController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateVideosLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{videosController.selected.id}" title="#{bundle.CreateVideosTitle_id}" required="true" requiredMessage="#{bundle.CreateVideosRequiredMessage_id}"/>
+
+                        <p:outputLabel value="#{bundle.CreateVideosLabel_descricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{videosController.selected.descricao}" title="#{bundle.CreateVideosTitle_descricao}" maxlength="40"/>
+
                         <p:outputLabel value="#{bundle.CreateVideosLabel_link}" for="link" />
                         <p:inputText id="link" value="#{videosController.selected.link}" title="#{bundle.CreateVideosTitle_link}" required="true" requiredMessage="#{bundle.CreateVideosRequiredMessage_link}"/>
-                        <p:outputLabel value="#{bundle.CreateVideosLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{videosController.selected.descricao}" title="#{bundle.CreateVideosTitle_descricao}" />
-                        <p:outputLabel value="#{bundle.CreateVideosLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{videosController.selected.usuario}" title="#{bundle.CreateVideosTitle_usuario}" />
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{videosController.create}" value="#{bundle.Save}" update="display,:VideosListForm:datalist,:growl" oncomplete="handleSubmit(args,'VideosCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="VideosCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

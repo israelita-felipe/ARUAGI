@@ -20,6 +20,21 @@
                         <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_conteudo}"/>
 
                     </p:panelGrid>
+
+                    <p:dataGrid id="videoGrid" value="#{postagemController.selected.videosPostagems}" var="videoPostagem" paginator="true">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{videoPostagem.videos.descricao}"/>
+                            </f:facet>
+                            <p:media player="flash" value="#{videoPostagem.videos.link}"/>                        
+                            <f:facet name="footer">
+                                <p:commandButton value="Excluir" action="#{videosController.destroy()}" disabled="#{videoPostagem.usuario!=usuarioSessionController.selected.id}">
+                                    <f:setPropertyActionListener target="#{videosController.selected}" value="#{videoPostagem.videos}"/>
+                                </p:commandButton>
+                            </f:facet>
+                        </p:panel>
+                    </p:dataGrid>
+
                     <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.Save}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
                 </h:panelGroup>
             </h:form>

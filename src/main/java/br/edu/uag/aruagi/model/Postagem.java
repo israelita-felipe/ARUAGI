@@ -3,6 +3,7 @@ package br.edu.uag.aruagi.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class Postagem implements java.io.Serializable {
     private String conteudo;
     private Integer usuario;
     private Boolean status;
-    private Set videosPostagems = new HashSet(0);
+    private List<VideosPostagem> videosPostagems;
     private Set linksQuestaos = new HashSet(0);
 
     public Postagem() {
@@ -42,7 +43,7 @@ public class Postagem implements java.io.Serializable {
         this.conteudo = conteudo;
     }
 
-    public Postagem(int id, String titulo, String link, Date data, String conteudo, Integer usuario, Boolean status, Set videosPostagems, Set linksQuestaos) {
+    public Postagem(int id, String titulo, String link, Date data, String conteudo, Integer usuario, Boolean status, List<VideosPostagem> videosPostagems, Set linksQuestaos) {
         this.id = id;
         this.titulo = titulo;
         this.link = link;
@@ -120,16 +121,16 @@ public class Postagem implements java.io.Serializable {
         this.status = status;
     }
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "postagem", targetEntity = VideosPostagem.class)
-    public Set getVideosPostagems() {
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "postagem", targetEntity = VideosPostagem.class)
+    public List<VideosPostagem> getVideosPostagems() {
         return this.videosPostagems;
     }
 
-    public void setVideosPostagems(Set videosPostagems) {
+    public void setVideosPostagems(List<VideosPostagem> videosPostagems) {
         this.videosPostagems = videosPostagems;
     }
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "postagem", targetEntity = LinksQuestao.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "postagem", targetEntity = LinksQuestao.class)
     public Set getLinksQuestaos() {
         return this.linksQuestaos;
     }

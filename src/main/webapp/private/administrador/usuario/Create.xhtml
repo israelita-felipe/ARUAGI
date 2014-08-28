@@ -25,10 +25,10 @@
                         <p:inputText id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.CreateUsuarioTitle_nome}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_nome}"/>
 
                         <p:outputLabel value="#{bundle.CreateUsuarioLabel_senha}" for="senha" />
-                        <p:inputText id="senha" value="#{usuarioController.selected.senha}" title="#{bundle.CreateUsuarioTitle_senha}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_senha}"/>
+                        <p:password id="senha" value="#{usuarioController.selected.senha}" title="#{bundle.CreateUsuarioTitle_senha}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_senha}"/>
 
                         <p:outputLabel value="#{bundle.CreateUsuarioLabel_senha}" for="senhaConfirm" />
-                        <p:inputText id="senhaConfirm" value="#{usuarioController.confirmPass}" title="#{bundle.CreateUsuarioTitle_senha}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_senha}"/>
+                        <p:password id="senhaConfirm" value="#{usuarioController.confirmPass}" title="#{bundle.CreateUsuarioTitle_senha}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_senha}"/>
 
                         <p:outputLabel value="#{bundle.CreateUsuarioLabel_login}" for="login" />
                         <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{bundle.CreateUsuarioTitle_login}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_login}"/>
