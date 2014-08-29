@@ -38,12 +38,11 @@
                             </p:inputText>
 
                             <p:outputLabel value="#{bundle.Senha}" for="senha"/>
-                            <p:password id="senha" value="#{usuarioSessionController.selected.senha}" required="true"/>
+                            <p:password id="senha" value="#{usuarioSessionController.selected.senha}"/>
 
                             <f:facet name="footer">
-                                <center>
-                                    <p:commandButton value="#{bundle.Logar}" action="#{usuarioSessionController.doLogin}"/>
-                                </center>
+                                <p:commandButton value="#{bundle.Logar}" action="#{usuarioSessionController.doLogin}"/> 
+                                <p:commandLink value="Redefinir senha" action="Redefinir.xhtml?faces-redirect=true"/>
                             </f:facet>
                         </p:panelGrid>
                     </h:form>

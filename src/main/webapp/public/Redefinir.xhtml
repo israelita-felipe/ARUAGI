@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Redefinição de senha</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+    <h:body>
+        <h:form id="mainForm">
+            <center>
+                <p:panel header="AVISO">
+                    <h:outputText value="Sua nova senha de acesso será enviada para o seu 
+                                  endereço de e-mail, que serve para efetuar login no 
+                                  ARUAGI, caso seu endereço não seja válido entrar em 
+                                  contado com os administradores."/>
+                </p:panel>                
+                <br/>
+                <p:panelGrid columns="2">
+
+                    <f:facet name="header">
+                        <p:outputLabel value="Digite o E-mail que utiliza como login no ARUAGI"/>
+                        <p:messages autoUpdate="true" closable="true"/>
+                    </f:facet>                
+
+                    <p:outputLabel for="email" value="Login"/>
+                    <p:inputText id="email" value="#{usuarioSessionController.selected.login}">
+                        <f:validator validatorId="EmailValidator"/>
+                    </p:inputText>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Enviar" action="#{usuarioSessionController.requestNewPassword}"/>
+                    </f:facet>
+
+                </p:panelGrid>
+            </center>
+        </h:form>
+    </h:body>
+</html>
+

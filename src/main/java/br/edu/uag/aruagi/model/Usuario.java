@@ -1,17 +1,13 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,7 +26,6 @@ public class Usuario implements java.io.Serializable {
     private String login;
     private String observacoes;
     private Boolean status;
-    private Set usuarios = new HashSet(0);
 
     public Usuario() {
     }
@@ -44,7 +39,7 @@ public class Usuario implements java.io.Serializable {
         this.login = login;
     }
 
-    public Usuario(int id, Usuario usuario, NivelAcesso nivelAcesso, String nome, String senha, String login, String observacoes, Boolean status, Set usuarios) {
+    public Usuario(int id, Usuario usuario, NivelAcesso nivelAcesso, String nome, String senha, String login, String observacoes, Boolean status) {
         this.id = id;
         this.usuario = usuario;
         this.nivelAcesso = nivelAcesso;
@@ -53,7 +48,6 @@ public class Usuario implements java.io.Serializable {
         this.login = login;
         this.observacoes = observacoes;
         this.status = status;
-        this.usuarios = usuarios;
     }
 
     @Id
@@ -130,15 +124,6 @@ public class Usuario implements java.io.Serializable {
 
     public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", targetEntity = Usuario.class)
-    public Set getUsuarios() {
-        return this.usuarios;
-    }
-
-    public void setUsuarios(Set usuarios) {
-        this.usuarios = usuarios;
     }
 
     @Override

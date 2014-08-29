@@ -21,67 +21,69 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 
 public class UsuarioController implements Serializable, InterfaceController<Usuario, Integer> {
-    
+
     private final UsuarioFacade facade = new UsuarioFacade();
     private List<Usuario> items = null;
     private Usuario selected;
     private String confirmPass;
-    
+
     public UsuarioController() {
     }
-    
+
     public Usuario getSelected() {
         return selected;
     }
-    
+
     public void setSelected(Usuario selected) {
         this.selected = selected;
     }
-    
+
     public String getConfirmPass() {
         return confirmPass;
     }
-    
+
     public void setConfirmPass(String confirmPass) {
         this.confirmPass = confirmPass;
     }
-    
+
     protected void setEmbeddableKeys() {
     }
-    
+
     protected void initializeEmbeddableKey() {
     }
-    
+
     public UsuarioFacade getFacade() {
         return facade;
     }
-    
+
     @Override
     public Usuario prepareCreate() {
         selected = new Usuario();
         initializeEmbeddableKey();
         return selected;
     }
-    
+
     @Override
     public void create() {
+        // buscando um usuário com o mesmo login
         DetachedCriteria query = DetachedCriteria.forClass(Usuario.class)
-                .add(Property.forName("login").eq(getUserLogged().getLogin()));
+                .add(Property.forName("login").eq(getSelected().getLogin()));
         getFacade().begin();
         Usuario u = getFacade().getEntityByDetachedCriteria(query);
         getFacade().end();
+        // se não houver cria, caso contrário informa que já existe
         if (u == null) {
             persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioCreated"));
         } else {
             JsfUtil.addErrorMessage("E-mail já cadastrado");
         }
     }
-    
+
     @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioUpdated"));
     }
-    
+
     @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("UsuarioDeleted"));
@@ -90,7 +92,7 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-    
+
     @Override
     public List<Usuario> getItems() {
         getFacade().begin();
@@ -98,7 +100,7 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
         getFacade().end();
         return items;
     }
-    
+
     private void persist(PersistAction persistAction, String successMessage) {
         getFacade().begin();
         if (selected != null) {
@@ -125,27 +127,27 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
         }
         getFacade().end();
     }
-    
+
     public Usuario getUsuario(int id) {
         getFacade().begin();
         Usuario u = getFacade().find(id);
         getFacade().end();
         return u;
     }
-    
+
     @Override
     public List<Usuario> getItemsAvailableSelectMany() {
         return getItems();
     }
-    
+
     @Override
     public List<Usuario> getItemsAvailableSelectOne() {
         return getItems();
     }
-    
+
     @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
-        
+
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -155,19 +157,19 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
                     getValue(facesContext.getELContext(), null, "usuarioController");
             return controller.getUsuario(getKey(value));
         }
-        
+
         int getKey(String value) {
             int key;
             key = Integer.parseInt(value);
             return key;
         }
-        
+
         String getStringKey(int value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-        
+
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -181,7 +183,7 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
                 return null;
             }
         }
-        
+
     }
-    
+
 }

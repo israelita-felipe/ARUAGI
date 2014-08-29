@@ -3,6 +3,8 @@ package br.edu.uag.aruagi.control.bean;
 import br.edu.uag.aruagi.control.util.cript.SHA256;
 import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.util.support.EmailSender;
+import br.edu.uag.aruagi.control.util.support.StringManager;
 import br.edu.uag.aruagi.model.Usuario;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -13,6 +15,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.mail.MessagingException;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 
@@ -72,6 +75,7 @@ public class UsuarioSessionController implements Serializable {
 
     public String doLogout() throws Exception {
         setLogged(false);
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "/public/Login.xhtml?faces-redirect=true";
     }
 
@@ -110,6 +114,43 @@ public class UsuarioSessionController implements Serializable {
             JsfUtil.addErrorMessage("Erro desconhecido:\n" + ex.getMessage());
         }
         return null;
+    }
+
+    public void requestNewPassword() {
+        DetachedCriteria query = DetachedCriteria.forClass(Usuario.class)
+                .add(Property.forName("login").eq(getUserLogged().getLogin()));
+        getFacade().begin();
+        Usuario u = getFacade().getEntityByDetachedCriteria(query);
+        System.out.println("usuario atual: ++++++++++++++++++"+u);
+        getFacade().end();
+        if (u != null) {
+            try {
+                //abrindo uma nova transação
+                getFacade().begin();
+                //gerando uma nova senha
+                u.setSenha(StringManager.sortPassword(10));
+                //encriptado a senha com SHA256
+                String cP = SHA256.encode(u.getSenha());
+                //enviando um email
+                EmailSender.sendPreparedEmail(u);
+                //setando a nova senha
+                u.setSenha(cP);
+                //gravando alterações no banco                
+                getFacade().edit(u);
+                //finalizando a transação
+                getFacade().end();
+                JsfUtil.addSuccessMessage("Uma nova senha foi enviada para " + u.getLogin() + ", caso não tenha recebido repita o processo.");
+
+            } catch (UnsupportedEncodingException e) {
+                JsfUtil.addErrorMessage("[EM-UEE] Algo de errado na redefinição de senha ocorreu, nenhuma mudança foi feita.");
+            } catch (MessagingException e) {
+                JsfUtil.addErrorMessage("[EM-ME] Algo de errado na redefinição de senha ocorreu, nenhuma mudança foi feita.");
+            } catch (Exception e) {
+                JsfUtil.addErrorMessage("[EX-E] Ops! algo ocorreu, nada foi modificado");
+            }
+        } else {
+            JsfUtil.addErrorMessage("Usuário não é mebro do ARUAGI");
+        }
     }
 
     /**

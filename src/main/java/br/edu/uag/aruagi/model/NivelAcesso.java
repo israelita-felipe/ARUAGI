@@ -1,13 +1,9 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,7 +17,6 @@ public class NivelAcesso implements java.io.Serializable {
     private int id;
     private String linkAcesso;
     private String descricao;
-    private Set usuariosForIncluidoPor = new HashSet(0);
 
     public NivelAcesso() {
     }
@@ -30,11 +25,10 @@ public class NivelAcesso implements java.io.Serializable {
         this.id = id;
     }
 
-    public NivelAcesso(int id, String linkAcesso, String descricao, Set usuariosForIncluidoPor) {
+    public NivelAcesso(int id, String linkAcesso, String descricao) {
         this.id = id;
         this.linkAcesso = linkAcesso;
         this.descricao = descricao;
-        this.usuariosForIncluidoPor = usuariosForIncluidoPor;
     }
 
     @Id
@@ -63,15 +57,6 @@ public class NivelAcesso implements java.io.Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario", targetEntity = Usuario.class)
-    public Set getUsuariosForIncluidoPor() {
-        return this.usuariosForIncluidoPor;
-    }
-
-    public void setUsuariosForIncluidoPor(Set usuariosForIncluidoPor) {
-        this.usuariosForIncluidoPor = usuariosForIncluidoPor;
     }
 
     @Override

@@ -237,6 +237,12 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
+    <managed-bean>
+        <managed-bean-name>captchController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.util.support.Captcha</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    
     <!-- VALIDADORES -->
     <validator>
         <validator-id>EmailValidator</validator-id>
