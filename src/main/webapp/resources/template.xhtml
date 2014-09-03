@@ -3,10 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <!-- HEAD COM IMPORTACAO DO CSS E JAVASCRIPT -->
     <h:head>
+        <ui:insert name="head"/>
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>        
@@ -21,6 +23,75 @@
 
             <!-- LAYOUT DE INFORMACAO DE ACESSO -->
             <p:layoutUnit position="north" header="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">                 
+                <h:form id="menuForm">
+                    <!-- BARRA DE MENUS PRINCIPAL-->
+                    <p:menubar>
+                        
+                        <p:menuitem value="INÍCIO" outcome="/private/homePrivate.xhtml" />
+                        
+                        <p:submenu label="MANUTENÇÃO" rendered="#{usuarioSessionController.admin}">
+
+                            <p:menuitem value="Acesso" outcome="/private/administrador/acesso/List.xhtml" />
+                            <p:menuitem value="NivelAcesso" outcome="/private/administrador/nivelAcesso/List.xhtml" />
+                            <p:menuitem value="NivelQuestao" outcome="/private/administrador/nivelQuestao/List.xhtml" />
+                            <p:menuitem value="TipoQuestao" outcome="/private/administrador/tipoQuestao/List.xhtml" />
+                            <p:menuitem value="Usuario" outcome="/private/administrador/usuario/List.xhtml" />
+
+                        </p:submenu>
+                        <p:submenu label="CONTEÚDO">
+
+                            <p:menuitem value="AplicacaoFrase" outcome="/private/professor/aplicacaoFrase/List.xhtml" />
+                            <p:menuitem value="Caso" outcome="/private/professor/caso/List.xhtml" />
+                            <p:menuitem value="CasoAplicado" outcome="/private/professor/casoAplicado/List.xhtml" />
+                            <p:menuitem value="ClassificacaoGramatical" outcome="/private/professor/classificacaoGramatical/List.xhtml" />
+                            <p:menuitem value="Declinacao" outcome="/private/professor/declinacao/List.xhtml" />
+                            <p:menuitem value="DeclinacaoAplicada" outcome="/private/professor/declinacaoAplicada/List.xhtml" />
+                            <p:menuitem value="FraseLatim" outcome="/private/professor/fraseLatim/List.xhtml" />
+                            <p:menuitem value="FrasePortugues" outcome="/private/professor/frasePortugues/List.xhtml" />
+                            <p:menuitem value="IndicadorPessoaGramatical" outcome="/private/professor/indicadorPessoaGramatical/List.xhtml" />
+                            <p:menuitem value="IndicadorTempoVerbal" outcome="/private/professor/indicadorTempoVerbal/List.xhtml" />
+                            <p:menuitem value="PalavraLatim" outcome="/private/professor/palavraLatim/List.xhtml" />
+                            <p:menuitem value="PalavraPortugues" outcome="/private/professor/palavraPortugues/List.xhtml" />
+                            <p:menuitem value="PalavrasClassificadas" outcome="/private/professor/palavrasClassificadas/List.xhtml" />
+                            <p:menuitem value="PalavrasDeclinadas" outcome="/private/professor/palavrasDeclinadas/List.xhtml" />
+                            <p:menuitem value="PessoaGramatical" outcome="/private/professor/pessoaGramatical/List.xhtml" />
+                            <p:menuitem value="Radical" outcome="/private/professor/radical/List.xhtml" />
+                            <p:menuitem value="TempoVerbal" outcome="/private/professor/tempoVerbal/List.xhtml" />
+                            <p:menuitem value="TraduzFrase" outcome="/private/professor/traduzFrase/List.xhtml" />
+                            <p:menuitem value="TraduzPalavra" outcome="/private/professor/traduzPalavra/List.xhtml" />
+                            <p:menuitem value="VideosPostagem" outcome="/private/professor/videosPostagem/List.xhtml" />
+
+                        </p:submenu>
+                        <p:submenu label="ATIVIDADES">
+
+                            <p:menuitem value="AtividadeQuestao" outcome="/private/professor/atividadeQuestao/List.xhtml" />
+                            <p:menuitem value="Lacuna" outcome="/private/professor/lacuna/List.xhtml" />
+                            <p:menuitem value="LinksQuestao" outcome="/private/administrador/linksQuestao/List.xhtml" />
+                            <p:menuitem value="ListaQuestao" outcome="/private/administrador/listaQuestao/List.xhtml" />
+                            <p:menuitem value="QuestaoDeclinacao" outcome="/private/professor/questaoDeclinacao/List.xhtml" />
+                            <p:menuitem value="QuestaoGramatical" outcome="/private/professor/questaoGramatical/List.xhtml" />
+                            <p:menuitem value="QuestaoLacuna" outcome="/private/professor/questaoLacuna/List.xhtml" />
+                            <p:menuitem value="QuestaoTraduzFrase" outcome="/private/professor/questaoTraduzFrase/List.xhtml" />
+                            <p:menuitem value="QuestaoTraduzPalavra" outcome="/private/professor/questaoTraduzPalavra/List.xhtml" />
+
+                        </p:submenu>
+                        <p:submenu label="MULTIMÍDIA">
+
+                            <p:menuitem value="Videos" outcome="/private/professor/videos/List.xhtml" />
+
+                        </p:submenu>
+
+                        <f:facet name="options">
+                            <p:menuButton value="Perfil">
+                                <p:menuitem value="Atualizar informações"/>
+                                <p:menuitem value="Redefinir senha" outcome="/private/professor/senha/Redefinir.xhtml"/>
+                                <p:separator/>
+                                <p:menuitem value="Sair" ajax="false" action="#{usuarioSessionController.doLogout()}"/>
+                            </p:menuButton>
+                        </f:facet>
+
+                    </p:menubar>
+                </h:form>
                 <ui:insert name="header"/>                  
             </p:layoutUnit>
 
