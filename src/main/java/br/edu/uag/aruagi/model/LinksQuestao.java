@@ -52,7 +52,7 @@ public class LinksQuestao implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lista_questoes", nullable = false, insertable = false, updatable = false)
     public ListaQuestao getListaQuestao() {
         return this.listaQuestao;
@@ -62,7 +62,7 @@ public class LinksQuestao implements java.io.Serializable {
         this.listaQuestao = listaQuestao;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "postagem", nullable = false, insertable = false, updatable = false)
     public Postagem getPostagem() {
         return this.postagem;
@@ -84,10 +84,10 @@ public class LinksQuestao implements java.io.Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 53 * hash + (this.listaQuestao != null ? this.listaQuestao.hashCode() : 0);
-        hash = 53 * hash + (this.postagem != null ? this.postagem.hashCode() : 0);
-        hash = 53 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 53 * hash + (getId() != null ? getId().hashCode() : 0);
+        hash = 53 * hash + (getListaQuestao() != null ? getListaQuestao().hashCode() : 0);
+        hash = 53 * hash + (getPostagem() != null ? getPostagem().hashCode() : 0);
+        hash = 53 * hash + (getUsuario() != null ? getUsuario().hashCode() : 0);
         return hash;
     }
 
@@ -100,16 +100,16 @@ public class LinksQuestao implements java.io.Serializable {
             return false;
         }
         final LinksQuestao other = (LinksQuestao) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (getId() != other.getId() && (getId() == null || !getId().equals(other.getId()))) {
             return false;
         }
-        if (this.listaQuestao != other.listaQuestao && (this.listaQuestao == null || !this.listaQuestao.equals(other.listaQuestao))) {
+        if (getListaQuestao() != other.getListaQuestao() && (getListaQuestao() == null || !getListaQuestao().equals(other.getListaQuestao()))) {
             return false;
         }
-        if (this.postagem != other.postagem && (this.postagem == null || !this.postagem.equals(other.postagem))) {
+        if (getPostagem() != other.getPostagem() && (getPostagem() == null || !getPostagem().equals(other.getPostagem()))) {
             return false;
         }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
+        if (getUsuario() != other.getUsuario() && (getUsuario() == null || !getUsuario().equals(other.getUsuario()))) {
             return false;
         }
         return true;

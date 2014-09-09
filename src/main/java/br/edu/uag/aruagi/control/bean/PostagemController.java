@@ -15,13 +15,17 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 
 public class PostagemController implements Serializable, InterfaceController<Postagem, Integer> {
 
     private final PostagemFacade facade = new PostagemFacade();
+
     private List<Postagem> items = null;
     private Postagem selected;
+    
+    private List<Postagem> timeLine = null;
 
     public PostagemController() {
     }
@@ -95,6 +99,7 @@ public class PostagemController implements Serializable, InterfaceController<Pos
                     getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getSelected().setStatus(Boolean.TRUE);
                     getFacade().create(selected);
+
                 } else if (persistAction == PersistAction.UPDATE) {
                     /**
                      * atualizacao para a data de alteracao da postagem
@@ -121,10 +126,12 @@ public class PostagemController implements Serializable, InterfaceController<Pos
     }
 
     public List<Postagem> getTimeLine() {
+        DetachedCriteria query = DetachedCriteria.forClass(Postagem.class)
+                .addOrder(Order.desc("data"));
         getFacade().begin();
-        List<Postagem> timeLine = getFacade().getSession().createCriteria(Postagem.class).addOrder(Order.desc("data")).list();
+        this.timeLine = getFacade().getEntitiesByDetachedCriteria(query);
         getFacade().end();
-        return timeLine;
+        return this.timeLine;
     }
 
     @Override

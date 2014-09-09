@@ -1,16 +1,17 @@
-package ufrpe.uag.control;
+package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.QuestaoLacunaFacade;
 import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.QuestaoLacuna;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.model.Lacuna;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -22,7 +23,56 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
     private List<QuestaoLacuna> items = null;
     private QuestaoLacuna selected;
 
+    private Lacuna lacuna;
+    private int last = 0;
+
     public QuestaoLacunaController() {
+    }
+
+    /**
+     * adiciona uma nova lacuna
+     */
+    public void add() {
+        System.out.println(last);
+        boolean add = true;
+        lacuna.setInicio(last + 1);
+        if (selected.getLacunas() == null) {
+            selected.setLacunas(new ArrayList<Lacuna>());
+        }
+        if (!selected.getLacunas().isEmpty()) {
+            if (lacuna.getInicio() <= last) {
+                add = false;
+
+            }
+        }
+        if (add) {
+            selected.getLacunas().add(lacuna);
+            last = lacuna.getFim();
+        }
+    }
+
+    public int getLast() {
+        return last;
+    }
+
+    public void remove() {
+        if (lacuna != null) {
+            int t = selected.getLacunas().size();
+            for (int i = 0; i < t; i++) {
+                if (selected.getLacunas().get(i).equals(lacuna)) {
+                    selected.getLacunas().remove(i);
+                    i = t;
+                }
+            }
+        }
+    }
+
+    public void setLacuna(Lacuna lacuna) {
+        this.lacuna = lacuna;
+    }
+
+    public Lacuna getLacuna() {
+        return lacuna;
     }
 
     public QuestaoLacuna getSelected() {
@@ -45,6 +95,7 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
 
     @Override
     public QuestaoLacuna prepareCreate() {
+        lacuna = new Lacuna();
         selected = new QuestaoLacuna();
         initializeEmbeddableKey();
         return selected;
@@ -53,9 +104,6 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
     @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestaoLacunaCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     @Override
@@ -85,23 +133,16 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction == PersistAction.CREATE) {
+                    selected.setUsuario(UsuarioSessionController.getUserLogged().getId());
+                    selected.setStatus(Boolean.TRUE);
+                    getFacade().create(selected);
+                } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

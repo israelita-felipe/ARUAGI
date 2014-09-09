@@ -52,7 +52,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoDeclinacaoTitle_nivelQuestao}"/>
                             </f:facet>
-                            <h:outputText value="#{item.nivelQuestao}"/>
+                            <h:outputText value="#{item.nivel}"/>
                         </p:column>
 
                         <p:column>
@@ -66,14 +66,14 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestaoDeclinacaoTitle_usuario}"/>
                             </f:facet>
-                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
+                            <h:outputText value="#{usuarioSessionController.getUsuario(item.autor).nome}"/>
                         </p:column>
 
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{questaoDeclinacaoController.prepareCreate}" update=":QuestaoDeclinacaoCreateForm" oncomplete="PF('QuestaoDeclinacaoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":QuestaoDeclinacaoViewForm" oncomplete="PF('QuestaoDeclinacaoViewDialog').show()" disabled="#{empty questaoDeclinacaoController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":QuestaoDeclinacaoEditForm" oncomplete="PF('QuestaoDeclinacaoEditDialog').show()" disabled="#{empty questaoDeclinacaoController.selected || questaoDeclinacaoController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{questaoDeclinacaoController.destroy}" update=":growl,datalist" disabled="#{empty questaoDeclinacaoController.selected || questaoDeclinacaoController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":QuestaoDeclinacaoEditForm" oncomplete="PF('QuestaoDeclinacaoEditDialog').show()" disabled="#{empty questaoDeclinacaoController.selected || questaoDeclinacaoController.selected.autor!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{questaoDeclinacaoController.destroy}" update=":growl,datalist" disabled="#{empty questaoDeclinacaoController.selected || questaoDeclinacaoController.selected.autor!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

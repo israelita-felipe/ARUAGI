@@ -22,6 +22,7 @@ public class NivelQuestaoController implements Serializable, InterfaceController
     private NivelQuestao selected;
 
     public NivelQuestaoController() {
+       
     }
 
     public NivelQuestao getSelected() {

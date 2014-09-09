@@ -42,7 +42,7 @@ public class VideosPostagem implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id", unique = true)
     public int getId() {
         return this.id;
     }
@@ -83,10 +83,10 @@ public class VideosPostagem implements java.io.Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 71 * hash + this.id;
-        hash = 71 * hash + (this.videos != null ? this.videos.hashCode() : 0);
-        hash = 71 * hash + (this.postagem != null ? this.postagem.hashCode() : 0);
-        hash = 71 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 71 * hash + getId();
+        hash = 71 * hash + (getVideos() != null ? getVideos().hashCode() : 0);
+        hash = 71 * hash + (getPostagem() != null ? getPostagem().hashCode() : 0);
+        hash = 71 * hash + (getUsuario() != null ? getUsuario().hashCode() : 0);
         return hash;
     }
 
@@ -99,16 +99,16 @@ public class VideosPostagem implements java.io.Serializable {
             return false;
         }
         final VideosPostagem other = (VideosPostagem) obj;
-        if (this.id != other.id) {
+        if (getId() != other.getId()) {
             return false;
         }
-        if (this.videos != other.videos && (this.videos == null || !this.videos.equals(other.videos))) {
+        if (getVideos() != other.getVideos() && (getVideos() == null || !getVideos().equals(other.getVideos()))) {
             return false;
         }
-        if (this.postagem != other.postagem && (this.postagem == null || !this.postagem.equals(other.postagem))) {
+        if (getPostagem() != other.getPostagem() && (getPostagem() == null || !getPostagem().equals(other.getPostagem()))) {
             return false;
         }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
+        if (getUsuario() != other.getUsuario() && (getUsuario() == null || !getUsuario().equals(other.getUsuario()))) {
             return false;
         }
         return true;

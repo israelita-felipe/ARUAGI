@@ -5,15 +5,19 @@
  */
 package br.edu.uag.aruagi.control.util.exceptions;
 
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
+import javax.faces.event.PhaseId;
 
 /**
  *
@@ -21,47 +25,43 @@ import javax.faces.event.ExceptionQueuedEventContext;
  */
 public class LogExceptionHandler extends ExceptionHandlerWrapper {
 
-    private ExceptionHandler exceptionHandler;
+    private static final Logger log = Logger.getLogger(LogExceptionHandler.class.getCanonicalName());
+    private ExceptionHandler wrapped;
 
-    
-    public LogExceptionHandler(ExceptionHandler exceptionHandler) {
-        this.exceptionHandler = exceptionHandler;
+    LogExceptionHandler(ExceptionHandler exception) {
+        this.wrapped = exception;
     }
 
     @Override
     public ExceptionHandler getWrapped() {
-        return this.exceptionHandler;
+        return wrapped;
     }
 
     @Override
     public void handle() throws FacesException {
-        for (Iterator<ExceptionQueuedEvent> i = getUnhandledExceptionQueuedEvents().iterator(); i.hasNext();) {
-            ExceptionQueuedEvent exceptionQueuedEvent = i.next();
-
-            ExceptionQueuedEventContext exceptionQueuedEventContext = (ExceptionQueuedEventContext) exceptionQueuedEvent.getSource();
-
-            Throwable throwable = exceptionQueuedEventContext.getException();
-
-            if (throwable instanceof Throwable) {
-                Throwable t = (Throwable) throwable;
-                FacesContext facesContext
-                        = FacesContext.getCurrentInstance();
-
-                Map<String, Object> requestMap
-                        = facesContext.getExternalContext().getRequestMap();
-
-                try {
-
-                    requestMap.put("currentView", t.getMessage());
-                    facesContext.getExternalContext().getFlash().put("exceptioniNFO",
-                            t.getCause());
-                    facesContext.renderResponse();
-                } finally {
-                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ops! Algo aconteceu", t.getCause().getMessage()));
-                    i.remove();
-                }
+        final Iterator<ExceptionQueuedEvent> i = getUnhandledExceptionQueuedEvents().iterator();
+        while (i.hasNext()) {
+            ExceptionQueuedEvent event = i.next();
+            ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
+            // capturando a exceção do contexto
+            Throwable t = context.getException();
+            final FacesContext fc = FacesContext.getCurrentInstance();
+            final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+            final NavigationHandler nav = fc.getApplication().getNavigationHandler();
+            //fazer os devidos tratamentos
+            try {
+                //tratando o erro
+                log.log(Level.SEVERE, "Critical Exception!", t);  //redirect error page 
+                System.out.println("[israel] erro capturado pelo jsf " + t.getMessage());
+                requestMap.put("exceptionMessage", t.getMessage());
+                nav.handleNavigation(fc, null, "/error");
+                fc.renderResponse();
+                // avisando do erro
+                JsfUtil.addErrorMessage(t.getMessage());
+            } finally {
+                //removendo o erro
+                i.remove();
             }
-
         }
         getWrapped().handle();
     }

@@ -12,9 +12,6 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{nivelQuestaoController.selected != null}">
                         
-                        <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{nivelQuestaoController.selected.id}" title="#{bundle.CreateNivelQuestaoTitle_id}" required="true" requiredMessage="#{bundle.CreateNivelQuestaoRequiredMessage_id}"/>
-                        
                         <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.CreateNivelQuestaoTitle_descricao}" required="true" requiredMessage="#{bundle.CreateNivelQuestaoRequiredMessage_descricao}"/>
                         

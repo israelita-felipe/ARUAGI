@@ -238,9 +238,9 @@
     </managed-bean>
     
     <managed-bean>
-        <managed-bean-name>captchController</managed-bean-name>
-        <managed-bean-class>br.edu.uag.aruagi.control.util.support.Captcha</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-name>resolucaoTraduzPalavraController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.bean.ResolucaoTraduzPalavraController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
     <!-- VALIDADORES -->
@@ -248,4 +248,11 @@
         <validator-id>EmailValidator</validator-id>
         <validator-class>br.edu.uag.aruagi.control.util.validator.EmailValidator</validator-class>
     </validator>
+    
+    <!-- CAPTURA DE EXCECOES -->
+    <factory>
+        <exception-handler-factory>
+            br.edu.uag.aruagi.control.util.exceptions.LogExceptionFactory
+        </exception-handler-factory>
+    </factory>
 </faces-config>

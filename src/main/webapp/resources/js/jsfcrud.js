@@ -28,3 +28,18 @@ function fb_root(document, s, id) {
 function requestFocus(id) {
     document.getElementById(id).focus();
 }
+
+function getPosCursor(element) {
+    var value = 0;
+    if (typeof (element.selectionStart) !== "undefined") {
+        value = element.selectionStart;
+    }
+    else if (document.selection) {
+        var range = document.selection.createRange();
+        var storedRange = range.duplicate();
+        storedRange.moveToElementText(element);
+        storedRange.setEndPoint("EndToEnd", range);
+        value = storedRange.text.length - range.text.length;
+    }
+    return value;
+}

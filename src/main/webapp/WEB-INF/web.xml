@@ -2,7 +2,7 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <param-value>Production</param-value>
     </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -30,36 +30,34 @@
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/private/*</url-pattern>
     </filter-mapping>
-    
     <!-- FILTRO ADMIN -->
     <filter>
         <filter-name>AdminFilter</filter-name>
         <filter-class>br.edu.uag.aruagi.control.util.filtros.AdminFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>AdminFilter</filter-name>        
+        <filter-name>AdminFilter</filter-name>
         <url-pattern>/private/administrador/*</url-pattern>
     </filter-mapping>
-    
     <!-- FILTRO XHTML -->
     <filter>
         <filter-name>XHTMLFilter</filter-name>
         <filter-class>br.edu.uag.aruagi.control.util.filtros.XHTMLFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>XHTMLFilter</filter-name>        
+        <filter-name>XHTMLFilter</filter-name>
         <url-pattern>*.xhtml</url-pattern>
-    </filter-mapping>
+    </filter-mapping>       
     
     <error-page>
         <location>
             /public/advertencia/Erro.xhtml
         </location>
     </error-page>
-    
     <!-- tema primefaces -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>bootstrap</param-value>
     </context-param>
+    
 </web-app>

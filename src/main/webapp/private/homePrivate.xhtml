@@ -98,52 +98,64 @@
                         <p:panel header="#{itemAtual.titulo}" toggleable="true" toggleTitle="Detalhes" collapsed="true">
 
                             <h:outputText value="#{itemAtual.conteudo}" escape="false"/>
-                            <p:dataGrid value="#{itemAtual.videosPostagems}" var="videosAtuais" emptyMessage="Nenhum vídeos para esta postagem" columns="1" paginator="true" rows="1">
-                                <p:panel header="#{videosAtuais.videos.descricao}">
+                            
+                            <p:dataList id="videosDatalist" type="none" value="#{itemAtual.videosPostagems}" var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" rows="1">
+                                <p:panel header="#{vpa.videos.descricao}">
+
                                     <center>
                                         <iframe width="340"
                                                 height="260"
-                                                src="//www.youtube.com/embed/#{videosAtuais.videos.link}?feature=player_embedded"
+                                                src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
                                                 frameborder="0"
                                                 allowfullscreen="true">
                                         </iframe>                                  
                                     </center>
+                                    <f:facet name="footer">
+                                        <p:commandButton value="excluir" actionListener="#{videosPostagemController.destroy}" update=":PostagemListForm:datalist:videosDatalist">
+                                            <f:setPropertyActionListener target="#{videosPostagemController.selected}" value="#{vpa}"/>
+                                        </p:commandButton>
+                                    </f:facet>
                                 </p:panel>
-                            </p:dataGrid>                
+
+                            </p:dataList >
 
                             <f:facet name="footer" rendered="#{itemAtual.usuario!= usuarioSessionController.selected.id}">
+
+                                <p:commandButton icon="ui-icon-trash" action="#{postagemController.destroy}"  update="datalist" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
+                                    <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
+                                </p:commandButton>
+
+                                <p:outputLabel value=" | "/>
+
+                                <p:commandButton icon="ui-icon-pencil" update=":PostagemEditForm" oncomplete="PF('PostagemEditDialog').show()" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
+                                    <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
+                                </p:commandButton>
+
+                                <p:outputLabel value=" | "/>
+
+                                <p:commandButton icon="ui-icon-plus" actionListener="#{videosPostagemController.prepareCreate}" update=":VideosPostagemCreateForm" oncomplete="PF('VideosPostagemCreateDialog').show()" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
+                                    <f:setPropertyActionListener target="#{videosPostagemController.selected.postagem}" value="#{itemAtual}"/>
+                                </p:commandButton>
+
+                                <p:outputLabel value=" | "/>
 
                                 <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome} em "/>
                                 <h:outputFormat value="#{itemAtual.data}">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </h:outputFormat>                        
-                                <p:outputLabel value=" | "/>
-                                <p:commandLink value="Excluir" action="#{postagemController.destroy}"  update="datalist" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
-                                    <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
-                                </p:commandLink>
-                                <p:outputLabel value=" | "/>
-                                <p:commandLink value="#{bundle.Edit}" update=":PostagemEditForm" oncomplete="PF('PostagemEditDialog').show()" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
-                                    <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
-                                </p:commandLink>
+                                </h:outputFormat>                                                        
 
                             </f:facet>
                         </p:panel>                                 
                     </p:dataGrid>                                    
                 </h:form>        
-                <!-- FACEBOOK -->
-                <div class="fb-facepile"
-                     data-href="https://www.facebook.com/FacebookDevelopers"
-                     data-max-rows="1"
-                     data-colorscheme="light"
-                     data-size="medium"
-                     data-show-count="true">                         
-                </div>
+
             </p:layoutUnit>
         </p:layout>
         <!-- INCLUDES PARA POSTAGEM -->
         <ui:include src="/private/professor/postagem/Create.xhtml"/>
         <ui:include src="/private/professor/postagem/Edit.xhtml"/>
         <ui:include src="/private/professor/postagem/View.xhtml"/>
+        <ui:include src="/private/professor/videosPostagem/Create.xhtml"/>
     </h:body>
 </html>
 

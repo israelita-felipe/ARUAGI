@@ -13,9 +13,6 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{nivelQuestaoController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditNivelQuestaoLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{nivelQuestaoController.selected.id}" title="#{bundle.EditNivelQuestaoTitle_id}" required="true" requiredMessage="#{bundle.EditNivelQuestaoRequiredMessage_id}"/>
-
                         <p:outputLabel value="#{bundle.EditNivelQuestaoLabel_descricao}" for="descricao" />
                         <p:inputText id="descricao" value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.EditNivelQuestaoTitle_descricao}" required="true" requiredMessage="#{bundle.EditNivelQuestaoRequiredMessage_descricao}"/>
 

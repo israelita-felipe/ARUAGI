@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
+import br.edu.uag.aruagi.control.interfaces.InterfaceQuestao;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,18 +18,33 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "questao_declinacao", schema = "public"
 )
-public class QuestaoDeclinacao implements java.io.Serializable {
+public class QuestaoDeclinacao implements java.io.Serializable, InterfaceQuestao {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private int id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "declinacao", nullable = false)
     private Declinacao declinacao;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "palavra_latim", nullable = false)
     private PalavraLatim palavraLatim;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "caso", nullable = false)
     private Caso caso;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "nivel", nullable = false)
     private NivelQuestao nivelQuestao;
+    @Column(name = "titulo")
     private String titulo;
+    @Column(name = "enunciado")
     private String enunciado;
+    @Column(name = "usuario")
     private Integer usuario;
+    @Column(name = "status", nullable = false)
     private boolean status;
-
+    
     public QuestaoDeclinacao() {
     }
 
@@ -53,19 +69,16 @@ public class QuestaoDeclinacao implements java.io.Serializable {
         this.status = status;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @Override
     public int getId() {
         return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "declinacao", nullable = false)
     public Declinacao getDeclinacao() {
         return this.declinacao;
     }
@@ -74,8 +87,6 @@ public class QuestaoDeclinacao implements java.io.Serializable {
         this.declinacao = declinacao;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "palavra_latim", nullable = false)
     public PalavraLatim getPalavraLatim() {
         return this.palavraLatim;
     }
@@ -84,8 +95,6 @@ public class QuestaoDeclinacao implements java.io.Serializable {
         this.palavraLatim = palavraLatim;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "caso", nullable = false)
     public Caso getCaso() {
         return this.caso;
     }
@@ -94,17 +103,16 @@ public class QuestaoDeclinacao implements java.io.Serializable {
         this.caso = caso;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "nivel", nullable = false)
-    public NivelQuestao getNivelQuestao() {
+    @Override
+    public NivelQuestao getNivel() {
         return this.nivelQuestao;
     }
 
-    public void setNivelQuestao(NivelQuestao nivelQuestao) {
+    @Override
+    public void setNivel(NivelQuestao nivelQuestao) {
         this.nivelQuestao = nivelQuestao;
     }
 
-    @Column(name = "titulo")
     public String getTitulo() {
         return this.titulo;
     }
@@ -113,7 +121,6 @@ public class QuestaoDeclinacao implements java.io.Serializable {
         this.titulo = titulo;
     }
 
-    @Column(name = "enunciado")
     public String getEnunciado() {
         return this.enunciado;
     }
@@ -122,23 +129,26 @@ public class QuestaoDeclinacao implements java.io.Serializable {
         this.enunciado = enunciado;
     }
 
-    @Column(name = "usuario")
-    public Integer getUsuario() {
+    @Override
+    public Integer getAutor() {
         return this.usuario;
     }
 
-    public void setUsuario(Integer usuario) {
+    @Override
+    public void setAutor(Integer usuario) {
         this.usuario = usuario;
     }
 
-    @Column(name = "status", nullable = false)
-    public boolean isStatus() {
+    @Override
+    public boolean getStatus() {
         return this.status;
     }
 
+    @Override
     public void setStatus(boolean status) {
         this.status = status;
     }
+    
 
     @Override
     public int hashCode() {

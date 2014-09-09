@@ -40,7 +40,6 @@ public class EmailValidator implements Validator {
                     "Use: nome@mail.com.br");
 
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
-
             throw new ValidatorException(message);
         }
     }
