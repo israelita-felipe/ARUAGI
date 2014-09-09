@@ -93,7 +93,7 @@
 
                 <h:form id="PostagemListForm">                    
 
-                    <p:dataGrid id="datalist"  value="#{postagemController.timeLine}" var="itemAtual" columns="1" emptyMessage="Nenhuma postagem adicionada" paginator="true" rows="20">
+                    <p:dataGrid id="datalist"  value="#{postagemController.timeLine}" var="itemAtual" columns="1" emptyMessage="Nenhuma postagem adicionada" paginator="false" rows="5">
 
                         <p:panel header="#{itemAtual.titulo}" toggleable="true" toggleTitle="Detalhes" collapsed="true">
 
