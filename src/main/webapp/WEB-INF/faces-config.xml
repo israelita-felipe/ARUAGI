@@ -248,6 +248,10 @@
         <validator-id>EmailValidator</validator-id>
         <validator-class>br.edu.uag.aruagi.control.util.validator.EmailValidator</validator-class>
     </validator>
+    <validator>
+        <validator-id>TraducaoValidator</validator-id>
+        <validator-class>br.edu.uag.aruagi.control.util.validator.TraducaoValidator</validator-class>
+    </validator>
     
     <!-- CAPTURA DE EXCECOES -->
     <factory>

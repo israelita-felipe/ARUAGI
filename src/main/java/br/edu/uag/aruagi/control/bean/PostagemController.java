@@ -58,10 +58,7 @@ public class PostagemController implements Serializable, InterfaceController<Pos
     @Override
     public void create() {
         if (getSelected().getData() == null) {
-            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PostagemCreated"));
-            if (!JsfUtil.isValidationFailed()) {
-                items = null;    // Invalidate list of items to trigger re-query.
-            }
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemCriada"));
         } else {
             update();
         }
@@ -69,12 +66,12 @@ public class PostagemController implements Serializable, InterfaceController<Pos
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PostagemUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemAtualizada"));
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PostagemDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemExcluida"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.

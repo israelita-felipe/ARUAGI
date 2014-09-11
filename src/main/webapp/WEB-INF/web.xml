@@ -19,7 +19,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>public/Login.uag</welcome-file>
+        <welcome-file>index.uag</welcome-file>
     </welcome-file-list>
     <!-- FILTRO LOGIN -->
     <filter>

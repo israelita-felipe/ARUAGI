@@ -121,7 +121,6 @@ public class UsuarioSessionController implements Serializable {
                 .add(Property.forName("login").eq(getUserLogged().getLogin()));
         getFacade().begin();
         Usuario u = getFacade().getEntityByDetachedCriteria(query);
-        System.out.println("usuario atual: ++++++++++++++++++"+u);
         getFacade().end();
         if (u != null) {
             try {

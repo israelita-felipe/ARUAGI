@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>#{bundle.TituloInicio}</title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
         <!-- SCRIPT DE REQUISICAO DO FACEBOOK -->
@@ -16,68 +16,89 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north">
+            <p:layoutUnit position="north">                    
+                <f:facet name="footer">
+                    <h:outputText value="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento"/>
+                </f:facet>
+
                 <h:form id="menuForm">
                     <!-- BARRA DE MENUS PRINCIPAL-->
                     <p:menubar>                        
-                        <p:submenu label="MANUTENÇÃO" rendered="#{usuarioSessionController.admin}">
+                        <p:menuitem>
+                            <h:link outcome="#{bundle.MenuInicio}">
+                                <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="20" height="23"/>                    
+                            </h:link> 
+                        </p:menuitem>
+                        <p:submenu label="#{bundle.MenuTituloManutencao}" rendered="#{usuarioSessionController.admin}">
 
-                            <p:menuitem value="Acesso" outcome="./administrador/acesso/List.xhtml" />
-                            <p:menuitem value="NivelAcesso" outcome="./administrador/nivelAcesso/List.xhtml" />
-                            <p:menuitem value="NivelQuestao" outcome="./administrador/nivelQuestao/List.xhtml" />
-                            <p:menuitem value="TipoQuestao" outcome="./administrador/tipoQuestao/List.xhtml" />
-                            <p:menuitem value="Usuario" outcome="./administrador/usuario/List.xhtml" />
-
-                        </p:submenu>
-                        <p:submenu label="CONTEÚDO">
-
-                            <p:menuitem value="AplicacaoFrase" outcome="./professor/aplicacaoFrase/List.xhtml" />
-                            <p:menuitem value="Caso" outcome="./professor/caso/List.xhtml" />
-                            <p:menuitem value="CasoAplicado" outcome="./professor/casoAplicado/List.xhtml" />
-                            <p:menuitem value="ClassificacaoGramatical" outcome="./professor/classificacaoGramatical/List.xhtml" />
-                            <p:menuitem value="Declinacao" outcome="./professor/declinacao/List.xhtml" />
-                            <p:menuitem value="DeclinacaoAplicada" outcome="./professor/declinacaoAplicada/List.xhtml" />
-                            <p:menuitem value="FraseLatim" outcome="./professor/fraseLatim/List.xhtml" />
-                            <p:menuitem value="FrasePortugues" outcome="./professor/frasePortugues/List.xhtml" />
-                            <p:menuitem value="IndicadorPessoaGramatical" outcome="./professor/indicadorPessoaGramatical/List.xhtml" />
-                            <p:menuitem value="IndicadorTempoVerbal" outcome="./professor/indicadorTempoVerbal/List.xhtml" />
-                            <p:menuitem value="PalavraLatim" outcome="./professor/palavraLatim/List.xhtml" />
-                            <p:menuitem value="PalavraPortugues" outcome="./professor/palavraPortugues/List.xhtml" />
-                            <p:menuitem value="PalavrasClassificadas" outcome="./professor/palavrasClassificadas/List.xhtml" />
-                            <p:menuitem value="PalavrasDeclinadas" outcome="./professor/palavrasDeclinadas/List.xhtml" />
-                            <p:menuitem value="PessoaGramatical" outcome="./professor/pessoaGramatical/List.xhtml" />
-                            <p:menuitem value="Radical" outcome="./professor/radical/List.xhtml" />
-                            <p:menuitem value="TempoVerbal" outcome="./professor/tempoVerbal/List.xhtml" />
-                            <p:menuitem value="TraduzFrase" outcome="./professor/traduzFrase/List.xhtml" />
-                            <p:menuitem value="TraduzPalavra" outcome="./professor/traduzPalavra/List.xhtml" />
-                            <p:menuitem value="VideosPostagem" outcome="./professor/videosPostagem/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusListaAcessos}" outcome="./administrador/acesso/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusNiveisAcesso}" outcome="./administrador/nivelAcesso/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusNiveisQuestao}" outcome="./administrador/nivelQuestao/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusTiposQuestao}" outcome="./administrador/tipoQuestao/List.xhtml" />
+                            <p:separator/>
+                            <p:menuitem value="#{bundle.MenusListaUsuarios}" outcome="./administrador/usuario/List.xhtml" />
 
                         </p:submenu>
-                        <p:submenu label="ATIVIDADES">
+                        <p:submenu label="#{bundle.MenusConteudo}">
 
-                            <p:menuitem value="AtividadeQuestao" outcome="./professor/atividadeQuestao/List.xhtml" />
-                            <p:menuitem value="Lacuna" outcome="./professor/lacuna/List.xhtml" />
-                            <p:menuitem value="LinksQuestao" outcome="./administrador/linksQuestao/List.xhtml" />
-                            <p:menuitem value="ListaQuestao" outcome="./administrador/listaQuestao/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusCasosLatinos}" outcome="./professor/caso/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusClassificacaoGramatical}" outcome="./professor/classificacaoGramatical/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusDeclinacao}" outcome="./professor/declinacao/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusFraseLatim}" outcome="./professor/fraseLatim/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusFrasePortugues}" outcome="./professor/frasePortugues/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusPalavraLatim}" outcome="./professor/palavraLatim/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusPalavraPortugues}" outcome="./professor/palavraPortugues/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusPessoaGramatical}" outcome="./professor/pessoaGramatical/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusTempoVerbal}" outcome="./professor/tempoVerbal/List.xhtml" />
+
+                        </p:submenu>
+
+                        <p:submenu label="#{bundle.MenusTraducao}">
+                            <p:menuitem value="#{bundle.MenusTraducaoFrase}" outcome="./professor/traduzFrase/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusTraducaoPalavra}" outcome="./professor/traduzPalavra/List.xhtml" />                            
+                        </p:submenu>
+
+                        <p:submenu label="#{bundle.MenusGramatica}">
+                            <p:menuitem value="#{bundle.MenusAplicacaoFrase}" outcome="./professor/aplicacaoFrase/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusAplicacaoCaso}" outcome="./professor/casoAplicado/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusAplicacaoDeclinacao}" outcome="./professor/declinacaoAplicada/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusIndicadorPessoaGramatical}" outcome="./professor/indicadorPessoaGramatical/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusIndicadorTempoVerbal}" outcome="./professor/indicadorTempoVerbal/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusClassificacaoPalavras}" outcome="./professor/palavrasClassificadas/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusDeclinacaoPalavras}" outcome="./professor/palavrasDeclinadas/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusRadical}" outcome="./professor/radical/List.xhtml" />
+                        </p:submenu>
+
+                        <p:submenu label="#{bundle.MenusAtividade}">
+
+                            <p:menuitem value="AtividadeQuestao (pendente)" outcome="./professor/atividadeQuestao/List.xhtml" />
+                            <p:menuitem value="Lacuna (pendente)" outcome="./professor/lacuna/List.xhtml" />
+                            <p:menuitem value="LinksQuestao (pendente)" outcome="./administrador/linksQuestao/List.xhtml" />
+                            <p:menuitem value="ListaQuestao (pendente)" outcome="./administrador/listaQuestao/List.xhtml" />
                             <p:menuitem value="QuestaoDeclinacao" outcome="./professor/questaoDeclinacao/List.xhtml" />
                             <p:menuitem value="QuestaoGramatical" outcome="./professor/questaoGramatical/List.xhtml" />
-                            <p:menuitem value="QuestaoLacuna" outcome="./professor/questaoLacuna/List.xhtml" />
+                            <p:menuitem value="QuestaoLacuna (pendente)" outcome="./professor/questaoLacuna/List.xhtml" />
                             <p:menuitem value="QuestaoTraduzFrase" outcome="./professor/questaoTraduzFrase/List.xhtml" />
                             <p:menuitem value="QuestaoTraduzPalavra" outcome="./professor/questaoTraduzPalavra/List.xhtml" />
 
                         </p:submenu>
-                        <p:submenu label="MULTIMÍDIA">
+                        <p:submenu label="#{bundle.MenusMultimidia}">
 
-                            <p:menuitem value="Videos" outcome="./professor/videos/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusVideo}" outcome="./professor/videos/List.xhtml" />
 
                         </p:submenu>
 
                         <f:facet name="options">
-                            <p:menuButton value="Perfil">
-                                <p:menuitem value="Atualizar informações"/>
-                                <p:menuitem value="Redefinir senha" outcome="./professor/senha/Redefinir.xhtml"/>
+
+                            <p:commandButton icon="ui-icon-plus" title="Aumentar fonte"/>
+                            <p:commandButton icon="ui-icon-minus" title="Diminuir fonte"/>
+                            <p:commandButton icon="ui-icon-x" title="Auto-contraste"/>
+                            <p:spacer width="48" height="10"/>
+                            <p:menuButton value="#{bundle.MenusBotaoPerfil}">
+                                <p:menuitem value="#{bundle.MenusAtualizarPerfil}" outcome="./professor/perfil/Perfil.xhtml"/>
+                                <p:menuitem value="#{bundle.CampoRedefinirSenha}" outcome="./professor/senha/Redefinir.xhtml"/>
                                 <p:separator/>
-                                <p:menuitem value="Sair" ajax="false" action="#{usuarioSessionController.doLogout()}"/>
+                                <p:menuitem value="#{bundle.AcaoSair}" ajax="false" action="#{usuarioSessionController.doLogout()}"/>
                             </p:menuButton>
                         </f:facet>
 
@@ -88,17 +109,17 @@
             <p:layoutUnit position="center">
 
                 <f:facet name="header">
-                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
                 </f:facet>
 
                 <h:form id="PostagemListForm">                    
 
-                    <p:dataGrid id="datalist"  value="#{postagemController.timeLine}" var="itemAtual" columns="1" emptyMessage="Nenhuma postagem adicionada" paginator="true" rows="20">
+                    <p:dataGrid id="datalist"  value="#{postagemController.timeLine}" var="itemAtual" columns="1" emptyMessage="Nenhuma postagem adicionada" paginator="false" rows="5">
 
                         <p:panel header="#{itemAtual.titulo}" toggleable="true" toggleTitle="Detalhes" collapsed="true">
 
                             <h:outputText value="#{itemAtual.conteudo}" escape="false"/>
-                            
+
                             <p:dataList id="videosDatalist" type="none" value="#{itemAtual.videosPostagems}" var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" rows="1">
                                 <p:panel header="#{vpa.videos.descricao}">
 

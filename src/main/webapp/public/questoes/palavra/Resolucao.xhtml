@@ -14,13 +14,21 @@
             <p:layout id="layoutPanel" fullPage="true">
 
                 <p:layoutUnit id="north" position="north">
-                    <p:selectOneMenu id="selectNivel" value="#{resolucaoTraduzPalavraController.nivel}">
-                        <f:selectItems value="#{nivelQuestaoController.items}" var="nivel"
-                                       itemValue="#{nivel}"
-                                       itemLabel="#{nivel.descricao}"/>
-                    </p:selectOneMenu>    
-                    <p:spinner id="nQuestoes" value="#{resolucaoTraduzPalavraController.quantidade}" min="1"/>
-                    <p:commandButton id="prepareButton" value="PREPARE" actionListener="#{resolucaoTraduzPalavraController.prepare}" update="questoesForm:questoesPanel"/>
+                    <f:facet name="header">
+                        <h:outputText value="Atividades para resolução de questões"/>
+                    </f:facet>
+                    <p:panelGrid columns="5" >
+                        <p:selectOneMenu id="selectNivel" value="#{resolucaoTraduzPalavraController.nivel}">
+                            <f:selectItems value="#{nivelQuestaoController.items}" var="nivel"
+                                           itemValue="#{nivel}"
+                                           itemLabel="#{nivel.descricao}"/>
+                        </p:selectOneMenu>    
+                        <p:spinner id="nQuestoes" value="#{resolucaoTraduzPalavraController.quantidade}" min="1"/>
+                        <p:inputText value="#{resolucaoTraduzPalavraController.nome}" placeholder="Digite seu nome" required="true"/>
+                        <p:commandButton id="prepareButton" value="PREPARE" actionListener="#{resolucaoTraduzPalavraController.prepare}" update="questoesForm:questoesPanel"/>
+                        <p:commandButton value="AVALIAR" action="#{resolucaoTraduzPalavraController.avaliar}"/>
+                    </p:panelGrid>
+
                 </p:layoutUnit>
 
                 <p:layoutUnit id="center" position="center">
@@ -34,9 +42,9 @@
                             </f:facet>
 
                             <h:outputText value="#{resolucaoTraduzPalavraController.questaoAtual.enunciado}" escape="false"/>
-                            <br/>
-                            <p:outputLabel value="#{resolucaoTraduzPalavraController.questaoAtual.palavraLatim.palavra}"/>
-                            <br/>
+                            <p:separator/>
+                            <p:outputLabel value="A palavra é: #{resolucaoTraduzPalavraController.questaoAtual.palavraLatim.palavra}"/>
+                            <p:separator/>
                             <p:selectOneMenu id="choose" value="#{resolucaoTraduzPalavraController.selected}" style="width: 300px" filter="true">
                                 <f:selectItem itemLabel="Escolha uma opção" noSelectionOption="true"/>
                                 <f:selectItems value="#{palavraPortuguesController.itemsAvailableSelectOne}" var="palavraPortugues"
@@ -45,9 +53,9 @@
                             </p:selectOneMenu>
 
                             <f:facet name="footer">
-                                <p:commandButton id="next" value="responder e próxima" actionListener="#{resolucaoTraduzPalavraController.next()}" update="questoesPanel"/>
-                                <p:commandButton id="jump" value="pular" actionListener="#{resolucaoTraduzPalavraController.pular()}" update="questoesPanel"/>
-                                <p:commandButton id="previous" value="responder e anterior" actionListener="#{resolucaoTraduzPalavraController.previous()}" update="questoesPanel"/>
+                                <p:commandButton id="next" value="responder e próxima" action="#{resolucaoTraduzPalavraController.next()}" update="questoesPanel"/>
+                                <p:commandButton id="jump" value="pular" action="#{resolucaoTraduzPalavraController.pular()}" update="questoesPanel"/>
+                                <p:commandButton id="previous" value="responder e anterior" action="#{resolucaoTraduzPalavraController.previous()}" update="questoesPanel"/>
                             </f:facet>
 
                         </p:panel>

@@ -3,26 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="PostagemEditDlg" widgetVar="PostagemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPostagemTitle}">
+        <p:dialog id="PostagemEditDlg" widgetVar="PostagemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="PostagemEditForm">
                 <h:panelGroup id="display">
                     
-                    <p:panelGrid columns="2" rendered="#{postagemController.selected != null}">
+                    <p:panelGrid columns="1" rendered="#{postagemController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditPostagemLabel_titulo}" for="titulo" />
-                        <p:inputText id="titulo" value="#{postagemController.selected.titulo}" title="#{bundle.EditPostagemTitle_titulo}" />
+                        <p:inputText id="titulo" value="#{postagemController.selected.titulo}" title="#{bundle.CampoTitulo}" required="true" requiredMessage="#{bundle.Obrigatorio}" placeholder="#{bundle.CampoTitulo}"/>
 
-                        <p:outputLabel value="#{bundle.EditPostagemLabel_conteudo}" for="conteudo" />
-                        <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.EditPostagemRequiredMessage_conteudo}"/>
+                        <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.CampoConteudo}"/>
 
                     </p:panelGrid>                    
 
-                    <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.Save}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
+                    <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.AcaoSalvar}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

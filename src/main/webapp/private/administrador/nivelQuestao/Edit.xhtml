@@ -3,24 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="NivelQuestaoEditDlg" widgetVar="NivelQuestaoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditNivelQuestaoTitle}">
+        <p:dialog id="NivelQuestaoEditDlg" widgetVar="NivelQuestaoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="NivelQuestaoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{nivelQuestaoController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditNivelQuestaoLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.EditNivelQuestaoTitle_descricao}" required="true" requiredMessage="#{bundle.EditNivelQuestaoRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
-                        <p:outputLabel value="#{bundle.EditNivelQuestaoLabel_observacoes}" for="observacoes" />
-                        <p:inputText id="observacoes" value="#{nivelQuestaoController.selected.observacoes}" title="#{bundle.EditNivelQuestaoTitle_observacoes}" />
+                        <p:outputLabel value="#{bundle.CampoObservacao}" for="observacoes" />
+                        <p:editor id="observacoes" value="#{nivelQuestaoController.selected.observacoes}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{nivelQuestaoController.update}" value="#{bundle.Save}" update="display,:NivelQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'NivelQuestaoEditDialog');"/>
+                    <p:commandButton actionListener="#{nivelQuestaoController.update}" value="#{bundle.AcaoSalvar}" update="display,:NivelQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'NivelQuestaoEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

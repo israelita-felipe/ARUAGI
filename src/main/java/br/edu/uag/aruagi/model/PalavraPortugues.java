@@ -1,8 +1,8 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +26,7 @@ public class PalavraPortugues implements java.io.Serializable {
     private String palavra;
     private Integer usuario;
     private Boolean status;
-    private Set traduzPalavras = new HashSet(0);
+    private List traduzPalavras = new ArrayList();
 
     public PalavraPortugues() {
     }
@@ -36,7 +36,7 @@ public class PalavraPortugues implements java.io.Serializable {
         this.palavra = palavra;
     }
 
-    public PalavraPortugues(int id, String palavra, Integer usuario, Boolean status, Set traduzPalavras) {
+    public PalavraPortugues(int id, String palavra, Integer usuario, Boolean status, List traduzPalavras) {
         this.id = id;
         this.palavra = palavra;
         this.usuario = usuario;
@@ -84,11 +84,11 @@ public class PalavraPortugues implements java.io.Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "palavraPortugues", targetEntity = TraduzPalavra.class)
     @Fetch(FetchMode.SUBSELECT)
-    public Set getTraduzPalavras() {
+    public List<TraduzPalavra> getTraduzPalavras() {
         return this.traduzPalavras;
     }
 
-    public void setTraduzPalavras(Set traduzPalavras) {
+    public void setTraduzPalavras(List traduzPalavras) {
         this.traduzPalavras = traduzPalavras;
     }
 
@@ -121,7 +121,5 @@ public class PalavraPortugues implements java.io.Serializable {
         }
         return true;
     }
-
-    
 
 }

@@ -91,7 +91,7 @@ public class AcessoController implements Serializable, InterfaceController<Acess
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AcessoCreated"));
+        persist(PersistAction.CREATE, null);
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
@@ -99,12 +99,12 @@ public class AcessoController implements Serializable, InterfaceController<Acess
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AcessoUpdated"));
+        persist(PersistAction.UPDATE, null);
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AcessoDeleted"));
+        persist(PersistAction.DELETE, null);
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
