@@ -86,7 +86,7 @@ public class QuestaoDeclinacaoController implements Serializable, InterfaceContr
             try {
                 if (persistAction == PersistAction.CREATE) {
                     getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
+                    getSelected().setAutor(UsuarioSessionController.getUserLogged().getId());
                     getFacade().create(selected);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);

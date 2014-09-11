@@ -25,6 +25,7 @@
                                            var="palavraLatimItem"
                                            itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
+                            <f:validator validatorId="TraducaoValidator"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditQuestaoTraduzPalavraLabel_nivelQuestao}" for="nivelQuestao" />
                         <p:selectOneMenu id="nivelQuestao" value="#{questaoTraduzPalavraController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoTraduzPalavraRequiredMessage_nivelQuestao}">

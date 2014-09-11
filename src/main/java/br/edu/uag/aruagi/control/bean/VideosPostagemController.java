@@ -3,7 +3,6 @@ package br.edu.uag.aruagi.control.bean;
 import br.edu.uag.aruagi.control.Facade.VideosPostagemFacade;
 import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.VideosPostagem;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
 import java.util.List;
@@ -22,6 +21,7 @@ public class VideosPostagemController implements Serializable, InterfaceControll
     private VideosPostagem selected;
 
     public VideosPostagemController() {
+        this.selected = new VideosPostagem();
     }
 
     public VideosPostagem getSelected() {
@@ -44,17 +44,14 @@ public class VideosPostagemController implements Serializable, InterfaceControll
 
     @Override
     public VideosPostagem prepareCreate() {
-        selected = new VideosPostagem();
         initializeEmbeddableKey();
+        getSelected().setId(0);
         return selected;
     }
 
     @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("VideosPostagemCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     @Override
@@ -65,10 +62,6 @@ public class VideosPostagemController implements Serializable, InterfaceControll
     @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("VideosPostagemDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     @Override
@@ -80,25 +73,29 @@ public class VideosPostagemController implements Serializable, InterfaceControll
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
+        try {
+            getFacade().begin();
+            if (selected != null) {
+                setEmbeddableKeys();
                 if (persistAction == PersistAction.CREATE) {
                     getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getFacade().create(selected);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
+                    System.out.println(getSelected().getId());
+                    System.out.println(getSelected().getPostagem());
+                    System.out.println(getSelected().getVideos());
                     getFacade().remove(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
+        } catch (Exception ex) {
+            System.out.println("erro capturado: " + ex.getMessage());
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            getFacade().end();
+            this.selected = new VideosPostagem();
         }
-        getFacade().end();
     }
 
     public VideosPostagem getVideosPostagem(int id) {
@@ -157,6 +154,10 @@ public class VideosPostagemController implements Serializable, InterfaceControll
             }
         }
 
+    }
+
+    public void write() {
+        System.out.println("teste do clique");
     }
 
 }

@@ -3,27 +3,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
 
-        <p:dialog id="NivelQuestaoViewDlg" widgetVar="NivelQuestaoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNivelQuestaoTitle}">
+        <p:dialog id="NivelQuestaoViewDlg" widgetVar="NivelQuestaoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="NivelQuestaoViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{nivelQuestaoController.selected != null}">
-                        
-                        <h:outputText value="#{bundle.ViewNivelQuestaoLabel_id}"/>
-                        <h:outputText value="#{nivelQuestaoController.selected.id}" title="#{bundle.ViewNivelQuestaoTitle_id}"/>
-                        
-                        <h:outputText value="#{bundle.ViewNivelQuestaoLabel_descricao}"/>
-                        <h:outputText value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.ViewNivelQuestaoTitle_descricao}"/>
-                        
-                        <h:outputText value="#{bundle.ViewNivelQuestaoLabel_observacoes}"/>
-                        <h:outputText value="#{nivelQuestaoController.selected.observacoes}" title="#{bundle.ViewNivelQuestaoTitle_observacoes}"/>
-                        
-                        <h:outputText value="#{bundle.ViewNivelQuestaoLabel_usuario}"/>
-                        <h:outputText value="#{nivelQuestaoController.selected.usuario}" title="#{bundle.ViewNivelQuestaoTitle_usuario}"/>
-                    
+
+                        <h:outputText value="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{nivelQuestaoController.selected.id}" title="#{bundle.CampoChave}"/>
+
+                        <h:outputText value="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.CampoDescricao}"/>
+
+                        <h:outputText value="#{bundle.CampoObservacao}"/>
+                        <h:outputText value="#{nivelQuestaoController.selected.observacoes}" title="#{bundle.CampoObservacao}" escape="false"/>
+
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <p:commandLink value="#{usuarioSessionController.getUsuario(nivelQuestaoController.selected.usuario).nome}" action="/public/informacao/Perfil.xhtml?faces-redirect=true">
+                            <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{usuarioSessionController.getUsuario(nivelQuestaoController.selected.usuario)}"/>
+                        </p:commandLink>
+
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

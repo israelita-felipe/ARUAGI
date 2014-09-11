@@ -44,7 +44,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{bundle.EditQuestaoDeclinacaoLabel_nivelQuestao}" for="nivelQuestao" />
-                        <p:selectOneMenu id="nivelQuestao" value="#{questaoDeclinacaoController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoDeclinacaoRequiredMessage_nivelQuestao}">
+                        <p:selectOneMenu id="nivelQuestao" value="#{questaoDeclinacaoController.selected.nivel}" required="true" requiredMessage="#{bundle.EditQuestaoDeclinacaoRequiredMessage_nivelQuestao}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
                                            var="nivelQuestaoItem"

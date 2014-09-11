@@ -7,6 +7,7 @@ import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import br.edu.uag.aruagi.control.util.support.StringManager;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -26,6 +27,21 @@ public class VideosController implements Serializable, InterfaceController<Video
 
     public VideosController() {
         myVideos(0);
+    }
+
+    public void add() {
+        if (this.items == null) {
+            this.items = new ArrayList<Videos>();
+        }
+        items.add(selected);
+    }
+
+    public void remove() {
+        this.items.remove(selected);
+    }
+
+    public void resetList() {
+        this.items = null;
     }
 
     public Videos getSelected() {
@@ -72,8 +88,13 @@ public class VideosController implements Serializable, InterfaceController<Video
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Videos> getItems() {
+        //retorna apenas os item sem consulta
         return this.items;
     }
 
@@ -105,11 +126,13 @@ public class VideosController implements Serializable, InterfaceController<Video
             }
         }
         getFacade().end();
-        if (getSelected().getId() != 0) {
-            /**
-             * criando uma postagem automática para o vídeo
-             */
-            AutoPostagemController.create(selected);
+        if (getSelected() != null && persistAction == PersistAction.CREATE) {
+            if (getSelected().getId() != 0) {
+                /**
+                 * criando uma postagem automática para o vídeo
+                 */
+                AutoPostagemController.create(selected);
+            }
         }
     }
 
@@ -120,19 +143,17 @@ public class VideosController implements Serializable, InterfaceController<Video
         return v;
     }
 
-    public List<Videos> myVideos(int id) {
-        if (id == 0) {
-            getFacade().begin();
-            this.items = getFacade().findAll();
-            getFacade().end();
-        } else {
+    public void myVideos(int id) {
+        getFacade().begin();
+        if (id == 1) {
             DetachedCriteria query = DetachedCriteria.forClass(Videos.class);
-            query.add(Property.forName("usuario").eq(id));
-            getFacade().begin();
+            query.add(Property.forName("usuario").eq(UsuarioSessionController.getUserLogged().getId()));
+
             this.items = getFacade().getEntitiesByDetachedCriteria(query);
-            getFacade().end();
+        } else {
+            this.items = getFacade().findAll();
         }
-        return this.items;
+        getFacade().end();
     }
 
     @Override
@@ -142,7 +163,10 @@ public class VideosController implements Serializable, InterfaceController<Video
 
     @Override
     public List<Videos> getItemsAvailableSelectOne() {
-        return getItems();
+        getFacade().begin();
+        this.items = getFacade().findAll();
+        getFacade().end();
+        return this.items;
     }
 
     @FacesConverter(forClass = Videos.class)

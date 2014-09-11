@@ -51,7 +51,7 @@ public class NivelAcessoController implements Serializable, InterfaceController<
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NivelAcessoCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoCriado"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
@@ -59,16 +59,12 @@ public class NivelAcessoController implements Serializable, InterfaceController<
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("NivelAcessoUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoAtualizado"));
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NivelAcessoDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoExcluido"));
     }
 
     @Override

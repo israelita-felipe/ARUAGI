@@ -14,17 +14,24 @@ import javax.faces.context.ExceptionHandlerFactory;
  */
 public class LogExceptionFactory extends ExceptionHandlerFactory {
 
-    private ExceptionHandlerFactory exceptionHandlerFactory;
+    /**
+     * fábrica de captura de exceção
+     */
+    private ExceptionHandlerFactory parent;
 
-    public LogExceptionFactory(ExceptionHandlerFactory exceptionHandlerFactory) {
-        this.exceptionHandlerFactory = exceptionHandlerFactory;
+    public LogExceptionFactory(ExceptionHandlerFactory parent) {
+        this.parent = parent;
     }
 
+    /**
+     * sobreescrita da captura
+     *
+     * @return
+     */
     @Override
     public ExceptionHandler getExceptionHandler() {
-        ExceptionHandler result = exceptionHandlerFactory.getExceptionHandler();
-        result = new LogExceptionHandler(result);
-        return result;
+        ExceptionHandler handler = new LogExceptionHandler(parent.getExceptionHandler());
+        return handler;
     }
 
 }

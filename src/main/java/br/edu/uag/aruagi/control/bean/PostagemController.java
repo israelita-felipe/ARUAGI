@@ -15,13 +15,17 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 
 public class PostagemController implements Serializable, InterfaceController<Postagem, Integer> {
 
     private final PostagemFacade facade = new PostagemFacade();
+
     private List<Postagem> items = null;
     private Postagem selected;
+    
+    private List<Postagem> timeLine = null;
 
     public PostagemController() {
     }
@@ -54,10 +58,7 @@ public class PostagemController implements Serializable, InterfaceController<Pos
     @Override
     public void create() {
         if (getSelected().getData() == null) {
-            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PostagemCreated"));
-            if (!JsfUtil.isValidationFailed()) {
-                items = null;    // Invalidate list of items to trigger re-query.
-            }
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemCriada"));
         } else {
             update();
         }
@@ -65,12 +66,12 @@ public class PostagemController implements Serializable, InterfaceController<Pos
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PostagemUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemAtualizada"));
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PostagemDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemExcluida"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -95,6 +96,7 @@ public class PostagemController implements Serializable, InterfaceController<Pos
                     getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getSelected().setStatus(Boolean.TRUE);
                     getFacade().create(selected);
+
                 } else if (persistAction == PersistAction.UPDATE) {
                     /**
                      * atualizacao para a data de alteracao da postagem
@@ -121,10 +123,12 @@ public class PostagemController implements Serializable, InterfaceController<Pos
     }
 
     public List<Postagem> getTimeLine() {
+        DetachedCriteria query = DetachedCriteria.forClass(Postagem.class)
+                .addOrder(Order.desc("data"));
         getFacade().begin();
-        List<Postagem> timeLine = getFacade().getSession().createCriteria(Postagem.class).addOrder(Order.desc("data")).list();
+        this.timeLine = getFacade().getEntitiesByDetachedCriteria(query);
         getFacade().end();
-        return timeLine;
+        return this.timeLine;
     }
 
     @Override

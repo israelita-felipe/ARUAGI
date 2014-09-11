@@ -92,18 +92,18 @@ public class TraduzPalavra implements java.io.Serializable {
     public Boolean getStatus() {
         return this.status;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 29 * hash + (this.palavraPortugues != null ? this.palavraPortugues.hashCode() : 0);
-        hash = 29 * hash + (this.palavraLatim != null ? this.palavraLatim.hashCode() : 0);
-        hash = 29 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
-        hash = 29 * hash + (this.status != null ? this.status.hashCode() : 0);
+        hash = 37 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 37 * hash + (this.palavraPortugues != null ? this.palavraPortugues.hashCode() : 0);
+        hash = 37 * hash + (this.palavraLatim != null ? this.palavraLatim.hashCode() : 0);
+        hash = 37 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        hash = 37 * hash + (this.status != null ? this.status.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -130,5 +130,6 @@ public class TraduzPalavra implements java.io.Serializable {
         }
         return true;
     }
+    
     
 }

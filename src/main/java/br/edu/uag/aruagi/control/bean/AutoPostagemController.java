@@ -6,7 +6,6 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.model.Postagem;
 import br.edu.uag.aruagi.model.Videos;
 import br.edu.uag.aruagi.model.VideosPostagem;
 import java.io.Serializable;

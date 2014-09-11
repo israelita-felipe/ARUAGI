@@ -10,27 +10,27 @@
 
         <p:dialog id="VideosPostagemCreateDlg" widgetVar="VideosPostagemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateVideosPostagemTitle}">
             <h:form id="VideosPostagemCreateForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{videosPostagemController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateVideosPostagemLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{videosPostagemController.selected.id}" title="#{bundle.CreateVideosPostagemTitle_id}" required="true" requiredMessage="#{bundle.CreateVideosPostagemRequiredMessage_id}"/>
-                        <p:outputLabel value="#{bundle.CreateVideosPostagemLabel_videos}" for="videos" />
-                        <p:selectOneMenu id="videos" value="#{videosPostagemController.selected.videos}" required="true" requiredMessage="#{bundle.EditVideosPostagemRequiredMessage_videos}">
-                            <f:selectItems value="#{videosController.itemsAvailableSelectOne}"
-                                           var="videosItem"
-                                           itemValue="#{videosItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateVideosPostagemLabel_postagem}" for="postagem" />
-                        <p:selectOneMenu id="postagem" value="#{videosPostagemController.selected.postagem}" required="true" requiredMessage="#{bundle.EditVideosPostagemRequiredMessage_postagem}">
-                            <f:selectItems value="#{postagemController.itemsAvailableSelectOne}"
-                                           var="postagemItem"
-                                           itemValue="#{postagemItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateVideosPostagemLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{videosPostagemController.selected.usuario}" title="#{bundle.CreateVideosPostagemTitle_usuario}" />
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{videosPostagemController.create}" value="#{bundle.Save}" update="display,:VideosPostagemListForm:datalist,:growl" oncomplete="handleSubmit(args,'VideosPostagemCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="VideosPostagemCreateDialog.hide()"/>
+                <h:panelGroup id="display">                    
+
+                    <p:dataList lazy="false" value="#{videosController.itemsAvailableSelectOne}" var="videoToCreate" rows="1" paginator="true" type="none" rendered="#{videosPostagemController.selected.postagem!=null}">
+                        
+                        <p:panel header="#{videoToCreate.descricao}">
+                            
+                            <iframe width="300"
+                                    height="220"
+                                    src="//www.youtube.com/embed/#{videoToCreate.link}?feature=player_embedded"
+                                    frameborder="0"
+                                    allowfullscreen="true">
+                            </iframe>  
+                            
+                            <f:facet name="footer">
+                                <p:commandButton actionListener="#{videosPostagemController.create}" icon="ui-icon ui-icon-disk" update=":PostagemListForm:datalist" oncomplete="handleSubmit(args,'VideosPostagemCreateDialog');">
+                                    <f:setPropertyActionListener target="#{videosPostagemController.selected.videos}" value="#{videoToCreate}"/>
+                                </p:commandButton>
+                            </f:facet>
+                        </p:panel>
+                    </p:dataList>
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -7,22 +7,19 @@
 
     <ui:composition>
 
-        <p:dialog id="NivelQuestaoCreateDlg" widgetVar="NivelQuestaoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateNivelQuestaoTitle}">
+        <p:dialog id="NivelQuestaoCreateDlg" widgetVar="NivelQuestaoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="NivelQuestaoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{nivelQuestaoController.selected != null}">
                         
-                        <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{nivelQuestaoController.selected.id}" title="#{bundle.CreateNivelQuestaoTitle_id}" required="true" requiredMessage="#{bundle.CreateNivelQuestaoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
                         
-                        <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{nivelQuestaoController.selected.descricao}" title="#{bundle.CreateNivelQuestaoTitle_descricao}" required="true" requiredMessage="#{bundle.CreateNivelQuestaoRequiredMessage_descricao}"/>
-                        
-                        <p:outputLabel value="#{bundle.CreateNivelQuestaoLabel_observacoes}" for="observacoes" />
+                        <p:outputLabel value="#{bundle.CampoObservacao}" for="observacoes" />
                         <p:editor id="observacoes" value="#{nivelQuestaoController.selected.observacoes}"/>
                         
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{nivelQuestaoController.create}" value="#{bundle.Save}" update="display,:NivelQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args,'NivelQuestaoCreateDialog');"/>
+                    <p:commandButton actionListener="#{nivelQuestaoController.create}" value="#{bundle.AcaoSalvar}" update="display,:NivelQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args,'NivelQuestaoCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

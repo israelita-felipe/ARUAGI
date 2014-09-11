@@ -34,7 +34,7 @@ public class Acesso implements java.io.Serializable {
 
     @Id
     @Temporal(TemporalType.DATE)
-    @Column(name = "data", unique = true, nullable = false, length = 13)
+    @Column(name = "data")
     public Date getData() {
         return this.data;
     }

@@ -19,14 +19,13 @@ and open the template in the editor.
     <h:body>
         <p:layout fullPage="true">
             <p:layoutUnit position="north">
-                <h:graphicImage library="images" name="aruagi_capa.jpg" width="100%" height="150px"/>
-                <p:menubar>
-                    <p:menuitem value="Sistema" outcome="/public/Login.uag"/>
-                </p:menubar>
+                <h:graphicImage library="images" name="aruagi_capa.jpg" width="100%" height="350px"/>
             </p:layoutUnit>
             
             <p:layoutUnit position="center">
-                
+                <p:menubar>
+                    <p:menuitem value="Sistema" outcome="/public/Login.uag"/>
+                </p:menubar>
                 
                 <ui:insert name="body"/>
                 
