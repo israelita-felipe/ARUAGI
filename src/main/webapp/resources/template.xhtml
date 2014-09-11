@@ -28,11 +28,16 @@
         <p:layout fullPage="true">
 
             <!-- LAYOUT DE INFORMACAO DE ACESSO -->
-            <p:layoutUnit position="north" header="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">                 
+            <p:layoutUnit position="north" header="Seja bem-vindo(a) #{usuarioSessionController.selected.nome}">                 
                 <h:form id="menuForm">
                     <!-- BARRA DE MENUS PRINCIPAL-->
                     <p:menubar>  
 
+                        <p:menuitem>
+                            <h:link outcome="#{bundle.MenuInicio}">
+                                <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="20" height="23"/>                    
+                            </h:link> 
+                        </p:menuitem>
                         <p:menuitem value="#{bundle.TituloInicio}" outcome="#{bundle.MenuHomePrivate}"/>
 
                         <p:submenu label="#{bundle.MenuTituloManutencao}" rendered="#{usuarioSessionController.admin}">
@@ -118,7 +123,7 @@
             </p:layoutUnit>
 
             <!-- LAYOUT DO CENTRO DA PAGINA -->
-            <p:layoutUnit position="center">
+            <p:layoutUnit position="center" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
                 <!-- INSERCAO DO CORPO DA PAGINA A SER PRESONALIZADA -->
                 <ui:insert name="body"/> 
 

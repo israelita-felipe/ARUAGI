@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/resources/template_site.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Home"/>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="GlossarioForm">                    
+
+                    <p:dataGrid  id="datalist" value="#{traduzPalavraController.items}" var="itemAtual" columns="3" emptyMessage="Nenhuma palavra adicionada" paginator="false" rows="5">
+                        
+                        
+                        <p:panel header="#{itemAtual.palavraLatim.palavra}" toggleable="false" toggleTitle="Detalhes" collapsed="false" >
+
+                            <h:outputText value="Em Português: #{itemAtual.palavraPortugues.palavra}" escape="false"/>           
+
+                        </p:panel> 
+                    </p:dataGrid>                                    
+                </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
