@@ -26,27 +26,13 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoNivel}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
                         
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.CampoDescricao}"/>
                             </f:facet>
                             <h:outputText value="#{item.descricao}"/>
-                        </p:column>
-                        
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoObservacao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.observacoes}"/>
-                        </p:column>
+                        </p:column>                        
 
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{nivelQuestaoController.prepareCreate}" update=":NivelQuestaoCreateForm" oncomplete="PF('NivelQuestaoCreateDialog').show()"/>

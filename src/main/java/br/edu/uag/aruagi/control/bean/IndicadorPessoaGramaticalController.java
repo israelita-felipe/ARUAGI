@@ -53,24 +53,17 @@ public class IndicadorPessoaGramaticalController implements Serializable, Interf
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("IndicadorPessoaGramaticalCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemIndicadorPessoaGramaticalCriada"));
     }
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("IndicadorPessoaGramaticalUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemIndicadorPessoaGramaticalAtualizada"));
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("IndicadorPessoaGramaticalDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemIndicadorPessoaGramaticalExcluida"));
     }
 
     @Override

@@ -8,39 +8,39 @@
 
     <ui:composition>
 
-        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateUsuarioTitle}">
+        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="UsuarioCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_nivelAcessoByNivelAcesso}" for="nivelAcessoByNivelAcesso" />
-                        <p:selectOneMenu id="nivelAcessoByNivelAcesso" value="#{usuarioController.selected.nivelAcesso}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_nivelAcessoByNivelAcesso}">
+                        <p:outputLabel value="#{bundle.CampoNivel}" for="nivelAcessoByNivelAcesso" />
+                        <p:selectOneMenu id="nivelAcessoByNivelAcesso" value="#{usuarioController.selected.nivelAcesso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{nivelAcessoController.itemsAvailableSelectOne}"
                                            var="nivelAcessoByNivelAcessoItem"
                                            itemLabel="#{nivelAcessoByNivelAcessoItem.descricao}"
                                            itemValue="#{nivelAcessoByNivelAcessoItem}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_nome}" for="nome" />
-                        <p:inputText id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.CreateUsuarioTitle_nome}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_nome}"/>
-
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_senha}" for="senha" />
-                        <p:password id="senha" value="#{usuarioController.selected.senha}" title="#{bundle.CreateUsuarioTitle_senha}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_senha}"/>
-
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_senha}" for="senhaConfirm" />
-                        <p:password id="senhaConfirm" value="#{usuarioController.confirmPass}" title="#{bundle.CreateUsuarioTitle_senha}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_senha}"/>
-
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_login}" for="login" />
-                        <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{bundle.CreateUsuarioTitle_login}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_login}"/>
-
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_observacoes}" for="observacoes" />
-                        <p:editor id="observacoes" value="#{usuarioController.selected.observacoes}"/>
-
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_status}" for="status" />
+                        <p:outputLabel value="#{bundle.CampoStatus}" for="status" />
                         <p:selectBooleanCheckbox id="status" value="#{usuarioController.selected.status}" />
 
+                        <p:outputLabel value="#{bundle.CampoNome}" for="nome" />
+                        <p:inputText id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
+                        <p:outputLabel value="#{bundle.CampoSenha}" for="senha" />
+                        <p:password id="senha" value="#{usuarioController.selected.senha}" title="#{bundle.CampoSenha}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
+                        <p:outputLabel value="#{bundle.CampoConfirmaSenha}" for="senhaConfirm" />
+                        <p:password id="senhaConfirm" value="#{usuarioController.confirmPass}" title="#{bundle.CampoConfirmaSenha}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
+                        <p:outputLabel value="#{bundle.CampoLogin}" for="login" />
+                        <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
+                        <p:outputLabel value="#{bundle.CampoObservacao}" for="observacoes" />
+                        <p:editor id="observacoes" value="#{usuarioController.selected.observacoes}"/>
+
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{usuarioController.create}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args,'UsuarioCreateDialog');"/>
+                    <p:commandButton actionListener="#{usuarioController.create}" value="#{bundle.AcaoSalvar}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args,'UsuarioCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

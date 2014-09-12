@@ -12,6 +12,7 @@
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="primefaces.css"/>
         <h:outputStylesheet library="css" name="defaultHTML.css"/>
+        <h:outputStylesheet library="css" name="customHTML.css"/>
     </h:head>
 
 
@@ -19,6 +20,9 @@
         <p:layout fullPage="true">
             <!-- LAYOUT DE INFORMACAO DE ACESSO -->
             <p:layoutUnit position="north" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
+                <f:facet name="header">
+                    <p:messages autoUpdate="true" closable="true"/>
+                </f:facet>
                 <p:panelGrid columns="3">
 
                     <h:link outcome="#{bundle.MenuInicio}">
@@ -26,26 +30,22 @@
                     </h:link>                    
 
                     <h:link outcome="#{bundle.MenuInicio}" value="#{bundle.TituloAplicacaoCompleto}"/>
-
                     <h:form >
-                        <p:messages autoUpdate="true" closable="true"/>
-                        <p:panelGrid id="loginGrid" columns="2" style="noBorder">
+                        <p:panelGrid id="loginForm" columns="1">
 
                             <f:facet name="header">
                                 <p:outputLabel value="#{bundle.CampoAutorizacao}"/>
                             </f:facet>
 
-                            <p:outputLabel value="#{bundle.CampoLogin}" for="login"/>
-                            <p:inputText id="login" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                            <p:inputText id="login" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}" placeholder="#{bundle.CampoLogin}">
                                 <f:validator validatorId="EmailValidator"/>
                             </p:inputText>
 
-                            <p:outputLabel value="#{bundle.CampoSenha}" for="senha"/>
-                            <p:password id="senha" value="#{usuarioSessionController.selected.senha}"/>
+                            <p:password id="senha" value="#{usuarioSessionController.selected.senha}" placeholder="#{bundle.CampoSenha}"/>
 
                             <f:facet name="footer">
                                 <p:commandButton value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/> 
-                                <p:commandLink value="#{bundle.CampoRedefinirSenha}" action="#{bundle.ActionRedefinirSenha}"/>
+                                <p:commandLink value="#{bundle.CampoRedefinirSenha}" action="Redefinir.xhtml?faces-redirect=true"/>
                             </f:facet>
                         </p:panelGrid>
                     </h:form>
@@ -55,8 +55,8 @@
 
             <p:layoutUnit position="center">
                 <div class="footer">
-                    <p:outputLabel value="#{bundle.TituloRodape}"/>
-                </div>                                
+                    <h:outputText value="#{bundle.TituloRodape}"/>
+                </div>                    
             </p:layoutUnit>
 
         </p:layout> 

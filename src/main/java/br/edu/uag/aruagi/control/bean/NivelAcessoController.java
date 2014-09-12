@@ -52,9 +52,6 @@ public class NivelAcessoController implements Serializable, InterfaceController<
     @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoCriado"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     @Override

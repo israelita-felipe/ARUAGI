@@ -51,24 +51,17 @@ public class FrasePortuguesController implements Serializable, InterfaceControll
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("FrasePortuguesCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFrasePortuguesCriada"));  
     }
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("FrasePortuguesUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFrasePortuguesAtualizada"));
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("FrasePortuguesDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemFrasePortuguesExcluida"));
     }
 
     @Override

@@ -19,9 +19,7 @@
                 <p:outputLabel for="nome" value="#{bundle.CampoNome}"/>
                 <h:outputText id="nome" value="#{usuarioController.selected.nome}"/>
                 <p:outputLabel for="status" value="#{bundle.CampoStatus}"/>
-                <p:selectOneRadio id="status">
-                    <f:selectItem itemValue="#{usuarioController.selected.status}" itemLabel="#{bundle.CampoAtivo}"/>
-                </p:selectOneRadio>
+                <p:selectBooleanCheckbox value="#{usuarioController.selected.status}"/>
                 <p:outputLabel for="assinatura" value="#{bundle.CampoAssinatura}"/>
                 <h:outputText id="assinatura" value="#{usuarioController.selected.observacoes}" escape="false"/>
             </p:panelGrid>

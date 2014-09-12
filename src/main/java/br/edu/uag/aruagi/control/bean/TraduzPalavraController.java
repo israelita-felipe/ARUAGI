@@ -53,24 +53,17 @@ public class TraduzPalavraController implements Serializable, InterfaceControlle
     
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TraduzPalavraCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTraduzPalavraCriada"));
     }
     
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TraduzPalavraUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTraduzPalavraAtualizada"));
     }
     
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TraduzPalavraDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemTraduzPalavraExcluida"));
     }
     
     @Override

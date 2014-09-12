@@ -51,24 +51,17 @@ public class TipoQuestaoController implements Serializable, InterfaceController<
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TipoQuestaoCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTipoQuestaoCriada"));
     }
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TipoQuestaoUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTipoQuestaoAtualizada"));
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TipoQuestaoDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemTipoQuestaoExcluida"));
     }
 
     @Override
@@ -84,11 +77,11 @@ public class TipoQuestaoController implements Serializable, InterfaceController<
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if(persistAction == PersistAction.CREATE){
+                if (persistAction == PersistAction.CREATE) {
                     getSelected().setStatus(Boolean.TRUE);
                     getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getFacade().create(selected);
-                }else if (persistAction == PersistAction.UPDATE) {
+                } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

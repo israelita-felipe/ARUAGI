@@ -17,7 +17,7 @@ import javax.faces.convert.FacesConverter;
 
 public class AtividadeQuestaoController implements Serializable, InterfaceController<AtividadeQuestao, Integer> {
 
-    private AtividadeQuestaoFacade facade = new AtividadeQuestaoFacade();
+    private final AtividadeQuestaoFacade facade = new AtividadeQuestaoFacade();
     private List<AtividadeQuestao> items = null;
     private AtividadeQuestao selected;
 
@@ -51,31 +51,24 @@ public class AtividadeQuestaoController implements Serializable, InterfaceContro
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AtividadeQuestaoCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemAtividadeQuestaoCriada"));
     }
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AtividadeQuestaoUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemAtividadeQuestaoAtualizada"));
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AtividadeQuestaoDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemAtividadeQuestaoExcluida"));
     }
 
     @Override
     public List<AtividadeQuestao> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+        getFacade().begin();
+        items = getFacade().findAll();
+        getFacade().end();
         return items;
     }
 

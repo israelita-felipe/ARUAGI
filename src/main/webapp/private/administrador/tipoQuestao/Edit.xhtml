@@ -7,19 +7,19 @@
 
     <ui:composition>
 
-        <p:dialog id="TipoQuestaoEditDlg" widgetVar="TipoQuestaoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTipoQuestaoTitle}">
+        <p:dialog id="TipoQuestaoEditDlg" widgetVar="TipoQuestaoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="TipoQuestaoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tipoQuestaoController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditTipoQuestaoLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{tipoQuestaoController.selected.descricao}" title="#{bundle.EditTipoQuestaoTitle_descricao}" required="true" requiredMessage="#{bundle.EditTipoQuestaoRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{tipoQuestaoController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
-                        <p:outputLabel value="#{bundle.EditTipoQuestaoLabel_nomeTabelaBanco}" for="nomeTabelaBanco" />
-                        <p:inputText id="nomeTabelaBanco" value="#{tipoQuestaoController.selected.nomeTabelaBanco}" title="#{bundle.EditTipoQuestaoTitle_nomeTabelaBanco}" />
+                        <p:outputLabel value="#{bundle.CampoTabelaBanco}" for="nomeTabelaBanco" />
+                        <p:inputText id="nomeTabelaBanco" value="#{tipoQuestaoController.selected.nomeTabelaBanco}" title="#{bundle.CampoTabelaBanco}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{tipoQuestaoController.update}" value="#{bundle.Save}" update="display,:TipoQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipoQuestaoEditDialog');"/>
+                    <p:commandButton actionListener="#{tipoQuestaoController.update}" value="#{bundle.AcaoSalvar}" update="display,:TipoQuestaoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipoQuestaoEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

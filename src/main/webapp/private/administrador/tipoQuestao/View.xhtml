@@ -3,23 +3,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
 
-        <p:dialog id="TipoQuestaoViewDlg" widgetVar="TipoQuestaoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTipoQuestaoTitle}">
+        <p:dialog id="TipoQuestaoViewDlg" widgetVar="TipoQuestaoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="TipoQuestaoViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tipoQuestaoController.selected != null}">
-                        <h:outputText value="#{bundle.ViewTipoQuestaoLabel_id}"/>
-                        <h:outputText value="#{tipoQuestaoController.selected.id}" title="#{bundle.ViewTipoQuestaoTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewTipoQuestaoLabel_descricao}"/>
-                        <h:outputText value="#{tipoQuestaoController.selected.descricao}" title="#{bundle.ViewTipoQuestaoTitle_descricao}"/>
-                        <h:outputText value="#{bundle.ViewTipoQuestaoLabel_nomeTabelaBanco}"/>
-                        <h:outputText value="#{tipoQuestaoController.selected.nomeTabelaBanco}" title="#{bundle.ViewTipoQuestaoTitle_nomeTabelaBanco}"/>
-                        <h:outputText value="#{bundle.ViewTipoQuestaoLabel_usuario}"/>
-                        <h:outputText value="#{tipoQuestaoController.selected.usuario}" title="#{bundle.ViewTipoQuestaoTitle_usuario}"/>
+                        <h:outputText value="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{tipoQuestaoController.selected.id}" title="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{tipoQuestaoController.selected.descricao}" title="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{bundle.CampoTabelaBanco}"/>
+                        <h:outputText value="#{tipoQuestaoController.selected.nomeTabelaBanco}" title="#{bundle.CampoTabelaBanco}"/>
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <p:commandLink value="#{usuarioSessionController.getUsuario(tipoQuestaoController.selected.usuario).nome}" action="/public/informacao/Perfil.xhtml?faces-redirect=true">
+                            <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{usuarioSessionController.getUsuario(tipoQuestaoController.selected.usuario)}"/>
+                        </p:commandLink>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

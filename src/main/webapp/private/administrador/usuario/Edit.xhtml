@@ -8,33 +8,33 @@
 
     <ui:composition>
 
-        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUsuarioTitle}">
+        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="UsuarioEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_nivelAcessoByNivelAcesso}" for="nivelAcessoByNivelAcesso" />
-                        <p:selectOneMenu id="nivelAcessoByNivelAcesso" value="#{usuarioController.selected.nivelAcesso}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_nivelAcessoByNivelAcesso}">
+                        <p:outputLabel value="#{bundle.CampoNivel}" for="nivelAcessoByNivelAcesso" />
+                        <p:selectOneMenu id="nivelAcessoByNivelAcesso" value="#{usuarioController.selected.nivelAcesso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{nivelAcessoController.itemsAvailableSelectOne}"
                                            var="nivelAcessoByNivelAcessoItem"
                                            itemLabel="#{nivelAcessoByNivelAcessoItem.descricao}"
                                            itemValue="#{nivelAcessoByNivelAcessoItem}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_nome}" for="nome" />
-                        <p:inputText id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.EditUsuarioTitle_nome}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_nome}"/>
-                       
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_login}" for="login" />
-                        <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{bundle.EditUsuarioTitle_login}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_login}"/>
-
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_observacoes}" for="observacoes" />
-                        <p:editor id="observacoes" value="#{usuarioController.selected.observacoes}"/>
-
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_status}" for="status" />
+                        <p:outputLabel value="#{bundle.CampoStatus}" for="status" />
                         <p:selectBooleanCheckbox id="status" value="#{usuarioController.selected.status}" />
 
+                        <p:outputLabel value="#{bundle.CampoNome}" for="nome" />
+                        <p:inputText id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
+                        <p:outputLabel value="#{bundle.CampoLogin}" for="login" />
+                        <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
+                        <p:outputLabel value="#{bundle.CampoObservacao}" for="observacoes" />
+                        <p:editor id="observacoes" value="#{usuarioController.selected.observacoes}"/>
+
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{usuarioController.update}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialog');"/>
+                    <p:commandButton actionListener="#{usuarioController.update}" value="#{bundle.AcaoSalvar}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -7,34 +7,31 @@
 
     <ui:composition>
 
-        <p:dialog id="UsuarioViewDlg" widgetVar="UsuarioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewUsuarioTitle}">
+        <p:dialog id="UsuarioViewDlg" widgetVar="UsuarioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="UsuarioViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
 
-                        <h:outputText value="#{bundle.ViewUsuarioLabel_id}"/>
-                        <h:outputText value="#{usuarioController.selected.id}" title="#{bundle.ViewUsuarioTitle_id}"/>
+                        <h:outputText value="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{usuarioController.selected.id}" title="#{bundle.CampoChave}"/>
 
-                        <h:outputText value="#{bundle.ViewUsuarioLabel_usuario}"/>
-                        <h:outputText value="#{usuarioController.selected.usuario}" title="#{bundle.ViewUsuarioTitle_usuario}"/>
-
-                        <h:outputText value="#{bundle.ViewUsuarioLabel_nivelAcessoByIncluidoPor}"/>
-                        <h:outputText value="#{usuarioController.selected.nivelAcesso}" title="#{bundle.ViewUsuarioTitle_nivelAcessoByNivelAcesso}"/>
-
-                        <h:outputText value="#{bundle.ViewUsuarioLabel_nome}"/>
-                        <h:outputText value="#{usuarioController.selected.nome}" title="#{bundle.ViewUsuarioTitle_nome}"/>
-
-                        <h:outputText value="#{bundle.ViewUsuarioLabel_senha}"/>
-                        <h:outputText value="#{usuarioController.selected.senha}" title="#{bundle.ViewUsuarioTitle_senha}"/>
-
-                        <h:outputText value="#{bundle.ViewUsuarioLabel_login}"/>
-                        <h:outputText value="#{usuarioController.selected.login}" title="#{bundle.ViewUsuarioTitle_login}"/>
-
-                        <h:outputText value="#{bundle.ViewUsuarioLabel_observacoes}"/>
-                        <h:outputText value="#{usuarioController.selected.observacoes}" title="#{bundle.ViewUsuarioTitle_observacoes}"/>
-
-                        <h:outputText value="#{bundle.ViewUsuarioLabel_status}"/>
+                        <h:outputText value="#{bundle.CampoStatus}"/>
                         <p:selectBooleanCheckbox value="#{usuarioController.selected.status}" disabled="true"/>
+
+                        <h:outputText value="#{bundle.CampoIncluidoPor}"/>
+                        <h:outputText value="#{usuarioController.selected.usuario.nome}" title="#{bundle.CampoIncluidoPor}"/>
+
+                        <h:outputText value="#{bundle.CampoNivel}"/>
+                        <h:outputText value="#{usuarioController.selected.nivelAcesso.id}" title="#{bundle.CampoNivel}"/>
+
+                        <h:outputText value="#{bundle.CampoNome}"/>
+                        <h:outputText value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}"/>
+
+                        <h:outputText value="#{bundle.CampoLogin}"/>
+                        <h:outputText value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}"/>
+
+                        <h:outputText value="#{bundle.CampoObservacao}"/>
+                        <p:editor value="#{usuarioController.selected.observacoes}" controls=""/>
 
                     </p:panelGrid>
                 </h:panelGroup>

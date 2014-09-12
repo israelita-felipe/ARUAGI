@@ -92,9 +92,6 @@ public class AcessoController implements Serializable, InterfaceController<Acess
     @Override
     public void create() {
         persist(PersistAction.CREATE, null);
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     @Override
@@ -105,10 +102,6 @@ public class AcessoController implements Serializable, InterfaceController<Acess
     @Override
     public void destroy() {
         persist(PersistAction.DELETE, null);
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
     }
 
     @Override
@@ -131,7 +124,6 @@ public class AcessoController implements Serializable, InterfaceController<Acess
                 } else {
                     getFacade().remove(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

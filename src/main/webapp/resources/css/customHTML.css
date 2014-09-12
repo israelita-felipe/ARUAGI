@@ -7,3 +7,14 @@ and open the template in the editor.
     Created on : 19/08/2014, 18:50:57
     Author     : Israel Araújo
 */
+.noBorder tr, .noBorder td {
+	border: none !important;
+}
+
+.left{
+    position: absolute;
+    left: 100%
+}
+.full{
+    width: 100%
+}

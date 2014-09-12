@@ -2,6 +2,7 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.VideosPostagemFacade;
 import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.model.VideosPostagem;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
@@ -51,17 +52,17 @@ public class VideosPostagemController implements Serializable, InterfaceControll
 
     @Override
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("VideosPostagemCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoPostagemCriado"));
     }
 
     @Override
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("VideosPostagemUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoPostagemAtualizado"));
     }
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("VideosPostagemDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoPostagemExcluido"));
     }
 
     @Override
@@ -83,15 +84,12 @@ public class VideosPostagemController implements Serializable, InterfaceControll
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                 } else {
-                    System.out.println(getSelected().getId());
-                    System.out.println(getSelected().getPostagem());
-                    System.out.println(getSelected().getVideos());
                     getFacade().remove(selected);
                 }
             }
         } catch (Exception ex) {
-            System.out.println("erro capturado: " + ex.getMessage());
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         } finally {
             getFacade().end();
             this.selected = new VideosPostagem();
@@ -155,9 +153,4 @@ public class VideosPostagemController implements Serializable, InterfaceControll
         }
 
     }
-
-    public void write() {
-        System.out.println("teste do clique");
-    }
-
 }
