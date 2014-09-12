@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/resources/template_site.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Home"/>
+        </ui:define>
+        <ui:define name="head">
+            <f:metadata>
+                <f:viewParam name="id" id="id" value="#{postagemController.idParametro}"/>
+            </f:metadata>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="PostagemListForm">                    
+
+
+                <p:panel header="#{postagemController.getPostagem(postagemController.idParametro).titulo}" toggleable="false" toggleTitle="Detalhes" collapsed="false">
+                    <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(postagemController.getPostagem(postagemController.idParametro).usuario).nome} em "/>
+                    <h:outputFormat value="#{postagemController.getPostagem(postagemController.idParametro).data}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputFormat>
+                    <br/>
+                    <br/>
+                    <h:outputText value="#{postagemController.getPostagem(postagemController.idParametro).conteudo}" escape="false"/>
+
+                    <p:dataList id="videosDatalist" type="none" value="#{postagemController.getPostagem(postagemController.idParametro).videosPostagems}"
+                                var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" rows="1"
+                                rendered="#{!postagemController.getPostagem(postagemController.idParametro).videosPostagems.isEmpty()}">
+                        <p:panel header="#{vpa.videos.descricao}">
+
+                            <center>
+                                <iframe width="340"
+                                        height="260"
+                                        src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
+                                        frameborder="0"
+                                        allowfullscreen="true">
+                                </iframe>                                  
+                            </center>
+
+                        </p:panel>
+
+                    </p:dataList >
+
+                </p:panel>                                    
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

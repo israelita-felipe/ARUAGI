@@ -16,10 +16,7 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north">                    
-                <f:facet name="footer">
-                    <h:outputText value="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento"/>
-                </f:facet>
+            <p:layoutUnit position="north" header="Seja bem-vindo(a) #{usuarioSessionController.selected.nome}">
 
                 <h:form id="menuForm">
                     <!-- BARRA DE MENUS PRINCIPAL-->
@@ -106,7 +103,7 @@
                 </h:form>
             </p:layoutUnit>
             <!-- CENTRO DA PÁGINA-->
-            <p:layoutUnit position="center">
+            <p:layoutUnit position="center" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
 
                 <f:facet name="header">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>

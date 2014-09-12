@@ -17,13 +17,14 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="primefaces.css"/>
     </h:head>
     <h:body>
-        <p:layout fullPage="true">
-            <p:layoutUnit position="north">
-                <h:graphicImage library="images" name="aruagi_capa.jpg" width="100%" height="350px"/>
-            </p:layoutUnit>
+        <p:layout fullPage="true" >
             
-            <p:layoutUnit position="center">
+            <p:layoutUnit position="center" resizable="true" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
+                
+                <h:link outcome="/index.uag" ><h:graphicImage library="images" name="aruagi_capa.jpg" width="100%" height="200px"/></h:link>
                 <p:menubar>
+                    <p:menuitem value="Home" outcome="/index.uag"/>
+                    <p:menuitem value="Glossário" outcome="/public/glossario/index.uag"/>
                     <p:menuitem value="Sistema" outcome="/public/Login.uag"/>
                 </p:menubar>
                 
