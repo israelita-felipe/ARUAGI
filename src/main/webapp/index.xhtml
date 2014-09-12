@@ -18,25 +18,19 @@ and open the template in the editor.
         <ui:define name="body">
             <h:form id="PostagemListForm">                    
 
-                    <p:dataGrid id="datalist"  value="#{postagemController.timeLine}" var="itemAtual" columns="1" emptyMessage="Nenhuma postagem adicionada" paginator="false" rows="5">
+                    <p:dataGrid id="datalist"  value="#{postagemController.timeLine}" var="itemAtual" columns="2" 
+                                emptyMessage="Nenhuma postagem adicionada" paginator="false" rows="5">
 
                         <p:panel header="#{itemAtual.titulo}" toggleable="false" toggleTitle="Detalhes" collapsed="false">
 
-                            <h:outputText value="#{itemAtual.conteudo}" escape="false"/>
+                            <h:outputText value="#{conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
+                            <br/>
+                            <br/>
                             
-                            <p:dataGrid value="#{itemAtual.videosPostagems}" var="videosAtuais" emptyMessage="Nenhum vídeos para esta postagem" columns="1" paginator="true" rows="1"  transient="#{String.valueOf(!videosAtuais.isEmpty())}" >
-                                <p:panel header="#{videosAtuais.videos.descricao}">
-                                    <center>
-                                        <iframe width="340"
-                                                height="260"
-                                                src="//www.youtube.com/embed/#{videosAtuais.videos.link}?feature=player_embedded"
-                                                frameborder="0"
-                                                allowfullscreen="true">
-                                        </iframe>                                  
-                                    </center>
-                                </p:panel>
-                            </p:dataGrid>                
-
+                            <h:link outcome="/public/postagem/index.uag" value="Continuar lendo...">
+                                <f:param name="id" id="id" value="#{itemAtual.id}"/>
+                            </h:link>
+                            
                             <f:facet name="footer" rendered="#{itemAtual.usuario!= usuarioSessionController.selected.id}">
 
                                 <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome} em "/>

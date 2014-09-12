@@ -26,6 +26,8 @@ public class PostagemController implements Serializable, InterfaceController<Pos
     private Postagem selected;
     
     private List<Postagem> timeLine = null;
+    
+    private int idParametro;
 
     public PostagemController() {
     }
@@ -139,6 +141,20 @@ public class PostagemController implements Serializable, InterfaceController<Pos
     @Override
     public List<Postagem> getItemsAvailableSelectOne() {
         return getItems();
+    }
+
+    /**
+     * @return the idParametro
+     */
+    public int getIdParametro() {
+        return idParametro;
+    }
+
+    /**
+     * @param idParametro the idParametro to set
+     */
+    public void setIdParametro(int idParametro) {
+        this.idParametro = idParametro;
     }
 
     @FacesConverter(forClass = Postagem.class)
