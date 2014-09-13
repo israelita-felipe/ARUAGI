@@ -8,32 +8,32 @@
 
     <ui:composition>
 
-        <p:dialog id="RadicalCreateDlg" widgetVar="RadicalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRadicalTitle}">
+        <p:dialog id="RadicalCreateDlg" widgetVar="RadicalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="RadicalCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{radicalController.selected != null}">
 
                         <p:outputLabel value="Radical" for="radical"/>
-                        <p:inputText id="radical" value="#{radicalController.selected.radical}" required="true" requiredMessage="Campo obrigatório"/>
+                        <p:inputText id="radical" value="#{radicalController.selected.radical}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
-                        <p:outputLabel value="#{bundle.CreateRadicalLabel_pessoaGramatical}" for="pessoaGramatical" />
-                        <p:selectOneMenu id="pessoaGramatical" value="#{radicalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.EditRadicalRequiredMessage_pessoaGramatical}">
+                        <p:outputLabel value="#{bundle.CampoPessoaGramatical}" for="pessoaGramatical" />
+                        <p:selectOneMenu id="pessoaGramatical" filter="true" value="#{radicalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"
                                            var="pessoaGramaticalItem"
                                            itemLabel="#{pessoaGramaticalItem.descricao} - #{pessoaGramaticalItem.flexao}"
                                            itemValue="#{pessoaGramaticalItem}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.CreateRadicalLabel_tempoVerbal}" for="tempoVerbal" />
-                        <p:selectOneMenu id="tempoVerbal" value="#{radicalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.EditRadicalRequiredMessage_tempoVerbal}">
+                        <p:outputLabel value="#{bundle.CampoTempoVerbal}" for="tempoVerbal" />
+                        <p:selectOneMenu id="tempoVerbal" filter="true" value="#{radicalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"
                                            var="tempoVerbalItem"
                                            itemLabel="#{tempoVerbalItem.descricao}"
                                            itemValue="#{tempoVerbalItem}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.CreateRadicalLabel_palavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" value="#{radicalController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditRadicalRequiredMessage_palavraLatim}">
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{radicalController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.CampoPalavraLatim}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
                                            itemLabel="#{palavraLatimItem.palavra}"
@@ -41,7 +41,7 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{radicalController.create}" value="#{bundle.Save}" update="display,:RadicalListForm:datalist,:growl" oncomplete="handleSubmit(args,'RadicalCreateDialog');"/>
+                    <p:commandButton actionListener="#{radicalController.create}" value="#{bundle.AcaoSalvar}" update="display,:RadicalListForm:datalist,:growl" oncomplete="handleSubmit(args,'RadicalCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

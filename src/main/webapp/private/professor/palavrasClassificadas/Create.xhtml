@@ -8,21 +8,21 @@
 
     <ui:composition>
 
-        <p:dialog id="PalavrasClassificadasCreateDlg" widgetVar="PalavrasClassificadasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePalavrasClassificadasTitle}">
+        <p:dialog id="PalavrasClassificadasCreateDlg" widgetVar="PalavrasClassificadasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="PalavrasClassificadasCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{palavrasClassificadasController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CreatePalavrasClassificadasLabel_palavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" value="#{palavrasClassificadasController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditPalavrasClassificadasRequiredMessage_palavraLatim}">
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{palavrasClassificadasController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
                                            itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.CreatePalavrasClassificadasLabel_classificacaoGramatical}" for="classificacaoGramatical" />
-                        <p:selectOneMenu id="classificacaoGramatical" value="#{palavrasClassificadasController.selected.classificacaoGramatical}" required="true" requiredMessage="#{bundle.EditPalavrasClassificadasRequiredMessage_classificacaoGramatical}">
+                        <p:outputLabel value="#{bundle.CampoClassificacaoGramatical}" for="classificacaoGramatical" />
+                        <p:selectOneMenu id="classificacaoGramatical" filter="true" value="#{palavrasClassificadasController.selected.classificacaoGramatical}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{classificacaoGramaticalController.itemsAvailableSelectOne}"
                                            var="classificacaoGramaticalItem"
                                            itemLabel="#{classificacaoGramaticalItem.nome}"
@@ -30,7 +30,7 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{palavrasClassificadasController.create}" value="#{bundle.Save}" update="display,:PalavrasClassificadasListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavrasClassificadasCreateDialog');"/>
+                    <p:commandButton actionListener="#{palavrasClassificadasController.create}" value="#{bundle.AcaoSalvar}" update="display,:PalavrasClassificadasListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavrasClassificadasCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

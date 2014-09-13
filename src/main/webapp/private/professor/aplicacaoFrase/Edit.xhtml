@@ -8,21 +8,21 @@
 
     <ui:composition>
 
-        <p:dialog id="AplicacaoFraseEditDlg" widgetVar="AplicacaoFraseEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditAplicacaoFraseTitle}">
+        <p:dialog id="AplicacaoFraseEditDlg" widgetVar="AplicacaoFraseEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="AplicacaoFraseEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{aplicacaoFraseController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditAplicacaoFraseLabel_fraseLatim}" for="fraseLatim" />
-                        <p:selectOneMenu id="fraseLatim" value="#{aplicacaoFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.EditAplicacaoFraseRequiredMessage_fraseLatim}">
+                        <p:outputLabel value="#{bundle.CampoFraseLatim}" for="fraseLatim" />
+                        <p:selectOneMenu id="fraseLatim" filter="true" value="#{aplicacaoFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
                                            var="fraseLatimItem"
                                            itemLabel="#{fraseLatimItem.frase}"
                                            itemValue="#{fraseLatimItem}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.EditAplicacaoFraseLabel_palavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" value="#{aplicacaoFraseController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditAplicacaoFraseRequiredMessage_palavraLatim}">
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{aplicacaoFraseController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
                                            itemLabel="#{palavraLatimItem.palavra}"
@@ -30,7 +30,7 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{aplicacaoFraseController.update}" value="#{bundle.Save}" update="display,:AplicacaoFraseListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AplicacaoFraseEditDialog');"/>
+                    <p:commandButton actionListener="#{aplicacaoFraseController.update}" value="#{bundle.AcaoSalvar}" update="display,:AplicacaoFraseListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AplicacaoFraseEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

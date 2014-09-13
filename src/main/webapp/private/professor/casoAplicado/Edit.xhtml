@@ -8,29 +8,29 @@
 
     <ui:composition>
 
-        <p:dialog id="CasoAplicadoEditDlg" widgetVar="CasoAplicadoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCasoAplicadoTitle}">
+        <p:dialog id="CasoAplicadoEditDlg" widgetVar="CasoAplicadoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="CasoAplicadoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{casoAplicadoController.selected != null}">
-                       
-                        <p:outputLabel value="#{bundle.EditCasoAplicadoLabel_palavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" value="#{casoAplicadoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditCasoAplicadoRequiredMessage_palavraLatim}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{casoAplicadoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
+                                           itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
-                        
-                        <p:outputLabel value="#{bundle.EditCasoAplicadoLabel_caso}" for="caso" />
-                        <p:selectOneMenu id="caso" value="#{casoAplicadoController.selected.caso}" required="true" requiredMessage="#{bundle.EditCasoAplicadoRequiredMessage_caso}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+
+                        <p:outputLabel value="#{bundle.CampoCaso}" for="caso" />
+                        <p:selectOneMenu id="caso" filter="true" value="#{casoAplicadoController.selected.caso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{casoController.itemsAvailableSelectOne}"
                                            var="casoItem"
+                                           itemLabel="#{casoItem.descricao}"
                                            itemValue="#{casoItem}"/>
                         </p:selectOneMenu>
-                                                
+
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{casoAplicadoController.update}" value="#{bundle.Save}" update="display,:CasoAplicadoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CasoAplicadoEditDialog');"/>
+                    <p:commandButton actionListener="#{casoAplicadoController.update}" value="#{bundle.AcaoSalvar}" update="display,:CasoAplicadoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CasoAplicadoEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

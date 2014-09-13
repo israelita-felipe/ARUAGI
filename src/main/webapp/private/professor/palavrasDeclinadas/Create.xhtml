@@ -8,21 +8,21 @@
 
     <ui:composition>
 
-        <p:dialog id="PalavrasDeclinadasCreateDlg" widgetVar="PalavrasDeclinadasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePalavrasDeclinadasTitle}">
+        <p:dialog id="PalavrasDeclinadasCreateDlg" widgetVar="PalavrasDeclinadasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="PalavrasDeclinadasCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{palavrasDeclinadasController.selected != null}">
                        
-                        <p:outputLabel value="#{bundle.CreatePalavrasDeclinadasLabel_palavraLatimByPalavraDeclinada}" for="palavraLatimByPalavraDeclinada" />
-                        <p:selectOneMenu id="palavraLatimByPalavraDeclinada" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraDeclinada}" required="true" requiredMessage="#{bundle.EditPalavrasDeclinadasRequiredMessage_palavraLatimByPalavraDeclinada}">
+                        <p:outputLabel value="#{bundle.CampoPalavraDeclinada}" for="palavraLatimByPalavraDeclinada" />
+                        <p:selectOneMenu id="palavraLatimByPalavraDeclinada" filter="true" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraDeclinada}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimByPalavraDeclinadaItem"
                                            itemLabel="#{palavraLatimByPalavraDeclinadaItem.palavra}"
                                            itemValue="#{palavraLatimByPalavraDeclinadaItem}"/>
                         </p:selectOneMenu>
                         
-                        <p:outputLabel value="#{bundle.CreatePalavrasDeclinadasLabel_palavraLatimByPalavraLatim}" for="palavraLatimByPalavraLatim" />
-                        <p:selectOneMenu id="palavraLatimByPalavraLatim" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraLatim}" required="true" requiredMessage="#{bundle.EditPalavrasDeclinadasRequiredMessage_palavraLatimByPalavraLatim}">
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatimByPalavraLatim" />
+                        <p:selectOneMenu id="palavraLatimByPalavraLatim" filter="true" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimByPalavraLatimItem"
                                            itemLabel="#{palavraLatimByPalavraLatimItem.palavra}"
@@ -30,7 +30,7 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{palavrasDeclinadasController.create}" value="#{bundle.Save}" update="display,:PalavrasDeclinadasListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavrasDeclinadasCreateDialog');"/>
+                    <p:commandButton actionListener="#{palavrasDeclinadasController.create}" value="#{bundle.AcaoSalvar}" update="display,:PalavrasDeclinadasListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavrasDeclinadasCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

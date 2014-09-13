@@ -3,23 +3,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="IndicadorPessoaGramaticalViewDlg" widgetVar="IndicadorPessoaGramaticalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewIndicadorPessoaGramaticalTitle}">
+        <p:dialog id="IndicadorPessoaGramaticalViewDlg" widgetVar="IndicadorPessoaGramaticalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="IndicadorPessoaGramaticalViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{indicadorPessoaGramaticalController.selected != null}">
-                        <h:outputText value="#{bundle.ViewIndicadorPessoaGramaticalLabel_pessoaGramatical}"/>
-                        <h:outputText value="#{indicadorPessoaGramaticalController.selected.pessoaGramatical}" title="#{bundle.ViewIndicadorPessoaGramaticalTitle_pessoaGramatical}"/>
-                        <h:outputText value="#{bundle.ViewIndicadorPessoaGramaticalLabel_tempoVerbal}"/>
-                        <h:outputText value="#{indicadorPessoaGramaticalController.selected.tempoVerbal}" title="#{bundle.ViewIndicadorPessoaGramaticalTitle_tempoVerbal}"/>
-                        <h:outputText value="#{bundle.ViewIndicadorPessoaGramaticalLabel_descricao}"/>
-                        <h:outputText value="#{indicadorPessoaGramaticalController.selected.descricao}" title="#{bundle.ViewIndicadorPessoaGramaticalTitle_descricao}"/>
-                        <h:outputText value="#{bundle.ViewIndicadorPessoaGramaticalLabel_usuario}"/>
-                        <h:outputText value="#{indicadorPessoaGramaticalController.selected.usuario}" title="#{bundle.ViewIndicadorPessoaGramaticalTitle_usuario}"/>
+                        <h:outputText value="#{bundle.CampoPessoaGramatical}"/>
+                        <h:outputText value="#{indicadorPessoaGramaticalController.selected.pessoaGramatical.descricao} - #{indicadorPessoaGramaticalController.selected.pessoaGramatical.flexao}" title="#{bundle.CampoPessoaGramatical}"/>
+                        <h:outputText value="#{bundle.CampoTempoVerbal}"/>
+                        <h:outputText value="#{indicadorPessoaGramaticalController.selected.tempoVerbal.descricao}" title="#{bundle.CampoTempoVerbal}"/>
+                        <h:outputText value="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{indicadorPessoaGramaticalController.selected.descricao}" title="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{usuarioSessionController.getUsuario(indicadorPessoaGramaticalController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

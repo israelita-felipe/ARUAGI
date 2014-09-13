@@ -8,26 +8,28 @@
 
     <ui:composition>
 
-        <p:dialog id="CasoAplicadoCreateDlg" widgetVar="CasoAplicadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCasoAplicadoTitle}">
+        <p:dialog id="CasoAplicadoCreateDlg" widgetVar="CasoAplicadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="CasoAplicadoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{casoAplicadoController.selected != null}">
                         
-                        <p:outputLabel value="#{bundle.CreateCasoAplicadoLabel_palavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" value="#{casoAplicadoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditCasoAplicadoRequiredMessage_palavraLatim}">
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{casoAplicadoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
+                                           itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                         </p:selectOneMenu>
                         
-                        <p:outputLabel value="#{bundle.CreateCasoAplicadoLabel_caso}" for="caso" />
-                        <p:selectOneMenu id="caso" value="#{casoAplicadoController.selected.caso}" required="true" requiredMessage="#{bundle.EditCasoAplicadoRequiredMessage_caso}">
+                        <p:outputLabel value="#{bundle.CampoCaso}" for="caso" />
+                        <p:selectOneMenu id="caso" filter="true" value="#{casoAplicadoController.selected.caso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{casoController.itemsAvailableSelectOne}"
                                            var="casoItem"
+                                           itemLabel="#{casoItem.descricao}"
                                            itemValue="#{casoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{casoAplicadoController.create}" value="#{bundle.Save}" update="display,:CasoAplicadoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CasoAplicadoCreateDialog');"/>
+                    <p:commandButton actionListener="#{casoAplicadoController.create}" value="#{bundle.AcaoSalvar}" update="display,:CasoAplicadoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CasoAplicadoCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

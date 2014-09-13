@@ -7,16 +7,16 @@
 
     <ui:composition>
 
-        <p:dialog id="PalavrasDeclinadasViewDlg" widgetVar="PalavrasDeclinadasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPalavrasDeclinadasTitle}">
+        <p:dialog id="PalavrasDeclinadasViewDlg" widgetVar="PalavrasDeclinadasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="PalavrasDeclinadasViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{palavrasDeclinadasController.selected != null}">
-                        <h:outputText value="#{bundle.ViewPalavrasDeclinadasLabel_palavraLatimByPalavraDeclinada}"/>
-                        <h:outputText value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraDeclinada}" title="#{bundle.ViewPalavrasDeclinadasTitle_palavraLatimByPalavraDeclinada}"/>
-                        <h:outputText value="#{bundle.ViewPalavrasDeclinadasLabel_palavraLatimByPalavraLatim}"/>
-                        <h:outputText value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraLatim}" title="#{bundle.ViewPalavrasDeclinadasTitle_palavraLatimByPalavraLatim}"/>
-                        <h:outputText value="#{bundle.ViewPalavrasDeclinadasLabel_usuario}"/>
-                        <h:outputText value="#{palavrasDeclinadasController.selected.usuario}" title="#{bundle.ViewPalavrasDeclinadasTitle_usuario}"/>
+                        <h:outputText value="#{bundle.CampoPalavraDeclinada}"/>
+                        <h:outputText value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraDeclinada.palavra}" title="#{bundle.CampoPalavraDeclinada}"/>
+                        <h:outputText value="#{bundle.CampoPalavraLatim}"/>
+                        <h:outputText value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraLatim.palavra}" title="#{bundle.CampoPalavraLatim}"/>
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{usuarioSessionController.getUsuario(palavrasDeclinadasController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

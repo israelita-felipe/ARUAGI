@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListPalavrasClassificadasTitle}"></h:outputText>
+            <h:outputText value="#{bundle.TituloListagemClassificacaoGramatical}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="PalavrasClassificadasListForm">
-                <p:panel header="#{bundle.ListPalavrasClassificadasTitle}">
+                <p:panel>
                     <p:dataTable id="datalist" value="#{palavrasClassificadasController.items}" var="item"
                                  selectionMode="single" selection="#{palavrasClassificadasController.selected}"
                                  paginator="true"
@@ -29,27 +29,27 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPalavrasClassificadasTitle_palavraLatim}"/>
+                                <h:outputText value="#{bundle.CampoPalavraLatim}"/>
                             </f:facet>
                             <h:outputText value="#{item.palavraLatim.palavra}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPalavrasClassificadasTitle_classificacaoGramatical}"/>
+                                <h:outputText value="#{bundle.CampoClassificacaoGramatical}"/>
                             </f:facet>
                             <h:outputText value="#{item.classificacaoGramatical.nome}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPalavrasClassificadasTitle_usuario}"/>
+                                <h:outputText value="#{bundle.CampoAutor}"/>
                             </f:facet>
                             <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{palavrasClassificadasController.prepareCreate}" update=":PalavrasClassificadasCreateForm" oncomplete="PF('PalavrasClassificadasCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PalavrasClassificadasViewForm" oncomplete="PF('PalavrasClassificadasViewDialog').show()" disabled="#{empty palavrasClassificadasController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PalavrasClassificadasEditForm" oncomplete="PF('PalavrasClassificadasEditDialog').show()" disabled="#{empty palavrasClassificadasController.selected || palavrasClassificadasController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{palavrasClassificadasController.destroy}" update=":growl,datalist" disabled="#{empty palavrasClassificadasController.selected || palavrasClassificadasController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{palavrasClassificadasController.prepareCreate}" update=":PalavrasClassificadasCreateForm" oncomplete="PF('PalavrasClassificadasCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.AcaoDetalhar}" update=":PalavrasClassificadasViewForm" oncomplete="PF('PalavrasClassificadasViewDialog').show()" disabled="#{empty palavrasClassificadasController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.AcaoEditar}" update=":PalavrasClassificadasEditForm" oncomplete="PF('PalavrasClassificadasEditDialog').show()" disabled="#{empty palavrasClassificadasController.selected || palavrasClassificadasController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.AcaoExcluir}" actionListener="#{palavrasClassificadasController.destroy}" update=":growl,datalist" disabled="#{empty palavrasClassificadasController.selected || palavrasClassificadasController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

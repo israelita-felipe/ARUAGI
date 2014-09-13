@@ -7,16 +7,16 @@
 
     <ui:composition>
 
-        <p:dialog id="PalavrasClassificadasViewDlg" widgetVar="PalavrasClassificadasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPalavrasClassificadasTitle}">
+        <p:dialog id="PalavrasClassificadasViewDlg" widgetVar="PalavrasClassificadasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="PalavrasClassificadasViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{palavrasClassificadasController.selected != null}">
-                        <h:outputText value="#{bundle.ViewPalavrasClassificadasLabel_palavraLatim}"/>
-                        <h:outputText value="#{palavrasClassificadasController.selected.palavraLatim}" title="#{bundle.ViewPalavrasClassificadasTitle_palavraLatim}"/>
-                        <h:outputText value="#{bundle.ViewPalavrasClassificadasLabel_classificacaoGramatical}"/>
-                        <h:outputText value="#{palavrasClassificadasController.selected.classificacaoGramatical}" title="#{bundle.ViewPalavrasClassificadasTitle_classificacaoGramatical}"/>
-                        <h:outputText value="#{bundle.ViewPalavrasClassificadasLabel_usuario}"/>
-                        <h:outputText value="#{palavrasClassificadasController.selected.usuario}" title="#{bundle.ViewPalavrasClassificadasTitle_usuario}"/>
+                        <h:outputText value="#{bundle.CampoPalavraLatim}"/>
+                        <h:outputText value="#{palavrasClassificadasController.selected.palavraLatim.palavra}" title="#{bundle.CampoPalavraLatim}"/>
+                        <h:outputText value="#{bundle.CampoClassificacaoGramatical}"/>
+                        <h:outputText value="#{palavrasClassificadasController.selected.classificacaoGramatical.nome}" title="#{bundle.CampoClassificacaoGramatical}"/>
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{usuarioSessionController.getUsuario(palavrasClassificadasController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

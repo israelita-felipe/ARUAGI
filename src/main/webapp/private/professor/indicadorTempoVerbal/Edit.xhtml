@@ -8,32 +8,32 @@
 
     <ui:composition>
 
-        <p:dialog id="IndicadorTempoVerbalEditDlg" widgetVar="IndicadorTempoVerbalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditIndicadorTempoVerbalTitle}">
+        <p:dialog id="IndicadorTempoVerbalEditDlg" widgetVar="IndicadorTempoVerbalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="IndicadorTempoVerbalEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{indicadorTempoVerbalController.selected != null}">
-                       
-                        <p:outputLabel value="#{bundle.EditIndicadorTempoVerbalLabel_pessoaGramatical}" for="pessoaGramatical" />
-                        <p:selectOneMenu id="pessoaGramatical" value="#{indicadorTempoVerbalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.EditIndicadorTempoVerbalRequiredMessage_pessoaGramatical}">
+
+                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{indicadorTempoVerbalController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
+                        <p:outputLabel value="#{bundle.CampoPessoaGramatical}" for="pessoaGramatical" />
+                        <p:selectOneMenu id="pessoaGramatical" filter="true" value="#{indicadorTempoVerbalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"
                                            var="pessoaGramaticalItem"
-                                           itemLabel="#{pessoaGramaticalItem.id}ª pessoa - #{pessoaGramaticalItem.flexao}"
+                                           itemLabel="#{pessoaGramaticalItem.descricao} - #{pessoaGramaticalItem.flexao}"
                                            itemValue="#{pessoaGramaticalItem}"/>
                         </p:selectOneMenu>
-                        
-                        <p:outputLabel value="#{bundle.EditIndicadorTempoVerbalLabel_tempoVerbal}" for="tempoVerbal" />
-                        <p:selectOneMenu id="tempoVerbal" value="#{indicadorTempoVerbalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.EditIndicadorTempoVerbalRequiredMessage_tempoVerbal}">
+
+                        <p:outputLabel value="#{bundle.CampoTempoVerbal}" for="tempoVerbal" />
+                        <p:selectOneMenu id="tempoVerbal" filter="true" value="#{indicadorTempoVerbalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"
                                            var="tempoVerbalItem"
                                            itemLabel="#{tempoVerbalItem.descricao}"
                                            itemValue="#{tempoVerbalItem}"/>
                         </p:selectOneMenu>
-                        
-                        <p:outputLabel value="#{bundle.EditIndicadorTempoVerbalLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{indicadorTempoVerbalController.selected.descricao}" title="#{bundle.EditIndicadorTempoVerbalTitle_descricao}" required="true" requiredMessage="#{bundle.EditIndicadorTempoVerbalRequiredMessage_descricao}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{indicadorTempoVerbalController.update}" value="#{bundle.Save}" update="display,:IndicadorTempoVerbalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'IndicadorTempoVerbalEditDialog');"/>
+                    <p:commandButton actionListener="#{indicadorTempoVerbalController.update}" value="#{bundle.AcaoSalvar}" update="display,:IndicadorTempoVerbalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'IndicadorTempoVerbalEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
