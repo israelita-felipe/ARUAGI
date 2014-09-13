@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListTraduzPalavraTitle}"></h:outputText>
+            <h:outputText value="#{bundle.TituloTraduzPalavras}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="TraduzPalavraListForm">
-                <p:panel header="#{bundle.ListTraduzPalavraTitle}">
+                <p:panel>
                     <p:dataTable id="datalist" value="#{traduzPalavraController.items}" var="item"
                                  selectionMode="single" selection="#{traduzPalavraController.selected}"
                                  paginator="true"
@@ -29,27 +29,27 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTraduzPalavraTitle_palavraPortugues}"/>
+                                <h:outputText value="#{bundle.CampoPalavraPortugues}"/>
                             </f:facet>
                             <h:outputText value="#{item.palavraPortugues.palavra}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTraduzPalavraTitle_palavraLatim}"/>
+                                <h:outputText value="#{bundle.CampoPalavraLatim}"/>
                             </f:facet>
                             <h:outputText value="#{item.palavraLatim.palavra}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTraduzPalavraTitle_usuario}"/>
+                                <h:outputText value="#{bundle.CampoAutor}"/>
                             </f:facet>
                             <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{traduzPalavraController.prepareCreate}" update=":TraduzPalavraCreateForm" oncomplete="PF('TraduzPalavraCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TraduzPalavraViewForm" oncomplete="PF('TraduzPalavraViewDialog').show()" disabled="#{empty traduzPalavraController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TraduzPalavraEditForm" oncomplete="PF('TraduzPalavraEditDialog').show()" disabled="#{empty traduzPalavraController.selected || traduzPalavraController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{traduzPalavraController.destroy}" update=":growl,datalist" disabled="#{empty traduzPalavraController.selected || traduzPalavraController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{traduzPalavraController.prepareCreate}" update=":TraduzPalavraCreateForm" oncomplete="PF('TraduzPalavraCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.AcaoDetalhar}" update=":TraduzPalavraViewForm" oncomplete="PF('TraduzPalavraViewDialog').show()" disabled="#{empty traduzPalavraController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.AcaoEditar}" update=":TraduzPalavraEditForm" oncomplete="PF('TraduzPalavraEditDialog').show()" disabled="#{empty traduzPalavraController.selected || traduzPalavraController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.AcaoExcluir}" actionListener="#{traduzPalavraController.destroy}" update=":growl,datalist" disabled="#{empty traduzPalavraController.selected || traduzPalavraController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

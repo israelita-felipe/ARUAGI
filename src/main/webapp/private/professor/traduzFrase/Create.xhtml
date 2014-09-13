@@ -8,21 +8,21 @@
 
     <ui:composition>
 
-        <p:dialog id="TraduzFraseCreateDlg" widgetVar="TraduzFraseCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTraduzFraseTitle}">
+        <p:dialog id="TraduzFraseCreateDlg" widgetVar="TraduzFraseCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="TraduzFraseCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{traduzFraseController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CreateTraduzFraseLabel_fraseLatim}" for="fraseLatim" />
-                        <p:selectOneMenu id="fraseLatim" value="#{traduzFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.EditTraduzFraseRequiredMessage_fraseLatim}">
+                        <p:outputLabel value="#{bundle.CampoFraseLatim}" for="fraseLatim" />
+                        <p:selectOneMenu id="fraseLatim" filter="true" value="#{traduzFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
                                            var="fraseLatimItem"
                                            itemLabel="#{fraseLatimItem.frase}"
                                            itemValue="#{fraseLatimItem}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.CreateTraduzFraseLabel_frasePortugues}" for="frasePortugues" />
-                        <p:selectOneMenu id="frasePortugues" value="#{traduzFraseController.selected.frasePortugues}" required="true" requiredMessage="#{bundle.EditTraduzFraseRequiredMessage_frasePortugues}">
+                        <p:outputLabel value="#{bundle.CampoFrasePortugues}" for="frasePortugues" />
+                        <p:selectOneMenu id="frasePortugues" filter="true" value="#{traduzFraseController.selected.frasePortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{frasePortuguesController.itemsAvailableSelectOne}"
                                            var="frasePortuguesItem"
                                            itemLabel="#{frasePortuguesItem.frase}"
@@ -30,7 +30,7 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{traduzFraseController.create}" value="#{bundle.Save}" update="display,:TraduzFraseListForm:datalist,:growl" oncomplete="handleSubmit(args,'TraduzFraseCreateDialog');"/>
+                    <p:commandButton actionListener="#{traduzFraseController.create}" value="#{bundle.AcaoSalvar}" update="display,:TraduzFraseListForm:datalist,:growl" oncomplete="handleSubmit(args,'TraduzFraseCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

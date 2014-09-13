@@ -7,16 +7,16 @@
 
     <ui:composition>
 
-        <p:dialog id="TempoVerbalEditDlg" widgetVar="TempoVerbalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTempoVerbalTitle}">
+        <p:dialog id="TempoVerbalEditDlg" widgetVar="TempoVerbalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="TempoVerbalEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tempoVerbalController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditTempoVerbalLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{tempoVerbalController.selected.descricao}" title="#{bundle.EditTempoVerbalTitle_descricao}" required="true" requiredMessage="#{bundle.EditTempoVerbalRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{tempoVerbalController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{tempoVerbalController.update}" value="#{bundle.Save}" update="display,:TempoVerbalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TempoVerbalEditDialog');"/>
+                    <p:commandButton actionListener="#{tempoVerbalController.update}" value="#{bundle.AcaoSalvar}" update="display,:TempoVerbalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TempoVerbalEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

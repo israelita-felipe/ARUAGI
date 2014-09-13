@@ -3,21 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="PalavraLatimCreateDlg" widgetVar="PalavraLatimCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePalavraLatimTitle}">
+        <p:dialog id="PalavraLatimCreateDlg" widgetVar="PalavraLatimCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="PalavraLatimCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{palavraLatimController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CreatePalavraLatimLabel_palavra}" for="palavra" />
-                        <p:inputText id="palavra" value="#{palavraLatimController.selected.palavra}" title="#{bundle.CreatePalavraLatimTitle_palavra}" required="true" requiredMessage="#{bundle.CreatePalavraLatimRequiredMessage_palavra}"/>
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavra" />
+                        <p:inputText id="palavra" value="#{palavraLatimController.selected.palavra}" title="#{bundle.CampoPalavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{palavraLatimController.create}" value="#{bundle.Save}" update="display,:PalavraLatimListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavraLatimCreateDialog');"/>
+                    <p:commandButton actionListener="#{palavraLatimController.create}" value="#{bundle.AcaoSalvar}" update="display,:PalavraLatimListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavraLatimCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

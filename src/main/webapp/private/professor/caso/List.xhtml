@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListCasoTitle}"></h:outputText>
+            <h:outputText value="#{bundle.TituloCasosLatinos}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="CasoListForm">
-                <p:panel header="#{bundle.ListCasoTitle}">
+                <p:panel>
                     <p:dataTable id="datalist" value="#{casoController.items}" var="item"
                                  selectionMode="single" selection="#{casoController.selected}"
                                  paginator="true"
@@ -29,23 +29,23 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCasoTitle_descricao}"/>
+                                <h:outputText value="#{bundle.CampoDescricao}"/>
                             </f:facet>
                             <h:outputText value="#{item.descricao}"/>
                         </p:column>
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCasoTitle_usuario}"/>
+                                <h:outputText value="#{bundle.CampoAutor}"/>
                             </f:facet>
                             <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{casoController.prepareCreate}" update=":CasoCreateForm" oncomplete="PF('CasoCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CasoViewForm" oncomplete="PF('CasoViewDialog').show()" disabled="#{empty casoController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CasoEditForm" oncomplete="PF('CasoEditDialog').show()" disabled="#{empty casoController.selected || casoController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{casoController.destroy}" update=":growl,datalist" disabled="#{empty casoController.selected || casoController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{casoController.prepareCreate}" update=":CasoCreateForm" oncomplete="PF('CasoCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.AcaoDetalhar}" update=":CasoViewForm" oncomplete="PF('CasoViewDialog').show()" disabled="#{empty casoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.AcaoEditar}" update=":CasoEditForm" oncomplete="PF('CasoEditDialog').show()" disabled="#{empty casoController.selected || casoController.selected.usuario!=usuarioSessionController.selected.id}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.AcaoExcluir}" actionListener="#{casoController.destroy}" update=":growl,datalist" disabled="#{empty casoController.selected || casoController.selected.usuario!=usuarioSessionController.selected.id}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

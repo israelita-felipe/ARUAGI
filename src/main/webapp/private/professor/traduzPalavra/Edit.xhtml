@@ -8,21 +8,21 @@
 
     <ui:composition>
 
-        <p:dialog id="TraduzPalavraEditDlg" widgetVar="TraduzPalavraEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTraduzPalavraTitle}">
+        <p:dialog id="TraduzPalavraEditDlg" widgetVar="TraduzPalavraEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="TraduzPalavraEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{traduzPalavraController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditTraduzPalavraLabel_palavraPortugues}" for="palavraPortugues" />
-                        <p:selectOneMenu id="palavraPortugues" value="#{traduzPalavraController.selected.palavraPortugues}" required="true" requiredMessage="#{bundle.EditTraduzPalavraRequiredMessage_palavraPortugues}">
+                        <p:outputLabel value="#{bundle.CampoPalavraPortugues}" for="palavraPortugues" />
+                        <p:selectOneMenu id="palavraPortugues" filter="true" value="#{traduzPalavraController.selected.palavraPortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraPortuguesController.itemsAvailableSelectOne}"
                                            var="palavraPortuguesItem"
                                            itemLabel="#{palavraPortuguesItem.palavra}"
                                            itemValue="#{palavraPortuguesItem}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.EditTraduzPalavraLabel_palavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" value="#{traduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditTraduzPalavraRequiredMessage_palavraLatim}">
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{traduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
                                            itemLabel="#{palavraLatimItem.palavra}"
@@ -30,7 +30,7 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{traduzPalavraController.update}" value="#{bundle.Save}" update="display,:TraduzPalavraListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TraduzPalavraEditDialog');"/>
+                    <p:commandButton actionListener="#{traduzPalavraController.update}" value="#{bundle.AcaoSalvar}" update="display,:TraduzPalavraListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TraduzPalavraEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

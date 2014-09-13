@@ -7,19 +7,19 @@
 
     <ui:composition>
 
-        <p:dialog id="PessoaGramaticalViewDlg" widgetVar="PessoaGramaticalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPessoaGramaticalTitle}">
+        <p:dialog id="PessoaGramaticalViewDlg" widgetVar="PessoaGramaticalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="PessoaGramaticalViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pessoaGramaticalController.selected != null}">
-                        <h:outputText value="#{bundle.ViewPessoaGramaticalLabel_id}"/>
-                        <h:outputText value="#{pessoaGramaticalController.selected.id}" title="#{bundle.ViewPessoaGramaticalTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewPessoaGramaticalLabel_descricao}"/>
-                        <h:outputText value="#{pessoaGramaticalController.selected.descricao}" title="#{bundle.ViewPessoaGramaticalTitle_descricao}"/>
-                        <h:outputText value="#{bundle.ViewPessoaGramaticalLabel_flexao}"/>
-                        <h:outputText value="#{pessoaGramaticalController.selected.flexao}" title="#{bundle.ViewPessoaGramaticalTitle_flexao}"/>
-                        <h:outputText value="#{bundle.ViewPessoaGramaticalLabel_usuario}"/>
-                        <h:outputText value="#{pessoaGramaticalController.selected.usuario}" title="#{bundle.ViewPessoaGramaticalTitle_usuario}"/>
-                        <h:outputText value="#{bundle.ViewPessoaGramaticalLabel_status}"/>
+                        <h:outputText value="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{pessoaGramaticalController.selected.id}" title="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{pessoaGramaticalController.selected.descricao}" title="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{bundle.CampoFlexao}"/>
+                        <h:outputText value="#{pessoaGramaticalController.selected.flexao}" title="#{bundle.CampoFlexao}"/>
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{usuarioSessionController.getUsuario(pessoaGramaticalController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{bundle.CampoStatus}"/>
                         <p:selectBooleanCheckbox value="#{pessoaGramaticalController.selected.status}" disabled="true"/>
                     </p:panelGrid>
                 </h:panelGroup>

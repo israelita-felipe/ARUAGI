@@ -8,22 +8,22 @@
 
     <ui:composition>
 
-        <p:dialog id="PessoaGramaticalEditDlg" widgetVar="PessoaGramaticalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPessoaGramaticalTitle}">
+        <p:dialog id="PessoaGramaticalEditDlg" widgetVar="PessoaGramaticalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="PessoaGramaticalEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pessoaGramaticalController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditPessoaGramaticalLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{pessoaGramaticalController.selected.descricao}" title="#{bundle.EditPessoaGramaticalTitle_descricao}" required="true" requiredMessage="#{bundle.EditPessoaGramaticalRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{pessoaGramaticalController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
-                        <p:outputLabel value="#{bundle.CreatePessoaGramaticalLabel_flexao}" for="flexao" />
-                        <p:selectOneMenu id="flexao" value="#{pessoaGramaticalController.selected.flexao}" required="true" requiredMessage="#{bundle.CreatePessoaGramaticalRequiredMessage_flexao}">
-                            <f:selectItem itemLabel="Singular" itemValue="Singular"/>
-                            <f:selectItem itemLabel="Plural" itemValue="Plural"/>
+                        <p:outputLabel value="#{bundle.CampoFlexao}" for="flexao" />
+                        <p:selectOneMenu id="flexao" value="#{pessoaGramaticalController.selected.flexao}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                            <f:selectItem itemLabel="#{bundle.ItemFlexaoSingular}" itemValue="#{bundle.ItemFlexaoSingular}"/>
+                            <f:selectItem itemLabel="#{bundle.ItemFlexaoPlural}" itemValue="#{bundle.ItemFlexaoPlural}"/>
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{pessoaGramaticalController.update}" value="#{bundle.Save}" update="display,:PessoaGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PessoaGramaticalEditDialog');"/>
+                    <p:commandButton actionListener="#{pessoaGramaticalController.update}" value="#{bundle.AcaoSalvar}" update="display,:PessoaGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PessoaGramaticalEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

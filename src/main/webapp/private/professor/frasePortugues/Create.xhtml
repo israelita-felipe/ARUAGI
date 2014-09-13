@@ -7,16 +7,16 @@
 
     <ui:composition>
 
-        <p:dialog id="FrasePortuguesCreateDlg" widgetVar="FrasePortuguesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateFrasePortuguesTitle}">
+        <p:dialog id="FrasePortuguesCreateDlg" widgetVar="FrasePortuguesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="FrasePortuguesCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{frasePortuguesController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CreateFrasePortuguesLabel_frase}" for="frase" />
-                        <p:inputText id="frase" value="#{frasePortuguesController.selected.frase}" title="#{bundle.CreateFrasePortuguesTitle_frase}" required="true" requiredMessage="#{bundle.CreateFrasePortuguesRequiredMessage_frase}"/>
+                        <p:outputLabel value="#{bundle.CampoFrasePortugues}" for="frase" />
+                        <p:inputText id="frase" value="#{frasePortuguesController.selected.frase}" title="#{bundle.CampoFrasePortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{frasePortuguesController.create}" value="#{bundle.Save}" update="display,:FrasePortuguesListForm:datalist,:growl" oncomplete="handleSubmit(args,'FrasePortuguesCreateDialog');"/>
+                    <p:commandButton actionListener="#{frasePortuguesController.create}" value="#{bundle.AcaoSalvar}" update="display,:FrasePortuguesListForm:datalist,:growl" oncomplete="handleSubmit(args,'FrasePortuguesCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

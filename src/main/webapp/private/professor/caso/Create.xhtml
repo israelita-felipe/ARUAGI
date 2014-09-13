@@ -7,17 +7,16 @@
 
     <ui:composition>
 
-        <p:dialog id="CasoCreateDlg" widgetVar="CasoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCasoTitle}">
+        <p:dialog id="CasoCreateDlg" widgetVar="CasoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="CasoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{casoController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CreateCasoLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{casoController.selected.descricao}" title="#{bundle.CreateCasoTitle_descricao}" required="true" requiredMessage="#{bundle.CreateCasoRequiredMessage_descricao}"/>
+                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                        <p:inputText id="descricao" value="#{casoController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{casoController.create}" value="#{bundle.Save}" update="display,:CasoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CasoCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="CasoCreateDialog.hide()"/>
+                    <p:commandButton actionListener="#{casoController.create}" value="#{bundle.AcaoSalvar}" update="display,:CasoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CasoCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

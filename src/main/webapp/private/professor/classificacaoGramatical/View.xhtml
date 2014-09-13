@@ -3,22 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="ClassificacaoGramaticalViewDlg" widgetVar="ClassificacaoGramaticalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewClassificacaoGramaticalTitle}">
+        <p:dialog id="ClassificacaoGramaticalViewDlg" widgetVar="ClassificacaoGramaticalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="ClassificacaoGramaticalViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{classificacaoGramaticalController.selected != null}">
-                        <h:outputText value="#{bundle.ViewClassificacaoGramaticalLabel_id}"/>
-                        <h:outputText value="#{classificacaoGramaticalController.selected.id}" title="#{bundle.ViewClassificacaoGramaticalTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewClassificacaoGramaticalLabel_nome}"/>
-                        <h:outputText value="#{classificacaoGramaticalController.selected.nome}" title="#{bundle.ViewClassificacaoGramaticalTitle_nome}"/>
-                        <h:outputText value="#{bundle.ViewClassificacaoGramaticalLabel_usuario}"/>
-                        <h:outputText value="#{classificacaoGramaticalController.selected.usuario}" title="#{bundle.ViewClassificacaoGramaticalTitle_usuario}"/>
-                        <h:outputText value="#{bundle.ViewClassificacaoGramaticalLabel_status}"/>
+                        <h:outputText value="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{classificacaoGramaticalController.selected.id}" title="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{bundle.CampoNome}"/>
+                        <h:outputText value="#{classificacaoGramaticalController.selected.nome}" title="#{bundle.CampoNome}"/>
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{usuarioSessionController.getUsuario(classificacaoGramaticalController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{bundle.CampoStatus}"/>
                         <p:selectBooleanCheckbox value="#{classificacaoGramaticalController.selected.status}" disabled="true"/>
                     </p:panelGrid>
                 </h:panelGroup>

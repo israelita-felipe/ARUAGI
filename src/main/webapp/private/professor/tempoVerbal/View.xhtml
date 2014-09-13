@@ -7,17 +7,17 @@
 
     <ui:composition>
 
-        <p:dialog id="TempoVerbalViewDlg" widgetVar="TempoVerbalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTempoVerbalTitle}">
+        <p:dialog id="TempoVerbalViewDlg" widgetVar="TempoVerbalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="TempoVerbalViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tempoVerbalController.selected != null}">
-                        <h:outputText value="#{bundle.ViewTempoVerbalLabel_id}"/>
-                        <h:outputText value="#{tempoVerbalController.selected.id}" title="#{bundle.ViewTempoVerbalTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewTempoVerbalLabel_descricao}"/>
-                        <h:outputText value="#{tempoVerbalController.selected.descricao}" title="#{bundle.ViewTempoVerbalTitle_descricao}"/>
-                        <h:outputText value="#{bundle.ViewTempoVerbalLabel_usuario}"/>
-                        <h:outputText value="#{tempoVerbalController.selected.usuario}" title="#{bundle.ViewTempoVerbalTitle_usuario}"/>
-                        <h:outputText value="#{bundle.ViewTempoVerbalLabel_status}"/>
+                        <h:outputText value="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{tempoVerbalController.selected.id}" title="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{tempoVerbalController.selected.descricao}" title="#{bundle.CampoDescricao}"/>
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{usuarioSessionController.getUsuario(tempoVerbalController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{bundle.CampoStatus}"/>
                         <p:selectBooleanCheckbox value="#{tempoVerbalController.selected.status}" disabled="true"/>
                     </p:panelGrid>
                 </h:panelGroup>

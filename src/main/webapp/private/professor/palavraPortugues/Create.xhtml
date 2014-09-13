@@ -3,21 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="PalavraPortuguesCreateDlg" widgetVar="PalavraPortuguesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePalavraPortuguesTitle}">
+        <p:dialog id="PalavraPortuguesCreateDlg" widgetVar="PalavraPortuguesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="PalavraPortuguesCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{palavraPortuguesController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CreatePalavraPortuguesLabel_palavra}" for="palavra" />
-                        <p:inputText id="palavra" value="#{palavraPortuguesController.selected.palavra}" title="#{bundle.CreatePalavraPortuguesTitle_palavra}" required="true" requiredMessage="#{bundle.CreatePalavraPortuguesRequiredMessage_palavra}"/>
+                        <p:outputLabel value="#{bundle.CampoPalavraPortugues}" for="palavra" />
+                        <p:inputText id="palavra" value="#{palavraPortuguesController.selected.palavra}" title="#{bundle.CampoPalavraPortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{palavraPortuguesController.create}" value="#{bundle.Save}" update="display,:PalavraPortuguesListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavraPortuguesCreateDialog');"/>
+                    <p:commandButton actionListener="#{palavraPortuguesController.create}" value="#{bundle.AcaoSalvar}" update="display,:PalavraPortuguesListForm:datalist,:growl" oncomplete="handleSubmit(args,'PalavraPortuguesCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
