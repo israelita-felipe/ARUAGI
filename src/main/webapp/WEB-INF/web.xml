@@ -30,6 +30,15 @@
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/private/*</url-pattern>
     </filter-mapping>
+    <!-- FILTRO REDIRECIONAMENTO DE LOGIN -->
+    <filter>
+        <filter-name>IsLoggedFilter</filter-name>
+        <filter-class>br.edu.uag.aruagi.control.util.filtros.IsLoggedFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>IsLoggedFilter</filter-name>
+        <url-pattern>/public/Login.uag</url-pattern>
+    </filter-mapping>
     <!-- FILTRO ADMIN -->
     <filter>
         <filter-name>AdminFilter</filter-name>

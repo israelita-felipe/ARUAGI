@@ -106,7 +106,7 @@
             <p:layoutUnit position="center" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
 
                 <f:facet name="header">
-                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
                 </f:facet>
 
                 <h:form id="PostagemListForm">                    

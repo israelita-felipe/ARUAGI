@@ -8,8 +8,6 @@ package br.edu.uag.aruagi.control.util.support;
 import br.edu.uag.aruagi.model.Usuario;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -34,20 +32,43 @@ public class EmailSender {
         email.setConexaoSegura(true);
 
         //dados do remetente
-        email.setUsuario("israelita.felipe");
-        email.setSenha("1509199215091992");
-        email.setEmailRemetente("israelita.felipe@gmail.com");
-        email.setNomeRemetente("Israel Araújo");
+        email.setUsuario("ARUAGI.UFRPE.UAG.SENHAS");
+        email.setSenha("ARUAGI741852963");
+        email.setEmailRemetente("ARUAGI.UFRPE.UAG.SENHAS@gmail.com");
+        email.setNomeRemetente("ARUAGI UFRPE");
         //dados do email
         email.setAssunto("REDEFINIÇÃO DE SENHA DO ARUAGI");
-        email.setCorpo(user.getNome()+" SUA NOVA SENHA DO ARUAGI E: "+user.getSenha());
+        email.setCorpo(user.getNome()+" Sua nova senha do ARUAGI é: "+user.getSenha());
         email.setTypeText(SmtpMail.TYPE_TEXT_PLAIN);
         //dados do destinatário
         email.setNomeDestinatario(user.getNome());
         email.setEmailDestinatario(user.getLogin());
 
         return send(email);
+    }
+    
+    public static boolean sendPreparedEmail(String mensagem) throws MessagingException, UnsupportedEncodingException{
+        SmtpMail email = new SmtpMail();
 
+        email.setHost("smtp.gmail.com");
+        email.setPorta(465);
+        email.setAutenticacao(true);
+        email.setConexaoSegura(true);
+
+        //dados do remetente
+        email.setUsuario("ARUAGI.UFRPE.UAG.ERROS");
+        email.setSenha("ARUAGI741852963");
+        email.setEmailRemetente("ARUAGI.UFRPE.UAG.ERROS@GMAIL.COM");
+        email.setNomeRemetente("ARUAGI UFRPE");
+        //dados do email
+        email.setAssunto("ERRO");
+        email.setCorpo(mensagem);
+        email.setTypeText(SmtpMail.TYPE_TEXT_PLAIN);
+        //dados do destinatário
+        email.setNomeDestinatario("ARUAGI UFRPE");
+        email.setEmailDestinatario("ARUAGI.UFRPE.UAG.ERROS@GMAIL.COM");
+
+        return send(email);
     }
 
     public static boolean send(final SmtpMail mail) throws MessagingException, UnsupportedEncodingException {
@@ -72,7 +93,7 @@ public class EmailSender {
         Session session = Session.getInstance(prop, auth);
 
         //caso queira habilitar o modo de Debug
-        session.setDebug(true);
+        //session.setDebug(true);
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(mail.getEmailRemetente(), mail.getNomeRemetente()));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(mail.getEmailDestinatario(), mail.getNomeDestinatario()));
@@ -221,15 +242,5 @@ public class EmailSender {
         public void setTypeText(String typeText) {
             this.typeText = typeText;
         }
-    }
-
-    public static void main(String[] args) {
-        try {
-            EmailSender.sendPreparedEmail(new Usuario());
-        } catch (MessagingException ex) {
-            Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    }  
 }
