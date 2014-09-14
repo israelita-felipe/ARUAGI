@@ -9,6 +9,7 @@ and open the template in the editor.
 */
 .noBorder tr, .noBorder td {
 	border: none !important;
+        padding: 0px;
 }
 
 .left{
@@ -16,5 +17,8 @@ and open the template in the editor.
     left: 100%
 }
 .full{
+    width: 100%
+}
+.large{
     width: 100%
 }
