@@ -19,41 +19,32 @@
     <h:body>
         <p:layout fullPage="true">
             <!-- LAYOUT DE INFORMACAO DE ACESSO -->
-            <p:layoutUnit position="north" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
-                <f:facet name="header">
-                    <p:messages autoUpdate="true" closable="true"/>
-                </f:facet>
-                <p:panelGrid columns="3">
-
-                    <h:link outcome="#{bundle.MenuInicio}">
-                        <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="100" height="130"/>                    
-                    </h:link>                    
-
-                    <h:link outcome="#{bundle.MenuInicio}" value="#{bundle.TituloAplicacaoCompleto}"/>
-                    <h:form >
-                        <p:panelGrid id="loginForm" columns="1">
-
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.CampoAutorizacao}"/>
-                            </f:facet>
-
-                            <p:inputText id="login" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}" placeholder="#{bundle.CampoLogin}">
-                                <f:validator validatorId="EmailValidator"/>
-                            </p:inputText>
-
-                            <p:password id="senha" value="#{usuarioSessionController.selected.senha}" placeholder="#{bundle.CampoSenha}"/>
-
-                            <f:facet name="footer">
-                                <p:commandButton value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/> 
-                                <p:commandLink value="#{bundle.CampoRedefinirSenha}" action="Redefinir.xhtml?faces-redirect=true"/>
-                            </f:facet>
-                        </p:panelGrid>
-                    </h:form>
-
-                </p:panelGrid>
-            </p:layoutUnit>
-
             <p:layoutUnit position="center">
+                <p:messages autoUpdate="true" closable="true"/>
+                <h:form styleClass="container">
+                    <p:panel >
+
+                        <f:facet name="header">
+                            <p:outputLabel value="#{bundle.CampoAutorizacao}" styleClass="center"/>
+                        </f:facet>
+
+                        <p:outputLabel value="#{bundle.CampoLogin}" styleClass="label"/>
+                        <br/>
+                        <p:inputText id="login" styleClass="input" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                            <f:validator validatorId="EmailValidator"/>
+                        </p:inputText>
+                        <br/>
+                        <p:outputLabel value="#{bundle.CampoSenha}" styleClass="label"/>
+                        <p:spacer width="150" height="10"/>
+                        <p:commandLink styleClass="label" value="#{bundle.CampoRedefinirSenha}" action="Redefinir.xhtml?faces-redirect=true"/>                                
+                        <br/>
+                        <p:password id="senha" styleClass="input" value="#{usuarioSessionController.selected.senha}"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton styleClass="label" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/> 
+                        </f:facet>
+                    </p:panel>
+                </h:form>
                 <div class="footer">
                     <h:outputText value="#{bundle.TituloRodape}"/>
                 </div>                    

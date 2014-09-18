@@ -19,14 +19,15 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 
 public class PostagemController implements Serializable, InterfaceController<Postagem, Integer> {
-
+    
+    //facade ou DAO para postagem
     private final PostagemFacade facade = new PostagemFacade();
-
+    //elementos manipulados visualmente
     private List<Postagem> items = null;
     private Postagem selected;
-    
+    //linha do tempo com ordem por última data
     private List<Postagem> timeLine = null;
-    
+
     private int idParametro;
 
     public PostagemController() {

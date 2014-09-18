@@ -21,10 +21,22 @@ public class FacesContextUtil {
         return (Session) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(HIBERNATE_SESSION);
     }
 
+    /**
+     * captura um atributo da sessao
+     *
+     * @param key
+     * @return
+     */
     public static Object get(String key) {
         return FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(key);
     }
 
+    /**
+     * injeta um atributo no sessao
+     *
+     * @param key
+     * @param object
+     */
     public static void set(String key, Object object) {
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(key, object);
     }

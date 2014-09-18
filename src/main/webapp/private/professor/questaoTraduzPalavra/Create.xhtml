@@ -8,19 +8,16 @@
 
     <ui:composition>
 
-        <p:dialog id="QuestaoTraduzPalavraCreateDlg" widgetVar="QuestaoTraduzPalavraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateQuestaoTraduzPalavraTitle}">
+        <p:dialog id="QuestaoTraduzPalavraCreateDlg" widgetVar="QuestaoTraduzPalavraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="QuestaoTraduzPalavraCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{questaoTraduzPalavraController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_titulo}" for="titulo" />
-                        <p:inputText id="titulo" value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.CreateQuestaoTraduzPalavraTitle_titulo}" />
+                        <p:outputLabel value="#{bundle.CampoTitulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.CampoTitulo}" placeholder="#{bundle.CampoTitulo}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
-                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_enunciado}" for="enunciado" />
-                        <p:editor id="enunciado" value="#{questaoTraduzPalavraController.selected.enunciado}" required="true"/>
-
-                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_palavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" value="#{questaoTraduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.EditQuestaoTraduzPalavraRequiredMessage_palavraLatim}">
+                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{questaoTraduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
                                            var="palavraLatimItem"
                                            itemLabel="#{palavraLatimItem.palavra}"
@@ -28,16 +25,19 @@
                             <f:validator validatorId="TraducaoValidator"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.CreateQuestaoTraduzPalavraLabel_nivelQuestao}" for="nivelQuestao" />
-                        <p:selectOneMenu id="nivelQuestao" value="#{questaoTraduzPalavraController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.EditQuestaoTraduzPalavraRequiredMessage_nivelQuestao}">
+                        <p:outputLabel value="#{bundle.CampoNivel}" for="nivelQuestao" />
+                        <p:selectOneMenu id="nivelQuestao" filter="true" value="#{questaoTraduzPalavraController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
                                            var="nivelQuestaoItem"
                                            itemLabel="#{nivelQuestaoItem.descricao}"
                                            itemValue="#{nivelQuestaoItem}"/>
                         </p:selectOneMenu>
 
+                        <p:outputLabel value="#{bundle.CampoEnunciado}" for="enunciado" />
+                        <p:editor id="enunciado" value="#{questaoTraduzPalavraController.selected.enunciado}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{questaoTraduzPalavraController.create}" value="#{bundle.Save}" update="display,:QuestaoTraduzPalavraListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestaoTraduzPalavraCreateDialog');"/>
+                    <p:commandButton actionListener="#{questaoTraduzPalavraController.create}" value="#{bundle.AcaoSalvar}" update="display,:QuestaoTraduzPalavraListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestaoTraduzPalavraCreateDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
