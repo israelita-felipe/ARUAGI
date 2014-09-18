@@ -6,27 +6,39 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+/**
+ * FÁBRICA DE SESSÃO DO HIBERNATE
+ *
+ * @author Israel Araújo
+ */
 public class HibernateUtil {
 
+    /**
+     * ATRIBUTOS
+     */
     private static final SessionFactory sessionFactory;
-    public static final String HIBERNATE_SESSION = "hibernate_session";
 
+    /**
+     * construtor estático da fábrica de sessões
+     */
     static {
         try {
-            System.out.println("Tentando configurar a SF");
             Configuration configuration = new Configuration().configure();
             ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().
                     applySettings(configuration.getProperties()).buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            System.out.println("Session factory criada corretamente");
         } catch (Exception ex) {
-            System.out.println("Ocorreu um  erro ao iniciar a SF. " + ex);
             throw new ExceptionInInitializerError(ex);
         }
 
     }
 
+    /**
+     * metodo estático que retorna um fábria de sessão
+     *
+     * @return
+     */
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
-    }   
+    }
 }

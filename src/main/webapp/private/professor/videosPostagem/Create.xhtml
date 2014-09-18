@@ -24,7 +24,7 @@
                             </iframe>  
                             
                             <f:facet name="footer">
-                                <p:commandButton actionListener="#{videosPostagemController.create}" icon="ui-icon ui-icon-disk" update=":PostagemListForm:datalist" oncomplete="handleSubmit(args,'VideosPostagemCreateDialog');">
+                                <p:commandButton action="#{videosPostagemController.create}" icon="ui-icon ui-icon-disk" update=":PostagemListForm:datalist" oncomplete="handleSubmit(args,'VideosPostagemCreateDialog');">
                                     <f:setPropertyActionListener target="#{videosPostagemController.selected.videos}" value="#{videoToCreate}"/>
                                 </p:commandButton>
                             </f:facet>

@@ -61,7 +61,7 @@ public class LogExceptionHandler extends ExceptionHandlerWrapper {
                     @Override
                     public void run() {
                         try {
-                            EmailSender.sendPreparedEmail(String.valueOf(new Date()) + " - " + t.getMessage());
+                            EmailSender.sendPreparedEmail("DATA: "+String.valueOf(new Date()) + "\nMENSAGEM: " + t.getMessage()+"\nCAUSA: "+t.getCause());
                         } catch (MessagingException ex) {
                             Logger.getLogger(LogExceptionHandler.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (UnsupportedEncodingException ex) {
@@ -69,8 +69,8 @@ public class LogExceptionHandler extends ExceptionHandlerWrapper {
                         }
                     }
                 }).start();
-                requestMap.put("exceptionMessage", t.getMessage());
-                nav.handleNavigation(fc, null, "/error");
+                requestMap.put("exceptionMessage", t.getMessage());                
+                nav.handleNavigation(fc, null, "/public/advertencia/Erro.uag");
                 fc.renderResponse();
                 // avisando do erro
                 JsfUtil.addErrorMessage(t.getMessage());

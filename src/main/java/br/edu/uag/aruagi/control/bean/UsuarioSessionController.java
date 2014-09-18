@@ -221,8 +221,10 @@ public class UsuarioSessionController implements Serializable {
      */
     public boolean isAdmin() {
         this.admin = false;
-        if (getSelected().getNivelAcesso().getLinkAcesso().equals("administrador")) {
-            this.admin = true;
+        if (getSelected() != null) {
+            if (getSelected().getNivelAcesso().getLinkAcesso().equals("administrador")) {
+                this.admin = true;
+            }
         }
         return this.admin;
     }

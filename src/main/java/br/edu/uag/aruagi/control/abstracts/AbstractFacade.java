@@ -7,7 +7,6 @@ package br.edu.uag.aruagi.control.abstracts;
 
 import br.edu.uag.aruagi.control.interfaces.InterfaceFacade;
 import br.edu.uag.aruagi.control.util.hibernate.FacesContextUtil;
-import br.edu.uag.aruagi.control.util.hibernate.HibernateUtil;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
@@ -34,13 +33,13 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
 
     @Override
     public void begin() {
-        FacesContextUtil.setRequestSession(HibernateUtil.getSessionFactory().openSession());
-        getSession().getTransaction().begin();
+        /*FacesContextUtil.setRequestSession(HibernateUtil.getSessionFactory().openSession());
+        getSession().getTransaction().begin();*/
     }
 
     @Override
     public void end() {
-        try {
+       /* try {
             getSession().getTransaction().commit();
         } catch (Exception ex) {
             if (getSession().getTransaction().isActive()) {
@@ -48,7 +47,7 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
             }
         } finally {
             getSession().close();
-        }
+        }*/
     }
 
     @Override

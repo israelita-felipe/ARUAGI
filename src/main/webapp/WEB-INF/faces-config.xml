@@ -12,12 +12,12 @@
         </resource-bundle>
     </application>
     
-    <!-- FASE LISTENER  
+    <!-- FASE LISTENER  -->
     <lifecycle>
         <phase-listener>
-            br.edu.uag.aruagi.control.util.listeners.PhaseListenerUtil
+            br.edu.uag.aruagi.control.util.listeners.HibernatePhaseListener
         </phase-listener>
-    </lifecycle>-->
+    </lifecycle>
         
     <!-- MANAGED BEAN -->
     <managed-bean>

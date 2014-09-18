@@ -56,7 +56,7 @@
     <filter-mapping>
         <filter-name>XHTMLFilter</filter-name>
         <url-pattern>*.xhtml</url-pattern>
-    </filter-mapping>       
+    </filter-mapping>        
     
     <error-page>
         <location>
