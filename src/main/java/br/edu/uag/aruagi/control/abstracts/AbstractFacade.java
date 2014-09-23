@@ -34,25 +34,30 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
     @Override
     public void begin() {
         /*FacesContextUtil.setRequestSession(HibernateUtil.getSessionFactory().openSession());
-        getSession().getTransaction().begin();*/
+         getSession().getTransaction().begin();*/
     }
 
     @Override
     public void end() {
-       /* try {
-            getSession().getTransaction().commit();
-        } catch (Exception ex) {
-            if (getSession().getTransaction().isActive()) {
-                getSession().getTransaction().rollback();
-            }
-        } finally {
-            getSession().close();
-        }*/
+        /* try {
+         getSession().getTransaction().commit();
+         } catch (Exception ex) {
+         if (getSession().getTransaction().isActive()) {
+         getSession().getTransaction().rollback();
+         }
+         } finally {
+         getSession().close();
+         }*/
     }
 
     @Override
     public void create(T entity) {
         getSession().persist(entity);
+    }
+
+    @Override
+    public void commit() {
+        getSession().getTransaction().commit();
     }
 
     @Override

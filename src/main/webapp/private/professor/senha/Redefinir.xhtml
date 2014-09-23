@@ -21,9 +21,7 @@
             <p:panelGrid columns="2">
 
                 <p:outputLabel for="currentPassword" value="#{bundle.CampoSenhaAtual}"/>
-                <p:password id="currentPassword" value="#{usuarioSessionController.currentPass}" feedback="true"
-                            promptLabel="#{bundle.AvisoSenhaBranco}" weakLabel="#{bundle.AvisoSenhaFraca}"
-                            goodLabel="#{bundle.AvisoSenhaBoa}" strongLabel="#{bundle.AvisoSenhaForte}"/>
+                <p:password id="currentPassword" value="#{usuarioSessionController.currentPass}"/>
 
                 <p:outputLabel for="newPassword" value="#{bundle.CampoNovaSenha}"/>
                 <p:password id="newPassword" value="#{usuarioSessionController.newPass}" feedback="true"

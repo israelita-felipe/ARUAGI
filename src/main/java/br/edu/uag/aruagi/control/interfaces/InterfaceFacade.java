@@ -41,6 +41,11 @@ public interface InterfaceFacade<T, ID extends Serializable> {
      * Finaliza uma transação com o banco
      */
     void end();
+    
+    /**
+     * Grava DEFINITIVAMENTE as alterações no banco de dados
+     */
+    void commit();
 
     /**
      * Edita um objeto do tipo <T>

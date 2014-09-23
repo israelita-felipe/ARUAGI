@@ -32,7 +32,7 @@
                         </f:facet>
 
                         <f:facet name="actions">
-                            <p:commandButton value="+" styleClass="acessibility-button"/>
+                           <!--<p:commandButton value="+" styleClass="acessibility-button"/>-->
                         </f:facet>
 
                         <p:outputLabel value="#{bundle.CampoLogin}" styleClass="label"/>
@@ -43,7 +43,7 @@
                         <br/>
                         <p:outputLabel value="#{bundle.CampoSenha}" styleClass="label"/>
                         <p:spacer width="150" height="10"/>
-                        <p:commandLink styleClass="label" value="#{bundle.CampoRedefinirSenha}" action="Redefinir.xhtml?faces-redirect=true"/>                                
+                        <p:commandLink styleClass="label" value="#{bundle.CampoRedefinirSenha}" action="/public/Redefinir.xhtml?faces-redirect=true"/>                                
                         <br/>
                         <p:password id="senha" styleClass="input" value="#{usuarioSessionController.selected.senha}"/>
 

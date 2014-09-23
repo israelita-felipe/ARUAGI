@@ -94,21 +94,18 @@ public class UsuarioSessionController implements Serializable {
             if (s.equals(UsuarioSessionController.getUserLogged().getSenha())) {
                 if (nP.equals(cNP)) {
                     getSelected().setSenha(nP);
-                    getFacade().begin();
                     getFacade().edit(getSelected());
-                    getFacade().end();
+                    getFacade().commit();
                     return doLogout();
                 } else {
-                    throw new IllegalArgumentException("nova senha e confirmação não correspondem");
+                    JsfUtil.addErrorMessage("nova senha e confirmação não correspondem");
                 }
             } else {
-                throw new IllegalArgumentException("Sua senha de usuário incorreta");
+                JsfUtil.addErrorMessage("Sua senha de usuário incorreta");
             }
         } catch (NoSuchAlgorithmException e) {
             JsfUtil.addErrorMessage("Erro:\n" + e.getMessage());
         } catch (UnsupportedEncodingException e) {
-            JsfUtil.addErrorMessage("Erro:\n" + e.getMessage());
-        } catch (IllegalArgumentException e) {
             JsfUtil.addErrorMessage("Erro:\n" + e.getMessage());
         } catch (Exception ex) {
             JsfUtil.addErrorMessage("Erro desconhecido:\n" + ex.getMessage());
