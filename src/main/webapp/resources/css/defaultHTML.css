@@ -19,5 +19,7 @@ and open the template in the editor.
     background:lightgrey;
     border-top: double gray;
 }
-.defaultTitle{
+
+.page-body {
+    margin: 0 auto;
 }

@@ -27,6 +27,7 @@ public class PalavraPortugues implements java.io.Serializable {
     private Integer usuario;
     private Boolean status;
     private List traduzPalavras = new ArrayList();
+    private List questoesTraduzPalavras = new ArrayList();
 
     public PalavraPortugues() {
     }
@@ -90,6 +91,16 @@ public class PalavraPortugues implements java.io.Serializable {
 
     public void setTraduzPalavras(List traduzPalavras) {
         this.traduzPalavras = traduzPalavras;
+    }
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "palavraPortugues", targetEntity = QuestaoTraduzPalavra.class)
+    @Fetch(FetchMode.SUBSELECT)
+    public List<QuestaoTraduzPalavra> getQuestoesTraduzPalavras() {
+        return this.questoesTraduzPalavras;
+    }
+
+    public void setQuestoesTraduzPalavras(List traduzPalavras) {
+        this.questoesTraduzPalavras = traduzPalavras;
     }
 
     @Override

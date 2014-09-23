@@ -21,6 +21,7 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
 
     private int id;
     private PalavraLatim palavraLatim;
+    private PalavraPortugues palavraPortugues;
     private NivelQuestao nivelQuestao;
     private String titulo;
     private String enunciado;
@@ -113,6 +114,16 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "traducao", nullable = false)
+    public PalavraPortugues getPalavraPortugues() {
+        return this.palavraPortugues;
+    }
+
+    public void setPalavraPortugues(PalavraPortugues palavraPortugues) {
+        this.palavraPortugues = palavraPortugues;
+    }
 
     @Override
     public int hashCode() {
@@ -123,7 +134,6 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
         hash = 17 * hash + (this.titulo != null ? this.titulo.hashCode() : 0);
         hash = 17 * hash + (this.enunciado != null ? this.enunciado.hashCode() : 0);
         hash = 17 * hash + (this.status ? 1 : 0);
-        hash = 17 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
         return hash;
     }
 
@@ -152,9 +162,6 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
             return false;
         }
         if (this.status != other.status) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
             return false;
         }
         return true;

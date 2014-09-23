@@ -9,23 +9,30 @@
     <!-- HEAD COM IMPORTACAO DO CSS E JAVASCRIPT -->
     <h:head>
         <title><ui:insert name="title">Login</ui:insert></title>
+
+        <h:outputScript library="js" name="zoom.js"/>
+
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="primefaces.css"/>
         <h:outputStylesheet library="css" name="defaultHTML.css"/>
-        <h:outputStylesheet library="css" name="customHTML.css"/>
+        <h:outputStylesheet library="css" name="customHTML.css"/>        
+
     </h:head>
 
 
     <h:body>
-        <p:layout fullPage="true">
-            <!-- LAYOUT DE INFORMACAO DE ACESSO -->
-            <p:layoutUnit position="center">
-                <p:messages autoUpdate="true" closable="true"/>
-                <h:form styleClass="container">
-                    <p:panel >
-
+        <h:form>
+            <p:layout fullPage="true">
+                <!-- LAYOUT DE INFORMACAO DE ACESSO -->
+                <p:layoutUnit position="center">
+                    <p:messages autoUpdate="true" closable="true"/>                     
+                    <p:panel styleClass="container">
                         <f:facet name="header">
-                            <p:outputLabel value="#{bundle.CampoAutorizacao}" styleClass="center"/>
+                            <p:outputLabel value="#{bundle.CampoAutorizacao}" styleClass="center"/>                                                        
+                        </f:facet>
+
+                        <f:facet name="actions">
+                            <p:commandButton value="+" styleClass="acessibility-button"/>
                         </f:facet>
 
                         <p:outputLabel value="#{bundle.CampoLogin}" styleClass="label"/>
@@ -44,12 +51,19 @@
                             <p:commandButton styleClass="label" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/> 
                         </f:facet>
                     </p:panel>
-                </h:form>
-                <div class="footer">
-                    <h:outputText value="#{bundle.TituloRodape}"/>
-                </div>                    
-            </p:layoutUnit>
 
-        </p:layout> 
+                    <div class="footer">
+                        <h:outputText value="#{bundle.TituloRodape}"/>
+                    </div> 
+                    <script src=".././resources/js/zoom.js"></script>
+                    <script>
+                        document.querySelector('.acessibility-button').addEventListener('click', function(event) {
+                            event.preventDefault();
+                            zoom.to({element: event.target});
+                        });
+                    </script>	
+                </p:layoutUnit>
+            </p:layout> 
+        </h:form>
     </h:body>
 </html>

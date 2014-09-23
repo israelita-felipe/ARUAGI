@@ -11,7 +11,7 @@
         <p:dialog id="QuestaoTraduzPalavraCreateDlg" widgetVar="QuestaoTraduzPalavraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="QuestaoTraduzPalavraCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{questaoTraduzPalavraController.selected != null}">
+                    <p:panelGrid columns="2" rendered="#{questaoTraduzPalavraController.selected != null}" styleClass="noBorder">
 
                         <p:outputLabel value="#{bundle.CampoTitulo}" for="titulo" />
                         <p:inputText id="titulo" value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.CampoTitulo}" placeholder="#{bundle.CampoTitulo}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
@@ -23,6 +23,14 @@
                                            itemLabel="#{palavraLatimItem.palavra}"
                                            itemValue="#{palavraLatimItem}"/>
                             <f:validator validatorId="TraducaoValidator"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{bundle.CampoTraducao}" for="traducao" />
+                        <p:selectOneMenu id="traducao" filter="true" value="#{questaoTraduzPalavraController.selected.palavraPortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                            <f:selectItems value="#{palavraPortuguesController.itemsAvailableSelectOne}"
+                                           var="palavraPortuguesItem"
+                                           itemLabel="#{palavraPortuguesItem.palavra}"
+                                           itemValue="#{palavraPortuguesItem}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{bundle.CampoNivel}" for="nivelQuestao" />

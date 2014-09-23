@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Avaliação</title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
@@ -10,25 +11,28 @@
     </h:head>
     <h:body>
         <h:form id="resolucao">
-            <h:outputText value="#{resolucaoTraduzPalavraController.nome}, sua pontuação nesta atividade é #{resolucaoTraduzPalavraController.pontuacao}"/>
-            <p:dataList value="#{resolucaoTraduzPalavraController.respostas}" var="resposta" itemType="none">
-
-                <p:panel header="#{resposta.questaoTraduzPalavra.titulo}">
-                    <h:outputText value="Sua resposta: #{resposta.palavraPortugues.palavra} - #{resposta.correcao}"/>
-                    <p:separator/>
-                    <h:outputText value="#{resposta.questaoTraduzPalavra.enunciado}" escape="false"/>
-                    <p:separator/>
-                    <h:outputText value="Possíveis traduções"/>
-                    <p:dataList  value="#{resposta.questaoTraduzPalavra.palavraLatim.traduzPalavras}" var="trad" rows="10" paginator="true">
-                        <h:outputText value="#{trad.palavraPortugues.palavra}"/>
-                    </p:dataList>
-                </p:panel>
-
-            </p:dataList>
+            <p:dataGrid id="avaliacao" value="#{resolucaoTraduzPalavraController.respostas}" var="resposta" columns="1">
+                <f:facet name="header">
+                    <h:outputText value="#{resolucaoTraduzPalavraController.nome}, sua pontuação nesta atividade é #{resolucaoTraduzPalavraController.pontuacao}"/>
+                </f:facet>
+                <h:outputText value="#{resposta.questaoTraduzPalavra.titulo}"/>
+                <h:outputText value="Tradução adequada ao contexto: #{resposta.questaoTraduzPalavra.palavraPortugues.palavra}"/>
+                <p:separator/>
+                <h:outputText value="Sua resposta: #{resposta.palavraPortugues.palavra} - #{resposta.correcao}"/>
+                <p:separator/>
+                <h:outputLabel for="enunciado" value="#{bundle.CampoEnunciado}"/>
+                <br/>
+                <h:outputText id="enunciado" value="#{resposta.questaoTraduzPalavra.enunciado}" escape="false"/>
+                <p:separator/>
+                <h:outputText value="Possíveis traduções"/>
+                <p:dataList  value="#{resposta.questaoTraduzPalavra.palavraLatim.traduzPalavras}" var="trad" rows="10" paginator="true">
+                    <h:outputText value="#{trad.palavraPortugues.palavra}"/>
+                </p:dataList>
+            </p:dataGrid>
             <p:commandButton value="imprimir">
-                <p:printer target="resolucao"/>
+                <p:printer target="avaliacao"/>
             </p:commandButton>
-            <p:commandButton value="Finalizar" action="#{resolucaoTraduzPalavraController.done()}"/>
+            <p:commandButton value="Finalizar" action="#{resolucaoTraduzPalavraController.done()}"/>  
         </h:form>
     </h:body>
 </html>

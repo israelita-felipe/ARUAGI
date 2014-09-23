@@ -22,12 +22,12 @@ import java.util.Random;
 public class ResolucaoTraduzPalavraController implements Serializable {
 
     //colecoes
-    private List<QuestaoTraduzPalavra> questoesPorNivel;
+    private List<QuestaoTraduzPalavra> questoesPorNivel = new ArrayList<QuestaoTraduzPalavra>();
     private RespostaTraduzPalavra[] respostas;
     //objetos
     private QuestaoTraduzPalavra questaoAtual;
     private NivelQuestao nivel;
-    private PalavraPortugues selected;
+    private String selected;
     //tipos primitivos int
     private int quantidade = 0;
     private int position = 1;
@@ -73,7 +73,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
     }
 
     /**
-     * pontuação
+     * pontuação: calcula a pontuação conforme respostas do usuário
      *
      * @return
      */
@@ -82,8 +82,24 @@ public class ResolucaoTraduzPalavraController implements Serializable {
             pontuacao = 0.0;
             position = 1;
             for (RespostaTraduzPalavra resposta : respostas) {
-                if (find(resposta.palavraPortugues)) {
-                    pontuacao = pontuacao + (10 / quantidade);
+                //tradução 100% se a palavra for igual a indicada pelo professor
+                if (resposta != null) {
+                    String PALAVRA_RESPOSTA = null;
+                    if (resposta.getPalavraPortugues() != null) {
+                        PALAVRA_RESPOSTA = resposta.getPalavraPortugues().getPalavra().trim().toUpperCase();
+                    }
+                    String PALAVRA_TRADUCAO = null;
+                    if (resposta.getQuestaoTraduzPalavra() != null) {
+                        PALAVRA_TRADUCAO = resposta.getQuestaoTraduzPalavra().getPalavraPortugues().getPalavra().trim().toUpperCase();
+                    }
+                    if (PALAVRA_RESPOSTA != null && PALAVRA_TRADUCAO != null) {
+                        if (PALAVRA_RESPOSTA.equals(PALAVRA_TRADUCAO)) {
+                            pontuacao = pontuacao + (10 / quantidade);
+                        }
+                    } else if (find(resposta.palavraPortugues)) {
+                        //pontuação vale apenas 90% se a tradução não for a indicada pelo professor
+                        pontuacao = pontuacao + ((10 / quantidade) * (0.9));
+                    }
                 }
                 position++;
             }
@@ -122,11 +138,11 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public PalavraPortugues getSelected() {
+    public String getSelected() {
         return selected;
     }
 
-    public void setSelected(PalavraPortugues selected) {
+    public void setSelected(String selected) {
         this.selected = selected;
     }
 
@@ -136,10 +152,6 @@ public class ResolucaoTraduzPalavraController implements Serializable {
     public void prepare() {
         this.questaoAtual = null;
         this.questoesPorNivel = new ArrayList<QuestaoTraduzPalavra>();
-        respostas = new RespostaTraduzPalavra[quantidade];
-        for (int i = 0; i < quantidade; i++) {
-            respostas[i] = new RespostaTraduzPalavra();
-        }
         //nível        
         // se a quantidade for 0, lista tudo
         if (quantidade > 0) {
@@ -148,8 +160,8 @@ public class ResolucaoTraduzPalavraController implements Serializable {
             int index = 0;
             //se existirem menos questoes que o número escolhido
             if (tamanho <= quantidade) {
+                quantidade = tamanho;
                 this.questoesPorNivel = nivel.getQuestaoTraduzPalavras();
-                JsfUtil.addErrorMessage("Listadas todas as questões possíveis");
             } else {
                 this.questoesPorNivel = new ArrayList<QuestaoTraduzPalavra>();
                 //sorteando quantidade-questoes para serem resolvidas
@@ -168,7 +180,14 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         //setando a primeira questao
         if (!this.questoesPorNivel.isEmpty()) {
             questaoAtual = this.questoesPorNivel.get(0);
-            JsfUtil.addSuccessMessage("Tudo finalizado, pode responder as questões");
+            position = 1;
+            //this.quantidade = this.questoesPorNivel.size();
+            respostas = new RespostaTraduzPalavra[quantidade];
+            for (int i = 0; i < quantidade; i++) {
+                respostas[i] = new RespostaTraduzPalavra();
+                respostas[i].setQuestaoTraduzPalavra(this.questoesPorNivel.get(i));
+            }
+            JsfUtil.addSuccessMessage("Tudo finalizado, pode responder as " + this.questoesPorNivel.size() + " questões");
         }
     }
 
@@ -178,16 +197,20 @@ public class ResolucaoTraduzPalavraController implements Serializable {
      * @return
      */
     public String next() {
-        respostas[position - 1].setPalavraPortugues(selected);
+        respostas[position - 1].setPalavraPortugues(new PalavraPortugues(0, selected));
         respostas[position - 1].setQuestaoTraduzPalavra(questaoAtual);
         //se houver traducao escolhida pelo usuario status é true
-        respostas[position - 1].setStatus(find(selected));
+        boolean status = selected.toUpperCase().equals(respostas[position - 1].questaoTraduzPalavra.getPalavraPortugues().getPalavra().toUpperCase());
+        if (!status) {
+            status = find(respostas[position - 1].getPalavraPortugues());
+        }
+        respostas[position - 1].setStatus(status);
         if (position == quantidade) {
             return avaliar();
         } else {
             position++;
             this.questaoAtual = this.questoesPorNivel.get(position - 1);
-            this.selected = respostas[position - 1].getPalavraPortugues();
+            this.selected = respostas[position - 1].getPalavraPortugues().getPalavra();
             return null;
         }
     }
@@ -205,7 +228,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         } else {
             position++;
             this.questaoAtual = this.questoesPorNivel.get(position - 1);
-            this.selected = respostas[position - 1].getPalavraPortugues();
+            this.selected = respostas[position - 1].getPalavraPortugues().getPalavra();
             return null;
         }
     }
@@ -216,13 +239,17 @@ public class ResolucaoTraduzPalavraController implements Serializable {
      */
     public void previous() {
         if (position > 1) {
-            respostas[position - 1].setPalavraPortugues(selected);
+            respostas[position - 1].setPalavraPortugues(new PalavraPortugues(0, selected));
             respostas[position - 1].setQuestaoTraduzPalavra(questaoAtual);
             //se houver traducao escolhida pelo usuario status é true
-            respostas[position - 1].setStatus(find(selected));
+            boolean status = selected.toUpperCase().equals(respostas[position - 1].questaoTraduzPalavra.getPalavraPortugues().getPalavra().toUpperCase());
+            if (!status) {
+                status = find(respostas[position - 1].getPalavraPortugues());
+            }
+            respostas[position - 1].setStatus(status);
             position--;
             this.questaoAtual = this.questoesPorNivel.get(position - 1);
-            this.selected = respostas[position - 1].getPalavraPortugues();
+            this.selected = respostas[position - 1].getPalavraPortugues().getPalavra();
         } else {
             JsfUtil.addErrorMessage("essa é a primeira questão");
         }
@@ -272,7 +299,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         if (p != null) {
             List<TraduzPalavra> traducoes = (List<TraduzPalavra>) this.questoesPorNivel.get(position - 1).getPalavraLatim().getTraduzPalavras();
             for (TraduzPalavra tp : traducoes) {
-                if (tp.getPalavraPortugues().equals(p)) {
+                if (tp.getPalavraPortugues().getPalavra().toUpperCase().equals(p.getPalavra().toUpperCase())) {
                     return true;
                 }
             }

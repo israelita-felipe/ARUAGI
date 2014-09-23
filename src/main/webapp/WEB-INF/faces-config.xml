@@ -259,4 +259,5 @@
             br.edu.uag.aruagi.control.util.exceptions.LogExceptionFactory
         </exception-handler-factory>
     </factory>
+    
 </faces-config>
