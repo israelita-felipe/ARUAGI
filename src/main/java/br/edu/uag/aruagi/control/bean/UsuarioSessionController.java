@@ -26,9 +26,9 @@ import org.hibernate.criterion.Property;
 public class UsuarioSessionController implements Serializable {
 
     private final UsuarioFacade facade = new UsuarioFacade();
-    private static Usuario selected = null;
+    private Usuario selected = null;
     private boolean loged = false;
-    private boolean admin = false;
+    private boolean admin = false;   
 
     /**
      * campos para redefinição de senha
@@ -49,7 +49,7 @@ public class UsuarioSessionController implements Serializable {
      */
     public String doLogin() throws Exception {
         DetachedCriteria query = DetachedCriteria.forClass(Usuario.class)
-                .add(Property.forName("login").eq(getUserLogged().getLogin()));
+                .add(Property.forName("login").eq(selected.getLogin()));
         getFacade().begin();
         Usuario u = getFacade().getEntityByDetachedCriteria(query);
         getFacade().end();
@@ -57,12 +57,13 @@ public class UsuarioSessionController implements Serializable {
          * verificando se o usuario existe e sua senha confere
          */
         if (u != null) {
-            if (u.getSenha().equals(SHA256.encode(getUserLogged().getSenha()))) {
+            if (u.getSenha().equals(SHA256.encode(selected.getSenha()))) {
                 /**
                  * retornamos a pagina de dados
                  */
                 setLogged(true);
                 setSelected(u);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", selected);  
                 return "/private/homePrivate.xhtml?faces-redirect=true";
             } else {
                 JsfUtil.addErrorMessage("Senhas não conferem");
@@ -226,8 +227,9 @@ public class UsuarioSessionController implements Serializable {
         return this.admin;
     }
 
-    public static Usuario getUserLogged() {
-        return selected;
+    public static Usuario getUserLogged() {        
+        Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        return user;
     }
 
     public Usuario getSelected() {
@@ -235,7 +237,7 @@ public class UsuarioSessionController implements Serializable {
     }
 
     public void setSelected(Usuario selected) {
-        UsuarioSessionController.selected = selected;
+        this.selected = selected;
     }
 
     public UsuarioFacade getFacade() {

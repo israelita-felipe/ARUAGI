@@ -33,8 +33,8 @@ public class AdminFilter implements Filter {
          * capturando o usuario do managedBean
          */
         UsuarioSessionController user = (UsuarioSessionController) ((HttpServletRequest) request).getSession().getAttribute("usuarioSessionController");
-        if (user.isLogged()) {
-            if (!UsuarioSessionController.getUserLogged().getNivelAcesso().getLinkAcesso().equals("administrador")) {
+        if (user != null && user.isLogged()) {
+            if (!user.isAdmin()) {
                 String contextPath = ((HttpServletRequest) request).getContextPath();
                 /**
                  * redirecionando o usuario para a pagina home

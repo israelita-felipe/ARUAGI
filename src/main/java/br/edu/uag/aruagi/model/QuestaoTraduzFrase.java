@@ -21,6 +21,7 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
 
     private int id;
     private FraseLatim fraseLatim;
+    private FrasePortugues frasePortugues;
     private NivelQuestao nivelQuestao;
     private boolean status;
     private String enunciado;
@@ -49,7 +50,7 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id", unique = true,nullable = false)
     public int getId() {
         return this.id;
     }
@@ -114,16 +115,26 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
         this.usuario = usuario;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "traducao")
+    public FrasePortugues getFrasePortugues() {
+        return this.frasePortugues;
+    }
+
+    public void setFrasePortugues(FrasePortugues frasePortugues) {
+        this.frasePortugues = frasePortugues;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + this.id;
-        hash = 83 * hash + (this.fraseLatim != null ? this.fraseLatim.hashCode() : 0);
-        hash = 83 * hash + (this.nivelQuestao != null ? this.nivelQuestao.hashCode() : 0);
-        hash = 83 * hash + (this.status ? 1 : 0);
-        hash = 83 * hash + (this.enunciado != null ? this.enunciado.hashCode() : 0);
-        hash = 83 * hash + (this.titulo != null ? this.titulo.hashCode() : 0);
-        hash = 83 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        int hash = 7;
+        hash = 17 * hash + this.id;
+        hash = 17 * hash + (this.fraseLatim != null ? this.fraseLatim.hashCode() : 0);
+        hash = 17 * hash + (this.frasePortugues != null ? this.frasePortugues.hashCode() : 0);
+        hash = 17 * hash + (this.nivelQuestao != null ? this.nivelQuestao.hashCode() : 0);
+        hash = 17 * hash + (this.status ? 1 : 0);
+        hash = 17 * hash + (this.enunciado != null ? this.enunciado.hashCode() : 0);
+        hash = 17 * hash + (this.titulo != null ? this.titulo.hashCode() : 0);
         return hash;
     }
 
@@ -142,6 +153,9 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
         if (this.fraseLatim != other.fraseLatim && (this.fraseLatim == null || !this.fraseLatim.equals(other.fraseLatim))) {
             return false;
         }
+        if (this.frasePortugues != other.frasePortugues && (this.frasePortugues == null || !this.frasePortugues.equals(other.frasePortugues))) {
+            return false;
+        }
         if (this.nivelQuestao != other.nivelQuestao && (this.nivelQuestao == null || !this.nivelQuestao.equals(other.nivelQuestao))) {
             return false;
         }
@@ -152,9 +166,6 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
             return false;
         }
         if ((this.titulo == null) ? (other.titulo != null) : !this.titulo.equals(other.titulo)) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
             return false;
         }
         return true;

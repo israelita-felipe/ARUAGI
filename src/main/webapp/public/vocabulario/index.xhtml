@@ -18,7 +18,7 @@ and open the template in the editor.
         <ui:define name="body">
             <h:form id="GlossarioForm">                    
 
-                    <p:dataGrid  id="datalist" value="#{traduzPalavraController.items}" var="itemAtual" columns="3" emptyMessage="Nenhuma palavra adicionada" paginator="false" rows="5">
+                <p:dataGrid  id="datalist" value="#{traduzPalavraController.items}" var="itemAtual" columns="3" emptyMessage="Nenhuma palavra adicionada" paginator="true" rows="15">
                         
                         
                         <p:panel header="#{itemAtual.palavraLatim.palavra}" toggleable="false" toggleTitle="Detalhes" collapsed="false" >

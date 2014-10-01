@@ -8,14 +8,14 @@
 
     <ui:composition>
 
-        <p:dialog id="QuestaoLacunaViewDlg" widgetVar="QuestaoLacunaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewQuestaoLacunaTitle}">
+        <p:dialog id="QuestaoLacunaViewDlg" widgetVar="QuestaoLacunaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="QuestaoLacunaViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{questaoLacunaController.selected != null}">
-                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_id}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.id}" title="#{bundle.ViewQuestaoLacunaTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_fraseLatim}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.fraseLatim}" title="#{bundle.ViewQuestaoLacunaTitle_fraseLatim}"/>
+                        <h:outputText value="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.id}" title="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{bundle.CampoPalavraLatim}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.fraseLatim}" title="#{bundle.CampoPalavraLatim}"/>
                         <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_nivelQuestao}"/>
                         <h:outputText value="#{questaoLacunaController.selected.nivelQuestao}" title="#{bundle.ViewQuestaoLacunaTitle_nivelQuestao}"/>
                         <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_titulo}"/>
@@ -25,7 +25,6 @@
                         <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_usuario}"/>
                         <h:outputText value="#{questaoLacunaController.selected.usuario}" title="#{bundle.ViewQuestaoLacunaTitle_usuario}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="QuestaoLacunaViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -6,6 +6,7 @@ import br.edu.uag.aruagi.model.QuestaoLacuna;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import br.edu.uag.aruagi.model.Lacuna;
+import br.edu.uag.aruagi.model.PalavraLatim;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,63 +17,57 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.event.DragDropEvent;
 
 public class QuestaoLacunaController implements Serializable, InterfaceController<QuestaoLacuna, Integer> {
 
     private final QuestaoLacunaFacade facade = new QuestaoLacunaFacade();
     private List<QuestaoLacuna> items = null;
     private QuestaoLacuna selected;
-
-    private Lacuna lacuna;
-    private int last = 0;
+    //composição da lacuna
+    private List<PalavraLatim> palavrasSelecionadas = new ArrayList<PalavraLatim>();
+    private PalavraLatim palavraEscolhida;
 
     public QuestaoLacunaController() {
     }
 
-    /**
-     * adiciona uma nova lacuna
-     */
-    public void add() {
-        System.out.println(last);
-        boolean add = true;
-        lacuna.setInicio(last + 1);
-        if (selected.getLacunas() == null) {
-            selected.setLacunas(new ArrayList<Lacuna>());
-        }
-        if (!selected.getLacunas().isEmpty()) {
-            if (lacuna.getInicio() <= last) {
-                add = false;
-
-            }
-        }
-        if (add) {
-            selected.getLacunas().add(lacuna);
-            last = lacuna.getFim();
-        }
+    public void add(DragDropEvent ddEvent) {
+        PalavraLatim palavra = ((PalavraLatim) ddEvent.getData());
+        this.palavrasSelecionadas.add(palavra);
+        this.palavraEscolhida = null;
     }
 
-    public int getLast() {
-        return last;
+    public void setItems(List<QuestaoLacuna> items) {
+        this.items = items;
     }
 
     public void remove() {
-        if (lacuna != null) {
-            int t = selected.getLacunas().size();
-            for (int i = 0; i < t; i++) {
-                if (selected.getLacunas().get(i).equals(lacuna)) {
-                    selected.getLacunas().remove(i);
-                    i = t;
-                }
-            }
-        }
+        this.palavrasSelecionadas.remove(palavraEscolhida);
+        this.palavraEscolhida = null;
     }
 
-    public void setLacuna(Lacuna lacuna) {
-        this.lacuna = lacuna;
+    public void reset() {
+        this.palavrasSelecionadas = new ArrayList<PalavraLatim>();
     }
 
-    public Lacuna getLacuna() {
-        return lacuna;
+    public void parse() {
+        this.selected.setEnunciado(this.selected.getFraseLatim().getFrase());
+    }
+
+    public PalavraLatim getPalavraEscolhida() {
+        return palavraEscolhida;
+    }
+
+    public void setPalavraEscolhida(PalavraLatim palavraEscolhida) {
+        this.palavraEscolhida = palavraEscolhida;
+    }
+
+    public List<PalavraLatim> getPalavrasSelecionadas() {
+        return palavrasSelecionadas;
+    }
+
+    public void setPalavrasSelecionadas(List<PalavraLatim> palavrasSelecionadas) {
+        this.palavrasSelecionadas = palavrasSelecionadas;
     }
 
     public QuestaoLacuna getSelected() {
@@ -95,10 +90,20 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
 
     @Override
     public QuestaoLacuna prepareCreate() {
-        lacuna = new Lacuna();
+        this.palavrasSelecionadas = new ArrayList<PalavraLatim>();
         selected = new QuestaoLacuna();
         initializeEmbeddableKey();
         return selected;
+    }
+
+    /**
+     * prepara a lista de lacunar cadastradas para a questão
+     */
+    public void prepareEdit() {
+        this.palavrasSelecionadas = new ArrayList<PalavraLatim>();
+        for (Lacuna l : this.selected.getLacunas()) {
+            this.palavrasSelecionadas.add(l.getPalavraLatim());
+        }
     }
 
     @Override
@@ -126,14 +131,48 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
 
     private void persist(PersistAction persistAction, String successMessage) {
         getFacade().begin();
-        if (selected != null) {
+        if (selected != null && !this.palavrasSelecionadas.isEmpty()) {
             setEmbeddableKeys();
             try {
                 if (persistAction == PersistAction.CREATE) {
                     selected.setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    selected.setStatus(Boolean.TRUE);
+                    //selected.setStatus(Boolean.TRUE);
                     getFacade().create(selected);
+                    LacunaController lc = new LacunaController();
+                    for (int i = 0; i < this.palavrasSelecionadas.size(); i++) {
+                        //criando uma nova lacuna
+                        Lacuna l = new Lacuna();
+                        //setando seus valores
+                        l.setUsuario(selected.getUsuario());
+                        l.setIndex(i);
+                        l.setPalavraLatim(getPalavrasSelecionadas().get(i));
+                        l.setQuestaoLacuna(selected);
+                        //selecionando a lacuna criada
+                        lc.setSelected(l);
+                        //criando a lacuna
+                        lc.create();
+                    }
                 } else if (persistAction == PersistAction.UPDATE) {
+                    LacunaController lc = new LacunaController();
+                    //limpando as lacunas antigas
+                    for (Lacuna l : selected.getLacunas()) {
+                        lc.setSelected(l);
+                        lc.destroy();
+                    }
+                    //gravando as lacunas atuais
+                    for (int i = 0; i < this.palavrasSelecionadas.size(); i++) {
+                        //criando uma nova lacuna
+                        Lacuna l = new Lacuna();
+                        //setando seus valores
+                        l.setUsuario(selected.getUsuario());
+                        l.setIndex(i);
+                        l.setPalavraLatim(getPalavrasSelecionadas().get(i));
+                        l.setQuestaoLacuna(selected);
+                        //selecionando a lacuna criada
+                        lc.setSelected(l);
+                        //criando a lacuna
+                        lc.create();
+                    }
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

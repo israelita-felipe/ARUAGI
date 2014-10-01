@@ -37,6 +37,7 @@ public class PalavraLatim implements java.io.Serializable {
     private List radicals = new ArrayList();
     private List declinacaoAplicadas = new ArrayList();
     private List questaoTraduzPalavras = new ArrayList();
+    private List lacunas = new ArrayList();
 
     public PalavraLatim() {
     }
@@ -210,6 +211,15 @@ public class PalavraLatim implements java.io.Serializable {
 
     public void setQuestaoTraduzPalavras(List questaoTraduzPalavras) {
         this.questaoTraduzPalavras = questaoTraduzPalavras;
+    }
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "palavraLatim", targetEntity = Lacuna.class, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    public List<Lacuna> getLacunas() {
+        return this.lacunas;
+    }
+
+    public void setLacunas(List<Lacuna> lacunas) {
+        this.lacunas = lacunas;
     }
 
     @Override

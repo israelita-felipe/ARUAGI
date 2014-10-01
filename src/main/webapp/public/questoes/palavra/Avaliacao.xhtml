@@ -7,7 +7,9 @@
     <h:head>
         <title>Avaliação</title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputScript library="js" name="jsfcrud.js"/>   
+        <h:outputScript library="js" name="jsfcrud.js"/> 
+        <h:outputStylesheet library="css" name="defaultHTML.css"/>
+        <h:outputStylesheet library="css" name="customHTML.css"/> 
     </h:head>
     <h:body>
         <h:form id="resolucao">
@@ -15,25 +17,47 @@
                 <f:facet name="header">
                     <h:outputText value="#{resolucaoTraduzPalavraController.nome}, sua pontuação nesta atividade é #{resolucaoTraduzPalavraController.pontuacao}"/>
                 </f:facet>
-                <h:outputText value="#{resposta.questaoTraduzPalavra.titulo}"/>
-                <h:outputText value="Tradução adequada ao contexto: #{resposta.questaoTraduzPalavra.palavraPortugues.palavra}"/>
-                <p:separator/>
-                <h:outputText value="Sua resposta: #{resposta.palavraPortugues.palavra} - #{resposta.correcao}"/>
-                <p:separator/>
-                <h:outputLabel for="enunciado" value="#{bundle.CampoEnunciado}"/>
-                <br/>
-                <h:outputText id="enunciado" value="#{resposta.questaoTraduzPalavra.enunciado}" escape="false"/>
-                <p:separator/>
-                <h:outputText value="Possíveis traduções"/>
-                <p:dataList  value="#{resposta.questaoTraduzPalavra.palavraLatim.traduzPalavras}" var="trad" rows="10" paginator="true">
-                    <h:outputText value="#{trad.palavraPortugues.palavra}"/>
-                </p:dataList>
+                <p:panel header="#{resposta.correcao}">
+                    <h:outputText value="#{resposta.questaoTraduzPalavra.titulo}"/>
+                    <h:outputText value="Tradução adequada ao contexto: #{resposta.questaoTraduzPalavra.palavraPortugues.palavra}"/>
+                    <p:separator/>
+                    <h:outputText value="Sua resposta: #{resposta.palavraPortugues.palavra}"/>
+                    <p:separator/>
+                    <p:panel header="#{bundle.CampoEnunciado}" collapsed="true" toggleable="true">
+                        <h:outputText id="enunciado" value="#{resposta.questaoTraduzPalavra.enunciado}" escape="false"/>
+                    </p:panel>                    
+                    <p:separator/>
+                    <h:outputText value="Possíveis traduções"/>
+                    <p:dataList  value="#{resposta.questaoTraduzPalavra.palavraLatim.traduzPalavras}" var="trad" rows="10" paginator="true">
+                        <h:outputText value="#{trad.palavraPortugues.palavra}"/>
+                    </p:dataList>
+                </p:panel>
             </p:dataGrid>
-            <p:commandButton value="imprimir">
+            <p:commandButton value="IMPRIMIR">
                 <p:printer target="avaliacao"/>
             </p:commandButton>
-            <p:commandButton value="Finalizar" action="#{resolucaoTraduzPalavraController.done()}"/>  
+            <p:commandButton value="ENVIAR" update=":sendForm" oncomplete="PF('sendReport').show()"/>
+            <p:commandButton value="FINALIZAR" action="#{resolucaoTraduzPalavraController.done()}"/>  
         </h:form>
+        <p:dialog id="send" appendTo="@(body)" widgetVar="sendReport" modal="true" header="#{bundle.AcaoEnviar}" resizable="false">
+            <h:form id="sendForm">
+                <p:outputLabel for="universidade" value="#{bundle.CampoInstituicao}" styleClass="label"/>
+                <br/>
+                <p:inputText id="universidade" styleClass="input"/>
+                <br/>
+                <p:outputLabel for="cod" value="#{bundle.CampoChave}" styleClass="label"/>
+                <br/>
+                <p:inputMask id="cod" mask="aaa9999.9" styleClass="input"/>
+                <br/>
+                <p:outputLabel for="email" value="#{bundle.CampoLogin}" styleClass="label"/>
+                <br/>
+                <p:inputText id="email" styleClass="input">
+                    <f:validator validatorId="EmailValidator"/>
+                </p:inputText>
+                <hr/>
+                <p:commandButton value="#{bundle.AcaoEnviar}" styleClass="label"/>
+            </h:form>
+        </p:dialog>
     </h:body>
 </html>
 

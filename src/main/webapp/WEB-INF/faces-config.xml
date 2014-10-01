@@ -252,6 +252,10 @@
         <validator-id>TraducaoValidator</validator-id>
         <validator-class>br.edu.uag.aruagi.control.util.validator.TraducaoValidator</validator-class>
     </validator>
+    <validator>
+        <validator-id>LacunaValidator</validator-id>
+        <validator-class>br.edu.uag.aruagi.control.util.validator.LacunaValidator</validator-class>
+    </validator>
     
     <!-- CAPTURA DE EXCECOES -->
     <factory>

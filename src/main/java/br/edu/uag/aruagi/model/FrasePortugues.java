@@ -1,8 +1,8 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +26,8 @@ public class FrasePortugues implements java.io.Serializable {
     private String frase;
     private Integer usuario;
     private Boolean status;
-    private Set traduzFrases = new HashSet(0);
+    private List<TraduzFrase> traduzFrases = new ArrayList<TraduzFrase>();
+    private List<QuestaoTraduzFrase> questaoTraduzFrases = new ArrayList<QuestaoTraduzFrase>();
 
     public FrasePortugues() {
     }
@@ -36,7 +37,7 @@ public class FrasePortugues implements java.io.Serializable {
         this.frase = frase;
     }
 
-    public FrasePortugues(int id, String frase, Integer usuario, Boolean status, Set traduzFrases) {
+    public FrasePortugues(int id, String frase, Integer usuario, Boolean status, List traduzFrases) {
         this.id = id;
         this.frase = frase;
         this.usuario = usuario;
@@ -84,21 +85,29 @@ public class FrasePortugues implements java.io.Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "frasePortugues", targetEntity = TraduzFrase.class)
     @Fetch(FetchMode.SUBSELECT)
-    public Set getTraduzFrases() {
+    public List<TraduzFrase> getTraduzFrases() {
         return this.traduzFrases;
     }
 
-    public void setTraduzFrases(Set traduzFrases) {
+    public void setTraduzFrases(List<TraduzFrase> traduzFrases) {
         this.traduzFrases = traduzFrases;
+    }
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "frasePortugues", targetEntity = QuestaoTraduzFrase.class)
+    @Fetch(FetchMode.SUBSELECT)
+    public List<QuestaoTraduzFrase> getQuestaoTraduzFrases() {
+        return this.questaoTraduzFrases;
+    }
+
+    public void setQuestaoTraduzFrases(List<QuestaoTraduzFrase> questaoTraduzFrases) {
+        this.questaoTraduzFrases = questaoTraduzFrases;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + this.id;
-        hash = 67 * hash + (this.frase != null ? this.frase.hashCode() : 0);
-        hash = 67 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
-        hash = 67 * hash + (this.status != null ? this.status.hashCode() : 0);
+        int hash = 3;
+        hash = 83 * hash + this.id;
+        hash = 83 * hash + (this.frase != null ? this.frase.hashCode() : 0);
         return hash;
     }
 
@@ -117,13 +126,7 @@ public class FrasePortugues implements java.io.Serializable {
         if ((this.frase == null) ? (other.frase != null) : !this.frase.equals(other.frase)) {
             return false;
         }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
-            return false;
-        }
         return true;
-    }
+    }    
 
 }

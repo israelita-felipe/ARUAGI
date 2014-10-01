@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -25,7 +24,7 @@
                         <h:outputText value="#{bundle.ViewQuestaoTraduzFraseLabel_usuario}"/>
                         <h:outputText value="#{questaoTraduzFraseController.selected.usuario}" title="#{bundle.ViewQuestaoTraduzFraseTitle_usuario}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="QuestaoTraduzFraseViewDialog.hide()"/>
+                    <p:commandButton value="#{bundle.AcaoFechar}" onclick="QuestaoTraduzFraseViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

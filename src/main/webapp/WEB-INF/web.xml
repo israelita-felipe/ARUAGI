@@ -56,17 +56,13 @@
     <filter-mapping>
         <filter-name>XHTMLFilter</filter-name>
         <url-pattern>*.xhtml</url-pattern>
-    </filter-mapping>        
-    
-    <error-page>
-        <location>
-            /public/advertencia/Erro.xhtml
-        </location>
-    </error-page>
+    </filter-mapping>
     <!-- tema primefaces -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>bootstrap</param-value>
     </context-param>
-    
+    <error-page>
+        <location>/public/advertencia/Erro.xhtml</location>
+    </error-page>
 </web-app>

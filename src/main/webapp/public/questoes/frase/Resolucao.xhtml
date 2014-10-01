@@ -1,12 +1,79 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../../resources/template_site.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <ui:define name="head">
+        <h:outputStylesheet library="css" name="defaultHTML.css"/>
+        <h:outputStylesheet library="css" name="customHTML.css"/> 
+    </ui:define>
+
+    <ui:define name="title">
+        Questões
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form>
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:panelGrid columns="8" styleClass="noBorder">
+                        <p:outputLabel for="selectNivel" value="#{bundle.CampoNivel}"/>
+                        <p:selectOneMenu id="selectNivel" value="#{resolucaoTraduzPalavraController.nivel}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                            <f:selectItems value="#{nivelQuestaoController.items}" var="nivel"
+                                           itemValue="#{nivel}"
+                                           itemLabel="#{nivel.descricao}"/>
+                        </p:selectOneMenu>
+                        <span class="ui-separator">
+                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                        </span>
+                        <p:outputLabel for="nQuestoes" value="#{bundle.CampoQuantidade}"/>
+                        <p:spinner id="nQuestoes" value="#{resolucaoTraduzPalavraController.quantidade}" min="1" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+                        <span class="ui-separator">
+                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                        </span>
+                        <p:outputLabel for="nome" value="#{bundle.CampoNome}"/>
+                        <p:inputText id="nome" value="#{resolucaoTraduzPalavraController.nome}" placeholder="Digite seu nome" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+
+                    </p:panelGrid>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton id="prepareButton" value="#{bundle.AcaoGerar}" actionListener="#{resolucaoTraduzPalavraController.prepare}" update="questoesPanel,nQuestoes,avaliar"/>
+                    <p:commandButton id="avaliar" value="#{bundle.AcaoAvaliar}" action="#{resolucaoTraduzPalavraController.avaliar}" disabled="#{resolucaoTraduzPalavraController.questoesPorNivel.isEmpty()}"/>
+                </f:facet>
+            </p:toolbar>
+
+            <p:messages autoUpdate="true" closable="true" showIcon="false"/>
+
+            <p:panel id="questoesPanel" visible="#{resolucaoTraduzPalavraController.questaoAtual!=null}">
+                <f:facet name="header">
+                    <h:outputText value="Questão: #{resolucaoTraduzPalavraController.questaoAtual.titulo}, por: #{usuarioSessionController.getUsuario(resolucaoTraduzPalavraController.questaoAtual.usuario).nome}"/>                                 
+                </f:facet>
+                <f:facet name="actions">
+                    <h:outputText value="itens restantes: #{resolucaoTraduzPalavraController.restante}" rendered="#{resolucaoTraduzPalavraController.restante!=-1}"/>
+                </f:facet>
+
+                <h:outputText value="#{resolucaoTraduzPalavraController.questaoAtual.enunciado}" escape="false"/>
+
+                <p:separator/>
+
+                <p:outputLabel value="A palavra é: #{resolucaoTraduzPalavraController.questaoAtual.palavraLatim.palavra}"/>
+
+                <p:separator/>
+
+                <p:outputLabel value="#{bundle.CampoTraducao}" for="traducao"/>
+                <p:inputText id="traducao" value="#{resolucaoTraduzPalavraController.selected}"/>
+
+                <f:facet name="footer">
+                    <p:commandButton id="next" value="#{bundle.AcaoResponder}" action="#{resolucaoTraduzPalavraController.next()}" update="questoesPanel"/>
+                    <p:commandButton id="jump" value="#{bundle.AcaoPular}" action="#{resolucaoTraduzPalavraController.pular()}" update="questoesPanel"/>
+                    <p:commandButton id="previous" value="#{bundle.AcaoVoltar}" action="#{resolucaoTraduzPalavraController.previous()}" update="questoesPanel"/>
+                </f:facet>
+
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

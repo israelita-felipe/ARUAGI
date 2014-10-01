@@ -95,10 +95,10 @@ public class ResolucaoTraduzPalavraController implements Serializable {
                     if (PALAVRA_RESPOSTA != null && PALAVRA_TRADUCAO != null) {
                         if (PALAVRA_RESPOSTA.equals(PALAVRA_TRADUCAO)) {
                             pontuacao = pontuacao + (10 / quantidade);
+                        } else if (find(resposta.palavraPortugues)) {
+                            //pontuação vale apenas 90% se a tradução não for a indicada pelo professor
+                            pontuacao = pontuacao + ((10 / quantidade) * (0.9));
                         }
-                    } else if (find(resposta.palavraPortugues)) {
-                        //pontuação vale apenas 90% se a tradução não for a indicada pelo professor
-                        pontuacao = pontuacao + ((10 / quantidade) * (0.9));
                     }
                 }
                 position++;

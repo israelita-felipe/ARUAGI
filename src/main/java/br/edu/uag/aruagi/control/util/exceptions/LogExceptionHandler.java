@@ -61,7 +61,7 @@ public class LogExceptionHandler extends ExceptionHandlerWrapper {
                     @Override
                     public void run() {
                         try {
-                            EmailSender.sendPreparedEmail("DATA: "+String.valueOf(new Date()) + "\nMENSAGEM: " + t.getMessage()+"\nCAUSA: "+t.getCause());
+                            EmailSender.sendPreparedEmail("DATA: "+String.valueOf(new Date()) + "\nMENSAGEM: " + t.getMessage()+"\nCAUSA: "+t.getCause()+"\nCOMPLETO: \n"+t.getStackTrace().toString());
                         } catch (MessagingException ex) {
                             Logger.getLogger(LogExceptionHandler.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (UnsupportedEncodingException ex) {

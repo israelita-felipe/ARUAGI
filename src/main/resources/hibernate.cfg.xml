@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory name="hibernate_session_factory">
+    <session-factory>
       
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/ARUAGI</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">1509199215091992</property>
-    
+        
+        <!-- Enable Hibernate's automatic session context management -->
         <property name="hibernate.current_session_context_class">thread</property>
+        
+        <!-- Logging all generated SQL to console 
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>-->
     
         <mapping class="br.edu.uag.aruagi.model.CasoAplicado"/>
         <mapping class="br.edu.uag.aruagi.model.PalavrasClassificadasId"/>

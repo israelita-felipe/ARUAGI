@@ -15,7 +15,7 @@ import java.util.Date;
  * @author Israel Araújo
  */
 public class AcessoFacade extends AbstractFacade<Acesso, Date> implements Serializable{
-
+    
     public AcessoFacade() {
         super(Acesso.class);
     }

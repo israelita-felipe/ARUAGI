@@ -26,7 +26,6 @@ public class Caso implements java.io.Serializable {
     private String descricao;
     private Integer usuario;
     private Boolean status;
-    private Set lacunas = new HashSet(0);
     private Set questaoDeclinacaos = new HashSet(0);
     private Set casoAplicados = new HashSet(0);
 
@@ -38,12 +37,11 @@ public class Caso implements java.io.Serializable {
         this.descricao = descricao;
     }
 
-    public Caso(int id, String descricao, Integer usuario, Boolean status, Set lacunas, Set questaoDeclinacaos, Set casoAplicados) {
+    public Caso(int id, String descricao, Integer usuario, Boolean status,Set questaoDeclinacaos, Set casoAplicados) {
         this.id = id;
         this.descricao = descricao;
         this.usuario = usuario;
         this.status = status;
-        this.lacunas = lacunas;
         this.questaoDeclinacaos = questaoDeclinacaos;
         this.casoAplicados = casoAplicados;
     }
@@ -84,16 +82,6 @@ public class Caso implements java.io.Serializable {
 
     public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "caso", targetEntity = Lacuna.class)
-    @Fetch(FetchMode.SUBSELECT)
-    public Set getLacunas() {
-        return this.lacunas;
-    }
-
-    public void setLacunas(Set lacunas) {
-        this.lacunas = lacunas;
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "caso", targetEntity = QuestaoDeclinacao.class)

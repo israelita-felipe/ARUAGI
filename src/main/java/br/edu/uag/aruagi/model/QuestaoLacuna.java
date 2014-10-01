@@ -121,7 +121,7 @@ public class QuestaoLacuna implements java.io.Serializable {
         this.usuario = usuario;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "questaoLacuna", targetEntity = Lacuna.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "questaoLacuna", targetEntity = Lacuna.class, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     public List<Lacuna> getLacunas() {
         return this.lacunas;
@@ -133,14 +133,12 @@ public class QuestaoLacuna implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 73 * hash + this.id;
-        hash = 73 * hash + (this.fraseLatim != null ? this.fraseLatim.hashCode() : 0);
-        hash = 73 * hash + (this.nivelQuestao != null ? this.nivelQuestao.hashCode() : 0);
-        hash = 73 * hash + (this.status ? 1 : 0);
-        hash = 73 * hash + (this.titulo != null ? this.titulo.hashCode() : 0);
-        hash = 73 * hash + (this.enunciado != null ? this.enunciado.hashCode() : 0);
-        hash = 73 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
+        int hash = 3;
+        hash = 23 * hash + (this.fraseLatim != null ? this.fraseLatim.hashCode() : 0);
+        hash = 23 * hash + (this.nivelQuestao != null ? this.nivelQuestao.hashCode() : 0);
+        hash = 23 * hash + (this.titulo != null ? this.titulo.hashCode() : 0);
+        hash = 23 * hash + (this.enunciado != null ? this.enunciado.hashCode() : 0);
+        hash = 23 * hash + (this.lacunas != null ? this.lacunas.hashCode() : 0);
         return hash;
     }
 
@@ -153,16 +151,10 @@ public class QuestaoLacuna implements java.io.Serializable {
             return false;
         }
         final QuestaoLacuna other = (QuestaoLacuna) obj;
-        if (this.id != other.id) {
-            return false;
-        }
         if (this.fraseLatim != other.fraseLatim && (this.fraseLatim == null || !this.fraseLatim.equals(other.fraseLatim))) {
             return false;
         }
         if (this.nivelQuestao != other.nivelQuestao && (this.nivelQuestao == null || !this.nivelQuestao.equals(other.nivelQuestao))) {
-            return false;
-        }
-        if (this.status != other.status) {
             return false;
         }
         if ((this.titulo == null) ? (other.titulo != null) : !this.titulo.equals(other.titulo)) {
@@ -171,10 +163,12 @@ public class QuestaoLacuna implements java.io.Serializable {
         if ((this.enunciado == null) ? (other.enunciado != null) : !this.enunciado.equals(other.enunciado)) {
             return false;
         }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
+        if (this.lacunas != other.lacunas && (this.lacunas == null || !this.lacunas.equals(other.lacunas))) {
             return false;
         }
         return true;
     }
+
+    
 
 }

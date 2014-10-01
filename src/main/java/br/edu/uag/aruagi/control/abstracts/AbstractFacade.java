@@ -24,7 +24,7 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
-    }
+    }    
 
     @Override
     public Session getSession() {
@@ -62,7 +62,7 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
 
     @Override
     public void edit(T entity) {
-        getSession().update(entity);
+        getSession().merge(entity);
     }
 
     @Override

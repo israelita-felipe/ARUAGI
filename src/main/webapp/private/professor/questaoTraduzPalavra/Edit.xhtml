@@ -11,40 +11,44 @@
         <p:dialog id="QuestaoTraduzPalavraEditDlg" widgetVar="QuestaoTraduzPalavraEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="QuestaoTraduzPalavraEditForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{questaoTraduzPalavraController.selected != null}" styleClass="noBorder">
+                    <p:panel rendered="#{questaoTraduzPalavraController.selected != null}" styleClass="noBorder">
+                        <f:facet name="header">
+                            <p:inputText id="titulo" value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.CampoTitulo}" placeholder="#{bundle.CampoTitulo}" required="true" requiredMessage="#{bundle.Obrigatorio}" styleClass="largeInput"/>
+                        </f:facet>
+                        <p:panelGrid columns="4" styleClass="noBorder">
+                            <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+                            <p:outputLabel value="#{bundle.CampoTraducao}" for="traducao" />
+                            <p:outputLabel value="#{bundle.CampoNivel}" for="nivelQuestao" />
+                            <p:outputLabel value="#{bundle.CampoStatus}" for="status" />
 
-                        <p:outputLabel value="#{bundle.CampoTitulo}" for="titulo" />
-                        <p:inputText id="titulo" value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.CampoTitulo}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
-                        
-                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{questaoTraduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
-                                           var="palavraLatimItem"
-                                           itemLabel="#{palavraLatimItem.palavra}"
-                                           itemValue="#{palavraLatimItem}"/>
-                            <f:validator validatorId="TraducaoValidator"/>
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel value="#{bundle.CampoTraducao}" for="traducao" />
-                        <p:selectOneMenu id="traducao" filter="true" value="#{questaoTraduzPalavraController.selected.palavraPortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{palavraPortuguesController.itemsAvailableSelectOne}"
-                                           var="palavraPortuguesItem"
-                                           itemLabel="#{palavraPortuguesItem.palavra}"
-                                           itemValue="#{palavraPortuguesItem}"/>
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel value="#{bundle.CampoNivel}" for="nivelQuestao" />
-                        <p:selectOneMenu id="nivelQuestao" filter="true" value="#{questaoTraduzPalavraController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
-                                           var="nivelQuestaoItem"
-                                           itemLabel="#{nivelQuestaoItem.descricao}"
-                                           itemValue="#{nivelQuestaoItem}"/>
-                        </p:selectOneMenu>
+                            <p:selectOneMenu id="palavraLatim" filter="true" value="#{questaoTraduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                                <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
+                                               var="palavraLatimItem"
+                                               itemLabel="#{palavraLatimItem.palavra}"
+                                               itemValue="#{palavraLatimItem}"/>
+                                <f:validator validatorId="TraducaoValidator"/>
+                            </p:selectOneMenu>
 
+                            <p:selectOneMenu id="traducao" filter="true" value="#{questaoTraduzPalavraController.selected.palavraPortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                                <f:selectItems value="#{palavraPortuguesController.itemsAvailableSelectOne}"
+                                               var="palavraPortuguesItem"
+                                               itemLabel="#{palavraPortuguesItem.palavra}"
+                                               itemValue="#{palavraPortuguesItem}"/>
+                            </p:selectOneMenu>
+
+                            <p:selectOneMenu id="nivelQuestao" filter="true" value="#{questaoTraduzPalavraController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                                <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
+                                               var="nivelQuestaoItem"
+                                               itemLabel="#{nivelQuestaoItem.descricao}"
+                                               itemValue="#{nivelQuestaoItem}"/>
+                            </p:selectOneMenu>
+
+                            <p:inputSwitch id="status" value="#{questaoTraduzPalavraController.selected.status}" onLabel="#{bundle.StatusAtivo}" offLabel="#{bundle.StatusDesativado}"/>
+                        </p:panelGrid>
                         <p:outputLabel value="#{bundle.CampoEnunciado}" for="enunciado" />
-                        <p:editor id="enunciado" value="#{questaoTraduzPalavraController.selected.enunciado}"/>
+                        <p:editor id="enunciado" value="#{questaoTraduzPalavraController.selected.enunciado}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
-                    </p:panelGrid>
+                    </p:panel>
                     <p:commandButton actionListener="#{questaoTraduzPalavraController.update}" value="#{bundle.AcaoSalvar}" update="display,:QuestaoTraduzPalavraListForm:datalist,:growl" oncomplete="handleSubmit(args, 'QuestaoTraduzPalavraEditDialog');"/>
                 </h:panelGroup>
             </h:form>

@@ -78,7 +78,7 @@ public class QuestaoTraduzFraseController implements Serializable, InterfaceCont
             setEmbeddableKeys();
             try {
                 if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
+                    //getSelected().setStatus(Boolean.TRUE);
                     getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getFacade().create(selected);
                 } else if (persistAction == PersistAction.UPDATE) {

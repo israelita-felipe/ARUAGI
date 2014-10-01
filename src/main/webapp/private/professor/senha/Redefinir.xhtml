@@ -18,25 +18,30 @@
 
         <h:form style="width: 100%">
             <p:messages autoUpdate="true" closable="true"/>
-            <p:panelGrid columns="2">
-
-                <p:outputLabel for="currentPassword" value="#{bundle.CampoSenhaAtual}"/>
-                <p:password id="currentPassword" value="#{usuarioSessionController.currentPass}"/>
-
-                <p:outputLabel for="newPassword" value="#{bundle.CampoNovaSenha}"/>
-                <p:password id="newPassword" value="#{usuarioSessionController.newPass}" feedback="true"
+            <p:panel styleClass="container">
+                <f:facet name="header">
+                    <h:outputText value="#{bundle.CampoRedefinirSenha}"/>
+                </f:facet>
+                <p:outputLabel styleClass="label" for="currentPassword" value="#{bundle.CampoSenhaAtual}"/>
+                <br/>
+                <p:password id="currentPassword" styleClass="input" value="#{usuarioSessionController.currentPass}"/>
+                <br/>
+                <p:outputLabel styleClass="label" for="newPassword" value="#{bundle.CampoNovaSenha}"/>
+                <br/>
+                <p:password id="newPassword" styleClass="input" value="#{usuarioSessionController.newPass}" feedback="true"
                             promptLabel="#{bundle.AvisoSenhaBranco}" weakLabel="#{bundle.AvisoSenhaFraca}"
                             goodLabel="#{bundle.AvisoSenhaBoa}" strongLabel="#{bundle.AvisoSenhaForte}"/>
-
-                <p:outputLabel for="retryNewPassword" value="#{bundle.CampoRepetirNovaSenha}"/>
-                <p:password id="retryNewPassword" value="#{usuarioSessionController.confirmNewPass}" feedback="true"
+                <br/>
+                <p:outputLabel styleClass="label" for="retryNewPassword" value="#{bundle.CampoRepetirNovaSenha}"/>
+                <br/>
+                <p:password id="retryNewPassword" styleClass="input" value="#{usuarioSessionController.confirmNewPass}" feedback="true"
                             promptLabel="#{bundle.AvisoSenhaBranco}" weakLabel="#{bundle.AvisoSenhaFraca}"
                             goodLabel="#{bundle.AvisoSenhaBoa}" strongLabel="#{bundle.AvisoSenhaForte}"/>
 
                 <f:facet name="footer">
-                    <p:commandButton value="#{bundle.AcaoSalvar}" ajax="false" action="#{usuarioSessionController.updatePassword}"/>
+                    <p:commandButton styleClass="label" value="#{bundle.AcaoSalvar}" ajax="false" action="#{usuarioSessionController.updatePassword}"/>
                 </f:facet>
-            </p:panelGrid>        
+            </p:panel>        
         </h:form>
     </ui:define>
 

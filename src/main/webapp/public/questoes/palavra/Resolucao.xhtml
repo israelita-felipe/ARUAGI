@@ -19,14 +19,23 @@
         <h:form>
             <p:toolbar>
                 <f:facet name="left">
-                    <p:panelGrid columns="3" styleClass="noBorder">
-                        <p:selectOneMenu id="selectNivel" value="#{resolucaoTraduzPalavraController.nivel}">
+                    <p:panelGrid columns="8" styleClass="noBorder">
+                        <p:outputLabel for="selectNivel" value="#{bundle.CampoNivel}"/>
+                        <p:selectOneMenu id="selectNivel" value="#{resolucaoTraduzPalavraController.nivel}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{nivelQuestaoController.items}" var="nivel"
                                            itemValue="#{nivel}"
                                            itemLabel="#{nivel.descricao}"/>
-                        </p:selectOneMenu>    
-                        <p:spinner id="nQuestoes" value="#{resolucaoTraduzPalavraController.quantidade}" min="1"/>
-                        <p:inputText value="#{resolucaoTraduzPalavraController.nome}" placeholder="Digite seu nome" required="true"/>
+                        </p:selectOneMenu>
+                        <span class="ui-separator">
+                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                        </span>
+                        <p:outputLabel for="nQuestoes" value="#{bundle.CampoQuantidade}"/>
+                        <p:spinner id="nQuestoes" value="#{resolucaoTraduzPalavraController.quantidade}" min="1" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+                        <span class="ui-separator">
+                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                        </span>
+                        <p:outputLabel for="nome" value="#{bundle.CampoNome}"/>
+                        <p:inputText id="nome" value="#{resolucaoTraduzPalavraController.nome}" placeholder="Digite seu nome" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
 
                     </p:panelGrid>
                 </f:facet>
