@@ -7,7 +7,7 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/ARUAGI</property>
         <property name="hibernate.connection.username">aruagi</property>
-        <property name="hibernate.connection.password">aruagi</property>
+        <property name="hibernate.connection.password">1509199215091992</property>
         
         <!-- Enable Hibernate's automatic session context management -->
         <property name="hibernate.current_session_context_class">thread</property>
