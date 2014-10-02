@@ -15,15 +15,15 @@
                         <h:outputText value="#{bundle.CampoChave}"/>
                         <h:outputText value="#{questaoLacunaController.selected.id}" title="#{bundle.CampoChave}"/>
                         <h:outputText value="#{bundle.CampoPalavraLatim}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.fraseLatim}" title="#{bundle.CampoPalavraLatim}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_nivelQuestao}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.nivelQuestao}" title="#{bundle.ViewQuestaoLacunaTitle_nivelQuestao}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_titulo}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.titulo}" title="#{bundle.ViewQuestaoLacunaTitle_titulo}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_enunciado}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.enunciado}" title="#{bundle.ViewQuestaoLacunaTitle_enunciado}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoLacunaLabel_usuario}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.usuario}" title="#{bundle.ViewQuestaoLacunaTitle_usuario}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.fraseLatim.frase}" title="#{bundle.CampoPalavraLatim}"/>
+                        <h:outputText value="#{bundle.CampoNivel}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.nivelQuestao.descricao}" title="#{bundle.CampoNivel}"/>
+                        <h:outputText value="#{bundle.CampoTitulo}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.titulo}" title="#{bundle.CampoTitulo}"/>
+                        <h:outputText value="#{bundle.CampoEnunciado}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.enunciado}" title="#{bundle.CampoEnunciado}"/>
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.usuario}" title="#{bundle.CampoAutor}"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>
