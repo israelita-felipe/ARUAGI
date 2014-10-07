@@ -36,7 +36,7 @@
                         
                         <f:facet name="footer">
 
-                            <h:outputText value="Por: #{usuarioSessionController.getUsuario(video.usuario).nome}"/>
+                            <h:outputText value="Por: #{usuarioSessionController.getUsuario(t.usuario).nome}"/>
 
                             <p:outputLabel value=" | "/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil"  update=":VideosEditForm" oncomplete="PF('VideosEditDialog').show()" disabled="#{t.usuario!=usuarioSessionController.selected.id}">

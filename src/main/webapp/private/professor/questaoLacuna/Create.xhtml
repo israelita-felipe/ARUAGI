@@ -39,9 +39,10 @@
                         </p:panelGrid>                        
 
                         <p:outputLabel for="enunciado" value="#{bundle.CampoEnunciado}"/>
-                        <p:editor id="enunciado" value="#{questaoLacunaController.selected.enunciado}" width="700" height="100">
+                        <br/>
+                        <p:inputText id="enunciado" value="#{questaoLacunaController.selected.enunciado}" style="width: 100%">
                             <f:validator validatorId="LacunaValidator"/>
-                        </p:editor>
+                        </p:inputText>
 
                         <p:panelGrid columns="2" styleClass="noBorder" style="width: 100%">
                             <p:fieldset id="sources" legend="#{bundle.CampoPalavraLatim}" style="width: 50%">

@@ -24,9 +24,18 @@ public class VideosController implements Serializable, InterfaceController<Video
     private final VideosFacade facade = new VideosFacade();
     private List<Videos> items = null;
     private Videos selected;
+    private String pesquisa;
 
     public VideosController() {
         myVideos(0);
+    }
+
+    public String getPesquisa() {
+        return pesquisa;
+    }
+
+    public void setPesquisa(String pesquisa) {
+        this.pesquisa = pesquisa;
     }
 
     public void add() {
@@ -130,6 +139,19 @@ public class VideosController implements Serializable, InterfaceController<Video
                 AutoPostagemController.create(selected);
             }
         }
+    }
+
+    public List<Videos> pesquisar() {
+        getFacade().begin();
+        if (!this.pesquisa.trim().equals("")) {
+            DetachedCriteria query = DetachedCriteria.forClass(Videos.class);
+            query.add(Property.forName("descricao").like(this.pesquisa));
+            this.items = getFacade().getEntitiesByDetachedCriteria(query);
+        }else{
+            this.items = getItems();
+        }
+        getFacade().end();
+        return this.items;
     }
 
     public Videos getVideos(int id) {

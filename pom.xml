@@ -122,6 +122,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.opencms.modules</groupId>
+            <artifactId>org.opencms.jquery</artifactId>
+            <version>8.5.2</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>

@@ -1,25 +1,26 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="./../../../resources/template_site.xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
-
-    <ui:define name="head">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Questões</title>
         <h:outputStylesheet library="css" name="defaultHTML.css"/>
         <h:outputStylesheet library="css" name="customHTML.css"/> 
-    </ui:define>
-
-    <ui:define name="title">
-        Questões
-    </ui:define>
-
-    <ui:define name="body">
+        <h:outputStylesheet library="css" name="jsfcrud.css"/> 
+    </h:head>
+    <h:body>
         <h:form>
             <p:toolbar>
                 <f:facet name="left">
-                    <p:panelGrid columns="8" styleClass="noBorder">
+                    <p:panelGrid columns="10" styleClass="noBorder">
+                        <h:link outcome="#{bundle.MenuInicio}">
+                            <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="20" height="23"/>                    
+                        </h:link> 
+                        <span class="ui-separator">
+                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                        </span>
                         <p:outputLabel for="selectNivel" value="#{bundle.CampoNivel}"/>
                         <p:selectOneMenu id="selectNivel" value="#{resolucaoTraduzPalavraController.nivel}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                             <f:selectItems value="#{nivelQuestaoController.items}" var="nivel"
@@ -36,12 +37,14 @@
                         </span>
                         <p:outputLabel for="nome" value="#{bundle.CampoNome}"/>
                         <p:inputText id="nome" value="#{resolucaoTraduzPalavraController.nome}" placeholder="Digite seu nome" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
-
                     </p:panelGrid>
                 </f:facet>
                 <f:facet name="right">
-                    <p:commandButton id="prepareButton" value="#{bundle.AcaoGerar}" actionListener="#{resolucaoTraduzPalavraController.prepare}" update="questoesPanel,nQuestoes,avaliar"/>
-                    <p:commandButton id="avaliar" value="#{bundle.AcaoAvaliar}" action="#{resolucaoTraduzPalavraController.avaliar}" disabled="#{resolucaoTraduzPalavraController.questoesPorNivel.isEmpty()}"/>
+                    <p:panelGrid styleClass="noBorder" columns="5">
+                        <p:outputLabel id="status-correct" value="Resposta anterior: #{resolucaoTraduzPalavraController.respostas[resolucaoTraduzPalavraController.position-1].getCorrecao()}"/>
+                        <p:commandButton id="prepareButton" value="#{bundle.AcaoGerar}" actionListener="#{resolucaoTraduzPalavraController.prepare}" update="questoesPanel,nQuestoes,avaliar"/>
+                        <p:commandButton id="avaliar" value="#{bundle.AcaoAvaliar}" action="#{resolucaoTraduzPalavraController.avaliar}" disabled="#{resolucaoTraduzPalavraController.questoesPorNivel.isEmpty()}"/>
+                    </p:panelGrid>
                 </f:facet>
             </p:toolbar>
 
@@ -67,13 +70,13 @@
                 <p:inputText id="traducao" value="#{resolucaoTraduzPalavraController.selected}"/>
 
                 <f:facet name="footer">
-                    <p:commandButton id="next" value="#{bundle.AcaoResponder}" action="#{resolucaoTraduzPalavraController.next()}" update="questoesPanel"/>
-                    <p:commandButton id="jump" value="#{bundle.AcaoPular}" action="#{resolucaoTraduzPalavraController.pular()}" update="questoesPanel"/>
-                    <p:commandButton id="previous" value="#{bundle.AcaoVoltar}" action="#{resolucaoTraduzPalavraController.previous()}" update="questoesPanel"/>
+                    <p:commandButton id="next" value="#{bundle.AcaoResponder}" action="#{resolucaoTraduzPalavraController.next()}" update="questoesPanel,status-correct"/>
+                    <p:commandButton id="jump" value="#{bundle.AcaoPular}" action="#{resolucaoTraduzPalavraController.pular()}" update="questoesPanel,status-correct"/>
+                    <p:commandButton id="previous" value="#{bundle.AcaoVoltar}" action="#{resolucaoTraduzPalavraController.previous()}" update="questoesPanel,status-correct"/>
                 </f:facet>
 
             </p:panel>
         </h:form>
-    </ui:define>
+    </h:body>
+</html>
 
-</ui:composition>

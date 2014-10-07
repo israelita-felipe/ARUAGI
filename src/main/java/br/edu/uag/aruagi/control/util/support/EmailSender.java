@@ -89,6 +89,41 @@ public class EmailSender {
     }
 
     /**
+     * Envia um e-mail para a destinatário especificado
+     *
+     * @param titulo
+     * @param emailToSend
+     * @param conteudo
+     * @param nome
+     * @return
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     */
+    public static boolean sendPreparedEmail(String titulo, String emailToSend, String conteudo, String nome) throws MessagingException, UnsupportedEncodingException {
+        SmtpMail email = new SmtpMail();
+
+        email.setHost("smtp.gmail.com");
+        email.setPorta(465);
+        email.setAutenticacao(true);
+        email.setConexaoSegura(true);
+
+        //dados do remetente
+        email.setUsuario("ARUAGI.UFRPE.UAG.ERROS");
+        email.setSenha("ARUAGI741852963");
+        email.setEmailRemetente("ARUAGI.UFRPE.UAG.ERROS@GMAIL.COM");
+        email.setNomeRemetente("ARUAGI UFRPE");
+        //dados do email
+        email.setAssunto(titulo);
+        email.setCorpo(emailToSend+"\n"+conteudo);
+        email.setTypeText(SmtpMail.TYPE_TEXT_PLAIN);
+        //dados do destinatário
+        email.setNomeDestinatario(nome);
+        email.setEmailDestinatario("ARUAGI.UFRPE.UAG.ERROS@GMAIL.COM");
+
+        return send(email);
+    }
+
+    /**
      * envia um relatório de de uma atividade respondida pelo aluno
      *
      * @param respostas

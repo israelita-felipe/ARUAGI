@@ -16,11 +16,26 @@ ul.ui-menu-child {
     //min-width: 350px;
     width: 200px !important;
 }
-.full{
-    width: auto;
-    height:auto
-}
-
 /*
 AREA PARA COMPONENTES EXPLICITOS COM CLASSES DA DOCUMENTACAO DO PRIMEFACES
 */
+.ui-layout-unit{
+    border: none;
+}
+.ui-layout {
+    border: none;
+}
+.ui-layout-doc {
+    border: none;
+}
+.ui-layout-unit-content{
+    border: none;
+}
+.ui-menuitem-text{
+    text-align: center;
+    border: none !important;
+    padding-right: 6px;
+}
+.ui-menuitem-link:hover{
+    background-color: #777! important;   
+}

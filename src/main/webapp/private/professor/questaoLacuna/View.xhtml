@@ -12,18 +12,30 @@
             <h:form id="QuestaoLacunaViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{questaoLacunaController.selected != null}">
+
                         <h:outputText value="#{bundle.CampoChave}"/>
                         <h:outputText value="#{questaoLacunaController.selected.id}" title="#{bundle.CampoChave}"/>
+
                         <h:outputText value="#{bundle.CampoPalavraLatim}"/>
                         <h:outputText value="#{questaoLacunaController.selected.fraseLatim.frase}" title="#{bundle.CampoPalavraLatim}"/>
+
                         <h:outputText value="#{bundle.CampoNivel}"/>
                         <h:outputText value="#{questaoLacunaController.selected.nivelQuestao.descricao}" title="#{bundle.CampoNivel}"/>
+
                         <h:outputText value="#{bundle.CampoTitulo}"/>
                         <h:outputText value="#{questaoLacunaController.selected.titulo}" title="#{bundle.CampoTitulo}"/>
+
                         <h:outputText value="#{bundle.CampoEnunciado}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.enunciado}" title="#{bundle.CampoEnunciado}"/>
+                        <h:outputText value="#{questaoLacunaController.selected.enunciado}" style="width: 100%"/>
+
+                        <h:outputText value="#{bundle.CampoDesejada}"/>
+                        <p:dataList value="#{questaoLacunaController.selected.lacunas}" var="lacunas" >
+                            <h:outputText value="#{lacunas.palavraLatim.palavra}"/>
+                        </p:dataList>
+
                         <h:outputText value="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.usuario}" title="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{usuarioSessionController.getUsuario(questaoLacunaController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

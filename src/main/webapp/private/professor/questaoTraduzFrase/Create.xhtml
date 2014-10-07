@@ -26,6 +26,7 @@
                                                var="fraseLatimItem"
                                                itemLabel="#{fraseLatimItem.frase}"
                                                itemValue="#{fraseLatimItem}"/>
+                                <f:validator validatorId="TraducaoFraseValidator"/>
                             </p:selectOneMenu>
 
                             <p:selectOneMenu id="fraseLatimDesejada" filter="true" value="#{questaoTraduzFraseController.selected.frasePortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}">

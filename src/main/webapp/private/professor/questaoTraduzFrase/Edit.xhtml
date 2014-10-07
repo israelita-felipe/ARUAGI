@@ -28,6 +28,7 @@
                                                var="fraseLatimItem"
                                                itemLabel="#{fraseLatimItem.frase}"
                                                itemValue="#{fraseLatimItem}"/>
+                                <f:validator validatorId="TraducaoFraseValidator"/>
                             </p:selectOneMenu>
 
                             <p:selectOneMenu id="fraseLatimDesejada" filter="true" value="#{questaoTraduzFraseController.selected.frasePortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}">
@@ -43,8 +44,8 @@
                                                itemLabel="#{nivelQuestaoItem.descricao}"
                                                itemValue="#{nivelQuestaoItem}"/>
                             </p:selectOneMenu>
-                            
-                                                    <p:inputSwitch id="status" value="#{questaoTraduzFraseController.selected.status}" onLabel="#{bundle.StatusAtivo}" offLabel="#{bundle.StatusDesativado}"/>
+
+                            <p:inputSwitch id="status" value="#{questaoTraduzFraseController.selected.status}" onLabel="#{bundle.StatusAtivo}" offLabel="#{bundle.StatusDesativado}"/>
                         </p:panelGrid>
 
                         <p:outputLabel value="#{bundle.CampoEnunciado}" for="enunciado" />

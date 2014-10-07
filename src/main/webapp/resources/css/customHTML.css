@@ -15,12 +15,17 @@ retira as bordas de panelgrid
     padding: 0px;
     background-color: transparent;
 }
-
+.right{
+    position: absolute;
+    right: 0;
+}
 .left{
-    position: absolute;left: 100%
+    position: absolute;
+    left: 0;
 }
 .full{
-    width: 100%;height: 100%
+    top: 0;
+    width: 100%;
 }
 .large{
     width: 100%
@@ -36,11 +41,11 @@ container de login
     top: 50%;
     left: 50%;
     margin-top: -145px;
-    margin-left: -200px;
+    margin-left: -175px;
     background: #fff;
     border-radius: 3px;
-    border: 1px solid #ccc;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    border: 2px solid #ccc;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, .4);
     border: none !important;
     padding: 0px;
 }
@@ -52,7 +57,6 @@ labels para login
     display: inline-block;
     margin-left: 18px;
     padding-top: 10px;
-    font-size: 14px;
 }
 /*
 estilo de menus login
@@ -80,7 +84,6 @@ botao de escolha de questao
     margin-right: 18px;    
     padding-top: 10px;
     padding-bottom: 10px;
-    font-size: 20px;
     height: 68px;
     width: 136px;
 }
@@ -103,8 +106,7 @@ acessibility-button{
     color: #555;
     display: inline-block;
     margin-left: 18px;
-    padding-top: 10px;
-    font-size: 14px;
+    padding-top: 10px;    
 }
 /*
 estilo de combo
@@ -122,4 +124,12 @@ estilo de combo
     border: 1px solid #c7d0d2;
     border-radius: 2px;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .2), 0 0 0 2px #f5f7f8;
+}
+.page-body{
+    background-color: #777;
+}
+
+.erro-label{
+    font-size: 20px;
+    color: red
 }

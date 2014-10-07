@@ -7,17 +7,18 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>#{bundle.TituloInicio}</title>
-        
+
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="primefaces.css"/>
-        
+        <h:outputStylesheet library="css" name="customHTML.css"/>
+
         <h:outputScript library="js" name="jsfcrud.js"/>
         <!-- SCRIPT DE REQUISICAO DO FACEBOOK -->
         <script>
             fb_root(document, 'script', 'facebook-jssdk');
-        </script>
+        </script>        
     </h:head>
-    <h:body>
+    <h:body id="body-page" style="font-size: #{acessoController.items.size()}px">
         <p:layout fullPage="true">
             <p:layoutUnit position="north" header="Seja bem-vindo(a) #{usuarioSessionController.selected.nome}">
 
@@ -75,13 +76,19 @@
                             <p:menuitem value="Lacuna (pendente)" outcome="./professor/lacuna/List.xhtml" />
                             <p:menuitem value="LinksQuestao (pendente)" outcome="./administrador/linksQuestao/List.xhtml" />
                             <p:menuitem value="ListaQuestao (pendente)" outcome="./administrador/listaQuestao/List.xhtml" />
+
+                        </p:submenu>
+
+                        <p:submenu label="#{bundle.MenusQuestoes}">
+
                             <p:menuitem value="QuestaoDeclinacao" outcome="./professor/questaoDeclinacao/List.xhtml" />
                             <p:menuitem value="QuestaoGramatical" outcome="./professor/questaoGramatical/List.xhtml" />
-                            <p:menuitem value="QuestaoLacuna (pendente)" outcome="./professor/questaoLacuna/List.xhtml" />
-                            <p:menuitem value="QuestaoTraduzFrase" outcome="./professor/questaoTraduzFrase/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusQuestaoLacuna}" outcome="./professor/questaoLacuna/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusQuestaoTraduzFrase}" outcome="./professor/questaoTraduzFrase/List.xhtml" />
                             <p:menuitem value="#{bundle.MenusQuestaoTraduzPalavra}" outcome="./professor/questaoTraduzPalavra/List.xhtml" />
 
                         </p:submenu>
+
                         <p:submenu label="#{bundle.MenusMultimidia}">
 
                             <p:menuitem value="#{bundle.MenusVideo}" outcome="./professor/videos/List.xhtml" />
@@ -91,8 +98,6 @@
                         <f:facet name="options">
 
                             <p:commandButton icon="ui-icon-plus" title="Aumentar fonte"/>
-                            <p:commandButton icon="ui-icon-minus" title="Diminuir fonte"/>
-                            <p:commandButton icon="ui-icon-x" title="Auto-contraste"/>
                             <p:spacer width="48" height="10"/>
                             <p:menuButton value="#{bundle.MenusBotaoPerfil}">
                                 <p:menuitem value="#{bundle.MenusAtualizarPerfil}" outcome="./professor/perfil/Perfil.xhtml"/>
@@ -176,7 +181,7 @@
         <ui:include src="/private/professor/postagem/Create.xhtml"/>
         <ui:include src="/private/professor/postagem/Edit.xhtml"/>
         <ui:include src="/private/professor/postagem/View.xhtml"/>
-        <ui:include src="/private/professor/videosPostagem/Create.xhtml"/>
+        <ui:include src="/private/professor/videosPostagem/Create.xhtml"/> 
     </h:body>
 </html>
 

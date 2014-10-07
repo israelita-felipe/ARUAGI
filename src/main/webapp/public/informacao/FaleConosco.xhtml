@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Contato</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="primefaces.css"/>
+        <h:outputStylesheet library="css" name="defaultHTML.css"/>
+        <h:outputStylesheet library="css" name="customHTML.css"/>  
+    </h:head>
+    <h:body>
+        <h:form> 
+            <center>
+                <p:panelGrid columns="2" styleClass="noBorder">
+                    <h:link outcome="#{bundle.MenuInicio}">
+                        <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="40" height="52"/>                    
+                    </h:link>                        
+                    <p:outputLabel value="Entre em contato"/>                       
+                </p:panelGrid>
+                <p:growl autoUpdate="true"/>
+                <p:outputLabel for="titulo" value="Titulo" styleClass="label"/>
+                <p:inputText id="titulo" styleClass="input" required="true" value="#{contatoController.titulo}"/>
+                <br/>                                
+                <p:outputLabel for="nome" value="Nome" styleClass="label"/>
+                <p:inputText id="nome" styleClass="input" required="true" value="#{contatoController.nome}"/>
+                <br/>
+                <p:outputLabel for="email" value="E-mail" styleClass="label"/>
+                <p:inputText id="email" styleClass="input" required="true" value="#{contatoController.email}">
+                    <f:validator validatorId="EmailValidator"/>
+                </p:inputText>
+                <br/>
+                <p:editor id="conteudo" required="true" styleClass="label" value="#{contatoController.mensagem}" requiredMessage="Conteúdo obrigatório"/>
+                <br/>
+                <p:commandButton value="Enviar" styleClass="label" action="#{contatoController.send()}"/>
+            </center>
+        </h:form>
+    </h:body>
+</html>
+

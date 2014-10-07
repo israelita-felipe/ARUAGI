@@ -7,24 +7,29 @@
 
     <ui:composition>
 
-        <p:dialog id="QuestaoTraduzFraseViewDlg" widgetVar="QuestaoTraduzFraseViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewQuestaoTraduzFraseTitle}">
+        <p:dialog id="QuestaoTraduzFraseViewDlg" widgetVar="QuestaoTraduzFraseViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="QuestaoTraduzFraseViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{questaoTraduzFraseController.selected != null}">
-                        <h:outputText value="#{bundle.ViewQuestaoTraduzFraseLabel_id}"/>
-                        <h:outputText value="#{questaoTraduzFraseController.selected.id}" title="#{bundle.ViewQuestaoTraduzFraseTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoTraduzFraseLabel_fraseLatim}"/>
-                        <h:outputText value="#{questaoTraduzFraseController.selected.fraseLatim}" title="#{bundle.ViewQuestaoTraduzFraseTitle_fraseLatim}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoTraduzFraseLabel_nivelQuestao}"/>
-                        <h:outputText value="#{questaoTraduzFraseController.selected.nivelQuestao}" title="#{bundle.ViewQuestaoTraduzFraseTitle_nivelQuestao}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoTraduzFraseLabel_enunciado}"/>
-                        <h:outputText value="#{questaoTraduzFraseController.selected.enunciado}" title="#{bundle.ViewQuestaoTraduzFraseTitle_enunciado}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoTraduzFraseLabel_titulo}"/>
-                        <h:outputText value="#{questaoTraduzFraseController.selected.titulo}" title="#{bundle.ViewQuestaoTraduzFraseTitle_titulo}"/>
-                        <h:outputText value="#{bundle.ViewQuestaoTraduzFraseLabel_usuario}"/>
-                        <h:outputText value="#{questaoTraduzFraseController.selected.usuario}" title="#{bundle.ViewQuestaoTraduzFraseTitle_usuario}"/>
+                    <p:panelGrid columns="2" rendered="#{questaoTraduzFraseController.selected != null}" >
+                        <h:outputText value="#{bundle.CampoTitulo}"/>
+                        <h:outputText value="#{questaoTraduzFraseController.selected.titulo}" title="#{bundle.CampoTitulo}"/>
+                        
+                        <h:outputText value="#{bundle.CampoChave}"/>
+                        <h:outputText value="#{questaoTraduzFraseController.selected.id}" title="#{bundle.CampoChave}"/>
+                        
+                        <h:outputText value="#{bundle.CampoFraseLatim}"/>
+                        <h:outputText value="#{questaoTraduzFraseController.selected.fraseLatim.frase}" title="#{bundle.CampoFraseLatim}"/>
+                        
+                        <h:outputText value="#{bundle.CampoNivel}"/>
+                        <h:outputText value="#{questaoTraduzFraseController.selected.nivelQuestao}" title="#{bundle.CampoNivel}"/>
+                        
+                        <h:outputText value="#{bundle.CampoEnunciado}"/>
+                        <p:editor value="#{questaoTraduzFraseController.selected.enunciado}" controls="" disabled="true" width="400"/>
+                        
+                        <h:outputText value="#{bundle.CampoAutor}"/>
+                        <h:outputText value="#{usuarioSessionController.getUsuario(questaoTraduzFraseController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+                    
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.AcaoFechar}" onclick="QuestaoTraduzFraseViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

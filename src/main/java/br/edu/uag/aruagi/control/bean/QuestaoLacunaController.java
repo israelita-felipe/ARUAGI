@@ -5,6 +5,7 @@ import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.model.QuestaoLacuna;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.util.validator.LacunaValidator;
 import br.edu.uag.aruagi.model.Lacuna;
 import br.edu.uag.aruagi.model.PalavraLatim;
 import java.io.Serializable;
@@ -20,74 +21,74 @@ import javax.faces.convert.FacesConverter;
 import org.primefaces.event.DragDropEvent;
 
 public class QuestaoLacunaController implements Serializable, InterfaceController<QuestaoLacuna, Integer> {
-
+    
     private final QuestaoLacunaFacade facade = new QuestaoLacunaFacade();
     private List<QuestaoLacuna> items = null;
     private QuestaoLacuna selected;
     //composição da lacuna
     private List<PalavraLatim> palavrasSelecionadas = new ArrayList<PalavraLatim>();
     private PalavraLatim palavraEscolhida;
-
+    
     public QuestaoLacunaController() {
     }
-
+    
     public void add(DragDropEvent ddEvent) {
         PalavraLatim palavra = ((PalavraLatim) ddEvent.getData());
         this.palavrasSelecionadas.add(palavra);
         this.palavraEscolhida = null;
     }
-
+    
     public void setItems(List<QuestaoLacuna> items) {
         this.items = items;
     }
-
+    
     public void remove() {
         this.palavrasSelecionadas.remove(palavraEscolhida);
         this.palavraEscolhida = null;
     }
-
+    
     public void reset() {
         this.palavrasSelecionadas = new ArrayList<PalavraLatim>();
     }
-
+    
     public void parse() {
         this.selected.setEnunciado(this.selected.getFraseLatim().getFrase());
     }
-
+    
     public PalavraLatim getPalavraEscolhida() {
         return palavraEscolhida;
     }
-
+    
     public void setPalavraEscolhida(PalavraLatim palavraEscolhida) {
         this.palavraEscolhida = palavraEscolhida;
     }
-
+    
     public List<PalavraLatim> getPalavrasSelecionadas() {
         return palavrasSelecionadas;
     }
-
+    
     public void setPalavrasSelecionadas(List<PalavraLatim> palavrasSelecionadas) {
         this.palavrasSelecionadas = palavrasSelecionadas;
     }
-
+    
     public QuestaoLacuna getSelected() {
         return selected;
     }
-
+    
     public void setSelected(QuestaoLacuna selected) {
         this.selected = selected;
     }
-
+    
     protected void setEmbeddableKeys() {
     }
-
+    
     protected void initializeEmbeddableKey() {
     }
-
+    
     private QuestaoLacunaFacade getFacade() {
         return facade;
     }
-
+    
     @Override
     public QuestaoLacuna prepareCreate() {
         this.palavrasSelecionadas = new ArrayList<PalavraLatim>();
@@ -105,22 +106,22 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
             this.palavrasSelecionadas.add(l.getPalavraLatim());
         }
     }
-
+    
     @Override
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoLacunaCriada"));
     }
-
+    
     @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoLacunaAtualizada"));
     }
-
+    
     @Override
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoLacunaExcluida"));
     }
-
+    
     @Override
     public List<QuestaoLacuna> getItems() {
         getFacade().begin();
@@ -128,10 +129,10 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
         getFacade().end();
         return items;
     }
-
+    
     private void persist(PersistAction persistAction, String successMessage) {
         getFacade().begin();
-        if (selected != null && !this.palavrasSelecionadas.isEmpty()) {
+        if (selected != null && !this.palavrasSelecionadas.isEmpty() && this.palavrasSelecionadas.size() == LacunaValidator.count(this.selected.getEnunciado())) {
             setEmbeddableKeys();
             try {
                 if (persistAction == PersistAction.CREATE) {
@@ -182,30 +183,32 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
+        } else {
+            JsfUtil.addErrorMessage("Verifique se o número de lacunas corresponde ao número de palavras escolhidas");
         }
         getFacade().end();
     }
-
+    
     public QuestaoLacuna getQuestaoLacuna(int id) {
         getFacade().begin();
         QuestaoLacuna ql = getFacade().find(id);
         getFacade().end();
         return ql;
     }
-
+    
     @Override
     public List<QuestaoLacuna> getItemsAvailableSelectMany() {
         return getItems();
     }
-
+    
     @Override
     public List<QuestaoLacuna> getItemsAvailableSelectOne() {
         return getItems();
     }
-
+    
     @FacesConverter(forClass = QuestaoLacuna.class)
     public static class QuestaoLacunaControllerConverter implements Converter {
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -215,19 +218,19 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
                     getValue(facesContext.getELContext(), null, "questaoLacunaController");
             return controller.getQuestaoLacuna(getKey(value));
         }
-
+        
         int getKey(String value) {
             int key;
             key = Integer.parseInt(value);
             return key;
         }
-
+        
         String getStringKey(int value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -241,7 +244,7 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
                 return null;
             }
         }
-
+        
     }
-
+    
 }

@@ -24,6 +24,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
     //colecoes
     private List<QuestaoTraduzPalavra> questoesPorNivel = new ArrayList<QuestaoTraduzPalavra>();
     private RespostaTraduzPalavra[] respostas;
+    private RespostaTraduzPalavra[] respostasTemp;
     //objetos
     private QuestaoTraduzPalavra questaoAtual;
     private NivelQuestao nivel;
@@ -35,14 +36,14 @@ public class ResolucaoTraduzPalavraController implements Serializable {
     //tipos primitivos string
     private String nome;
     //tipos primitivos boolean
-    private boolean hideToolBar;
+    private boolean hideAvaliar = true;
 
     public ResolucaoTraduzPalavraController() {
 
     }
 
     public boolean isHideToolBar() {
-        return hideToolBar;
+        return hideAvaliar;
     }
 
     public int getRestante() {
@@ -50,6 +51,10 @@ public class ResolucaoTraduzPalavraController implements Serializable {
             return (this.quantidade - this.position);
         }
         return -1;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     public RespostaTraduzPalavra[] getRespostas() {
@@ -177,8 +182,8 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         } else {
             this.questoesPorNivel = nivel.getQuestaoTraduzPalavras();
         }
-        //setando a primeira questao
         if (!this.questoesPorNivel.isEmpty()) {
+            //setando a primeira questao
             questaoAtual = this.questoesPorNivel.get(0);
             position = 1;
             //this.quantidade = this.questoesPorNivel.size();
@@ -206,7 +211,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         }
         respostas[position - 1].setStatus(status);
         if (position == quantidade) {
-            return avaliar();
+            return null;
         } else {
             position++;
             this.questaoAtual = this.questoesPorNivel.get(position - 1);
@@ -221,10 +226,10 @@ public class ResolucaoTraduzPalavraController implements Serializable {
      * @return
      */
     public String pular() {
-        respostas[position - 1] = null;
+        respostas[position - 1].setPalavraPortugues(new PalavraPortugues(0, ""));
         respostas[position - 1].setQuestaoTraduzPalavra(questaoAtual);
         if (position == quantidade) {
-            return avaliar();
+            return null;
         } else {
             position++;
             this.questaoAtual = this.questoesPorNivel.get(position - 1);
@@ -261,7 +266,9 @@ public class ResolucaoTraduzPalavraController implements Serializable {
      * @return
      */
     public String avaliar() {
-        this.hideToolBar = false;
+        this.respostasTemp = this.respostas;
+        reset();
+        this.hideAvaliar = false;
         return "/public/questoes/palavra/Avaliacao.xhtml?faces-redirect=true";
     }
 
@@ -282,7 +289,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         this.pontuacao = 0;
         this.position = 1;
         this.quantidade = 0;
-        this.hideToolBar = false;
+        this.hideAvaliar = false;
         this.questoesPorNivel = new ArrayList<QuestaoTraduzPalavra>();
         this.respostas = new RespostaTraduzPalavra[quantidade];
         this.questaoAtual = null;
@@ -307,6 +314,14 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         return false;
     }
 
+    public RespostaTraduzPalavra[] getRespostasTemp() {
+        return respostasTemp;
+    }
+
+    public void setRespostasTemp(RespostaTraduzPalavra[] respostasTemp) {
+        this.respostasTemp = respostasTemp;
+    }
+
     /**
      * subclasse de respostas de tradução de palavras
      */
@@ -317,6 +332,14 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         private boolean status;
 
         public RespostaTraduzPalavra() {
+            this.palavraPortugues = new PalavraPortugues();
+            this.questaoTraduzPalavra = new QuestaoTraduzPalavra();
+        }
+
+        public RespostaTraduzPalavra(PalavraPortugues palavraPortugues, QuestaoTraduzPalavra questaoTraduzPalavra, boolean status) {
+            this.palavraPortugues = palavraPortugues;
+            this.questaoTraduzPalavra = questaoTraduzPalavra;
+            this.status = status;
         }
 
         public PalavraPortugues getPalavraPortugues() {
@@ -350,4 +373,5 @@ public class ResolucaoTraduzPalavraController implements Serializable {
             return "Errado";
         }
     }
+
 }

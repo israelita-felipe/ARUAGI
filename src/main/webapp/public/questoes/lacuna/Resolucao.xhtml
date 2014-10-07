@@ -8,50 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:panelGrid columns="2" styleClass="noBorder" style="width: 100%">
-            <p:fieldset id="sources" legend="#{bundle.CampoPalavraLatim}">
-                <p:dataTable id="sourcesTable"  
-                             value="#{palavraLatimController.itemsAvailableSelectMany}"
-                             var="palavraSelecionada"
-                             paginator="true"
-                             rows="5"
-                             >
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.CampoPalavraLatim}"/>
-                        </f:facet>
-                        <h:outputText value="#{palavraSelecionada.palavra}"/>
-                    </p:column>
-                    <p:column >
-                        <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
-                        <p:draggable for="dragIcon" revert="true" helper="clone"/>
-                    </p:column>                                        
-                </p:dataTable>
-            </p:fieldset>
-            <p:fieldset id="target" legend="#{bundle.CampoDesejada}">
-                <p:dataTable id="targetTable"
-                             value="#{questaoTraduzFraseController.palavrasSelecionadas}"
-                             var="itemSelecionado"
-                             paginator="true"
-                             rows="5"
-                             >
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.CampoPalavraLatim}"/>
-                        </f:facet>
-                        <h:outputText value="#{itemSelecionado.palavra}"/>
-                    </p:column>
-                    <p:column>
-                        <p:commandLink value="#{bundle.AcaoExcluir}" actionListener="#{questaoTraduzFraseController.remove()}" update="targetTable">
-                            <f:setPropertyActionListener target="#{questaoTraduzFraseController.palavraEscolhida}" value="#{itemSelecionado}"/>
-                        </p:commandLink>
-                    </p:column>
-                </p:dataTable>
-            </p:fieldset>
-            <p:droppable for="target" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="sources" onDrop="handleDrop">
-                <p:ajax listener="#{questaoTraduzFraseController.add}" update="target" />
-            </p:droppable>
-        </p:panelGrid>
+        
     </h:body>
 </html>
 

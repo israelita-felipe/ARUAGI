@@ -55,12 +55,11 @@ public class LacunaValidator implements Validator {
      * @return
      */
     public static int count(String frase) {
-        int index = find(frase, 0);
-        int count = 0;
-        while (index != -1 && index < frase.length()) {
-            count++;
-            index = find(frase, index);
+        System.out.println("|"+frase+"|");
+        int end = 0;
+        if (frase.endsWith(LacunaValidator.LACUNA)) {
+            end++;
         }
-        return count;
+        return frase.split(LacunaValidator.LACUNA).length + end - 1;
     }
 }

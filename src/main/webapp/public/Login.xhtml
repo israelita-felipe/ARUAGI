@@ -10,29 +10,29 @@
     <h:head>
         <title><ui:insert name="title">Login</ui:insert></title>
 
-        <h:outputScript library="js" name="zoom.js"/>
-
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="primefaces.css"/>
         <h:outputStylesheet library="css" name="defaultHTML.css"/>
         <h:outputStylesheet library="css" name="customHTML.css"/>        
+        <h:outputScript library="js" name="jsfcrud.js"/>
 
     </h:head>
 
 
-    <h:body>
-        <h:form>
-            <p:layout fullPage="true">
+    <h:body style="  border: none;">
+        <h:form style="  border: none;">
+            <p:layout fullPage="true" style="  border: none;">
                 <!-- LAYOUT DE INFORMACAO DE ACESSO -->
-                <p:layoutUnit position="center">
+                <p:layoutUnit position="center" style="  border: none;">
                     <p:messages autoUpdate="true" closable="true"/>                     
                     <p:panel styleClass="container">
                         <f:facet name="header">
-                            <p:outputLabel value="#{bundle.CampoAutorizacao}" styleClass="center"/>                                                        
-                        </f:facet>
-
-                        <f:facet name="actions">
-                           <!--<p:commandButton value="+" styleClass="acessibility-button"/>-->
+                            <p:panelGrid columns="2" styleClass="noBorder">
+                                <h:link outcome="#{bundle.MenuInicio}">
+                                    <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="20" height="23"/>                    
+                                </h:link>
+                                <p:outputLabel value="#{bundle.CampoAutorizacao}" styleClass="center"/>                                                        
+                            </p:panelGrid>
                         </f:facet>
 
                         <p:outputLabel value="#{bundle.CampoLogin}" styleClass="label"/>
@@ -50,20 +50,17 @@
                         <f:facet name="footer">
                             <p:commandButton styleClass="label" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/> 
                         </f:facet>
-                    </p:panel>
-
-                    <div class="footer">
-                        <h:outputText value="#{bundle.TituloRodape}"/>
-                    </div> 
-                    <script src=".././resources/js/zoom.js"></script>
-                    <script>
-                        document.querySelector('.acessibility-button').addEventListener('click', function(event) {
-                            event.preventDefault();
-                            zoom.to({element: event.target});
-                        });
-                    </script>	
+                    </p:panel>                    
                 </p:layoutUnit>
             </p:layout> 
+            <div id="footer" class="footer">
+                <br/>
+                <h:outputLabel value="Universidade Federal Rural de Pernambuco - UFRPE"/>
+                <br/>
+                <h:outputLabel value="Unidade Acadêmica de Garanhuns - UAG"/>
+                <br/>
+                <h:outputLabel value="Todos os direitor reservados"/>
+            </div> 
         </h:form>
     </h:body>
 </html>

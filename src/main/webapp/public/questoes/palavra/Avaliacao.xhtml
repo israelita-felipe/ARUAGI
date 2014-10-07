@@ -13,11 +13,14 @@
     </h:head>
     <h:body>
         <h:form id="resolucao">
-            <p:dataGrid id="avaliacao" value="#{resolucaoTraduzPalavraController.respostas}" var="resposta" columns="1">
+            <p:dataGrid id="avaliacao" value="#{resolucaoTraduzPalavraController.respostasTemp}" var="resposta" columns="1">
                 <f:facet name="header">
-                    <h:outputText value="#{resolucaoTraduzPalavraController.nome}, sua pontuação nesta atividade é #{resolucaoTraduzPalavraController.pontuacao}"/>
+                    <p:outputLabel value="#{resolucaoTraduzPalavraController.nome}, sua pontuação nesta atividade é #{resolucaoTraduzPalavraController.pontuacao}"/>
                 </f:facet>
-                <p:panel header="#{resposta.correcao}">
+                <p:panel>
+                    <f:facet name="header">
+                        <p:outputLabel styleClass="erro-label" value="#{resposta.correcao}"/>
+                    </f:facet>
                     <h:outputText value="#{resposta.questaoTraduzPalavra.titulo}"/>
                     <h:outputText value="Tradução adequada ao contexto: #{resposta.questaoTraduzPalavra.palavraPortugues.palavra}"/>
                     <p:separator/>
@@ -36,9 +39,9 @@
             <p:commandButton value="IMPRIMIR">
                 <p:printer target="avaliacao"/>
             </p:commandButton>
-            <p:commandButton value="ENVIAR" update=":sendForm" oncomplete="PF('sendReport').show()"/>
             <p:commandButton value="FINALIZAR" action="#{resolucaoTraduzPalavraController.done()}"/>  
         </h:form>
+        <!-- 
         <p:dialog id="send" appendTo="@(body)" widgetVar="sendReport" modal="true" header="#{bundle.AcaoEnviar}" resizable="false">
             <h:form id="sendForm">
                 <p:outputLabel for="universidade" value="#{bundle.CampoInstituicao}" styleClass="label"/>
@@ -57,7 +60,7 @@
                 <hr/>
                 <p:commandButton value="#{bundle.AcaoEnviar}" styleClass="label"/>
             </h:form>
-        </p:dialog>
+        </p:dialog>-->
     </h:body>
 </html>
 
