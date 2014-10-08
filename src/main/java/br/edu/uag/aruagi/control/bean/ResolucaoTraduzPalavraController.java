@@ -211,6 +211,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         }
         respostas[position - 1].setStatus(status);
         if (position == quantidade) {
+            JsfUtil.addSuccessMessage("Questões finalizadas, pode clicar no botão avaliar do lado direito");
             return null;
         } else {
             position++;
@@ -229,6 +230,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
         respostas[position - 1].setPalavraPortugues(new PalavraPortugues(0, ""));
         respostas[position - 1].setQuestaoTraduzPalavra(questaoAtual);
         if (position == quantidade) {
+            JsfUtil.addSuccessMessage("Questões finalizadas, pode clicar no botão avaliar do lado direito");
             return null;
         } else {
             position++;
@@ -267,6 +269,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
      */
     public String avaliar() {
         this.respostasTemp = this.respostas;
+        this.pontuacao = getPontuacao();
         reset();
         this.hideAvaliar = false;
         return "/public/questoes/palavra/Avaliacao.xhtml?faces-redirect=true";
@@ -286,7 +289,6 @@ public class ResolucaoTraduzPalavraController implements Serializable {
      * reseta os campos
      */
     private void reset() {
-        this.pontuacao = 0;
         this.position = 1;
         this.quantidade = 0;
         this.hideAvaliar = false;

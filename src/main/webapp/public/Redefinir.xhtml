@@ -7,36 +7,25 @@
     <h:head>
         <title>Redefinição de senha</title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="customHTML.css"/>
+        <h:outputStylesheet library="css" name="defaultHTML.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
     <h:body>
-        <h:form id="mainForm">
-            <center>
-                <p:panel header="AVISO">
-                    <h:outputText value="Sua nova senha de acesso será enviada para o seu 
-                                  endereço de e-mail, que serve para efetuar login no 
-                                  ARUAGI, caso seu endereço não seja válido entrar em 
-                                  contado com os administradores."/>
-                </p:panel>                
-                <br/>
-                <p:panelGrid columns="2">
+        <h:form id="mainForm">   
 
-                    <f:facet name="header">
-                        <p:outputLabel value="Digite o E-mail que utiliza como login no ARUAGI"/>
-                        <p:messages autoUpdate="true" closable="true"/>
-                    </f:facet>                
-
-                    <p:outputLabel for="email" value="Login"/>
-                    <p:inputText id="email" value="#{usuarioSessionController.selected.login}">
+            <div class="form-sender">                
+                <p:messages autoUpdate="true" closable="true"/>                                    
+                <center>
+                    <p:outputLabel styleClass="label" for="email" value="Login"/>
+                    <p:inputText id="email" styleClass="input" value="#{usuarioSessionController.selected.login}" required="true">
                         <f:validator validatorId="EmailValidator"/>
                     </p:inputText>
-
-                    <f:facet name="footer">
-                        <p:commandButton value="Enviar" action="#{usuarioSessionController.requestNewPassword}"/>
-                    </f:facet>
-
-                </p:panelGrid>
-            </center>
+                    <p:commandButton value="Enviar" action="#{usuarioSessionController.requestNewPassword}"/>
+                    <p:spacer height="10"/>
+                    <p:commandButton value="Cancelar" action="/index.xhtml?faces-redirect=true"/>
+                </center>
+            </div>
         </h:form>
     </h:body>
 </html>
