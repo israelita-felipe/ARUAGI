@@ -242,7 +242,13 @@
         <managed-bean-class>br.edu.uag.aruagi.control.bean.ResolucaoTraduzPalavraController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    
+
+    <managed-bean>
+        <managed-bean-name>resolucaoQuestaoLacunaController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.bean.ResolucaoQuestaoLacunaController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
     <!-- VALIDADORES -->
     <validator>
         <validator-id>EmailValidator</validator-id>

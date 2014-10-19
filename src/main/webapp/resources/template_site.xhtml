@@ -8,11 +8,18 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <ui:insert name="head"/>
         <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
+        <h:outputScript library="js" name="bootstrap.js"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="primefaces.css"/>
         <link rel="shortcut icon" href="/resources/images/icon.ico" />
@@ -30,6 +37,7 @@ and open the template in the editor.
                     <p:menuitem value="Sistema" outcome="/public/Login.uag"/>
                     <p:submenu label="Questões">
                         <p:menuitem value="Tradução de Palavra" outcome="/public/questoes/palavra/Resolucao.xhtml?faces-redirect=true"/>
+                        <p:menuitem value="Questões Lacuna" outcome="/public/questoes/lacuna/Resolucao.xhtml?faces-redirect=true"/>
                     </p:submenu>
                     <p:menuitem value="Contato" outcome="/public/informacao/FaleConosco.uag"/>
                 </p:menubar>

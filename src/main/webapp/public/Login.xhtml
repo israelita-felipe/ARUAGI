@@ -10,57 +10,55 @@
     <h:head>
         <title><ui:insert name="title">Login</ui:insert></title>
 
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputStylesheet library="css" name="primefaces.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="defaultHTML.css"/>
-        <h:outputStylesheet library="css" name="customHTML.css"/>        
+
+        <h:outputScript library="js" name="bootstrap.js"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+
         <h:outputScript library="js" name="jsfcrud.js"/>
 
     </h:head>
-
-
-    <h:body style="  border: none;">
-        <h:form style="  border: none;">
-            <p:layout fullPage="true" style="  border: none;">
-                <!-- LAYOUT DE INFORMACAO DE ACESSO -->
-                <p:layoutUnit position="center" style="  border: none;">
-                    <p:messages autoUpdate="true" closable="true"/>                     
-                    <p:panel styleClass="container">
-                        <f:facet name="header">
-                            <p:panelGrid columns="2" styleClass="noBorder">
-                                <h:link outcome="#{bundle.MenuInicio}">
-                                    <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="20" height="23"/>                    
-                                </h:link>
-                                <p:outputLabel value="#{bundle.CampoAutorizacao}" styleClass="center"/>                                                        
-                            </p:panelGrid>
-                        </f:facet>
-
-                        <p:outputLabel value="#{bundle.CampoLogin}" styleClass="label"/>
-                        <br/>
-                        <p:inputText id="login" styleClass="input" value="#{usuarioSessionController.selected.login}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:validator validatorId="EmailValidator"/>
-                        </p:inputText>
-                        <br/>
-                        <p:outputLabel value="#{bundle.CampoSenha}" styleClass="label"/>
-                        <p:spacer width="150" height="10"/>
-                        <p:commandLink styleClass="label" value="#{bundle.CampoRedefinirSenha}" action="/public/Redefinir.xhtml?faces-redirect=true"/>                                
-                        <br/>
-                        <p:password id="senha" styleClass="input" value="#{usuarioSessionController.selected.senha}"/>
-
-                        <f:facet name="footer">
-                            <p:commandButton styleClass="label" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/> 
-                        </f:facet>
-                    </p:panel>                    
-                </p:layoutUnit>
-            </p:layout> 
-            <div id="footer" class="footer">
-                <br/>
-                <h:outputLabel value="Universidade Federal Rural de Pernambuco - UFRPE"/>
-                <br/>
-                <h:outputLabel value="Unidade Acadêmica de Garanhuns - UAG"/>
-                <br/>
-                <h:outputLabel value="Todos os direitor reservados"/>
-            </div> 
+    <h:body>        
+        <h:form style="padding-top: 100px">
+            <p:messages autoUpdate="true" closable="true"/>
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">                
+                <div class="container">
+                    <h:link outcome="#{bundle.MenuInicio}">
+                        <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="54" height="70"/>                    
+                    </h:link>
+                    #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento
+                </div>                
+            </nav>            
+            <div class="thumbnail center-block" style="width: 300px">                
+                <div class="caption">
+                    <center>
+                        <h3>
+                            <h:outputLabel value="Autorização" styleClass="label label-primary"/>
+                        </h3>
+                    </center>
+                    <div class="jumbotron" style="border: 1px solid #ddd">
+                        <p:outputLabel for="login" value="Login"/>
+                        <div class="input-group">
+                            <span class="input-group-addon"></span>
+                            <p:inputText id="login" value="#{usuarioSessionController.selected.login}" styleClass="form-control">
+                                <f:validator validatorId="EmailValidator"/>
+                            </p:inputText>
+                        </div>   
+                        <p:outputLabel for="senha" value="Senha"/>
+                        <div class="input-group">
+                            <span class="input-group-addon"></span>
+                            <h:inputSecret id="senha" value="#{usuarioSessionController.selected.senha}" styleClass="form-control"/>
+                        </div>   
+                    </div>
+                    <p:commandButton styleClass="btn btn-primary" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/>
+                    <p:spacer width="10"/>
+                    <p:commandLink value="Alterar Senha" styleClass="pull-right" action="/public/Redefinir.xhtml?faces-redirect=true"/>
+                </div>
+            </div>
         </h:form>
     </h:body>
 </html>

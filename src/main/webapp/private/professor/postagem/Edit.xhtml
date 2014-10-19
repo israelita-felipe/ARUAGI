@@ -9,20 +9,20 @@
 
         <p:dialog id="PostagemEditDlg" widgetVar="PostagemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="PostagemEditForm">
-                <h:panelGroup id="display">
-                    
-                    <p:panelGrid columns="1" rendered="#{postagemController.selected != null}">
-
-                        <p:inputText id="titulo" value="#{postagemController.selected.titulo}" title="#{bundle.CampoTitulo}" required="true" requiredMessage="#{bundle.Obrigatorio}" placeholder="#{bundle.CampoTitulo}"/>
-
-                        <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.CampoConteudo}"/>
-
-                    </p:panelGrid>                    
-
-                    <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.AcaoSalvar}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
-                </h:panelGroup>
+                <h:panelGroup id="display" rendered="#{postagemController.selected != null}">
+                    <div class="jumbotron">
+                        <div class="input-group" style="width: 100%">
+                            <p:inputText id="titulo" value="#{postagemController.selected.titulo}" style="width: 100%" placeholder="#{bundle.CampoTitulo}"/>
+                        </div>
+                        <br/>
+                        <div class="input-group" style="width: 100%">
+                            <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>                        
+                        </div>
+                    </div>
+                </h:panelGroup> 
+                <hr/>
+                <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.AcaoSalvar}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
             </h:form>
-        </p:dialog>
-
+        </p:dialog>                    
     </ui:composition>
 </html>

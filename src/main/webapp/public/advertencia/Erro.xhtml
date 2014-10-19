@@ -1,25 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Erro</title>
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="defaultHTML.css"/>
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+        <h:outputScript library="js" name="bootstrap.js"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
 
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
     <h:body>
-        <div class="panel panel-danger">
-            <div class="panel-header">
-                Erro ocorrido em nosso sistema, caso o erro persista entre em contato com os administradores
+        <h:form>
+            <div class="jumbotron center-block">
+                <h1>Ops! algo inesperado ocorreu...</h1>
+                <p>Erro ocorrido em nosso sistema, caso o erro persista entre em contato com os administradores</p>
+                <p><p:commandButton value="Voltar" styleClass="btn btn-primary btn-lg" action="/index.uag?faces-redirect=true"/></p>
             </div>
-            <div class="panel-footer">Obrigado por utilizar o ARUAGI.</div>
-        </div>
+        </h:form>
     </h:body>
 </html>
 

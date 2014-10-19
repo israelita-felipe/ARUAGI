@@ -11,7 +11,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/resources/template_site.xhtml">
-        
+
         <ui:define name="title">
             <h:outputText value="Início - ARUAGI"/>
         </ui:define>
@@ -21,13 +21,13 @@ and open the template in the editor.
                 <p:dataGrid id="datalist"  value="#{postagemController.timeLine}" var="itemAtual" columns="2" 
                             emptyMessage="Nenhuma postagem adicionada" paginator="false" rows="5">
 
-                    <p:panel header="#{itemAtual.titulo}" toggleable="false" toggleTitle="Detalhes" collapsed="false">
+                    <p:panel header="#{itemAtual.titulo}" toggleable="false" toggleTitle="Detalhes" collapsed="false" styleClass="panel panel-default">
 
                         <h:outputText value="#{conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
                         <br/>
                         <br/>
 
-                        <h:link outcome="/public/postagem/index.uag" value="Continuar lendo...">
+                        <h:link outcome="/public/postagem/index.uag" value="Continuar lendo..." styleClass="btn btn-default navbar-btn">
                             <f:param name="id" id="id" value="#{itemAtual.id}"/>
                         </h:link>
 

@@ -8,14 +8,30 @@ and open the template in the editor.
     Author     : Israel Araújo
 */
 
-.footer{    
+.footer{ 
+    height: 300px;
     color: gray;
     text-align: center;
     background-color: #eee;
     position:absolute;
     bottom:0;
     width:100%;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid darkgray;
+}
+.footer-righ{
+    height: 90%;
+    text-align: right;
+    position: absolute;
+    right: 5px;
+}
+.footer-bottom{
+    height: 10%;    
+}
+.footer-left{
+    height: 90%;
+    text-align: left;
+    position: absolute;
+    left: 5px;
 }
 .page-body {
     margin: 0 auto;

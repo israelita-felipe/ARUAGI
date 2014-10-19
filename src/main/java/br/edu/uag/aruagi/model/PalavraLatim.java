@@ -105,7 +105,7 @@ public class PalavraLatim implements java.io.Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "palavraLatim", targetEntity = CasoAplicado.class)
     @Fetch(FetchMode.SUBSELECT)
-    public List getCasoAplicados() {
+    public List<CasoAplicado> getCasoAplicados() {
         return this.casoAplicados;
     }
 
@@ -125,7 +125,7 @@ public class PalavraLatim implements java.io.Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "palavraLatim", targetEntity = TraduzPalavra.class)
     @Fetch(FetchMode.SUBSELECT)
-    public List getTraduzPalavras() {
+    public List<TraduzPalavra> getTraduzPalavras() {
         return this.traduzPalavras;
     }
 

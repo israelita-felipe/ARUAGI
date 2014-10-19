@@ -33,31 +33,7 @@ retira as bordas de panelgrid
 .ajustado{
     width: available
 }
-/*
-container de login
-*/
-.container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: -145px;
-    margin-left: -175px;
-    background: #fff;
-    border-radius: 3px;
-    border: 2px solid #ccc;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, .4);
-    border: none !important;
-    padding: 0px;
-}
-/*
-labels para login
-*/
-.label {
-    color: #555;
-    display: inline-block;
-    margin-left: 18px;
-    padding-top: 10px;
-}
+
 /*
 estilo de menus login
 */

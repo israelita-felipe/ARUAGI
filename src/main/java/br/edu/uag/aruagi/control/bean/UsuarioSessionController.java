@@ -28,7 +28,7 @@ public class UsuarioSessionController implements Serializable {
     private final UsuarioFacade facade = new UsuarioFacade();
     private Usuario selected = null;
     private boolean loged = false;
-    private boolean admin = false;   
+    private boolean admin = false;
 
     /**
      * campos para redefinição de senha
@@ -63,7 +63,7 @@ public class UsuarioSessionController implements Serializable {
                  */
                 setLogged(true);
                 setSelected(u);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", selected);  
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", selected);
                 return "/private/homePrivate.xhtml?faces-redirect=true";
             } else {
                 JsfUtil.addErrorMessage("Senhas não conferem");
@@ -227,7 +227,11 @@ public class UsuarioSessionController implements Serializable {
         return this.admin;
     }
 
-    public static Usuario getUserLogged() {        
+    public Usuario getCurrentUser() {
+        return getUserLogged();
+    }
+
+    public static Usuario getUserLogged() {
         Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         return user;
     }

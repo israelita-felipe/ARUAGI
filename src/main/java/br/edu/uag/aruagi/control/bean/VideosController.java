@@ -18,6 +18,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 
 public class VideosController implements Serializable, InterfaceController<Videos, Integer> {
 
@@ -143,15 +144,15 @@ public class VideosController implements Serializable, InterfaceController<Video
 
     public List<Videos> pesquisar() {
         getFacade().begin();
-        if (!this.pesquisa.trim().equals("")) {
+        if (!this.pesquisa.trim().equals("") || this.pesquisa != null) {
             DetachedCriteria query = DetachedCriteria.forClass(Videos.class);
-            query.add(Property.forName("descricao").like(this.pesquisa));
+            query.add(Restrictions.like("descricao", "%"+this.pesquisa+"%").ignoreCase());
             this.items = getFacade().getEntitiesByDetachedCriteria(query);
-        }else{
-            this.items = getItems();
+            return this.items;
+        } else {
+            getFacade().end();
+            return getItems();
         }
-        getFacade().end();
-        return this.items;
     }
 
     public Videos getVideos(int id) {
