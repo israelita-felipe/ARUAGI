@@ -34,22 +34,15 @@
             <p:layoutUnit position="north" header="Seja bem-vindo(a) #{usuarioSessionController.selected.nome}">                 
                 <h:form id="menuForm">
                     <!-- BARRA DE MENUS PRINCIPAL-->
-                    <p:menubar>  
-
-                        <p:menuitem>
-                            <h:link outcome="#{bundle.MenuInicio}">
-                                <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="20" height="23"/>                    
-                            </h:link> 
-                        </p:menuitem>
-                        <p:menuitem value="#{bundle.TituloInicio}" outcome="#{bundle.MenuHomePrivate}"/>
-
+                    <p:menubar>
+                        <p:menuitem value="#{bundle.TituloInicio}" outcome="/private/homePrivate.xhtml" />
                         <p:submenu label="#{bundle.MenuTituloManutencao}" rendered="#{usuarioSessionController.admin}">
 
                             <p:menuitem value="#{bundle.MenusListaAcessos}" outcome="/private/administrador/acesso/List.xhtml" />
                             <p:menuitem value="#{bundle.MenusNiveisAcesso}" outcome="/private/administrador/nivelAcesso/List.xhtml" />
                             <p:menuitem value="#{bundle.MenusNiveisQuestao}" outcome="/private/administrador/nivelQuestao/List.xhtml" />
                             <p:menuitem value="#{bundle.MenusTiposQuestao}" outcome="/private/administrador/tipoQuestao/List.xhtml" />
-                            <p:separator/>
+                            <p:separator style="height: 2px"/>
                             <p:menuitem value="#{bundle.MenusListaUsuarios}" outcome="/private/administrador/usuario/List.xhtml" />
 
                         </p:submenu>
@@ -89,13 +82,17 @@
                             <p:menuitem value="Lacuna (pendente)" outcome="/private/professor/lacuna/List.xhtml" />
                             <p:menuitem value="LinksQuestao (pendente)" outcome="/private/administrador/linksQuestao/List.xhtml" />
                             <p:menuitem value="ListaQuestao (pendente)" outcome="/private/administrador/listaQuestao/List.xhtml" />
-                            <p:menuitem value="QuestaoDeclinacao" outcome="/private/professor/questaoDeclinacao/List.xhtml" />
-                            <p:menuitem value="QuestaoGramatical" outcome="/private/professor/questaoGramatical/List.xhtml" />
-                            <p:menuitem value="QuestaoLacuna (pendente)" outcome="/private/professor/questaoLacuna/List.xhtml" />
-                            <p:menuitem value="QuestaoTraduzFrase" outcome="/private/professor/questaoTraduzFrase/List.xhtml" />
-                            <p:menuitem value="QuestaoTraduzPalavra" outcome="/private/professor/questaoTraduzPalavra/List.xhtml" />
 
                         </p:submenu>
+
+                        <p:submenu label="#{bundle.MenusQuestoes}">
+
+                            <p:menuitem value="#{bundle.MenusQuestaoLacuna}" outcome="/private/professor/questaoLacuna/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusQuestaoTraduzFrase}" outcome="/private/professor/questaoTraduzFrase/List.xhtml" />
+                            <p:menuitem value="#{bundle.MenusQuestaoTraduzPalavra}" outcome="/private/professor/questaoTraduzPalavra/List.xhtml" />
+
+                        </p:submenu>
+
                         <p:submenu label="#{bundle.MenusMultimidia}">
 
                             <p:menuitem value="#{bundle.MenusVideo}" outcome="/private/professor/videos/List.xhtml" />
@@ -105,8 +102,6 @@
                         <f:facet name="options">
 
                             <p:commandButton icon="ui-icon-plus" title="Aumentar fonte"/>
-                            <p:commandButton icon="ui-icon-minus" title="Diminuir fonte"/>
-                            <p:commandButton icon="ui-icon-x" title="Auto-contraste"/>
                             <p:spacer width="48" height="10"/>
                             <p:menuButton value="#{bundle.MenusBotaoPerfil}">
                                 <p:menuitem value="#{bundle.MenusAtualizarPerfil}" outcome="/private/professor/perfil/Perfil.xhtml"/>
