@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -105,7 +104,7 @@ public class Postagem implements java.io.Serializable {
         this.conteudo = conteudo;
     }
 
-    @Column(name = "usuario")
+    @Column(name = "usuario", updatable = true)
     public Integer getUsuario() {
         return this.usuario;
     }
@@ -188,5 +187,5 @@ public class Postagem implements java.io.Serializable {
         }
         return true;
     }
-    
+
 }

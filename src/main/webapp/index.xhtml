@@ -17,12 +17,17 @@ and open the template in the editor.
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="PostagemListForm">                    
-                <p:dataGrid id="datalist"  value="#{postagemController.timeLine}" var="itemAtual" columns="2" 
-                            emptyMessage="Nenhuma postagem adicionada" paginator="false" rows="5">
-
+            <h:form id="PostagemListForm" style="padding-top: 12px">                    
+                <p:dataScroller id="datalist" styleClass="col-lg-9" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
+                    <f:facet name="loader">
+                        <p:commandButton type="button" value="Mais" icon="ui-icon-circle-triangle-s"/>
+                    </f:facet>                    
                     <p:panel header="#{itemAtual.titulo}" toggleable="false" toggleTitle="Detalhes" collapsed="false" styleClass="panel panel-default">
-
+                        <f:facet name="actions">
+                            <span class="badge pull-right">
+                                <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
+                            </span>
+                        </f:facet>
                         <h:outputText value="#{conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
                         <br/>
                         <br/>
@@ -34,14 +39,58 @@ and open the template in the editor.
                         <f:facet name="footer" rendered="#{itemAtual.usuario!= usuarioSessionController.selected.id}">
 
                             <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome} em "/>
+                            <p:spacer width="10"/>
                             <h:outputFormat value="#{itemAtual.data}">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputFormat>                        
 
                         </f:facet>
                     </p:panel>                                 
-                </p:dataGrid>                                    
-            </h:form>
+                </p:dataScroller>
+                <div class="col-lg-3">
+                    <ul class="nav nav-pills nav-stacked">                        
+                        <li class="active">
+                            <a>
+                                Conteúdo
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Postagens: <span class="badge pull-right">#{postagemController.timeLine.size()}</span>                                
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Vídeos: <span class="badge pull-right">#{videosController.items.size()}</span>                                
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Palavras: <span class="badge pull-right">#{palavraLatimController.items.size()}</span>                                
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Frases: <span class="badge pull-right">#{fraseLatimController.items.size()}</span>                                
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a>
+                                Usuário do ARUAGI: <span class="badge pull-right">#{usuarioController.items.size()}</span>                                
+                            </a>
+                        </li>
+                    </ul>
+                    <hr/>
+                    <div class="fb-like-box"
+                         data-href="https://www.facebook.com/pages/Aruagi-Ensino-de-L%C3%ADngua-Latina/553025198136554"
+                         data-colorscheme="light"
+                         data-show-faces="true"
+                         data-header="false"
+                         data-stream="true"
+                         data-show-border="false">                             
+                    </div>
+                </div>
+            </h:form>            
         </ui:define>
     </ui:composition>
 </html>

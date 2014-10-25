@@ -10,15 +10,15 @@
         <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
         <h:outputStylesheet library="css" name="bootstrap.css"/>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
 
         <h:outputScript library="js" name="bootstrap.js"/>
         <h:outputScript library="js" name="bootstrap.min.js"/>
-
         <h:outputScript library="js" name="jsfcrud.js"/>        
+        
     </h:head>
     <h:body>
-        <h:form style="padding-top: 70px" id="mainForm">            
-            <p:growl autoUpdate="true" showDetail="true"/>
+        <h:form style="padding-top: 70px" id="mainForm">                        
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">                
                 <div class="container">
                     <h:link outcome="#{bundle.MenuInicio}">
@@ -28,28 +28,32 @@
                 </div>                
             </nav>
             <div class="container">                
+                <p:messages autoUpdate="true" showDetail="false" closable="true"/>
                 <div class="col-md-3 jumbotron">
                     <h3>Opções</h3>
-                    <p:outputLabel style="width: 100%" for="selectNivel" value="#{bundle.CampoNivel}"/>
-                    <br/>
+                    <p:outputLabel for="selectNivel" value="#{bundle.CampoNivel}"/>
+                    <br/>                    
                     <p:selectOneMenu style="width: 100%" id="selectNivel" value="#{resolucaoQuestaoLacunaController.nivel}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                         <f:selectItems value="#{nivelQuestaoController.items}" var="nivel"
                                        itemValue="#{nivel}"
                                        itemLabel="#{nivel.descricao}"/>
                     </p:selectOneMenu>
                     <br/>
-                    <p:outputLabel style="width: 100%" for="nQuestoes" value="#{bundle.CampoQuantidade}"/>
+                    <p:outputLabel value="#{bundle.CampoQuantidade}"/>
                     <br/>
-                    <p:spinner id="nQuestoes" value="#{resolucaoQuestaoLacunaController.quantidade}" min="1" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+                    <p:spinner value="#{resolucaoQuestaoLacunaController.quantidade}" min="1" size="13"/>                    
                     <br/>
-                    <p:outputLabel style="width: 100%" for="nome" value="#{bundle.CampoNome}"/>
+                    <p:outputLabel for="nome" value="#{bundle.CampoNome}"/>
                     <br/>
                     <p:inputText style="width: 100%" id="nome" value="#{resolucaoQuestaoLacunaController.nome}" placeholder="Digite seu nome" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
                     <hr/>
-                    <p:commandButton style="width: 100%" styleClass="btn btn-primary" id="prepareButton" value="#{bundle.AcaoGerar}" actionListener="#{resolucaoQuestaoLacunaController.prepare}" update="questoesPanel,nQuestoes,avaliar"/>
+                    <p:commandButton style="width: 100%" styleClass="btn btn-primary" id="prepareButton" value="#{bundle.AcaoGerar}" actionListener="#{resolucaoQuestaoLacunaController.prepare}" update="questoesPanel,avaliar,limpar"/>
                     <br/>
                     <br/>
                     <p:commandButton style="width: 100%" styleClass="btn btn-primary" id="avaliar" value="#{bundle.AcaoAvaliar}" action="#{resolucaoQuestaoLacunaController.avaliar}" disabled="#{resolucaoQuestaoLacunaController.questoesPorNivel.isEmpty()}"/>
+                    <br/>
+                    <br/>
+                    <p:commandButton style="width: 100%" styleClass="btn btn-danger" id="limpar" value="Limpar" action="#{resolucaoQuestaoLacunaController.reset()}" disabled="#{resolucaoQuestaoLacunaController.questoesPorNivel.isEmpty()}" update="questoesPanel,avaliar,limpar"/>
                 </div>
                 <div class="col-md-9">
                     <p:panel style="width:  100%"  id="questoesPanel" header="#{resolucaoQuestaoLacunaController.questaoAtual.titulo}" visible="#{resolucaoQuestaoLacunaController.questaoAtual!=null}">
@@ -71,7 +75,7 @@
                             <p:outputLabel value="#{traducao}"/>
                         </p:dataList>
                         <hr/>
-                        <f:facet name="footer" class="pager">
+                        <f:facet name="footer" class="btn-group">
                             <ul class="pager">
                                 <p:commandButton  value="#{bundle.AcaoResponder}" action="#{resolucaoQuestaoLacunaController.next()}" update=":mainForm:questoesPanel"/>
                                 <p:commandButton  value="#{bundle.AcaoPular}" action="#{resolucaoQuestaoLacunaController.pular()}" update=":mainForm:questoesPanel"/>                       
@@ -90,7 +94,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Respostas"/>
                             </f:facet>
-                            <p:commandLink styleClass="label label-danger" value="#{bundle.AcaoExcluir}" action="#{resolucaoQuestaoLacunaController.remove()}" update="target">
+                            <p:commandLink style="padding-top: 1.5px;padding-bottom: 1.5px" styleClass="label label-danger" value="#{bundle.AcaoExcluir}" action="#{resolucaoQuestaoLacunaController.remove()}" update="target">
                                 <f:setPropertyActionListener target="#{resolucaoQuestaoLacunaController.palavraSelecionada}" value="#{s}"/>
                             </p:commandLink>
                             <span class="ui-separator"/>

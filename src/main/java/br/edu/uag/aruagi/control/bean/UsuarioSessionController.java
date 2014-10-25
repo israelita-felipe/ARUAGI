@@ -1,11 +1,15 @@
 package br.edu.uag.aruagi.control.bean;
 
+import br.edu.uag.aruagi.control.Facade.PostagemFacade;
 import br.edu.uag.aruagi.control.util.cript.SHA256;
 import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
+import br.edu.uag.aruagi.control.Facade.VideosFacade;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.support.EmailSender;
 import br.edu.uag.aruagi.control.util.support.StringManager;
+import br.edu.uag.aruagi.model.Postagem;
 import br.edu.uag.aruagi.model.Usuario;
+import br.edu.uag.aruagi.model.Videos;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -225,6 +229,14 @@ public class UsuarioSessionController implements Serializable {
             }
         }
         return this.admin;
+    }
+
+    public int postCount() {
+        return new PostagemFacade().getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Postagem.class).add(Property.forName("usuario").eq(getSelected().getId()))).size();
+    }
+
+    public int videosCout() {
+        return new VideosFacade().getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Videos.class).add(Property.forName("usuario").eq(getSelected().getId()))).size();
     }
 
     public Usuario getCurrentUser() {

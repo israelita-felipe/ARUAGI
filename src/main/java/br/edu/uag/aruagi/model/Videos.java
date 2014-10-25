@@ -74,7 +74,7 @@ public class Videos implements java.io.Serializable {
         this.descricao = descricao;
     }
 
-    @Column(name = "usuario")
+    @Column(name = "usuario",updatable = true)
     public Integer getUsuario() {
         return this.usuario;
     }

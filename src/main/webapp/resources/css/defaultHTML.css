@@ -9,14 +9,6 @@ and open the template in the editor.
 */
 
 .footer{ 
-    height: 300px;
-    color: gray;
-    text-align: center;
-    background-color: #eee;
-    position:absolute;
-    bottom:0;
-    width:100%;
-    border-top: 1px solid darkgray;
 }
 .footer-righ{
     height: 90%;

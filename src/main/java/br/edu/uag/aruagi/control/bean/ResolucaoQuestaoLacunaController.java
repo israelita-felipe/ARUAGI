@@ -104,7 +104,8 @@ public class ResolucaoQuestaoLacunaController implements Serializable {
         this.selected.add(palavra);
         this.palavraSelecionada = null;
     }
-    public void add(){
+
+    public void add() {
         this.selected.add(palavraSelecionada);
         this.palavraSelecionada = null;
     }
@@ -215,7 +216,6 @@ public class ResolucaoQuestaoLacunaController implements Serializable {
             position++;
             this.questaoAtual = this.questoesPorNivel.get(position - 1);
             this.selected = respostas[position - 1].getPalavrasLatim();
-            resetSelection();
         }
         return null;
     }
@@ -226,18 +226,16 @@ public class ResolucaoQuestaoLacunaController implements Serializable {
      * @return
      */
     public String pular() {
-        resetSelection();
-        respostas[position - 1].setPalavrasLatim(new ArrayList<PalavraLatim>());
+        respostas[position - 1].setPalavrasLatim(selected);
         respostas[position - 1].setQuestaoLacuna(questaoAtual);
         if (position == quantidade) {
-            JsfUtil.addSuccessMessage("Questões finalizadas, pode clicar no botão avaliar do lado direito");
-            return null;
+            JsfUtil.addSuccessMessage("Questões finalizadas, pode clicar no botão avaliar");
         } else {
             position++;
             this.questaoAtual = this.questoesPorNivel.get(position - 1);
             this.selected = respostas[position - 1].getPalavrasLatim();
-            return null;
         }
+        return null;
     }
 
     /**
@@ -246,9 +244,7 @@ public class ResolucaoQuestaoLacunaController implements Serializable {
      */
     public void previous() {
         if (position > 1) {
-            respostas[position - 1].setPalavrasLatim(selected);
             respostas[position - 1].setQuestaoLacuna(questaoAtual);
-
             ArrayList<PalavraLatim> corretas = new ArrayList<PalavraLatim>();
             for (Lacuna l : questaoAtual.getLacunas()) {
                 corretas.add(l.getPalavraLatim());
@@ -261,7 +257,6 @@ public class ResolucaoQuestaoLacunaController implements Serializable {
             position--;
             this.questaoAtual = this.questoesPorNivel.get(position - 1);
             this.selected = respostas[position - 1].getPalavrasLatim();
-            resetSelection();
         } else {
             JsfUtil.addErrorMessage("Essa é a primeira questão");
         }
@@ -293,7 +288,7 @@ public class ResolucaoQuestaoLacunaController implements Serializable {
     /**
      * reseta os campos
      */
-    private void reset() {
+    public void reset() {
         this.position = 1;
         this.quantidade = 0;
         this.hideAvaliar = false;

@@ -39,3 +39,7 @@ AREA PARA COMPONENTES EXPLICITOS COM CLASSES DA DOCUMENTACAO DO PRIMEFACES
 .ui-menuitem-link:hover{
     background-color: #777! important;   
 }
+.ui-datascroller .ui-datascroller-content {
+    padding:4px 10px;
+    border: 0 none;
+}

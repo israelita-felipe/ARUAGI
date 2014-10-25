@@ -118,11 +118,11 @@
                 </h:form>
             </p:layoutUnit>
             <!-- CENTRO DA PÁGINA-->
-            <p:layoutUnit position="center" styleClass="jumbotron">
+            <p:layoutUnit position="center">
                 <div class="col-md-3 jumbotron">
-                    <p:commandButton id="createButton" value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
-                    <hr/>
                     <ul class="nav nav-pills nav-stacked">
+                        <p:commandButton id="createButton" value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
+                        <hr/>
                         <li class="active">
                             <a>
                                 #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento.
@@ -130,12 +130,12 @@
                         </li>
                         <li>
                             <a>
-                                Minhas postagens: <span class="badge pull-right">10</span>
+                                Minhas postagens: <span class="badge pull-right">#{usuarioSessionController.postCount()}</span>
                             </a> 
                         </li>
                         <li>
                             <a>
-                                Veus vídeos: <span class="badge pull-right">10</span>                                
+                                Veus vídeos: <span class="badge pull-right">#{usuarioSessionController.videosCout()}</span>                                
                             </a>
                         </li>
                         <li>
@@ -160,14 +160,19 @@
                          data-show-border="false">                             
                     </div>
                 </div>
-                <h:form id="PostagemListForm" class="col-md-9" >                    
+                <h:form id="PostagemListForm" class="col-md-9" style="border:none">                    
                     <p:dataScroller id="datalist" style="border: none" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
+                        <f:facet name="loader">
+                            <p:commandButton type="button" value="Mais" icon="ui-icon-circle-triangle-s"/>
+                        </f:facet>
                         <p:panel toggleable="true" toggleTitle="Detalhes" collapsed="true">
                             <f:facet name="header" class="panel-heading">
                                 <p:outputLabel value="#{itemAtual.titulo}"/>
                             </f:facet>
                             <f:facet name="actions">
-                                <span class="badge pull-right">#{itemAtual.videosPostagems.size()}</span>
+                                <span class="badge pull-right">
+                                    <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
+                                </span>
                             </f:facet>
                             <h:outputText value="#{itemAtual.conteudo}" escape="false" styleClass="panel-body"/>
                             <br/>
@@ -216,16 +221,72 @@
                                 </div>
                             </f:facet>
                         </p:panel>  
-                        <hr/>
+                        <br/>
                     </p:dataScroller> 
-                </h:form>        
+                </h:form>
+                <form>
+                    <div class="col-sm-12" style="padding-top: 48px">
+                        <div style="border-top: 1px dashed gray">
+                            <div id="quadro_1" class="col-md-3">
+                                <div class="h3">
+                                    <h:link outcome="#{bundle.MenuInicio}">
+                                        <h:graphicImage library="images" name="logo_cut.jpg" width="72" height="72" style="border-radius: 50%"/>                    
+                                    </h:link>
+                                    ARUAGI
+                                </div>
+                                <div class="caption">
+                                    Universidade Federal Rural de Pernambuco - UFRPE
+                                    <hr/>
+                                    Unidade Acadêmica de Garanhuns - UAG
+                                </div>
+                            </div>
+                            <div id="quadro_2" class="col-md-3">
+                                <div class="h4">
+                                    Parceiros
+                                </div>
+                                <div class="caption">
+
+                                </div>
+                            </div>
+                            <div id="quadro_3" class="col-md-3">
+                                <div class="h4">
+                                    Projeto
+                                </div>
+                                <div class="caption">
+
+                                </div>
+                            </div>
+                            <div id="quadro_4" class="col-md-3">
+                                <div class="caption">
+                                    <h4>Orientado por:</h4>
+                                    Aliete Rosa
+                                    <hr/> 
+                                    <h4>Desenvolvimento</h4>
+                                    Israel F. de Lima Araújo Silva<br/> 
+                                    Renan Leandro Fernandes<br/> 
+                                    Rafaell Brunno<br/> 
+                                    Gilson Morais
+                                    <hr/>                     
+                                    <h4>Apoio técnico:</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <center>
+                                &copy; Todos os direitos reservados
+                                <p:spacer width="10"/>
+                                <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
+                            </center>
+                        </div>
+                    </div>
+                </form>
             </p:layoutUnit>
         </p:layout>        
         <!-- INCLUDES PARA POSTAGEM -->
         <ui:include src="/private/professor/postagem/Create.xhtml"/>
         <ui:include src="/private/professor/postagem/Edit.xhtml"/>
         <ui:include src="/private/professor/postagem/View.xhtml"/>
-        <ui:include src="/private/professor/videosPostagem/Create.xhtml"/>         
+        <ui:include src="/private/professor/videosPostagem/Create.xhtml"/>  
     </h:body>
 </html>
 
