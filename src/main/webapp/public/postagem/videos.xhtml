@@ -1,54 +1,74 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">    
+
     <h:head>
         <title>Vídeos</title>
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputStylesheet library="css" name="customHTML.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="defaultHTML.css"/>
         <h:outputStylesheet library="css" name="primefaces.css"/>
-    </h:head>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+
+        <h:outputScript library="js" name="bootstrap.js"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>   
+
     <h:body>
-        <h:form id="VideosListForm">                
-            <p:toolbar>
-                <f:facet name="left">
-                    <p:panelGrid styleClass="noBorder" columns="2">
+        <h:form id="VideosListForm">                                
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">                               
+                    <div class="navbar-header">                        
                         <h:link outcome="#{bundle.MenuInicio}">
-                            <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="20" height="23"/>                    
-                        </h:link> 
-                        <span class="ui-separator">
-                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                        </span>
-                    </p:panelGrid>
+                            <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="54" height="70"/>                    
+                        </h:link>
+                        #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento
+                    </div>
+                    <div class="navbar-collapse collapse in">                            
+                        <div class="navbar-form navbar-right">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <p:inputText id="pesquisa" styleClass="form-control" placeholder="Pesquisa" value="#{videosController.pesquisa}"/>
+                                    <span class="input-group-addon">
+                                        <p:commandLink styleClass="ui-icon ui-icon-search" action="#{videosController.pesquisar()}" update="VideosListForm:datalist"/>
+                                    </span>
+                                </div>
+                            </div>                            
+                        </div>                        
+                    </div>
+                </div>
+            </nav>
+            <p:dataScroller id="datalist" value="#{videosController.items}" var="t" chunkSize="10">
+                <f:facet name="loader">
+                    <p:commandButton type="button" value="Mais" icon="ui-icon-circle-triangle-s"/>
                 </f:facet>
-                <f:facet name="right">
-                    <p:panelGrid styleClass="noBorder" columns="3">
-                        <p:inputText id="pesquisa" placeholder="Pesquisa" value="#{videosController.pesquisa}"/>
-                        <span class="ui-separator">
-                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                        </span>
-                        <p:commandButton value="#{bundle.AcaoPesquisar}" action="#{videosController.pesquisar()}" update="datalist"/>
-                    </p:panelGrid>
-                </f:facet>
-            </p:toolbar>
-            <p:dataList id="datalist" value="#{videosController.items}" var="t" rows="4" paginator="true" type="none">
-                <center>
-                    <p:panel header="#{t.descricao}">
-                        <iframe width="300"
-                                height="220"
-                                src="//www.youtube.com/embed/#{t.link}?feature=player_embedded"
-                                frameborder="0"
-                                allowfullscreen="true">
-                        </iframe>  
-                        <f:facet name="footer">
-                            <h:outputText value="Por: #{usuarioSessionController.getUsuario(t.usuario).nome}"/>
+                <div class="col-sm-6 col-md-4">
+                    <p:panel header="#{t.descricao}" styleClass="thumbnail">
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <iframe class="embed-responsive-item"
+                                    width="240"
+                                    height="160"
+                                    src="//www.youtube.com/embed/#{t.link}?feature=player_embedded"
+                                    frameborder="0"
+                                    allowfullscreen="true">
+                            </iframe>  
+                        </div>
+                        <f:facet name="footer">   
+                            <div style="height: 16px">
+                                <h:outputText styleClass="pull-right" value="Por: #{usuarioSessionController.getUsuario(t.usuario).nome}"/>
+                            </div>
                         </f:facet>
                     </p:panel>
-                </center>
-            </p:dataList>
+                </div>
+            </p:dataScroller>
         </h:form>
     </h:body>
-</html>
 
+</html>

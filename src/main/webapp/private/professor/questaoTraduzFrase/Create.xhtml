@@ -15,11 +15,10 @@
                         <f:facet name="header">
                             <p:inputText id="titulo" value="#{questaoTraduzFraseController.selected.titulo}" title="#{bundle.CampoTitulo}" styleClass="large"/>
                         </f:facet>
-                        <p:panelGrid id="grid" columns="4" styleClass="noBorder">
+                        <p:panelGrid id="grid" columns="3" styleClass="noBorder">
                             <p:outputLabel value="#{bundle.CampoFraseLatim}" for="fraseLatim" />
                             <p:outputLabel value="#{bundle.CampoDesejada}" for="fraseLatimDesejada" />
                             <p:outputLabel value="#{bundle.CampoNivel}" for="nivelQuestao" />
-                            <p:outputLabel value="#{bundle.CampoStatus}" for="status" />
                             
                             <p:selectOneMenu id="fraseLatim" filter="true" value="#{questaoTraduzFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                                 <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
@@ -43,7 +42,6 @@
                                                itemValue="#{nivelQuestaoItem}"/>
                             </p:selectOneMenu>
 
-<!--                            <p:inputSwitch id="status" value="#{questaoTraduzFraseController.selected.status}" onLabel="#{bundle.StatusAtivo}" offLabel="#{bundle.StatusDesativado}"/> -->
                         </p:panelGrid>                        
                         <p:outputLabel value="#{bundle.CampoEnunciado}" for="enunciado" />
                         <p:editor id="enunciado" value="#{questaoTraduzFraseController.selected.enunciado}" />                            

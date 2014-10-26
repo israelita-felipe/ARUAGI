@@ -123,8 +123,8 @@ public class PostagemController implements Serializable, InterfaceController<Pos
 
     public List<Postagem> getTimeLine() {
         DetachedCriteria query = DetachedCriteria.forClass(Postagem.class)
-                .addOrder(Order.desc("id"))
-                .addOrder(Order.desc("data"));
+                .addOrder(Order.desc("data"))
+                .addOrder(Order.desc("id"));
         getFacade().begin();
         this.timeLine = getFacade().getEntitiesByDetachedCriteria(query);
         getFacade().end();

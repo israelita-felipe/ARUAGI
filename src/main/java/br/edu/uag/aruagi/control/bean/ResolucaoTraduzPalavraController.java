@@ -194,6 +194,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
             }
             JsfUtil.addSuccessMessage("Tudo finalizado, pode responder as " + this.questoesPorNivel.size() + " questões");
         }
+        quantidade = questoesPorNivel.size();
     }
 
     /**
@@ -288,7 +289,7 @@ public class ResolucaoTraduzPalavraController implements Serializable {
     /**
      * reseta os campos
      */
-    private void reset() {
+    public void reset() {
         this.position = 1;
         this.quantidade = 0;
         this.hideAvaliar = false;

@@ -143,7 +143,7 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
                 if (persistAction == PersistAction.CREATE) {
                     selected.setStatus(true);
                     selected.setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    //selected.setStatus(Boolean.TRUE);
+                    selected.setStatus(Boolean.TRUE);
                     getFacade().create(selected);
                     LacunaController lc = new LacunaController();
                     for (int i = 0; i < this.palavrasSelecionadas.size(); i++) {

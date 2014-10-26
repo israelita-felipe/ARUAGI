@@ -191,6 +191,7 @@ public class ResolucaoQuestaoLacunaController implements Serializable {
             }
             JsfUtil.addSuccessMessage("Tudo finalizado, pode responder as " + this.questoesPorNivel.size() + " questões");
         }
+        quantidade = questoesPorNivel.size();
     }
 
     /**

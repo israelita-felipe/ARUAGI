@@ -7,19 +7,15 @@
 
     <ui:composition>
 
-        <p:dialog id="VideosEditDlg" widgetVar="VideosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditVideosTitle}">
+        <p:dialog id="VideosEditDlg" widgetVar="VideosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
             <h:form id="VideosEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{videosController.selected != null}">
-
-                        <p:outputLabel value="#{bundle.EditVideosLabel_descricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{videosController.selected.descricao}" title="#{bundle.EditVideosTitle_descricao}" maxlength="40"/>
-
-                        <p:outputLabel value="#{bundle.EditVideosLabel_link}" for="link" />
-                        <p:inputText id="link" value="#{videosController.selected.link}" title="#{bundle.EditVideosTitle_link}" required="true" requiredMessage="#{bundle.EditVideosRequiredMessage_link}"/>
-
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{videosController.update}" value="#{bundle.Save}" update="display,:VideosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'VideosEditDialog');"/>
+                <h:panelGroup id="display" rendered="#{videosController.selected!=null}">
+                    <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                    <p:inputText style="width: 250px" id="descricao" styleClass="form-control" value="#{videosController.selected.descricao}" title="#{bundle.CampoDescricao}"/>
+                    <p:outputLabel value="#{bundle.CampoLink}" for="link" />
+                    <p:inputText style="width: 250px" id="link" styleClass="form-control" value="#{videosController.selected.link}" title="#{bundle.CampoLink}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+                    <hr/>
+                    <p:commandButton actionListener="#{videosController.update}" value="#{bundle.AcaoSalvar}" update="display,:VideosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'VideosEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

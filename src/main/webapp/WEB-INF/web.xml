@@ -64,5 +64,5 @@
     </context-param>
     <error-page>
         <location>/public/advertencia/Erro.xhtml</location>
-    </error-page>
+    </error-page>   
 </web-app>

@@ -12,11 +12,22 @@
         <title>
             <ui:insert name="title"/>
         </title>
+        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
+        <h:outputScript library="js" name="bootstrap.js"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="primefaces.css"/>
-        <h:outputStylesheet library="css" name="defaultHTML.css"/>
-        <h:outputStylesheet library="css" name="customHTML.css"/>
-        <h:outputScript library="js" name="jsfcrud.js"/> 
+        <link rel="shortcut icon" href="/resources/images/icon.ico" />
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <!-- SCRIPT DE REQUISICAO DO FACEBOOK -->
+        <script>
+            fb_root(document, 'script', 'facebook-jssdk');
+        </script>  
         <!-- SCRIPT DE REQUISICAO DO FACEBOOK -->
         <script>
             fb_root(document, 'script', 'facebook-jssdk');
@@ -25,7 +36,7 @@
 
     <!-- CORPO DA PAGINA -->
     <h:body>        
-        <p:growl id="growl" life="3000" />
+        <p:growl id="growl" life="500" />
 
         <!-- LAYOUT DE PREENCHIMENTO DO CORPO DA PAGINA -->
         <p:layout fullPage="true">
@@ -124,7 +135,6 @@
             <p:layoutUnit position="center" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
                 <!-- INSERCAO DO CORPO DA PAGINA A SER PRESONALIZADA -->
                 <ui:insert name="body"/> 
-
             </p:layoutUnit>
         </p:layout>            
     </h:body>        

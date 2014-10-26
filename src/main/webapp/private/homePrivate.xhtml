@@ -120,9 +120,9 @@
             <!-- CENTRO DA PÁGINA-->
             <p:layoutUnit position="center">
                 <div class="col-md-3 jumbotron">
+                    <p:commandButton id="createButton" value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
+                    <hr/>
                     <ul class="nav nav-pills nav-stacked">
-                        <p:commandButton id="createButton" value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
-                        <hr/>
                         <li class="active">
                             <a>
                                 #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento.
@@ -161,6 +161,7 @@
                     </div>
                 </div>
                 <h:form id="PostagemListForm" class="col-md-9" style="border:none">                    
+
                     <p:dataScroller id="datalist" style="border: none" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
                         <f:facet name="loader">
                             <p:commandButton type="button" value="Mais" icon="ui-icon-circle-triangle-s"/>
@@ -180,8 +181,8 @@
 
                                 <p:dataGrid id="videosDatalist" style="border: none" value="#{itemAtual.videosPostagems}" var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" columns="1" rows="1">
                                     <div>
-                                        <center>
-                                            <iframe
+                                        <center class="embed-responsive embed-responsive-4by3">
+                                            <iframe class="embed-responsive embed-responsive-item"
                                                 src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
                                                 frameborder="0"
                                                 allowfullscreen="true">
@@ -215,6 +216,7 @@
                                 </div>
                                 <div class="pull-right">
                                     <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome} em "/>
+                                    <p:spacer width="10"/>
                                     <h:outputFormat value="#{itemAtual.data}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </h:outputFormat>                                                        
@@ -224,62 +226,83 @@
                         <br/>
                     </p:dataScroller> 
                 </h:form>
-                <form>
-                    <div class="col-sm-12" style="padding-top: 48px">
-                        <div style="border-top: 1px dashed gray">
-                            <div id="quadro_1" class="col-md-3">
-                                <div class="h3">
-                                    <h:link outcome="#{bundle.MenuInicio}">
-                                        <h:graphicImage library="images" name="logo_cut.jpg" width="72" height="72" style="border-radius: 50%"/>                    
-                                    </h:link>
-                                    ARUAGI
-                                </div>
-                                <div class="caption">
-                                    Universidade Federal Rural de Pernambuco - UFRPE
-                                    <hr/>
-                                    Unidade Acadêmica de Garanhuns - UAG
-                                </div>
+                <div class="col-lg-12" style="padding-top: 32px;padding-left: 0;border-left: 0;padding-right: 0;border-right: 0">
+                    <div style="border-top: 1px solid #f7f7f7">
+                        <div id="quadro_1" class="col-md-3">
+                            <div class="h3">                                    
+                                ARUAGI
                             </div>
-                            <div id="quadro_2" class="col-md-3">
-                                <div class="h4">
-                                    Parceiros
-                                </div>
-                                <div class="caption">
-
-                                </div>
-                            </div>
-                            <div id="quadro_3" class="col-md-3">
-                                <div class="h4">
-                                    Projeto
-                                </div>
-                                <div class="caption">
-
-                                </div>
-                            </div>
-                            <div id="quadro_4" class="col-md-3">
-                                <div class="caption">
-                                    <h4>Orientado por:</h4>
-                                    Aliete Rosa
-                                    <hr/> 
-                                    <h4>Desenvolvimento</h4>
-                                    Israel F. de Lima Araújo Silva<br/> 
-                                    Renan Leandro Fernandes<br/> 
-                                    Rafaell Brunno<br/> 
-                                    Gilson Morais
-                                    <hr/>                     
-                                    <h4>Apoio técnico:</h4>
-                                </div>
+                            <div class="caption">
+                                Universidade Federal Rural de Pernambuco - UFRPE
+                                <hr/>
+                                Unidade Acadêmica de Garanhuns - UAG
                             </div>
                         </div>
-                        <div>
-                            <center>
-                                &copy; Todos os direitos reservados
-                                <p:spacer width="10"/>
-                                <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
-                            </center>
+                        <div id="quadro_2" class="col-md-3">
+                            <div class="h3">
+                                Parceiros
+                            </div>
+                            <div class="caption">
+
+                            </div>
                         </div>
+                        <div id="quadro_3" class="col-md-3">
+                            <div class="h3">
+                                Projeto
+                            </div>
+                            <div class="caption">
+
+                            </div>
+                        </div>
+                        <div id="quadro_4" class="col-md-3">
+                            <div class="caption">
+                                <h3>Orientado por:</h3>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/9765841869399460">
+                                        <h:outputText value="Aliete Gomes Carneiro Rosa" />
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <hr/> 
+                                <h3>Desenvolvimento</h3>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/0444370129900667">
+                                        <h:outputText value="Israel Felipe de Lima Araújo Silva" />
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="">
+                                        <h:outputText value="Renan Leandro Fernandes" />
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/6385944686814684">
+                                        <h:outputText value="Rafaell Brunno Nogueira Vieira" />
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="">
+                                        <h:outputText value="Gilson Morais" />
+                                    </h:outputLink>
+                                </p:lightBox>                        
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/0718728977707198">
+                                        <h:outputText value="Victor Francisco dos Santos Viana" />
+                                    </h:outputLink>
+                                </p:lightBox>                                  
+                                <hr/>                     
+                                <h3>Apoio técnico:</h3>
+                            </div>
+                        </div>
+                    </div>                                            
+                    <div class="col-lg-12" >      
+                        <hr/>
+                        <center>
+                            &copy; Todos os direitos reservados
+                            <p:spacer width="10"/>
+                            <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
+                        </center>
                     </div>
-                </form>
+                </div>
             </p:layoutUnit>
         </p:layout>        
         <!-- INCLUDES PARA POSTAGEM -->

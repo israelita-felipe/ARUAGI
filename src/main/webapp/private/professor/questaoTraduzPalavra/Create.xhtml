@@ -15,11 +15,10 @@
                         <f:facet name="header">
                             <p:inputText id="titulo" value="#{questaoTraduzPalavraController.selected.titulo}" title="#{bundle.CampoTitulo}" placeholder="#{bundle.CampoTitulo}" required="true" requiredMessage="#{bundle.Obrigatorio}" styleClass="largeInput"/>
                         </f:facet>
-                        <p:panelGrid columns="4" styleClass="noBorder">
+                        <p:panelGrid columns="3" styleClass="noBorder">
                             <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
                             <p:outputLabel value="#{bundle.CampoTraducao}" for="traducao" />
                             <p:outputLabel value="#{bundle.CampoNivel}" for="nivelQuestao" />
-                            <p:outputLabel value="#{bundle.CampoStatus}" for="status" />
 
                             <p:selectOneMenu id="palavraLatim" filter="true" value="#{questaoTraduzPalavraController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                                 <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
@@ -43,7 +42,6 @@
                                                itemValue="#{nivelQuestaoItem}"/>
                             </p:selectOneMenu>
                             
-<!--                            <p:inputSwitch id="status" value="#{questaoTraduzPalavraController.selected.status}" onLabel="#{bundle.StatusAtivo}" offLabel="#{bundle.StatusDesativado}"/> -->
                         </p:panelGrid>
                         <p:outputLabel value="#{bundle.CampoEnunciado}" for="enunciado" />
                         <p:editor id="enunciado" value="#{questaoTraduzPalavraController.selected.enunciado}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>

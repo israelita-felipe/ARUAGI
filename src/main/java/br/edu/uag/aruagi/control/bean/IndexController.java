@@ -60,7 +60,7 @@ public class IndexController implements Serializable {
     
     public List<Postagem> getTimeLine() {
         getFacade().begin();
-        List<Postagem> timeLine = getFacade().getSession().createCriteria(Postagem.class).addOrder(Order.desc("data")).list();
+        List<Postagem> timeLine = getFacade().getSession().createCriteria(Postagem.class).addOrder(Order.desc("data")).addOrder(Order.desc("id")).list();
         getFacade().end();
         return timeLine;
     }

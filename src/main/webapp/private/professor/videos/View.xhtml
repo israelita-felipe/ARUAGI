@@ -3,25 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="VideosViewDlg" widgetVar="VideosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewVideosTitle}">
+        <p:dialog id="VideosViewDlg" widgetVar="VideosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
             <h:form id="VideosViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{videosController.selected != null}">
-                        <h:outputText value="#{bundle.ViewVideosLabel_id}"/>
-                        <h:outputText value="#{videosController.selected.id}" title="#{bundle.ViewVideosTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewVideosLabel_link}"/>
-                        <h:outputText value="#{videosController.selected.link}" title="#{bundle.ViewVideosTitle_link}"/>
-                        <h:outputText value="#{bundle.ViewVideosLabel_descricao}"/>
-                        <h:outputText value="#{videosController.selected.descricao}" title="#{bundle.ViewVideosTitle_descricao}"/>
-                        <h:outputText value="#{bundle.ViewVideosLabel_usuario}"/>
-                        <h:outputText value="#{videosController.selected.usuario}" title="#{bundle.ViewVideosTitle_usuario}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="VideosViewDialog.hide()"/>
+                <h:panelGroup id="display" rendered="#{videosController.selected!=null}">
+
+                    <h:outputText value="#{bundle.CampoChave}: "/>
+                    <h:outputText value="#{videosController.selected.id}" title="#{bundle.CampoChave}"/>
+                    <br/>
+                    <h:outputText value="#{bundle.CampoLink}: "/>
+                    <h:outputLink value="https://www.youtube.com/watch?v=#{videosController.selected.link}" title="#{bundle.CampoLink}">https://www.youtube.com/watch?v=#{videosController.selected.link}</h:outputLink>
+                    <br/>
+                    <h:outputText value="#{bundle.CampoDescricao}: "/>
+                    <h:outputText value="#{videosController.selected.descricao}" title="#{bundle.CampoDescricao}"/>
+                    <br/>
+                    <h:outputText value="#{bundle.CampoAutor}: "/>
+                    <h:outputText value="#{usuarioSessionController.getUsuario(videosController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+                    <hr/>
+                    <p:commandButton value="#{bundle.AcaoFechar}" onclick="VideosViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

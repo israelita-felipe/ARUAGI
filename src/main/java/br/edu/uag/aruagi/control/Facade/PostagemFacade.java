@@ -8,17 +8,14 @@ package br.edu.uag.aruagi.control.Facade;
 import br.edu.uag.aruagi.control.abstracts.AbstractFacade;
 import br.edu.uag.aruagi.model.Postagem;
 import java.io.Serializable;
-import javax.ejb.Stateless;
 
 /**
  *
  * @author Israel Araújo
  */
-@Stateless
-public class PostagemFacade extends AbstractFacade<Postagem, Integer> implements Serializable{
+public class PostagemFacade extends AbstractFacade<Postagem, Integer> implements Serializable {
 
     public PostagemFacade() {
         super(Postagem.class);
     }
-
 }

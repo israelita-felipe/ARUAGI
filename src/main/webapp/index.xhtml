@@ -47,7 +47,7 @@ and open the template in the editor.
                         </f:facet>
                     </p:panel>                                 
                 </p:dataScroller>
-                <div class="col-lg-3">
+                <div class="col-lg-3">                    
                     <ul class="nav nav-pills nav-stacked">                        
                         <li class="active">
                             <a>
@@ -80,7 +80,7 @@ and open the template in the editor.
                             </a>
                         </li>
                     </ul>
-                    <hr/>
+                    <hr/>                    
                     <div class="fb-like-box"
                          data-href="https://www.facebook.com/pages/Aruagi-Ensino-de-L%C3%ADngua-Latina/553025198136554"
                          data-colorscheme="light"
@@ -88,9 +88,17 @@ and open the template in the editor.
                          data-header="false"
                          data-stream="true"
                          data-show-border="false">                             
+                    </div>           
+                    <hr/>
+                    <div id="busca" class="thumbnail">
+                        <p:outputLabel value="Pesquise..." styleClass="caption"/>
                     </div>
-                </div>
-            </h:form>            
-        </ui:define>
-    </ui:composition>
+                    <hr/>
+                </div>                
+                <script>
+                    googleSearch('busca', 'search', '004159013048277972925:frojtp-ajiy');
+                </script>
+            </h:form>             
+        </ui:define>        
+    </ui:composition>    
 </html>

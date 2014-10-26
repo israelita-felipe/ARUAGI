@@ -10,27 +10,28 @@
 
         <p:dialog id="VideosPostagemCreateDlg" widgetVar="VideosPostagemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
             <h:form id="VideosPostagemCreateForm">
-                <h:panelGroup id="display">                    
+                <h:panelGroup id="display" rendered="#{!videosController.items.isEmpty()}">                    
 
-                    <p:dataList lazy="false" value="#{videosController.itemsAvailableSelectOne}" var="videoToCreate" rows="1" paginator="true" type="none" rendered="#{videosPostagemController.selected.postagem!=null}">
-                        
-                        <p:panel header="#{videoToCreate.descricao}">
-                            
-                            <iframe width="300"
-                                    height="220"
-                                    src="//www.youtube.com/embed/#{videoToCreate.link}?feature=player_embedded"
-                                    frameborder="0"
-                                    allowfullscreen="true">
-                            </iframe>  
-                            
+                    <p:dataList style="border: none" value="#{videosController.itemsAvailableSelectOne}" var="videoToCreate" rows="1" paginator="true" type="none" rendered="#{videosPostagemController.selected.postagem!=null}">
+
+                        <p:panel style="border: none" header="#{videoToCreate.descricao}">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <iframe class="embed-responsive embed-responsive-item"
+                                        src="//www.youtube.com/embed/#{videoToCreate.link}?feature=player_embedded"
+                                        frameborder="0"
+                                        allowfullscreen="true">
+                                </iframe>  
+                            </div>
                             <f:facet name="footer">
-                                <p:commandButton action="#{videosPostagemController.create}" icon="ui-icon ui-icon-disk" update=":PostagemListForm:datalist" oncomplete="handleSubmit(args,'VideosPostagemCreateDialog');">
-                                    <f:setPropertyActionListener target="#{videosPostagemController.selected.videos}" value="#{videoToCreate}"/>
-                                </p:commandButton>
+                                <center>
+                                    <p:commandButton value="Incluir" styleClass="bnt btn-default" action="#{videosPostagemController.create}" icon="ui-icon ui-icon-disk" update=":PostagemListForm:datalist" oncomplete="handleSubmit(args,'VideosPostagemCreateDialog');">
+                                        <f:setPropertyActionListener target="#{videosPostagemController.selected.videos}" value="#{videoToCreate}"/>
+                                    </p:commandButton>
+                                </center>
                             </f:facet>
                         </p:panel>
                     </p:dataList>
-                    
+
                 </h:panelGroup>
             </h:form>
         </p:dialog>

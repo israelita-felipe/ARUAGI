@@ -13,67 +13,68 @@
             <h:outputText value="#{bundle.TituloListagemVideo}"></h:outputText>
         </ui:define>
 
-        <ui:define name="body">
-            <h:form id="VideosListForm">                
-
-                <p:dataList id="datalist" value="#{videosController.items}" var="t" rows="4" paginator="true" type="none">
-
-                    <f:facet name="header">
-                        <p:toolbar>
-                            <f:facet name="right">                                
-                                <p:commandButton value="Meus vídeos" actionListener="#{videosController.myVideos(1)}" update="datalist"/>
-                                <span class="ui-separator">
-                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                                </span>
-                                <p:commandButton value="Todos os vídeos" actionListener="#{videosController.myVideos(0)}" update="datalist"/>
-                                <span class="ui-separator">
-                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                                </span>
-                                <p:inputText id="pesquisa" placeholder="Pesquisa" value="#{videosController.pesquisa}"/>
-                                <span class="ui-separator">
-                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                                </span>
-                                <p:commandButton value="#{bundle.AcaoPesquisar}" action="#{videosController.pesquisar()}" update="datalist"/>
-
-                            </f:facet>
-                            <f:facet name="left">
-
-                                <p:commandButton id="createButton" icon="ui-icon-plus" value="#{bundle.AcaoNovo}" actionListener="#{videosController.prepareCreate}" update=":VideosCreateForm" oncomplete="PF('VideosCreateDialog').show()"/>                                
-
-                            </f:facet>
-                        </p:toolbar>
+        <ui:define name="body">            
+            <h:form id="VideosListForm">                                
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">                               
+                        <div class="navbar-header">                        
+                            <a class="navbar-brand" href="#">Vídeos</a>
+                        </div>
+                        <div class="navbar-collapse collapse in">
+                            <div class="navbar-form navbar-left">
+                                <p:commandButton style="height: 32px;width: 150px" id="createButton" icon="ui-icon-plus" value="#{bundle.AcaoNovo}" actionListener="#{videosController.prepareCreate}" update=":VideosCreateForm" oncomplete="PF('VideosCreateDialog').show()"/>                                
+                            </div>
+                            <div class="navbar-form navbar-left">
+                                <p:commandButton style="height: 32px;width: 150px" value="Todos os vídeos" actionListener="#{videosController.myVideos(0)}" update="VideosListForm:datalist"/>                                                                
+                            </div>
+                            <div class="navbar-form navbar-left">                            
+                                <p:commandButton style="height: 32px;width: 150px" value="Meus vídeos" actionListener="#{videosController.myVideos(1)}" update="VideosListForm:datalist"/>
+                            </div>
+                            <div class="navbar-form navbar-right">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <p:inputText id="pesquisa" styleClass="form-control" placeholder="Pesquisa" value="#{videosController.pesquisa}"/>
+                                        <span class="input-group-addon">
+                                            <p:commandLink styleClass="ui-icon ui-icon-search" action="#{videosController.pesquisar()}" update="VideosListForm:datalist"/>
+                                        </span>
+                                    </div>
+                                </div>                            
+                            </div>                        
+                        </div>
+                    </div>
+                </nav>
+                <p:dataScroller id="datalist" value="#{videosController.items}" var="t" chunkSize="10">
+                    <f:facet name="loader">
+                        <p:commandButton type="button" value="Mais" icon="ui-icon-circle-triangle-s"/>
                     </f:facet>
-
-                    <p:panel header="#{t.descricao}">
-                        <iframe width="240"
-                                height="160"
-                                src="//www.youtube.com/embed/#{t.link}?feature=player_embedded"
-                                frameborder="0"
-                                allowfullscreen="true">
-                        </iframe>  
-
-                        <f:facet name="footer">
-
-                            <h:outputText value="Por: #{usuarioSessionController.getUsuario(t.usuario).nome}"/>
-
-                            <p:outputLabel value=" | "/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil"  update=":VideosEditForm" oncomplete="PF('VideosEditDialog').show()" disabled="#{t.usuario!=usuarioSessionController.selected.id}">
-                                <f:setPropertyActionListener target="#{videosController.selected}" value="#{t}"/>
-                            </p:commandButton>
-
-                            <p:outputLabel value=" | "/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  actionListener="#{videosController.destroy}" update=":growl,datalist" disabled="#{t.usuario!=usuarioSessionController.selected.id}">
-                                <f:setPropertyActionListener target="#{videosController.selected}" value="#{t}"/>
-                            </p:commandButton>
-
-                            <p:outputLabel value=" | "/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" update=":VideosViewForm" oncomplete="PF('VideosViewDialog').show()">
-                                <f:setPropertyActionListener target="#{videosController.selected}" value="#{t}"/>
-                            </p:commandButton>
-
-                        </f:facet>
-                    </p:panel>
-                </p:dataList>
+                    <div class="col-sm-6 col-md-4">
+                        <p:panel header="#{t.descricao}" styleClass="thumbnail">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <iframe class="embed-responsive-item"
+                                        width="240"
+                                        height="160"
+                                        src="//www.youtube.com/embed/#{t.link}?feature=player_embedded"
+                                        frameborder="0"
+                                        allowfullscreen="true">
+                                </iframe>  
+                            </div>
+                            <f:facet name="footer">                                
+                                <div class="btn-group">
+                                    <p:commandButton id="editButton" styleClass="btn btn-default" icon="ui-icon-pencil"  update=":VideosEditForm" oncomplete="PF('VideosEditDialog').show()" disabled="#{t.usuario!=usuarioSessionController.selected.id}">
+                                        <f:setPropertyActionListener target="#{videosController.selected}" value="#{t}"/>
+                                    </p:commandButton>
+                                    <p:commandButton id="deleteButton" styleClass="btn btn-default" icon="ui-icon-trash"  actionListener="#{videosController.destroy}" update=":growl,datalist" disabled="#{t.usuario!=usuarioSessionController.selected.id}">
+                                        <f:setPropertyActionListener target="#{videosController.selected}" value="#{t}"/>
+                                    </p:commandButton>
+                                    <p:commandButton id="viewButton" styleClass="btn btn-default"  icon="ui-icon-search" update=":VideosViewForm" oncomplete="PF('VideosViewDialog').show()">
+                                        <f:setPropertyActionListener target="#{videosController.selected}" value="#{t}"/>
+                                    </p:commandButton>
+                                </div>
+                                <h:outputText styleClass="pull-right" value="Por: #{usuarioSessionController.getUsuario(t.usuario).nome}"/>
+                            </f:facet>
+                        </p:panel>
+                    </div>
+                </p:dataScroller>
             </h:form>
 
             <ui:include src="Create.xhtml"/>
