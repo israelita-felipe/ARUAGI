@@ -29,23 +29,65 @@ and open the template in the editor.
             fb_root(document, 'script', 'facebook-jssdk');
         </script>           
     </h:head>
-    <h:body>
-        <p:layout fullPage="true" >
-            <p:layoutUnit position="center" resizable="true" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
-                <h:link outcome="/index.uag" ><h:graphicImage library="images" name="aruagi_capa.jpg" width="100%" height="200px"/></h:link>
-                <p:menubar>
-                    <p:menuitem value="Início" outcome="/index.uag"/>
-                    <p:menuitem value="Vocabulário" outcome="/public/vocabulario/index.uag"/>
-                    <p:menuitem value="Vídeos" outcome="/public/postagem/videos.uag"/>
-                    <p:menuitem value="Sistema" outcome="/public/Login.uag"/>
-                    <p:submenu label="Questões">
-                        <p:menuitem value="Tradução de Palavra" outcome="/public/questoes/palavra/Resolucao.xhtml?faces-redirect=true"/>
-                        <p:menuitem value="Questões Lacuna" outcome="/public/questoes/lacuna/Resolucao.xhtml?faces-redirect=true"/>
-                    </p:submenu>
-                    <p:menuitem value="Contato" outcome="/public/informacao/FaleConosco.uag"/>
-                </p:menubar>
+    <h:body style="padding-top: 48px">
+        <p:layout fullPage="true" style="padding: 0;border: 0">
+            <p:layoutUnit style="padding: 0;border: 0" position="center" resizable="true" footer="#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento">
+                <!-- BARRA DE MENUS PRINCIPAL-->
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="/index.uag">Início</a>
+                                </li>
+                                <li>
+                                    <a href="/public/vocabulario/index.uag">Vocabulário</a>
+                                </li>
+                                <li>
+                                    <a href="/public/postagem/videos.uag">Vídeos</a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Questões</a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="/public/questoes/palavra/Resolucao.xhtml?faces-redirect=true">Tradução de palavras</a>
+                                        </li>
+                                        <li>
+                                            <a href="/public/questoes/lacuna/Resolucao.xhtml?faces-redirect=true">Lacuna</a>
+                                        </li>                                        
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/public/informacao/FaleConosco.uag">Contato</a>
+                                </li>                                
+                            </ul>    
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="/public/Login.uag">Logar</a>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav> 
+                <h:link outcome="/index.uag">
+                    <h:graphicImage library="images" name="aruagi_capa.jpg" width="100%" height="200px"/>
+                </h:link>
                 <ui:insert name="body"/>                
             </p:layoutUnit>
-        </p:layout>        
+        </p:layout> 
+        <script>
+            $('.dropdown-toggle').dropdown();
+        </script>
     </h:body>    
 </html>

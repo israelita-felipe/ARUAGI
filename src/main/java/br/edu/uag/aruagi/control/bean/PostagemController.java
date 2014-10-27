@@ -17,6 +17,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Property;
 
 public class PostagemController implements Serializable, InterfaceController<Postagem, Integer> {
     
@@ -74,7 +75,8 @@ public class PostagemController implements Serializable, InterfaceController<Pos
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemExcluida"));
     }
 
     @Override
@@ -123,6 +125,7 @@ public class PostagemController implements Serializable, InterfaceController<Pos
 
     public List<Postagem> getTimeLine() {
         DetachedCriteria query = DetachedCriteria.forClass(Postagem.class)
+                .add(Property.forName("status").eq(Boolean.TRUE))
                 .addOrder(Order.desc("data"))
                 .addOrder(Order.desc("id"));
         getFacade().begin();

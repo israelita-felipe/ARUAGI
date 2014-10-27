@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
+import br.edu.uag.aruagi.control.interfaces.InterfaceQuestao;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "questao_traduz_frase", schema = "public"
 )
-public class QuestaoTraduzFrase implements java.io.Serializable {
+public class QuestaoTraduzFrase implements java.io.Serializable, InterfaceQuestao {
 
     private int id;
     private FraseLatim fraseLatim;
@@ -50,11 +51,13 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true,nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
+    @Override
     public int getId() {
         return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -71,19 +74,23 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nivel", nullable = false)
+    @Override
     public NivelQuestao getNivelQuestao() {
         return this.nivelQuestao;
     }
 
+    @Override
     public void setNivelQuestao(NivelQuestao nivelQuestao) {
         this.nivelQuestao = nivelQuestao;
     }
 
     @Column(name = "status", nullable = false)
-    public boolean isStatus() {
+    @Override
+    public boolean getStatus() {
         return this.status;
     }
 
+    @Override
     public void setStatus(boolean status) {
         this.status = status;
     }
@@ -107,10 +114,12 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
     }
 
     @Column(name = "usuario")
+    @Override
     public Integer getUsuario() {
         return this.usuario;
     }
 
+    @Override
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
@@ -170,5 +179,4 @@ public class QuestaoTraduzFrase implements java.io.Serializable {
         }
         return true;
     }
-
 }

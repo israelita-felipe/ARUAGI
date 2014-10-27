@@ -61,7 +61,8 @@ public class PalavraPortuguesController implements Serializable, InterfaceContro
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraPortuguesExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraPortuguesExcluida"));
     }
 
     @Override

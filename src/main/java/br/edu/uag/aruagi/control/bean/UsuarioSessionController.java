@@ -10,6 +10,7 @@ import br.edu.uag.aruagi.control.util.support.StringManager;
 import br.edu.uag.aruagi.model.Postagem;
 import br.edu.uag.aruagi.model.Usuario;
 import br.edu.uag.aruagi.model.Videos;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -232,11 +233,11 @@ public class UsuarioSessionController implements Serializable {
     }
 
     public int postCount() {
-        return new PostagemFacade().getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Postagem.class).add(Property.forName("usuario").eq(getSelected().getId()))).size();
+        return new PostagemFacade().getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Postagem.class).add(Property.forName("usuario").eq(getSelected().getId())).add(Property.forName("status").eq(Boolean.TRUE))).size();
     }
 
     public int videosCout() {
-        return new VideosFacade().getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Videos.class).add(Property.forName("usuario").eq(getSelected().getId()))).size();
+        return new VideosFacade().getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Videos.class).add(Property.forName("usuario").eq(getSelected().getId())).add(Property.forName("status").eq(Boolean.TRUE))).size();
     }
 
     public Usuario getCurrentUser() {

@@ -29,6 +29,16 @@ public class ListaQuestao implements java.io.Serializable {
     private Integer idQuestao;
     private Integer usuario;
     private Set linksQuestaos = new HashSet(0);
+    private Boolean status;
+
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public ListaQuestao() {
     }

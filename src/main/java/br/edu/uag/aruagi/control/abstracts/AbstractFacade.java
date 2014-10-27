@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Property;
 
 /**
  *
@@ -80,7 +81,9 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
 
     @Override
     public List<T> findAll() {
-        return (List<T>) getSession().createCriteria(entityClass).list();
+        DetachedCriteria query = DetachedCriteria.forClass(entityClass);
+        query.add(Property.forName("status").eq(Boolean.TRUE));
+        return getEntitiesByDetachedCriteria(query);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
+import br.edu.uag.aruagi.control.interfaces.InterfaceQuestao;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "questao_traduz_palavra", schema = "public"
 )
-public class QuestaoTraduzPalavra implements java.io.Serializable {
+public class QuestaoTraduzPalavra implements java.io.Serializable, InterfaceQuestao {
 
     private int id;
     private PalavraLatim palavraLatim;
@@ -51,10 +52,12 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
+    @Override
     public int getId() {
         return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -71,10 +74,12 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nivel", nullable = false)
+    @Override
     public NivelQuestao getNivelQuestao() {
         return this.nivelQuestao;
     }
 
+    @Override
     public void setNivelQuestao(NivelQuestao nivelQuestao) {
         this.nivelQuestao = nivelQuestao;
     }
@@ -98,23 +103,27 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
     }
 
     @Column(name = "status", nullable = false)
-    public boolean isStatus() {
+    @Override
+    public boolean getStatus() {
         return this.status;
     }
 
+    @Override
     public void setStatus(boolean status) {
         this.status = status;
     }
 
     @Column(name = "usuario")
+    @Override
     public Integer getUsuario() {
         return this.usuario;
     }
 
+    @Override
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "traducao", nullable = false)
     public PalavraPortugues getPalavraPortugues() {
@@ -166,5 +175,4 @@ public class QuestaoTraduzPalavra implements java.io.Serializable {
         }
         return true;
     }
-
 }

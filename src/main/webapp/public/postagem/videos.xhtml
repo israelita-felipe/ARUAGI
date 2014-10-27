@@ -23,15 +23,14 @@
 
     <h:body>
         <h:form id="VideosListForm">                                
-            <nav class="navbar navbar-default" role="navigation">
+            <nav class="navbar navbar-default navbar-static-top" role="navigation">
                 <div class="container-fluid">                               
-                    <div class="navbar-header">                        
-                        <h:link outcome="#{bundle.MenuInicio}">
-                            <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="54" height="70"/>                    
-                        </h:link>
-                        #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento
-                    </div>
-                    <div class="navbar-collapse collapse in">                            
+                    <div class="navbar-collapse collapse in">
+                        <div class="navbar-header">
+                            <h:link styleClass="navbar-brand" style="padding-top: 0" outcome="#{bundle.MenuInicio}">
+                                <h:graphicImage  library="images" name="layout/BRASAO-UFRPE.jpg" width="37" height="48"/>                    
+                            </h:link> 
+                        </div>
                         <div class="navbar-form navbar-right">
                             <div class="form-group">
                                 <div class="input-group">
@@ -41,7 +40,7 @@
                                     </span>
                                 </div>
                             </div>                            
-                        </div>                        
+                        </div> 
                     </div>
                 </div>
             </nav>

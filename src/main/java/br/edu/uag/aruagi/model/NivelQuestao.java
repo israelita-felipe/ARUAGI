@@ -31,6 +31,16 @@ public class NivelQuestao implements java.io.Serializable {
     private List questaoTraduzFrases = new ArrayList();
     private List questaoLacunas = new ArrayList();
     private List questaoDeclinacaos = new ArrayList();
+    private Boolean status;
+
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public NivelQuestao() {
     }

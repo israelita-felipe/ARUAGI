@@ -61,7 +61,8 @@ public class PessoaGramaticalController implements Serializable, InterfaceContro
     
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemPessoaGramaticalExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPessoaGramaticalExcluida"));
     }
     
     @Override

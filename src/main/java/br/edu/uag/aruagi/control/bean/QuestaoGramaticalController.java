@@ -61,7 +61,8 @@ public class QuestaoGramaticalController implements Serializable, InterfaceContr
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoGramaticalExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoGramaticalExcluida"));
     }
 
     @Override

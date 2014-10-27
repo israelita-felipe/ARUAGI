@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Property;
 
 /**
  *
@@ -60,7 +61,7 @@ public class IndexController implements Serializable {
     
     public List<Postagem> getTimeLine() {
         getFacade().begin();
-        List<Postagem> timeLine = getFacade().getSession().createCriteria(Postagem.class).addOrder(Order.desc("data")).addOrder(Order.desc("id")).list();
+        List<Postagem> timeLine = getFacade().getSession().createCriteria(Postagem.class).add(Property.forName("status").eq(Boolean.TRUE)).addOrder(Order.desc("data")).addOrder(Order.desc("id")).list();
         getFacade().end();
         return timeLine;
     }

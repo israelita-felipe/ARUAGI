@@ -63,7 +63,8 @@ public class LinksQuestaoController implements Serializable, InterfaceController
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemLinkExcluido"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemLinkExcluido"));
     }
 
     @Override

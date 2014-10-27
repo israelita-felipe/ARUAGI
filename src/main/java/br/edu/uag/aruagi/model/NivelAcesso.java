@@ -17,6 +17,7 @@ public class NivelAcesso implements java.io.Serializable {
     private int id;
     private String linkAcesso;
     private String descricao;
+    private Boolean status;
 
     public NivelAcesso() {
     }
@@ -57,6 +58,15 @@ public class NivelAcesso implements java.io.Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override

@@ -14,22 +14,20 @@
         </ui:define>
 
         <ui:define name="body">            
-            <h:form id="VideosListForm">                                
-                <nav class="navbar navbar-default" role="navigation">
+            <h:form id="VideosListForm" style="padding-top: 5px">                                
+                <nav class="navbar navbar-default navbar-static-top" role="navigation">
                     <div class="container-fluid">                               
-                        <div class="navbar-header">                        
-                            <a class="navbar-brand" href="#">Vídeos</a>
-                        </div>
                         <div class="navbar-collapse collapse in">
-                            <div class="navbar-form navbar-left">
-                                <p:commandButton style="height: 32px;width: 150px" id="createButton" icon="ui-icon-plus" value="#{bundle.AcaoNovo}" actionListener="#{videosController.prepareCreate}" update=":VideosCreateForm" oncomplete="PF('VideosCreateDialog').show()"/>                                
-                            </div>
-                            <div class="navbar-form navbar-left">
-                                <p:commandButton style="height: 32px;width: 150px" value="Todos os vídeos" actionListener="#{videosController.myVideos(0)}" update="VideosListForm:datalist"/>                                                                
-                            </div>
-                            <div class="navbar-form navbar-left">                            
-                                <p:commandButton style="height: 32px;width: 150px" value="Meus vídeos" actionListener="#{videosController.myVideos(1)}" update="VideosListForm:datalist"/>
-                            </div>
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <p:commandLink value="#{bundle.AcaoNovo}" actionListener="#{videosController.prepareCreate}" update=":VideosCreateForm" oncomplete="PF('VideosCreateDialog').show()"/>
+                                </li>
+                                <li>
+                                    <p:commandLink value="Todos os vídeos" actionListener="#{videosController.myVideos(0)}" update="VideosListForm:datalist"/>
+                                </li>                                                                <li>
+                                    <p:commandLink value="Meus vídeos" actionListener="#{videosController.myVideos(1)}" update="VideosListForm:datalist"/>
+                                </li>
+                            </ul>
                             <div class="navbar-form navbar-right">
                                 <div class="form-group">
                                     <div class="input-group">
@@ -39,7 +37,7 @@
                                         </span>
                                     </div>
                                 </div>                            
-                            </div>                        
+                            </div> 
                         </div>
                     </div>
                 </nav>

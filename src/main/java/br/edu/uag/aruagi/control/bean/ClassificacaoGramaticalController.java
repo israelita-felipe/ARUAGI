@@ -61,7 +61,8 @@ public class ClassificacaoGramaticalController implements Serializable, Interfac
     
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemClassificacaoGramaticalExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemClassificacaoGramaticalExcluida"));
     }
     
     @Override

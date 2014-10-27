@@ -61,7 +61,8 @@ public class DeclinacaoController implements Serializable, InterfaceController<D
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemDeclinacaoExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemDeclinacaoExcluida"));
     }
 
     @Override

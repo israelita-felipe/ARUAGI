@@ -5,7 +5,6 @@
  */
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.util.hibernate.FacesContextUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.support.EmailSender;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 /**

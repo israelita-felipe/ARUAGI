@@ -63,7 +63,8 @@ public class IndicadorTempoVerbalController implements Serializable, InterfaceCo
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemTempoVerbalExcluido"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTempoVerbalExcluido"));
     }
 
     @Override

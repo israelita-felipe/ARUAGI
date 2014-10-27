@@ -278,4 +278,10 @@
         <managed-bean-class>br.edu.uag.aruagi.control.bean.ContatoController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <description>Atributos de acessibilidade</description>
+        <managed-bean-name>acessibilidadeController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.bean.AcessibilidadeController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

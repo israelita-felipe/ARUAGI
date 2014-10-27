@@ -61,7 +61,8 @@ public class QuestaoDeclinacaoController implements Serializable, InterfaceContr
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoDeclinacaoExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoDeclinacaoExcluida"));
     }
 
     @Override
@@ -79,7 +80,7 @@ public class QuestaoDeclinacaoController implements Serializable, InterfaceContr
             try {
                 if (persistAction == PersistAction.CREATE) {
                     getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setAutor(UsuarioSessionController.getUserLogged().getId());
+                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
                     getFacade().create(selected);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);

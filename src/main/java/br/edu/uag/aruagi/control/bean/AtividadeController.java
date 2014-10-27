@@ -6,20 +6,21 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.abstracts.AbstractFacade;
+import br.edu.uag.aruagi.control.interfaces.InterfaceQuestao;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Israel Araújo
  */
-public class AtividadeController {
+public class AtividadeController implements Serializable {
 
     private AbstractFacade facade;
-    private final ArrayList<QuestaoDeclinacaoController> questaoDeclinacao = new ArrayList<QuestaoDeclinacaoController>();
-    private final ArrayList<QuestaoGramaticalController> questaoGramatical = new ArrayList<QuestaoGramaticalController>();
-    private final ArrayList<QuestaoLacunaController> questaoLacuna = new ArrayList<QuestaoLacunaController>();
-    private final ArrayList<QuestaoTraduzFraseController> questaoTraduzFrase = new ArrayList<QuestaoTraduzFraseController>();
-    private final ArrayList<QuestaoTraduzPalavraController> questaoTraduzPalavra = new ArrayList<QuestaoTraduzPalavraController>();
+    private final ArrayList<InterfaceQuestao> questoes = new ArrayList<InterfaceQuestao>();
+    private InterfaceQuestao selected;
+    //posicao
+    private int posicao = 0;
 
     public AtividadeController() {
     }
@@ -32,24 +33,7 @@ public class AtividadeController {
         this.facade = facade;
     }
 
-    public ArrayList<QuestaoDeclinacaoController> getQuestaoDeclinacao() {
-        return questaoDeclinacao;
+    public String next() {
+        return null;
     }
-
-    public ArrayList<QuestaoGramaticalController> getQuestaoGramatical() {
-        return questaoGramatical;
-    }
-
-    public ArrayList<QuestaoLacunaController> getQuestaoLacuna() {
-        return questaoLacuna;
-    }
-
-    public ArrayList<QuestaoTraduzFraseController> getQuestaoTraduzFrase() {
-        return questaoTraduzFrase;
-    }
-
-    public ArrayList<QuestaoTraduzPalavraController> getQuestaoTraduzPalavra() {
-        return questaoTraduzPalavra;
-    }
-
 }

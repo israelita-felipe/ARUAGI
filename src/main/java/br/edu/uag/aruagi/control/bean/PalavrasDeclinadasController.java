@@ -63,7 +63,8 @@ public class PalavrasDeclinadasController implements Serializable, InterfaceCont
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraDeclinadaExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraDeclinadaExcluida"));
     }
 
     @Override

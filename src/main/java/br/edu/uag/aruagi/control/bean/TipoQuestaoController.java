@@ -61,7 +61,8 @@ public class TipoQuestaoController implements Serializable, InterfaceController<
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemTipoQuestaoExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTipoQuestaoExcluida"));
     }
 
     @Override

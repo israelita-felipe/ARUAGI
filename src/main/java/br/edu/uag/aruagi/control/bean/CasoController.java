@@ -61,7 +61,8 @@ public class CasoController implements Serializable, InterfaceController<Caso, I
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemCasoExcluido"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemCasoExcluido"));
     }
 
     @Override

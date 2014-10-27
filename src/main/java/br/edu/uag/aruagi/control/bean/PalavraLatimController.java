@@ -61,7 +61,8 @@ public class PalavraLatimController implements Serializable, InterfaceController
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraLatimExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraLatimExcluida"));
     }
 
     @Override

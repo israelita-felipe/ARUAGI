@@ -61,7 +61,8 @@ public class NivelAcessoController implements Serializable, InterfaceController<
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoExcluido"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoExcluido"));
     }
 
     @Override

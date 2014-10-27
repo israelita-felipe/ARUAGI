@@ -25,6 +25,17 @@ public class Lacuna implements java.io.Serializable {
     private Integer usuario;
     private PalavraLatim palavraLatim;
     private int index;
+    private Boolean status;
+
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
 
     public Lacuna() {
     }

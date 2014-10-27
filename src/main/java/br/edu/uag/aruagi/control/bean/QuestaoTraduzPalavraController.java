@@ -61,7 +61,8 @@ public class QuestaoTraduzPalavraController implements Serializable, InterfaceCo
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoTraduzPalavraExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoTraduzPalavraExcluida"));
     }
 
     @Override

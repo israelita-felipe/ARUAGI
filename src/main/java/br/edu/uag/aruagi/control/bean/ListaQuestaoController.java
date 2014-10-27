@@ -62,7 +62,8 @@ public class ListaQuestaoController implements Serializable, InterfaceController
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemListaQuestaoExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemListaQuestaoExcluida"));
     }
 
     @Override

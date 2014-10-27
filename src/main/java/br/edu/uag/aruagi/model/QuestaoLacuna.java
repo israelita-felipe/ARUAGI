@@ -1,6 +1,7 @@
 package br.edu.uag.aruagi.model;
 // Generated 09/08/2014 12:29:58 by Hibernate Tools 3.6.0
 
+import br.edu.uag.aruagi.control.interfaces.InterfaceQuestao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -22,7 +23,7 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "questao_lacuna", schema = "public"
 )
-public class QuestaoLacuna implements java.io.Serializable {
+public class QuestaoLacuna implements java.io.Serializable, InterfaceQuestao {
 
     private int id;
     private FraseLatim fraseLatim;
@@ -57,10 +58,12 @@ public class QuestaoLacuna implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Override
     public int getId() {
         return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -77,19 +80,23 @@ public class QuestaoLacuna implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nivel", nullable = false)
+    @Override
     public NivelQuestao getNivelQuestao() {
         return this.nivelQuestao;
     }
 
+    @Override
     public void setNivelQuestao(NivelQuestao nivelQuestao) {
         this.nivelQuestao = nivelQuestao;
     }
 
     @Column(name = "status", nullable = false)
-    public boolean isStatus() {
+    @Override
+    public boolean getStatus() {
         return this.status;
     }
 
+    @Override
     public void setStatus(boolean status) {
         this.status = status;
     }
@@ -113,10 +120,12 @@ public class QuestaoLacuna implements java.io.Serializable {
     }
 
     @Column(name = "usuario")
+    @Override
     public Integer getUsuario() {
         return this.usuario;
     }
 
+    @Override
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
@@ -168,7 +177,5 @@ public class QuestaoLacuna implements java.io.Serializable {
         }
         return true;
     }
-
-    
 
 }

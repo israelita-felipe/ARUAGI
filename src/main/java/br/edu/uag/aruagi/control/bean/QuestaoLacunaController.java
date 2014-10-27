@@ -124,7 +124,8 @@ public class QuestaoLacunaController implements Serializable, InterfaceControlle
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoLacunaExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoLacunaExcluida"));
     }
 
     @Override

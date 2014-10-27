@@ -61,7 +61,8 @@ public class RadicalController implements Serializable, InterfaceController<Radi
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemRadicalExcluido"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemRadicalExcluido"));
     }
 
     @Override

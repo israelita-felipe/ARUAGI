@@ -61,7 +61,8 @@ public class FraseLatimController implements Serializable, InterfaceController<F
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemFraseLatimExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFraseLatimExcluida"));
     }
 
     @Override

@@ -63,7 +63,8 @@ public class IndicadorPessoaGramaticalController implements Serializable, Interf
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemIndicadorPessoaGramaticalExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemIndicadorPessoaGramaticalExcluida"));
     }
 
     @Override

@@ -101,7 +101,8 @@ public class AcessoController implements Serializable, InterfaceController<Acess
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, null);
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, null);
     }
 
     @Override

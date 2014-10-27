@@ -19,6 +19,7 @@ public class Acesso implements java.io.Serializable {
 
     private Date data;
     private Integer acessos;
+    private Boolean status;
 
     public Acesso() {
     }
@@ -50,6 +51,14 @@ public class Acesso implements java.io.Serializable {
 
     public void setAcessos(Integer acessos) {
         this.acessos = acessos;
+    }
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override

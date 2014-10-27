@@ -23,6 +23,16 @@ public class LinksQuestao implements java.io.Serializable {
     private ListaQuestao listaQuestao;
     private Postagem postagem;
     private Integer usuario;
+    private Boolean status;
+
+    @Column(name = "status")
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public LinksQuestao() {
     }

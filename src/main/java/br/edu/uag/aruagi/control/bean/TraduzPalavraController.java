@@ -63,7 +63,8 @@ public class TraduzPalavraController implements Serializable, InterfaceControlle
     
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemTraduzPalavraExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTraduzPalavraExcluida"));
     }
     
     @Override

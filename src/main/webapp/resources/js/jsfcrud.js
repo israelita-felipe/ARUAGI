@@ -107,7 +107,7 @@ function googleSearch(id, tipo, seachID) {
     };
 
     (function() {
-        var cx = '004159013048277972925:frojtp-ajiy';
+        var cx = seachID;
         var gcse = document.createElement('script');
         gcse.type = 'text/javascript';
         gcse.async = true;

@@ -60,7 +60,8 @@ public class LacunaController implements Serializable, InterfaceController<Lacun
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemLacunaExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemLacunaExcluida"));
     }
 
     @Override

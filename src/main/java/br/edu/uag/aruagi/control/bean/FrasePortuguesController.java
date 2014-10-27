@@ -61,7 +61,8 @@ public class FrasePortuguesController implements Serializable, InterfaceControll
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemFrasePortuguesExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFrasePortuguesExcluida"));
     }
 
     @Override

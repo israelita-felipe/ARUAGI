@@ -22,8 +22,6 @@
                     <br/>
                     <h:outputText value="#{bundle.CampoAutor}: "/>
                     <h:outputText value="#{usuarioSessionController.getUsuario(videosController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
-                    <hr/>
-                    <p:commandButton value="#{bundle.AcaoFechar}" onclick="VideosViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

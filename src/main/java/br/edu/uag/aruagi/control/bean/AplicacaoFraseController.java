@@ -64,7 +64,8 @@ public class AplicacaoFraseController implements Serializable, InterfaceControll
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemAplicacaoFraseExcluida"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemAplicacaoFraseExcluida"));
     }
 
     @Override

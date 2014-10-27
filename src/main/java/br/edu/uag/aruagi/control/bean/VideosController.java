@@ -91,7 +91,8 @@ public class VideosController implements Serializable, InterfaceController<Video
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoExcluido"));
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoExcluido"));
     }
 
     /**
@@ -146,7 +147,7 @@ public class VideosController implements Serializable, InterfaceController<Video
         getFacade().begin();
         if (!this.pesquisa.trim().equals("") || this.pesquisa != null) {
             DetachedCriteria query = DetachedCriteria.forClass(Videos.class);
-            query.add(Restrictions.like("descricao", "%"+this.pesquisa+"%").ignoreCase());
+            query.add(Restrictions.like("descricao", "%"+this.pesquisa+"%").ignoreCase()).add(Property.forName("status").eq(Boolean.TRUE));
             this.items = getFacade().getEntitiesByDetachedCriteria(query);
             return this.items;
         } else {
@@ -166,7 +167,7 @@ public class VideosController implements Serializable, InterfaceController<Video
         getFacade().begin();
         if (id == 1) {
             DetachedCriteria query = DetachedCriteria.forClass(Videos.class);
-            query.add(Property.forName("usuario").eq(UsuarioSessionController.getUserLogged().getId()));
+            query.add(Property.forName("usuario").eq(UsuarioSessionController.getUserLogged().getId())).add(Property.forName("status").eq(Boolean.TRUE));
 
             this.items = getFacade().getEntitiesByDetachedCriteria(query);
         } else {

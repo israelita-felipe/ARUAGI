@@ -18,14 +18,14 @@ public interface InterfaceQuestao {
      *
      * @return
      */
-    NivelQuestao getNivel();
+    NivelQuestao getNivelQuestao();
 
     /**
      * Nível da questao
      *
      * @param nivel
      */
-    void setNivel(NivelQuestao nivel);
+    void setNivelQuestao(NivelQuestao nivel);
 
     /**
      * Id da questao
@@ -59,12 +59,12 @@ public interface InterfaceQuestao {
      *
      * @return
      */
-    Integer getAutor();
+    Integer getUsuario();
 
     /**
      * Atribuindo o autor da questao
      *
      * @param autor
      */
-    void setAutor(Integer autor);
+    void setUsuario(Integer autor);
 }

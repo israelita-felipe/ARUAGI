@@ -85,7 +85,8 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
 
     @Override
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("MensagemUsuarioExcluido"));        
+        getSelected().setStatus(Boolean.FALSE);
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemUsuarioExcluido"));        
     }
 
     @Override

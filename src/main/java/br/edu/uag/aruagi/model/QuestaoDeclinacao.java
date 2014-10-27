@@ -104,12 +104,12 @@ public class QuestaoDeclinacao implements java.io.Serializable, InterfaceQuestao
     }
 
     @Override
-    public NivelQuestao getNivel() {
+    public NivelQuestao getNivelQuestao() {
         return this.nivelQuestao;
     }
 
     @Override
-    public void setNivel(NivelQuestao nivelQuestao) {
+    public void setNivelQuestao(NivelQuestao nivelQuestao) {
         this.nivelQuestao = nivelQuestao;
     }
 
@@ -130,12 +130,12 @@ public class QuestaoDeclinacao implements java.io.Serializable, InterfaceQuestao
     }
 
     @Override
-    public Integer getAutor() {
+    public Integer getUsuario() {
         return this.usuario;
     }
 
     @Override
-    public void setAutor(Integer usuario) {
+    public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
 
