@@ -13,31 +13,31 @@
     </h:head>
     <h:body>
         <h:form id="resolucao">
-            <p:dataGrid id="avaliacao" value="#{resolucaoTraduzPalavraController.respostas}" var="resposta" columns="1">
+            <p:dataGrid id="avaliacao" value="#{resolucaoTraduzFraseController.respostas}" var="resposta" columns="1">
                 <f:facet name="header">
-                    <h:outputText value="#{resolucaoTraduzPalavraController.nome}, sua pontuação nesta atividade é #{resolucaoTraduzPalavraController.pontuacao}"/>
+                    <h:outputText value="#{resolucaoTraduzFraseController.nome}, sua pontuação nesta atividade é #{resolucaoTraduzFraseController.pontuacao}"/>
                 </f:facet>
                 <p:panel header="#{resposta.correcao}">
-                    <h:outputText value="#{resposta.questaoTraduzPalavra.titulo}"/>
-                    <h:outputText value="Tradução adequada ao contexto: #{resposta.questaoTraduzPalavra.palavraPortugues.palavra}"/>
+                    <h:outputText value="#{resposta.questaoTraduzFrase.titulo}"/>
+                    <h:outputText value="Tradução adequada ao contexto: #{resposta.questaoTraduzFrase.frasePortugues.frase}"/>
                     <p:separator/>
-                    <h:outputText value="Sua resposta: #{resposta.palavraPortugues.palavra}"/>
+                    <h:outputText value="Sua resposta: #{resposta.frasePortugues.frase}"/>
                     <p:separator/>
                     <p:panel header="#{bundle.CampoEnunciado}" collapsed="true" toggleable="true">
-                        <h:outputText id="enunciado" value="#{resposta.questaoTraduzPalavra.enunciado}" escape="false"/>
+                        <h:outputText id="enunciado" value="#{resposta.questaoTraduzFrase.enunciado}" escape="false"/>
                     </p:panel>                    
                     <p:separator/>
-                    <h:outputText value="Possíveis traduções"/>
+                    <!-- <h:outputText value="Possíveis traduções"/>
                     <p:dataList  value="#{resposta.questaoTraduzPalavra.palavraLatim.traduzPalavras}" var="trad" rows="10" paginator="true">
                         <h:outputText value="#{trad.palavraPortugues.palavra}"/>
-                    </p:dataList>
+                    </p:dataList> -->
                 </p:panel>
             </p:dataGrid>
             <p:commandButton value="IMPRIMIR">
                 <p:printer target="avaliacao"/>
             </p:commandButton>
             <p:commandButton value="ENVIAR" update=":sendForm" oncomplete="PF('sendReport').show()"/>
-            <p:commandButton value="FINALIZAR" action="#{resolucaoTraduzPalavraController.done()}"/>  
+            <p:commandButton value="FINALIZAR" action="#{resolucaoTraduzFraseController.done()}"/>  
         </h:form>
         <p:dialog id="send" appendTo="@(body)" widgetVar="sendReport" modal="true" header="#{bundle.AcaoEnviar}" resizable="false">
             <h:form id="sendForm">

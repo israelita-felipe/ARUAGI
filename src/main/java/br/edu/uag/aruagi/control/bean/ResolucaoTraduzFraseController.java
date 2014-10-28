@@ -6,8 +6,10 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.model.FrasePortugues;
 import br.edu.uag.aruagi.model.NivelQuestao;
 import br.edu.uag.aruagi.model.QuestaoTraduzFrase;
+import br.edu.uag.aruagi.model.TraduzFrase;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ public class ResolucaoTraduzFraseController implements Serializable {
     //colecoes
     private List<QuestaoTraduzFrase> questoesPorNivel = new ArrayList<QuestaoTraduzFrase>();
     private RespostaTraduzFrase[] respostas;
+    private RespostaTraduzFrase[] respostasTemp;
     //objetos
     private QuestaoTraduzFrase questaoAtual;
     private NivelQuestao nivel;
@@ -34,6 +37,7 @@ public class ResolucaoTraduzFraseController implements Serializable {
     private String nome;
     //tipos primitivos boolean
     private boolean hideToolBar;
+    private boolean hideAvaliar = true;
 
     public ResolucaoTraduzFraseController() {
 
@@ -45,7 +49,7 @@ public class ResolucaoTraduzFraseController implements Serializable {
 
     public int getRestante() {
         if (this.quantidade > 0) {
-            return (this.quantidade - this.position);
+            return (this.quantidade - this.getPosition());
         }
         return -1;
     }
@@ -77,20 +81,30 @@ public class ResolucaoTraduzFraseController implements Serializable {
      */
     public double getPontuacao() {
         if (quantidade > 0) {
-            pontuacao = 0.0;
-            position = 1;
+            setPontuacao(0.0);
+            setPosition(1);
             for (RespostaTraduzFrase resposta : respostas) {
-                //tradução 100% se a palavra for igual a indicada pelo professor
+                //tradução 100% se a frase for igual a indicada pelo professor
                 if (resposta != null) {
-                    /*
-                    implementar a comparação
-                    */
+                    String FRASE_RESPOSTA = null;
+                    if(resposta.getFrasePortugues() != null){
+                        FRASE_RESPOSTA = resposta.getFrasePortugues().getFrase().replace(" ", "").toUpperCase();
+                    }
+                    String FRASE_TRADUCAO = null;
+                    if(resposta.getQuestaoTraduzFrase() != null){
+                        FRASE_TRADUCAO = resposta.getQuestaoTraduzFrase().getFrasePortugues().getFrase().replace(" ", "").toUpperCase();
+                    }
+                    if(FRASE_RESPOSTA == null && FRASE_TRADUCAO == null){
+                        if(FRASE_RESPOSTA.equals(FRASE_TRADUCAO)){
+                            setPontuacao(pontuacao + (10 / quantidade));
+                        }
+                    }
                 }
-                position++;
+                setPosition(getPosition() + 1);
             }
-            position--;
+            setPosition(getPosition() - 1);
         } else {
-            pontuacao = 0;
+            setPontuacao(0);
         }
         return pontuacao;
     }
@@ -104,7 +118,7 @@ public class ResolucaoTraduzFraseController implements Serializable {
     }
 
     public void setPontuacao(int pontuacao) {
-        this.pontuacao = pontuacao;
+        this.setPontuacao(pontuacao);
     }
 
     public String getNome() {
@@ -152,7 +166,7 @@ public class ResolucaoTraduzFraseController implements Serializable {
                 //sorteando quantidade-questoes para serem resolvidas
                 for (int i = 0; i < this.quantidade && questoesPorNivel.size() < this.quantidade; i++) {
                     index = r.nextInt(tamanho - 1);
-                    if (questoesPorNivel.indexOf(nivel.getQuestaoTraduzPalavras().get(index)) == -1) {
+                    if (questoesPorNivel.indexOf(nivel.getQuestaoTraduzFrases().get(index)) == -1) {
                         this.questoesPorNivel.add((QuestaoTraduzFrase) nivel.getQuestaoTraduzFrases().get(index));
                     } else {
                         i--;
@@ -160,17 +174,17 @@ public class ResolucaoTraduzFraseController implements Serializable {
                 }
             }
         } else {
-            this.questoesPorNivel = nivel.getQuestaoTraduzPalavras();
+            this.questoesPorNivel = nivel.getQuestaoTraduzFrases();
         }
         //setando a primeira questao
         if (!this.questoesPorNivel.isEmpty()) {
             questaoAtual = this.questoesPorNivel.get(0);
-            position = 1;
+            setPosition(1);
             //this.quantidade = this.questoesPorNivel.size();
             respostas = new RespostaTraduzFrase[quantidade];
             for (int i = 0; i < quantidade; i++) {
                 respostas[i] = new RespostaTraduzFrase();
-                //respostas[i].setQuestaoTraduzPalavra(this.questoesPorNivel.get(i));
+                //respostas[i].setQuestaoTraduzFrase(this.questoesPorNivel.get(i));
             }
             JsfUtil.addSuccessMessage("Tudo finalizado, pode responder as " + this.questoesPorNivel.size() + " questões");
         }
@@ -182,7 +196,23 @@ public class ResolucaoTraduzFraseController implements Serializable {
      * @return
      */
     public String next() {
-        return null;
+        respostas[getPosition() - 1].setFrasePortugues(new FrasePortugues(0, selected));
+        respostas[getPosition() - 1].setQuestaoTraduzFrase(questaoAtual);
+        //se houver traducao escolhida pelo usuario status é true
+        boolean status = selected.toUpperCase().equals(respostas[getPosition() - 1].questaoTraduzFrase.getFrasePortugues().getFrase().toUpperCase());
+        if (!status) {
+            //status = find(respostas[position - 1].getFrasePortugues());
+        }
+        respostas[getPosition() - 1].setStatus(status);
+        if (getPosition() == quantidade) {
+            JsfUtil.addSuccessMessage("Questões finalizadas, pode clicar no botão avaliar do lado direito");
+            return null;
+        } else {
+            setPosition(getPosition() + 1);
+            this.questaoAtual = this.questoesPorNivel.get(getPosition() - 1);
+            this.selected = respostas[getPosition() - 1].getFrasePortugues().getFrase();
+            return null;
+        }
     }
 
     /**
@@ -191,7 +221,17 @@ public class ResolucaoTraduzFraseController implements Serializable {
      * @return
      */
     public String pular() {
-        return null;
+        respostas[getPosition() - 1].setFrasePortugues(new FrasePortugues(0, ""));
+        respostas[getPosition() - 1].setQuestaoTraduzFrase(questaoAtual);
+        if (getPosition() == quantidade) {
+            JsfUtil.addSuccessMessage("Questões finalizadas, pode clicar no botão avaliar do lado direito");
+            return null;
+        } else {
+            setPosition(getPosition() + 1);
+            this.questaoAtual = this.questoesPorNivel.get(getPosition() - 1);
+            this.selected = respostas[getPosition() - 1].getFrasePortugues().getFrase();
+            return null;
+        }
     }
 
     /**
@@ -199,7 +239,117 @@ public class ResolucaoTraduzFraseController implements Serializable {
      *
      */
     public void previous() {
-        
+        if (getPosition() > 1) {
+            respostas[getPosition() - 1].setFrasePortugues(new FrasePortugues(0, selected));
+            respostas[getPosition() - 1].setQuestaoTraduzFrase(questaoAtual);
+            //se houver traducao escolhida pelo usuario status é true
+            boolean status = selected.toUpperCase().equals(respostas[getPosition() - 1].questaoTraduzFrase.getFrasePortugues().getFrase().toUpperCase());
+            if (!status) {
+                //status = find(respostas[position - 1].getFrasePortugues());
+            }
+            respostas[getPosition() - 1].setStatus(status);
+            setPosition(getPosition() - 1);
+            this.questaoAtual = this.questoesPorNivel.get(getPosition() - 1);
+            this.selected = respostas[getPosition() - 1].getFrasePortugues().getFrase();
+        } else {
+            JsfUtil.addErrorMessage("essa é a primeira questão");
+        }
+    }
+
+    /**
+     * avalia as questões
+     *
+     * @return
+     */
+    public String avaliar() {
+        this.setRespostasTemp(this.respostas);
+        this.setPontuacao(getPontuacao());
+        reset();
+        this.hideAvaliar = false;
+        return "/public/questoes/frase/Avaliacao.xhtml?faces-redirect=true";
+    }
+
+    /**
+     * finaliza a avalição
+     *
+     * @return
+     */
+    public String done() {
+        reset();
+        return "/public/questoes/frase/Resolucao.xhtml?faces-redirect=true";
+    }
+
+    /**
+     * reseta os campos
+     */
+    public void reset() {
+        this.position = 1;
+        this.quantidade = 0;
+        this.hideAvaliar = false;
+        this.questoesPorNivel = new ArrayList<QuestaoTraduzFrase>();
+        this.respostas = new RespostaTraduzFrase[quantidade];
+        this.questaoAtual = null;
+        this.selected = null;
+    }
+    
+    /**
+     * encontra uma palavra
+     *
+     * @param p
+     * @return
+     */
+    private boolean find(FrasePortugues p) {
+        if (p != null) {
+            List<TraduzFrase> traducoes = (List<TraduzFrase>) this.questoesPorNivel.get(getPosition() - 1).getFraseLatim().getTraduzFrases();
+            for (TraduzFrase tp : traducoes) {
+                if (tp.getFrasePortugues().getFrase().toUpperCase().equals(p.getFrase().toUpperCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return the respostasTemp
+     */
+    public RespostaTraduzFrase[] getRespostasTemp() {
+        return respostasTemp;
+    }
+
+    /**
+     * @param respostasTemp the respostasTemp to set
+     */
+    public void setRespostasTemp(RespostaTraduzFrase[] respostasTemp) {
+        this.respostasTemp = respostasTemp;
+    }
+
+    /**
+     * @return the position
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * @param position the position to set
+     */
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    /**
+     * @param pontuacao the pontuacao to set
+     */
+    public void setPontuacao(double pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    /**
+     * @param hideToolBar the hideToolBar to set
+     */
+    public void setHideToolBar(boolean hideToolBar) {
+        this.hideToolBar = hideToolBar;
     }
 
     /**
@@ -207,12 +357,45 @@ public class ResolucaoTraduzFraseController implements Serializable {
      */
     public class RespostaTraduzFrase implements Serializable {
         
+        private FrasePortugues frasePortugues;
+        private QuestaoTraduzFrase questaoTraduzFrase;
         private boolean status;
 
         public RespostaTraduzFrase() {
+            this.frasePortugues = new FrasePortugues();
+            this.questaoTraduzFrase = new QuestaoTraduzFrase();
         }
 
-       
+        public RespostaTraduzFrase(FrasePortugues frasePortugues, QuestaoTraduzFrase questaoTraduzFrase, boolean status) {
+            this.frasePortugues = frasePortugues;
+            this.questaoTraduzFrase = questaoTraduzFrase;
+            this.status = status;
+        }
+
+        public FrasePortugues getFrasePortugues() {
+            return frasePortugues;
+        }
+
+        private void setFrasePortugues(FrasePortugues frasePortugues) {
+            this.frasePortugues = frasePortugues;
+        }
+
+        public boolean isStatus() {
+            return status;
+        }
+
+        private void setStatus(boolean status) {
+            this.status = status;
+        }
+
+        public QuestaoTraduzFrase getQuestaoTraduzFrase() {
+            return questaoTraduzFrase;
+        }
+
+        private void setQuestaoTraduzFrase(QuestaoTraduzFrase questaoTraduzFrase) {
+            this.questaoTraduzFrase = questaoTraduzFrase;
+        }
+
         public String getCorrecao() {
             if (this.status) {
                 return "Certo";
