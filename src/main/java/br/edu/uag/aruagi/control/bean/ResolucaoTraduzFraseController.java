@@ -291,24 +291,6 @@ public class ResolucaoTraduzFraseController implements Serializable {
         this.questaoAtual = null;
         this.selected = null;
     }
-    
-    /**
-     * encontra uma palavra
-     *
-     * @param p
-     * @return
-     */
-    private boolean find(FrasePortugues p) {
-        if (p != null) {
-            List<TraduzFrase> traducoes = (List<TraduzFrase>) this.questoesPorNivel.get(getPosition() - 1).getFraseLatim().getTraduzFrases();
-            for (TraduzFrase tp : traducoes) {
-                if (tp.getFrasePortugues().getFrase().toUpperCase().equals(p.getFrase().toUpperCase())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     /**
      * @return the respostasTemp
