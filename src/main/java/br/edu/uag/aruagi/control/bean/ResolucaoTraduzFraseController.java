@@ -9,7 +9,6 @@ import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.model.FrasePortugues;
 import br.edu.uag.aruagi.model.NivelQuestao;
 import br.edu.uag.aruagi.model.QuestaoTraduzFrase;
-import br.edu.uag.aruagi.model.TraduzFrase;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +93,7 @@ public class ResolucaoTraduzFraseController implements Serializable {
                     if(resposta.getQuestaoTraduzFrase() != null){
                         FRASE_TRADUCAO = resposta.getQuestaoTraduzFrase().getFrasePortugues().getFrase().replace(" ", "").toUpperCase();
                     }
-                    if(FRASE_RESPOSTA == null && FRASE_TRADUCAO == null){
+                    if(FRASE_RESPOSTA != null && FRASE_TRADUCAO != null){
                         if(FRASE_RESPOSTA.equals(FRASE_TRADUCAO)){
                             setPontuacao(pontuacao + (10 / quantidade));
                         }
@@ -262,8 +261,8 @@ public class ResolucaoTraduzFraseController implements Serializable {
      * @return
      */
     public String avaliar() {
-        this.setRespostasTemp(this.respostas);
-        this.setPontuacao(getPontuacao());
+        this.respostasTemp = this.respostas;
+        this.pontuacao = getPontuacao();
         reset();
         this.hideAvaliar = false;
         return "/public/questoes/frase/Avaliacao.xhtml?faces-redirect=true";
@@ -285,7 +284,7 @@ public class ResolucaoTraduzFraseController implements Serializable {
     public void reset() {
         this.position = 1;
         this.quantidade = 0;
-        this.hideAvaliar = false;
+        this.setHideAvaliar(false);
         this.questoesPorNivel = new ArrayList<QuestaoTraduzFrase>();
         this.respostas = new RespostaTraduzFrase[quantidade];
         this.questaoAtual = null;
@@ -332,6 +331,20 @@ public class ResolucaoTraduzFraseController implements Serializable {
      */
     public void setHideToolBar(boolean hideToolBar) {
         this.hideToolBar = hideToolBar;
+    }
+
+    /**
+     * @return the hideAvaliar
+     */
+    public boolean isHideAvaliar() {
+        return hideAvaliar;
+    }
+
+    /**
+     * @param hideAvaliar the hideAvaliar to set
+     */
+    public void setHideAvaliar(boolean hideAvaliar) {
+        this.hideAvaliar = hideAvaliar;
     }
 
     /**
