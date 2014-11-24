@@ -48,37 +48,25 @@ and open the template in the editor.
                     </p:panel>                                 
                 </p:dataScroller>
                 <div class="col-lg-3">                    
-                    <ul class="nav nav-pills nav-stacked">                        
-                        <li class="active">
-                            <a>
-                                Conteúdo
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                Postagens: <span class="badge pull-right">#{postagemController.timeLine.size()}</span>                                
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                Vídeos: <span class="badge pull-right">#{videosController.itemsAvailableSelectOne.size()}</span>                                
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                Palavras: <span class="badge pull-right">#{palavraLatimController.items.size()}</span>                                
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                Frases: <span class="badge pull-right">#{fraseLatimController.items.size()}</span>                                
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a>
-                                Usuário do ARUAGI: <span class="badge pull-right">#{usuarioController.items.size()}</span>                                
-                            </a>
-                        </li>
+                    <ul class="list-group">                        
+                        <a class="list-group-item active">
+                            Conteúdo
+                        </a>
+                        <a class="list-group-item">
+                            Postagens: <span class="badge pull-right">#{postagemController.timeLine.size()}</span>                                
+                        </a>
+                        <a class="list-group-item">
+                            Vídeos: <span class="badge pull-right">#{videosController.itemsAvailableSelectOne.size()}</span>                                
+                        </a>
+                        <a class="list-group-item">
+                            Palavras: <span class="badge pull-right">#{palavraLatimController.items.size()}</span>                                
+                        </a>
+                        <a class="list-group-item">
+                            Frases: <span class="badge pull-right">#{fraseLatimController.items.size()}</span>                                
+                        </a>
+                        <a class="list-group-item active">
+                            Usuário do ARUAGI: <span class="badge pull-right">#{usuarioController.items.size()}</span>                                
+                        </a>
                     </ul>
                     <hr/>                    
                     <div class="fb-like-box"

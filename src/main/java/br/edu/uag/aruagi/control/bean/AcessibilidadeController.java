@@ -12,6 +12,7 @@ package br.edu.uag.aruagi.control.bean;
 public class AcessibilidadeController {
 
     private int fontSize = 12;
+    private boolean acessible = false;
 
     /**
      * Creates a new instance of AcessibilidadeController
@@ -39,7 +40,18 @@ public class AcessibilidadeController {
         }
     }
 
+    public void setContraste(){
+        this.acessible = !this.acessible;
+    }
     public void reset() {
         this.fontSize = 12;
+    }
+
+    public boolean getAcessible() {
+        return acessible;
+    }
+
+    public void setAcessible(boolean acessible) {
+        this.acessible = acessible;
     }
 }

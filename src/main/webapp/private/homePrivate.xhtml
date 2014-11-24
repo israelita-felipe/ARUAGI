@@ -33,7 +33,7 @@
         </style>
     </h:head>
     <h:body id="body-page" style="padding-top: 46px">
-        <p:layout fullPage="true" style="padding: 0;border: 0">            
+        <p:layout fullPage="true" style="padding: 0;border: 0" styleClass="acessible">            
             <!-- CENTRO DA PÁGINA-->
             <p:layoutUnit position="center" style="padding: 0;border: 0">
                 <h:form id="menuForm">
@@ -142,12 +142,12 @@
                 </h:form>
 
                 <div class="col-md-3 jumbotron"> 
-                    <h:form>
-                        <p:commandButton id="aumentar" value="+" action="#{acessibilidadeController.up()}" ajax="false"/>
-                        <p:commandButton id="diminuir" value="-" action="#{acessibilidadeController.down()}" ajax="false"/>
-                        <p:commandButton id="resetar" value="0" action="#{acessibilidadeController.reset()}" ajax="false"/>
+                    <h:form class="list-group">
+                        <p:commandButton id="aumentar" style="border-radius: 0px" styleClass="form-control" icon="ui-icon-circle-plus" value="Aumentar" action="#{acessibilidadeController.up()}" ajax="false"/>
+                        <p:commandButton id="diminuir" style="border-radius: 0px" styleClass="form-control" icon="ui-icon-circle-minus" value="Diminuir" action="#{acessibilidadeController.down()}" ajax="false"/>
+                        <p:commandButton id="resetar" style="border-radius: 0px" styleClass="form-control" icon="ui-icon-circle-close" value="Padrão" action="#{acessibilidadeController.reset()}" ajax="false"/>
                     </h:form>                    
-                    <p:commandButton id="createButton" value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
+                    <p:commandButton icon="ui-icon-comment" styleClass="form-control" id="createButton" value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
                     <hr/>
                     <ul class="nav nav-pills nav-stacked">
                         <li class="active">
@@ -339,7 +339,7 @@
         <ui:include src="/private/professor/videosPostagem/Create.xhtml"/>  
         <script>
             $('.dropdown-toggle').dropdown();
-        </script>        
+        </script>   
     </h:body>
 </html>
 
