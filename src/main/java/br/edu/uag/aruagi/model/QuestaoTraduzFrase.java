@@ -143,7 +143,7 @@ public class QuestaoTraduzFrase implements java.io.Serializable, InterfaceQuesta
         hash = 17 * hash + (this.nivelQuestao != null ? this.nivelQuestao.hashCode() : 0);
         hash = 17 * hash + (this.status ? 1 : 0);
         hash = 17 * hash + (this.enunciado != null ? this.enunciado.hashCode() : 0);
-        hash = 17 * hash + (this.titulo != null ? this.titulo.hashCode() : 0);
+        hash = 17 * hash + (this.getTitulo() != null ? this.getTitulo().hashCode() : 0);
         return hash;
     }
 
@@ -174,7 +174,7 @@ public class QuestaoTraduzFrase implements java.io.Serializable, InterfaceQuesta
         if ((this.enunciado == null) ? (other.enunciado != null) : !this.enunciado.equals(other.enunciado)) {
             return false;
         }
-        if ((this.titulo == null) ? (other.titulo != null) : !this.titulo.equals(other.titulo)) {
+        if ((this.getTitulo() == null) ? (other.getTitulo() != null) : !this.titulo.equals(other.titulo)) {
             return false;
         }
         return true;

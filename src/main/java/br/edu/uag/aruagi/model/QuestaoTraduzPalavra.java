@@ -140,8 +140,8 @@ public class QuestaoTraduzPalavra implements java.io.Serializable, InterfaceQues
         hash = 17 * hash + this.id;
         hash = 17 * hash + (this.palavraLatim != null ? this.palavraLatim.hashCode() : 0);
         hash = 17 * hash + (this.nivelQuestao != null ? this.nivelQuestao.hashCode() : 0);
-        hash = 17 * hash + (this.titulo != null ? this.titulo.hashCode() : 0);
-        hash = 17 * hash + (this.enunciado != null ? this.enunciado.hashCode() : 0);
+        hash = 17 * hash + (this.getTitulo() != null ? this.getTitulo().hashCode() : 0);
+        hash = 17 * hash + (this.getEnunciado() != null ? this.getEnunciado().hashCode() : 0);
         hash = 17 * hash + (this.status ? 1 : 0);
         return hash;
     }
@@ -164,10 +164,10 @@ public class QuestaoTraduzPalavra implements java.io.Serializable, InterfaceQues
         if (this.nivelQuestao != other.nivelQuestao && (this.nivelQuestao == null || !this.nivelQuestao.equals(other.nivelQuestao))) {
             return false;
         }
-        if ((this.titulo == null) ? (other.titulo != null) : !this.titulo.equals(other.titulo)) {
+        if ((this.getTitulo() == null) ? (other.getTitulo() != null) : !this.titulo.equals(other.titulo)) {
             return false;
         }
-        if ((this.enunciado == null) ? (other.enunciado != null) : !this.enunciado.equals(other.enunciado)) {
+        if ((this.getEnunciado() == null) ? (other.getEnunciado() != null) : !this.enunciado.equals(other.enunciado)) {
             return false;
         }
         if (this.status != other.status) {

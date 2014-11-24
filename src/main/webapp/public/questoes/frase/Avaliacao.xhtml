@@ -6,39 +6,59 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Avaliação</title>
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputScript library="js" name="jsfcrud.js"/> 
-        <h:outputStylesheet library="css" name="defaultHTML.css"/>
-        <h:outputStylesheet library="css" name="customHTML.css"/> 
+        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
+        <h:outputScript library="js" name="bootstrap.js"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+
+        <h:outputScript library="js" name="jsfcrud.js"/>  
     </h:head>
     <h:body>
-        <h:form id="resolucao">
-            <p:dataGrid id="avaliacao" value="#{resolucaoTraduzPalavraController.respostas}" var="resposta" columns="1">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">                
+            <div class="container">
+                <h:link outcome="#{bundle.MenuInicio}">
+                    <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="54" height="70"/>                    
+                </h:link>
+                #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento
+            </div>                
+        </nav>
+        <h:form id="resolucao" style="padding-top: 100px" class="jumbotron">
+            <p:dataGrid id="avaliacao" styleClass="thumbnail" value="#{resolucaoTraduzFraseController.respostasTemp}" var="resposta" columns="1">
                 <f:facet name="header">
-                    <h:outputText value="#{resolucaoTraduzPalavraController.nome}, sua pontuação nesta atividade é #{resolucaoTraduzPalavraController.pontuacao}"/>
+                    <p:outputLabel value="Renan, sua pontuação nesta atividade é #{resolucaoTraduzFraseController.pontuacao}"/>
                 </f:facet>
-                <p:panel header="#{resposta.correcao}">
-                    <h:outputText value="#{resposta.questaoTraduzPalavra.titulo}"/>
-                    <h:outputText value="Tradução adequada ao contexto: #{resposta.questaoTraduzPalavra.palavraPortugues.palavra}"/>
-                    <p:separator/>
-                    <h:outputText value="Sua resposta: #{resposta.palavraPortugues.palavra}"/>
-                    <p:separator/>
+                <p:panel styleClass="caption">
+                    <f:facet name="header">
+                        <h:outputText value="#{resposta.questaoTraduzFrase.titulo}"/>
+                        <p:outputLabel styleClass="label label-warning pull-right" value="#{resposta.correcao}"/>
+                    </f:facet>
+                    <h:outputText value="Tradução adequada ao contexto: #{resposta.questaoTraduzFrase.frasePortugues.frase}"/>
+                    <hr/>
+                    <h:outputText value="Sua resposta: #{resposta.frasePortugues.frase}"/>
+                    <hr/>
                     <p:panel header="#{bundle.CampoEnunciado}" collapsed="true" toggleable="true">
-                        <h:outputText id="enunciado" value="#{resposta.questaoTraduzPalavra.enunciado}" escape="false"/>
+                        <h:outputText id="enunciado" value="#{resposta.questaoTraduzFrase.enunciado}" escape="false"/>
                     </p:panel>                    
-                    <p:separator/>
+                    <hr/>
                     <h:outputText value="Possíveis traduções"/>
-                    <p:dataList  value="#{resposta.questaoTraduzPalavra.palavraLatim.traduzPalavras}" var="trad" rows="10" paginator="true">
-                        <h:outputText value="#{trad.palavraPortugues.palavra}"/>
+                    <p:dataList  value="#{resposta.questaoTraduzFrase.fraseLatim.traduzFrases}" var="trad" rows="10" paginator="true">
+                        <h:outputText value="#{trad.frasePortugues.frase}"/>
                     </p:dataList>
                 </p:panel>
             </p:dataGrid>
-            <p:commandButton value="IMPRIMIR">
-                <p:printer target="avaliacao"/>
-            </p:commandButton>
-            <p:commandButton value="ENVIAR" update=":sendForm" oncomplete="PF('sendReport').show()"/>
-            <p:commandButton value="FINALIZAR" action="#{resolucaoTraduzPalavraController.done()}"/>  
+            <center>
+                <div class="btn-group">
+                    <p:commandButton value="#{bundle.AcaoImprimir}" styleClass="btn btn-primary">
+                        <p:printer target="avaliacao"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{bundle.AcaoFechar}" styleClass="btn btn-danger" action="#{resolucaoTraduzFraseController.done()}"/>                      
+                </div>
+            </center>            
         </h:form>
+        <!-- 
         <p:dialog id="send" appendTo="@(body)" widgetVar="sendReport" modal="true" header="#{bundle.AcaoEnviar}" resizable="false">
             <h:form id="sendForm">
                 <p:outputLabel for="universidade" value="#{bundle.CampoInstituicao}" styleClass="label"/>
@@ -57,7 +77,7 @@
                 <hr/>
                 <p:commandButton value="#{bundle.AcaoEnviar}" styleClass="label"/>
             </h:form>
-        </p:dialog>
+        </p:dialog>-->
     </h:body>
 </html>
 
