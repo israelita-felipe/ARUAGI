@@ -54,10 +54,10 @@
                     <br/>
                     <p:inputText style="width: 100%" id="nome" value="#{resolucaoTraduzFraseController.nome}" placeholder="Digite seu nome" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
                     <hr/>
-                    <p:commandButton style="width: 100%" styleClass="btn btn-primary" id="prepareButton" value="#{bundle.AcaoGerar}" actionListener="#{resolucaoTraduzFraseController.prepare}" update="questoesPanel,avaliar,limpar"/>
+                    <p:commandButton style="width: 100%" styleClass="btn btn-primary" id="prepareButton" value="#{bundle.AcaoGerar}" actionListener="#{resolucaoTraduzFraseController.prepare()}" update="questoesPanel,avaliar,limpar"/>
                     <br/>
                     <br/>
-                    <p:commandButton style="width: 100%" styleClass="btn btn-primary" id="avaliar" value="#{bundle.AcaoAvaliar}" action="#{resolucaoTraduzFraseController.avaliar}" disabled="#{resolucaoTraduzFraseController.questoesPorNivel.isEmpty()}"/>
+                    <p:commandButton style="width: 100%" styleClass="btn btn-primary" id="avaliar" value="#{bundle.AcaoAvaliar}" action="#{resolucaoTraduzFraseController.avaliar()}" disabled="#{resolucaoTraduzFraseController.questoesPorNivel.isEmpty()}"/>
                     <br/>
                     <br/>
                     <p:commandButton style="width: 100%" styleClass="btn btn-danger" id="limpar" value="Limpar" action="#{resolucaoTraduzFraseController.reset()}" disabled="#{resolucaoTraduzFraseController.questoesPorNivel.isEmpty()}" update="questoesPanel,avaliar,limpar"/>

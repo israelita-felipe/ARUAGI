@@ -264,7 +264,6 @@ public class ResolucaoTraduzFraseController implements Serializable {
         this.respostasTemp = this.respostas;
         this.pontuacao = getPontuacao();
         reset();
-        this.hideAvaliar = false;
         return "/public/questoes/frase/Avaliacao.xhtml?faces-redirect=true";
     }
 
@@ -283,8 +282,7 @@ public class ResolucaoTraduzFraseController implements Serializable {
      */
     public void reset() {
         this.position = 1;
-        this.quantidade = 0;
-        this.setHideAvaliar(false);
+        this.hideAvaliar = false;
         this.questoesPorNivel = new ArrayList<QuestaoTraduzFrase>();
         this.respostas = new RespostaTraduzFrase[quantidade];
         this.questaoAtual = null;
