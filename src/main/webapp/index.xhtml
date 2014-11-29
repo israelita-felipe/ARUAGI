@@ -20,36 +20,38 @@ and open the template in the editor.
             <h:form id="PostagemListForm" style="padding-top: 12px">                    
                 <p:dataScroller id="datalist" styleClass="col-lg-9" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
                     <f:facet name="loader">
-                        <p:commandButton type="button" value="Mais" icon="ui-icon-circle-triangle-s"/>
-                    </f:facet>                    
-                    <p:panel header="#{itemAtual.titulo}" toggleable="false" toggleTitle="Detalhes" collapsed="false" styleClass="panel panel-default">
-                        <f:facet name="actions">
+                        <button type="button" class="btn btn-default">Mais</button>
+                    </f:facet>  
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                #{itemAtual.titulo}                                
+                            </div>
                             <span class="badge pull-right">
                                 <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
                             </span>
-                        </f:facet>
-                        <h:outputText value="#{conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
-                        <br/>
-                        <br/>
-
-                        <h:link outcome="/public/postagem/index.uag" value="Continuar lendo..." styleClass="btn btn-default navbar-btn">
-                            <f:param name="id" id="id" value="#{itemAtual.id}"/>
-                        </h:link>
-
-                        <f:facet name="footer" rendered="#{itemAtual.usuario!= usuarioSessionController.selected.id}">
-
+                        </div>
+                        <div class="panel-body">
+                            <h:outputText value="#{conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
+                            <p>
+                                <h:link outcome="/public/postagem/index.uag" value="Continuar lendo..." styleClass="pull-right">
+                                    <f:param name="id" id="id" value="#{itemAtual.id}"/>
+                                </h:link>
+                            </p>
+                        </div>
+                        <div class="panel-footer">
                             <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome} em "/>
                             <p:spacer width="10"/>
                             <h:outputFormat value="#{itemAtual.data}">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputFormat>                        
-
-                        </f:facet>
-                    </p:panel>                                 
+                            </h:outputFormat>                            
+                        </div>
+                    </div>                                                    
                 </p:dataScroller>
-                <div class="col-lg-3">                    
+                <div class="col-lg-3"> 
                     <ul class="list-group">                        
-                        <a class="list-group-item active">
+                        <a class="list-group-item disabled">
                             Conteúdo
                         </a>
                         <a class="list-group-item">
@@ -64,7 +66,7 @@ and open the template in the editor.
                         <a class="list-group-item">
                             Frases: <span class="badge pull-right">#{fraseLatimController.items.size()}</span>                                
                         </a>
-                        <a class="list-group-item active">
+                        <a class="list-group-item disabled">
                             Usuário do ARUAGI: <span class="badge pull-right">#{usuarioController.items.size()}</span>                                
                         </a>
                     </ul>
@@ -77,11 +79,7 @@ and open the template in the editor.
                          data-stream="true"
                          data-show-border="false">                             
                     </div>           
-                    <hr/>
-                    <div id="busca" class="thumbnail">
-                        <p:outputLabel value="Pesquise..." styleClass="caption"/>
-                    </div>
-                    <hr/>
+                    <hr/>                    
                 </div>                
                 <script>
                     googleSearch('busca', 'search', '004159013048277972925:frojtp-ajiy');
