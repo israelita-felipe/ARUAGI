@@ -17,10 +17,13 @@ and open the template in the editor.
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="PostagemListForm" style="padding-top: 12px">                    
+            <div class="jumbotron">
+                #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento.
+            </div>
+            <h:form id="PostagemListForm">                    
                 <p:dataScroller id="datalist" styleClass="col-lg-9" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
                     <f:facet name="loader">
-                        <button type="button" class="btn btn-default">Mais</button>
+                        <button type="button" class="btn btn-default">Mais postagens</button>
                     </f:facet>  
 
                     <div class="panel panel-default">
@@ -28,9 +31,9 @@ and open the template in the editor.
                             <div class="panel-title">
                                 #{itemAtual.titulo}                                
                             </div>
-                            <span class="badge pull-right">
+                            <p:outputLabel styleClass="badge pull-right" rendered="#{!itemAtual.videosPostagems.isEmpty()}">
                                 <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
-                            </span>
+                            </p:outputLabel>
                         </div>
                         <div class="panel-body">
                             <h:outputText value="#{conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
@@ -77,14 +80,15 @@ and open the template in the editor.
                          data-show-faces="true"
                          data-header="false"
                          data-stream="true"
+                         data-width="250"
                          data-show-border="false">                             
                     </div>           
                     <hr/>                    
                 </div>                
                 <script>
                     googleSearch('busca', 'search', '004159013048277972925:frojtp-ajiy');
-                </script>
-            </h:form>             
+                </script>               
+            </h:form>              
         </ui:define>        
     </ui:composition>    
 </html>

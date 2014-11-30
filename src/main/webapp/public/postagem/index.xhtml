@@ -20,34 +20,30 @@ and open the template in the editor.
             </f:metadata>
         </ui:define>
         <ui:define name="body">
-            <h:form id="PostagemListForm">                    
+            <h:form id="PostagemListForm" style="padding-top: 12px">                    
 
 
-                <p:panel header="#{postagemController.getPostagem(postagemController.idParametro).titulo}" toggleable="false" toggleTitle="Detalhes" collapsed="false">
-                    <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(postagemController.getPostagem(postagemController.idParametro).usuario).nome} em "/>
-                    <h:outputFormat value="#{postagemController.getPostagem(postagemController.idParametro).data}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:outputFormat>
-                    <br/>
-                    <br/>
-                    <h:outputText value="#{postagemController.getPostagem(postagemController.idParametro).conteudo}" escape="false"/>
-
+                <p:panel header="#{postagemController.getPostagem(postagemController.idParametro).titulo}" toggleable="false" toggleTitle="Detalhes" collapsed="false">                    
+                    <f:facet name="footer">
+                        <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(postagemController.getPostagem(postagemController.idParametro).usuario).nome} em "/>
+                        <h:outputFormat value="#{postagemController.getPostagem(postagemController.idParametro).data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputFormat>
+                    </f:facet>
+                    <p>
+                        <h:outputText value="#{postagemController.getPostagem(postagemController.idParametro).conteudo}" escape="false"/>
+                    </p>
                     <p:dataList id="videosDatalist" type="none" value="#{postagemController.getPostagem(postagemController.idParametro).videosPostagems}"
-                                var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" rows="1"
+                                var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true"
                                 rendered="#{!postagemController.getPostagem(postagemController.idParametro).videosPostagems.isEmpty()}">
-                        <p:panel header="#{vpa.videos.descricao}">
 
-                            <center>
-                                <iframe width="340"
-                                        height="260"
-                                        src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
-                                        frameborder="0"
-                                        allowfullscreen="true">
-                                </iframe>                                  
-                            </center>
-
-                        </p:panel>
-
+                        <center>
+                            <iframe 
+                                src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
+                                frameborder="0"
+                                allowfullscreen="true">
+                            </iframe>                                  
+                        </center>
                     </p:dataList >
 
                 </p:panel>                                    
