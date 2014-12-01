@@ -10,8 +10,6 @@
     <h:head>
         <title><ui:insert name="title">Login</ui:insert></title>
 
-        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
-        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
         <h:outputStylesheet library="css" name="bootstrap.css"/>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="defaultHTML.css"/>
@@ -23,24 +21,18 @@
 
     </h:head>
     <h:body>        
-        <h:form style="padding-top: 100px">
+        <h:form style="padding-top: 100px" class="container">
             <p:messages autoUpdate="true" closable="true"/>
-            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">                
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">                
                 <div class="container">
-                    <h:link outcome="#{bundle.MenuInicio}">
-                        <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="54" height="70"/>                    
-                    </h:link>
-                    #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento
+                    <div class="navbar-header">                        
+                        <a href="/index.uag" class="navbar-brand">ARUAGI</a>
+                    </div>                    
                 </div>                
             </nav>            
-            <div class="thumbnail center-block" style="width: 300px">                
+            <div class="center-block" style="width: 300px">                
                 <div class="caption">
-                    <center>
-                        <h3>
-                            <h:outputLabel value="Autorização" styleClass="label label-primary"/>
-                        </h3>
-                    </center>
-                    <div class="jumbotron" style="border: 1px solid #ddd">
+                    <div >
                         <p:outputLabel for="login" value="Login"/>
                         <div class="input-group">
                             <span class="input-group-addon"></span>
@@ -54,6 +46,7 @@
                             <h:inputSecret id="senha" value="#{usuarioSessionController.selected.senha}" styleClass="form-control"/>
                         </div>   
                     </div>
+                    <hr/>
                     <p:commandButton styleClass="btn btn-primary" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/>
                     <p:spacer width="10"/>
                     <p:commandLink value="Alterar Senha" styleClass="pull-right" action="/public/Redefinir.xhtml?faces-redirect=true"/>

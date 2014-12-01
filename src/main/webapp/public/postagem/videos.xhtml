@@ -7,8 +7,6 @@
 
     <h:head>
         <title>Vídeos</title>
-        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
-        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
         <h:outputStylesheet library="css" name="bootstrap.css"/>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="defaultHTML.css"/>
@@ -23,13 +21,11 @@
 
     <h:body>
         <h:form id="VideosListForm">                                
-            <nav class="navbar navbar-default navbar-static-top" role="navigation">
-                <div class="container-fluid">                               
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container container-fluid">                               
                     <div class="navbar-collapse collapse in">
                         <div class="navbar-header">
-                            <h:link styleClass="navbar-brand" style="padding-top: 0" outcome="#{bundle.MenuInicio}">
-                                <h:graphicImage  library="images" name="layout/BRASAO-UFRPE.jpg" width="37" height="48"/>                    
-                            </h:link> 
+                            <a href="/index.uag" class="navbar-brand">ARUAGI</a>
                         </div>
                         <div class="navbar-form navbar-right">
                             <div class="form-group">
@@ -44,29 +40,34 @@
                     </div>
                 </div>
             </nav>
-            <p:dataScroller id="datalist" value="#{videosController.items}" var="t" chunkSize="10">
-                <f:facet name="loader">
-                    <p:commandButton type="button" value="Mais" icon="ui-icon-circle-triangle-s"/>
-                </f:facet>
-                <div class="col-sm-6 col-md-4">
-                    <p:panel header="#{t.descricao}" styleClass="thumbnail">
-                        <div class="embed-responsive embed-responsive-4by3">
-                            <iframe class="embed-responsive-item"
-                                    width="240"
-                                    height="160"
-                                    src="//www.youtube.com/embed/#{t.link}?feature=player_embedded"
-                                    frameborder="0"
-                                    allowfullscreen="true">
-                            </iframe>  
-                        </div>
-                        <f:facet name="footer">   
-                            <div style="height: 16px">
-                                <h:outputText styleClass="pull-right" value="Por: #{usuarioSessionController.getUsuario(t.usuario).nome}"/>
+            <div class="container">
+                <p:dataScroller id="datalist" value="#{videosController.items}" var="t" chunkSize="10">
+                    <f:facet name="loader">
+                        <button class="btn btn-default">Mais vídeos</button>
+                    </f:facet>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                #{t.descricao}
                             </div>
-                        </f:facet>
-                    </p:panel>
-                </div>
-            </p:dataScroller>
+                            <div class="panel-body embed-responsive embed-responsive-4by3">
+                                <iframe class="embed-responsive-item"
+                                        width="240"
+                                        height="160"
+                                        src="//www.youtube.com/embed/#{t.link}?feature=player_embedded"
+                                        frameborder="0"
+                                        allowfullscreen="true">
+                                </iframe>  
+                            </div>
+                            <div class="panel-footer">
+                                <div style="height: 16px">
+                                    <h:outputText styleClass="pull-right" value="Por: #{usuarioSessionController.getUsuario(t.usuario).nome}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p:dataScroller>
+            </div>
         </h:form>
     </h:body>
 

@@ -34,298 +34,291 @@
         <p:layout fullPage="true" style="padding: 0;border: 0" styleClass="acessible">            
             <!-- CENTRO DA PÁGINA-->
             <p:layoutUnit position="center" style="padding: 0;border: 0">
-                <h:form id="menuForm">
-                    <!-- BARRA DE MENUS PRINCIPAL-->
-                    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-                        <div class="container-fluid">
-                            <!-- Brand and toggle get grouped for better mobile display -->
-                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                                <h:link styleClass="navbar-brand" style="padding-top: 0" outcome="#{bundle.MenuInicio}">
-                                    <h:graphicImage  library="images" name="layout/BRASAO-UFRPE.jpg" width="37" height="48"/>                    
-                                </h:link> 
-                            </div>
+                <div class="container">                    
+                    <h:form>                        
+                        <ul class="pagination" style="width: 100%">
+                            <p:commandButton styleClass="btn btn-default" icon="ui-icon-comment" id="createButton" value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
+                            <p:commandButton styleClass="pull-right" id="aumentar" icon="ui-icon-circle-plus" action="#{acessibilidadeController.up()}" ajax="false"/>
+                            <p:commandButton styleClass="pull-right" id="diminuir" icon="ui-icon-circle-minus" action="#{acessibilidadeController.down()}" ajax="false"/>
+                            <p:commandButton styleClass="pull-right" id="resetar" icon="ui-icon-circle-close" action="#{acessibilidadeController.reset()}" ajax="false"/>
+                        </ul>
+                    </h:form>
 
-                            <!-- Collect the nav links, forms, and other content for toggling -->
-                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <ul class="nav navbar-nav">
-                                    <li class="dropdown" rendered="#{usuarioSessionController.admin}">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenuTituloManutencao}</a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="/private/administrador/acesso/List.uag">#{bundle.MenusListaAcessos}</a></li>
-                                            <li><a href="/private/administrador/nivelAcesso/List.uag">#{bundle.MenusNiveisAcesso}</a></li>
-                                            <li><a href="/private/administrador/nivelQuestao/List.uag">#{bundle.MenusNiveisQuestao}</a></li>
-                                            <li><a href="/private/administrador/tipoQuestao/List.uag">#{bundle.MenusTiposQuestao}</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="/private/administrador/usuario/List.uag">#{bundle.MenusListaUsuarios}</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusConteudo}</a>
-                                        <ul class="dropdown-menu" role="menu">                                            
-                                            <li><a href="/private/professor/caso/List.uag">#{bundle.MenusCasosLatinos}</a></li>
-                                            <li><a href="/private/professor/classificacaoGramatical/List.uag">#{bundle.MenusClassificacaoGramatical}</a></li>
-                                            <li><a href="/private/professor/declinacao/List.uag">#{bundle.MenusDeclinacao}</a></li>
-                                            <li><a href="/private/professor/fraseLatim/List.uag">#{bundle.MenusFraseLatim}</a></li>
-                                            <li><a href="/private/professor/frasePortugues/List.uag">#{bundle.MenusFrasePortugues}</a></li>
-                                            <li><a href="/private/professor/palavraLatim/List.uag">#{bundle.MenusPalavraLatim}</a></li>
-                                            <li><a href="/private/professor/palavraPortugues/List.uag">#{bundle.MenusPalavraPortugues}</a></li>
-                                            <li><a href="/private/professor/pessoaGramatical/List.uag">#{bundle.MenusPessoaGramatical}</a></li>
-                                            <li><a href="/private/professor/tempoVerbal/List.uag">#{bundle.MenusTempoVerbal}</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusTraducao}</a>
-                                        <ul class="dropdown-menu" role="menu">                                            
-                                            <li><a href="/private/professor/traduzFrase/List.uag">#{bundle.MenusTraducaoFrase}</a></li>
-                                            <li><a href="/private/professor/traduzPalavra/List.uag">#{bundle.MenusTraducaoPalavra}</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusGramatica}</a>
-                                        <ul class="dropdown-menu" role="menu">                                            
-                                            <li><a href="/private/professor/aplicacaoFrase/List.uag">#{bundle.MenusAplicacaoFrase}</a></li>
-                                            <li><a href="/private/professor/casoAplicado/List.uag">#{bundle.MenusAplicacaoCaso}</a></li>
-                                            <li><a href="/private/professor/declinacaoAplicada/List.uag">#{bundle.MenusAplicacaoDeclinacao}</a></li>
-                                            <li><a href="/private/professor/indicadorPessoaGramatical/List.uag">#{bundle.MenusIndicadorPessoaGramatical}</a></li>
-                                            <li><a href="/private/professor/indicadorTempoVerbal/List.uag">#{bundle.MenusIndicadorTempoVerbal}</a></li>
-                                            <li><a href="/private/professor/palavrasClassificadas/List.uag">#{bundle.MenusClassificacaoPalavras}</a></li>
-                                            <li><a href="/private/professor/palavrasDeclinadas/List.uag">#{bundle.MenusDeclinacaoPalavras}</a></li>
-                                            <li><a href="/private/professor/radical/List.uag">#{bundle.MenusRadical}</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusAtividade}</a>
-                                        <ul class="dropdown-menu" role="menu">                                            
-                                            <li><a href="#">AtividadeQuestao (pendente)</a></li>
-                                            <li><a href="#">Lacuna (pendente)</a></li>
-                                            <li><a href="#">LinksQuestao (pendente)</a></li>
-                                            <li><a href="#">ListaQuestao (pendente)</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusQuestoes}</a>
-                                        <ul class="dropdown-menu" role="menu">                                            
-                                            <li><a href="/private/professor/questaoLacuna/List.uag">#{bundle.MenusQuestaoLacuna}</a></li>
-                                            <li><a href="/private/professor/questaoTraduzFrase/List.uag">#{bundle.MenusQuestaoTraduzFrase}</a></li>
-                                            <li><a href="/private/professor/questaoTraduzPalavra/List.uag">#{bundle.MenusQuestaoTraduzPalavra}</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusMultimidia}</a>
-                                        <ul class="dropdown-menu" role="menu">                                            
-                                            <li><a href="/private/professor/videos/List.uag">#{bundle.MenusVideo}</a></li>
-                                        </ul>
-                                    </li>                                    
-                                </ul>  
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opções</a>
-                                        <ul class="dropdown-menu" role="menu">                                            
-                                            <li><a href="/private/professor/perfil/Perfil.uag">#{bundle.MenusAtualizarPerfil}</a></li>
-                                            <li><a href="/private/professor/senha/Redefinir.uag">#{bundle.CampoRedefinirSenha}</a></li>
-                                            <li class="divider"></li>
-                                            <li><p:commandLink ajax="false" action="#{usuarioSessionController.doLogout()}" value="#{bundle.AcaoSair}"/></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div><!-- /.navbar-collapse -->
-                        </div><!-- /.container-fluid -->
-                    </nav> 
-                </h:form>
+                    <h:form id="menuForm">
+                        <!-- BARRA DE MENUS PRINCIPAL-->
+                        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                            <div class="container container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a href="/index.uag" class="navbar-brand">ARUAGI</a> 
+                                </div>
 
-                <div class="col-md-3 jumbotron"> 
-                    <h:form class="list-group">
-                        <p:commandButton id="aumentar" style="border-radius: 0px" styleClass="form-control" icon="ui-icon-circle-plus" value="Aumentar" action="#{acessibilidadeController.up()}" ajax="false"/>
-                        <p:commandButton id="diminuir" style="border-radius: 0px" styleClass="form-control" icon="ui-icon-circle-minus" value="Diminuir" action="#{acessibilidadeController.down()}" ajax="false"/>
-                        <p:commandButton id="resetar" style="border-radius: 0px" styleClass="form-control" icon="ui-icon-circle-close" value="Padrão" action="#{acessibilidadeController.reset()}" ajax="false"/>
-                    </h:form>                    
-                    <p:commandButton icon="ui-icon-comment" styleClass="form-control" id="createButton" value="#{bundle.AcaoNovaPostagem}" actionListener="#{postagemController.prepareCreate}" update=":PostagemCreateForm" oncomplete="PF('PostagemCreateDialog').show()"/>
-                    <hr/>
-                    <ul class="nav nav-pills nav-stacked">
-                        <li class="active">
-                            <a>
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li class="dropdown" rendered="#{usuarioSessionController.admin}">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenuTituloManutencao}</a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="/private/administrador/acesso/List.uag">#{bundle.MenusListaAcessos}</a></li>
+                                                <li><a href="/private/administrador/nivelAcesso/List.uag">#{bundle.MenusNiveisAcesso}</a></li>
+                                                <li><a href="/private/administrador/nivelQuestao/List.uag">#{bundle.MenusNiveisQuestao}</a></li>
+                                                <li><a href="/private/administrador/tipoQuestao/List.uag">#{bundle.MenusTiposQuestao}</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="/private/administrador/usuario/List.uag">#{bundle.MenusListaUsuarios}</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusConteudo}</a>
+                                            <ul class="dropdown-menu" role="menu">                                            
+                                                <li><a href="/private/professor/caso/List.uag">#{bundle.MenusCasosLatinos}</a></li>
+                                                <li><a href="/private/professor/classificacaoGramatical/List.uag">#{bundle.MenusClassificacaoGramatical}</a></li>
+                                                <li><a href="/private/professor/declinacao/List.uag">#{bundle.MenusDeclinacao}</a></li>
+                                                <li><a href="/private/professor/fraseLatim/List.uag">#{bundle.MenusFraseLatim}</a></li>
+                                                <li><a href="/private/professor/frasePortugues/List.uag">#{bundle.MenusFrasePortugues}</a></li>
+                                                <li><a href="/private/professor/palavraLatim/List.uag">#{bundle.MenusPalavraLatim}</a></li>
+                                                <li><a href="/private/professor/palavraPortugues/List.uag">#{bundle.MenusPalavraPortugues}</a></li>
+                                                <li><a href="/private/professor/pessoaGramatical/List.uag">#{bundle.MenusPessoaGramatical}</a></li>
+                                                <li><a href="/private/professor/tempoVerbal/List.uag">#{bundle.MenusTempoVerbal}</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusTraducao}</a>
+                                            <ul class="dropdown-menu" role="menu">                                            
+                                                <li><a href="/private/professor/traduzFrase/List.uag">#{bundle.MenusTraducaoFrase}</a></li>
+                                                <li><a href="/private/professor/traduzPalavra/List.uag">#{bundle.MenusTraducaoPalavra}</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusGramatica}</a>
+                                            <ul class="dropdown-menu" role="menu">                                            
+                                                <li><a href="/private/professor/aplicacaoFrase/List.uag">#{bundle.MenusAplicacaoFrase}</a></li>
+                                                <li><a href="/private/professor/casoAplicado/List.uag">#{bundle.MenusAplicacaoCaso}</a></li>
+                                                <li><a href="/private/professor/declinacaoAplicada/List.uag">#{bundle.MenusAplicacaoDeclinacao}</a></li>
+                                                <li><a href="/private/professor/indicadorPessoaGramatical/List.uag">#{bundle.MenusIndicadorPessoaGramatical}</a></li>
+                                                <li><a href="/private/professor/indicadorTempoVerbal/List.uag">#{bundle.MenusIndicadorTempoVerbal}</a></li>
+                                                <li><a href="/private/professor/palavrasClassificadas/List.uag">#{bundle.MenusClassificacaoPalavras}</a></li>
+                                                <li><a href="/private/professor/palavrasDeclinadas/List.uag">#{bundle.MenusDeclinacaoPalavras}</a></li>
+                                                <li><a href="/private/professor/radical/List.uag">#{bundle.MenusRadical}</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusAtividade}</a>
+                                            <ul class="dropdown-menu" role="menu">                                            
+                                                <li><a href="#">AtividadeQuestao (pendente)</a></li>
+                                                <li><a href="#">Lacuna (pendente)</a></li>
+                                                <li><a href="#">LinksQuestao (pendente)</a></li>
+                                                <li><a href="#">ListaQuestao (pendente)</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusQuestoes}</a>
+                                            <ul class="dropdown-menu" role="menu">                                            
+                                                <li><a href="/private/professor/questaoLacuna/List.uag">#{bundle.MenusQuestaoLacuna}</a></li>
+                                                <li><a href="/private/professor/questaoTraduzFrase/List.uag">#{bundle.MenusQuestaoTraduzFrase}</a></li>
+                                                <li><a href="/private/professor/questaoTraduzPalavra/List.uag">#{bundle.MenusQuestaoTraduzPalavra}</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{bundle.MenusMultimidia}</a>
+                                            <ul class="dropdown-menu" role="menu">                                            
+                                                <li><a href="/private/professor/videos/List.uag">#{bundle.MenusVideo}</a></li>
+                                            </ul>
+                                        </li>                                    
+                                    </ul>  
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opções</a>
+                                            <ul class="dropdown-menu" role="menu">                                            
+                                                <li><a href="/private/professor/perfil/Perfil.uag">#{bundle.MenusAtualizarPerfil}</a></li>
+                                                <li><a href="/private/professor/senha/Redefinir.uag">#{bundle.CampoRedefinirSenha}</a></li>
+                                                <li class="divider"></li>
+                                                <li><p:commandLink ajax="false" action="#{usuarioSessionController.doLogout()}" value="#{bundle.AcaoSair}"/></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav> 
+                    </h:form>
+
+                    <div class="col-md-3"> 
+                        <ul class="list-group">
+                            <a class="list-group-item disabled">
                                 #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento.
                             </a>
-                        </li>
-                        <li>
-                            <a>
+                            <a class="list-group-item">
                                 Minhas postagens: <span class="badge pull-right">#{usuarioSessionController.postCount()}</span>
                             </a> 
-                        </li>
-                        <li>
-                            <a>
-                                Veus vídeos: <span class="badge pull-right">#{usuarioSessionController.videosCout()}</span>                                
+                            <a class="list-group-item">
+                                Meus vídeos: <span class="badge pull-right">#{usuarioSessionController.videosCout()}</span>                                
                             </a>
-                        </li>
-                        <li>
-                            <a>
+                            <a class="list-group-item">
                                 Postagens no ARUAGI: <span class="badge pull-right">#{postagemController.timeLine.size()}</span>                                
                             </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-pills nav-stacked">
-                        <li class="active">
-                            <a>
+                        </ul>
+                        <ul class="list-group">
+                            <a class="list-group-item disabled">
                                 Redes sociais
                             </a>
-                        </li>
-                    </ul>
-                    <div class="fb-like-box"
-                         data-href="https://www.facebook.com/pages/Aruagi-Ensino-de-L%C3%ADngua-Latina/553025198136554"
-                         data-colorscheme="light"
-                         data-show-faces="true"
-                         data-header="false"
-                         data-stream="true"
-                         data-show-border="false">                             
+                        </ul>
+                        <div class="fb-like-box"
+                             data-width="250"
+                             data-href="https://www.facebook.com/pages/Aruagi-Ensino-de-L%C3%ADngua-Latina/553025198136554"
+                             data-colorscheme="light"
+                             data-show-faces="true"
+                             data-header="false"
+                             data-stream="true"
+                             data-show-border="false">                             
+                        </div>
                     </div>
-                </div>
-                <h:form id="PostagemListForm" class="col-md-9" style="border:none">                    
+                    <h:form id="PostagemListForm" class="col-md-9" style="border:none">                    
 
-                    <p:dataScroller id="datalist" style="border: none" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
-                        <f:facet name="loader">
-                            <p:commandButton type="button" value="Mais" icon="ui-icon-circle-triangle-s"/>
-                        </f:facet>
-                        <p:panel toggleable="true" toggleTitle="Detalhes" collapsed="true">
-                            <f:facet name="header" class="panel-heading">
-                                <p:outputLabel value="#{itemAtual.titulo}"/>
+                        <p:dataScroller id="datalist" style="border: none" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
+                            <f:facet name="loader">
+                                <button class="btn btn-default">Mais postagens</button>
                             </f:facet>
-                            <f:facet name="actions">
-                                <span class="badge pull-right">
-                                    <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
-                                </span>
-                            </f:facet>
-                            <h:outputText value="#{itemAtual.conteudo}" escape="false" styleClass="panel-body"/>
-                            <br/>
-                            <p:panel collapsed="true" toggleable="true" header="Vídeos" style="border: none" rendered="#{!itemAtual.videosPostagems.isEmpty()}">                                
+                            <p:panel toggleable="true" toggleTitle="Detalhes" collapsed="true">
+                                <f:facet name="header" class="panel-heading">
+                                    <p:outputLabel value="#{itemAtual.titulo}"/>
+                                </f:facet>
+                                <f:facet name="actions">
+                                    <span class="badge pull-right">
+                                        <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
+                                    </span>
+                                </f:facet>
+                                <h:outputText value="#{itemAtual.conteudo}" escape="false" styleClass="panel-body"/>
+                                <br/>
+                                <p:panel collapsed="true" toggleable="true" header="Vídeos" style="border: none" rendered="#{!itemAtual.videosPostagems.isEmpty()}">                                
 
-                                <p:dataGrid id="videosDatalist" style="border: none" value="#{itemAtual.videosPostagems}" var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" columns="1" rows="1">
-                                    <div>
-                                        <center class="embed-responsive embed-responsive-4by3">
-                                            <iframe class="embed-responsive embed-responsive-item"
-                                                    src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
-                                                    frameborder="0"
-                                                    allowfullscreen="true">
-                                            </iframe>   
-                                        </center>
-                                        <div class="caption">
-                                            <center>
-                                                <h4>Observações</h4>
-                                                <h:outputText value="#{vpa.videos.descricao}"/>
-                                                <hr/>
-                                                <p:commandButton value="#{bundle.AcaoExcluir}" action="#{videosPostagemController.destroy}" update=":PostagemListForm:datalist">
-                                                    <f:setPropertyActionListener target="#{videosPostagemController.selected}" value="#{vpa}"/>
-                                                </p:commandButton> 
+                                    <p:dataGrid id="videosDatalist" style="border: none" value="#{itemAtual.videosPostagems}" var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" columns="1" rows="1">
+                                        <div>
+                                            <center class="embed-responsive embed-responsive-4by3">
+                                                <iframe class="embed-responsive embed-responsive-item"
+                                                        src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
+                                                        frameborder="0"
+                                                        allowfullscreen="true">
+                                                </iframe>   
                                             </center>
+                                            <div class="caption">
+                                                <center>
+                                                    <h4>Observações</h4>
+                                                    <h:outputText value="#{vpa.videos.descricao}"/>
+                                                    <hr/>
+                                                    <p:commandButton value="#{bundle.AcaoExcluir}" action="#{videosPostagemController.destroy}" update=":PostagemListForm:datalist">
+                                                        <f:setPropertyActionListener target="#{videosPostagemController.selected}" value="#{vpa}"/>
+                                                    </p:commandButton> 
+                                                </center>
+                                            </div>
                                         </div>
+                                    </p:dataGrid >
+                                </p:panel>
+
+                                <f:facet name="footer" rendered="#{itemAtual.usuario!= usuarioSessionController.selected.id}">
+                                    <div class="btn-group">
+                                        <p:commandButton styleClass="btn btn-default" value="#{bundle.AcaoExcluir}" icon="ui-icon-trash" action="#{postagemController.destroy}"  update=":PostagemListForm:datalist" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
+                                            <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
+                                        </p:commandButton>
+                                        <p:commandButton styleClass="btn btn-default" value="#{bundle.AcaoEditar}" icon="ui-icon-pencil" update=":PostagemEditForm" oncomplete="PF('PostagemEditDialog').show()" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
+                                            <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
+                                        </p:commandButton>
+                                        <p:commandButton styleClass="btn btn-default" value="Videos" icon="ui-icon-plus" actionListener="#{videosPostagemController.prepareCreate}" update=":VideosPostagemCreateForm" oncomplete="PF('VideosPostagemCreateDialog').show()" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
+                                            <f:setPropertyActionListener target="#{videosPostagemController.selected.postagem}" value="#{itemAtual}"/>
+                                        </p:commandButton>
                                     </div>
-                                </p:dataGrid >
-                            </p:panel>
-
-                            <f:facet name="footer" rendered="#{itemAtual.usuario!= usuarioSessionController.selected.id}">
-                                <div class="btn-group">
-                                    <p:commandButton styleClass="btn btn-default" value="#{bundle.AcaoExcluir}" icon="ui-icon-trash" action="#{postagemController.destroy}"  update=":PostagemListForm:datalist" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
-                                        <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
-                                    </p:commandButton>
-                                    <p:commandButton styleClass="btn btn-default" value="#{bundle.AcaoEditar}" icon="ui-icon-pencil" update=":PostagemEditForm" oncomplete="PF('PostagemEditDialog').show()" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
-                                        <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
-                                    </p:commandButton>
-                                    <p:commandButton styleClass="btn btn-default" value="Videos" icon="ui-icon-plus" actionListener="#{videosPostagemController.prepareCreate}" update=":VideosPostagemCreateForm" oncomplete="PF('VideosPostagemCreateDialog').show()" disabled="#{itemAtual.usuario!=usuarioSessionController.selected.id}">
-                                        <f:setPropertyActionListener target="#{videosPostagemController.selected.postagem}" value="#{itemAtual}"/>
-                                    </p:commandButton>
+                                    <div class="pull-right">
+                                        <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome} em "/>
+                                        <p:spacer width="10"/>
+                                        <h:outputFormat value="#{itemAtual.data}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputFormat>                                                        
+                                    </div>
+                                </f:facet>
+                            </p:panel>  
+                            <br/>
+                        </p:dataScroller> 
+                    </h:form>
+                    <div class="col-lg-12" style="padding-top: 32px;padding-left: 0;border-left: 0;padding-right: 0;border-right: 0">
+                        <div style="border-top: 1px solid #f7f7f7">
+                            <div id="quadro_1" class="col-md-3">
+                                <div class="h3">                                    
+                                    ARUAGI
                                 </div>
-                                <div class="pull-right">
-                                    <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome} em "/>
-                                    <p:spacer width="10"/>
-                                    <h:outputFormat value="#{itemAtual.data}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </h:outputFormat>                                                        
+                                <div class="caption">
+                                    Universidade Federal Rural de Pernambuco - UFRPE
+                                    <hr/>
+                                    Unidade Acadêmica de Garanhuns - UAG
                                 </div>
-                            </f:facet>
-                        </p:panel>  
-                        <br/>
-                    </p:dataScroller> 
-                </h:form>
-                <div class="col-lg-12" style="padding-top: 32px;padding-left: 0;border-left: 0;padding-right: 0;border-right: 0">
-                    <div style="border-top: 1px solid #f7f7f7">
-                        <div id="quadro_1" class="col-md-3">
-                            <div class="h3">                                    
-                                ARUAGI
                             </div>
-                            <div class="caption">
-                                Universidade Federal Rural de Pernambuco - UFRPE
-                                <hr/>
-                                Unidade Acadêmica de Garanhuns - UAG
-                            </div>
-                        </div>
-                        <div id="quadro_2" class="col-md-3">
-                            <div class="h3">
-                                Parceiros
-                            </div>
-                            <div class="caption">
+                            <div id="quadro_2" class="col-md-3">
+                                <div class="h3">
+                                    Parceiros
+                                </div>
+                                <div class="caption">
 
+                                </div>
                             </div>
-                        </div>
-                        <div id="quadro_3" class="col-md-3">
-                            <div class="h3">
-                                Projeto
-                            </div>
-                            <div class="caption">
+                            <div id="quadro_3" class="col-md-3">
+                                <div class="h3">
+                                    Projeto
+                                </div>
+                                <div class="caption">
 
+                                </div>
                             </div>
-                        </div>
-                        <div id="quadro_4" class="col-md-3">
-                            <div class="caption">
-                                <h3>Orientado por:</h3>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/9765841869399460">
-                                        <h:outputText value="Aliete Gomes Carneiro Rosa" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <hr/> 
-                                <h3>Desenvolvimento</h3>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/0444370129900667">
-                                        <h:outputText value="Israel Felipe de Lima Araújo Silva" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="">
-                                        <h:outputText value="Renan Leandro Fernandes" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/6385944686814684">
-                                        <h:outputText value="Rafaell Brunno Nogueira Vieira" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="">
-                                        <h:outputText value="Gilson Morais" />
-                                    </h:outputLink>
-                                </p:lightBox>                        
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/0718728977707198">
-                                        <h:outputText value="Victor Francisco dos Santos Viana" />
-                                    </h:outputLink>
-                                </p:lightBox>                                  
-                                <hr/>                     
-                                <h3>Apoio técnico:</h3>
+                            <div id="quadro_4" class="col-md-3">
+                                <div class="caption">
+                                    <h3>Orientado por:</h3>
+                                    <p:lightBox iframe="true">
+                                        <h:outputLink value="http://lattes.cnpq.br/9765841869399460">
+                                            <h:outputText value="Aliete Gomes Carneiro Rosa" />
+                                        </h:outputLink>
+                                    </p:lightBox>
+                                    <hr/> 
+                                    <h3>Desenvolvimento</h3>
+                                    <p:lightBox iframe="true">
+                                        <h:outputLink value="http://lattes.cnpq.br/0444370129900667">
+                                            <h:outputText value="Israel Felipe de Lima Araújo Silva" />
+                                        </h:outputLink>
+                                    </p:lightBox>
+                                    <p:lightBox iframe="true">
+                                        <h:outputLink value="">
+                                            <h:outputText value="Renan Leandro Fernandes" />
+                                        </h:outputLink>
+                                    </p:lightBox>
+                                    <p:lightBox iframe="true">
+                                        <h:outputLink value="http://lattes.cnpq.br/6385944686814684">
+                                            <h:outputText value="Rafaell Brunno Nogueira Vieira" />
+                                        </h:outputLink>
+                                    </p:lightBox>
+                                    <p:lightBox iframe="true">
+                                        <h:outputLink value="">
+                                            <h:outputText value="Gilson Morais" />
+                                        </h:outputLink>
+                                    </p:lightBox>                        
+                                    <p:lightBox iframe="true">
+                                        <h:outputLink value="http://lattes.cnpq.br/0718728977707198">
+                                            <h:outputText value="Victor Francisco dos Santos Viana" />
+                                        </h:outputLink>
+                                    </p:lightBox>                                  
+                                    <hr/>                     
+                                    <h3>Apoio técnico:</h3>
+                                </div>
                             </div>
+                        </div>                                            
+                        <div class="col-lg-12" >      
+                            <hr/>
+                            <center>
+                                &copy; Todos os direitos reservados
+                                <p:spacer width="10"/>
+                                <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
+                            </center>
                         </div>
-                    </div>                                            
-                    <div class="col-lg-12" >      
-                        <hr/>
-                        <center>
-                            &copy; Todos os direitos reservados
-                            <p:spacer width="10"/>
-                            <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
-                        </center>
                     </div>
                 </div>
             </p:layoutUnit>
