@@ -20,11 +20,11 @@ and open the template in the editor.
             </f:metadata>
         </ui:define>
         <ui:define name="body">
-            <h:form id="PostagemListForm" style="padding-top: 12px">                    
+            <h:form id="PostagemListForm" class="container" style="padding-top: 12px">                    
 
-                <div class="panel-title">
+                <h2 class="blog-post-title">
                     <h:outputText value="#{postagemController.getPostagem(postagemController.idParametro).titulo}" escape="false"/>
-                </div>
+                </h2>
                 <hr/>
                 <p>
                     <h:outputText value="#{postagemController.getPostagem(postagemController.idParametro).conteudo}" escape="false"/>

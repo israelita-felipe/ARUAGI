@@ -10,82 +10,93 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="/resources/template_site.xhtml">
+    <ui:composition template="/resources/template_site.xhtml">        
 
         <ui:define name="title">
             <h:outputText value="Início - ARUAGI"/>
         </ui:define>
 
-        <ui:define name="body">
+        <ui:define name="body">               
             <div class="jumbotron">
-                #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento.
-            </div>
-            <h:form id="PostagemListForm">                    
-                <p:dataScroller id="datalist" styleClass="col-lg-9" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
-                    <f:facet name="loader">
-                        <button type="button" class="btn btn-default">Mais postagens</button>
-                    </f:facet>  
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                #{itemAtual.titulo}                                
-                            </div>
-                            <p:outputLabel styleClass="badge pull-right" rendered="#{!itemAtual.videosPostagems.isEmpty()}">
-                                <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
-                            </p:outputLabel>
-                        </div>
-                        <div class="panel-body">
-                            <h:outputText value="#{conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
-                            <p>
-                                <h:link outcome="/public/postagem/index.uag" value="Continuar lendo..." styleClass="pull-right">
-                                    <f:param name="id" id="id" value="#{itemAtual.id}"/>
-                                </h:link>
-                            </p>
-                        </div>
-                        <div class="panel-footer">
-                            <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(itemAtual.usuario).nome} em "/>
-                            <p:spacer width="10"/>
-                            <h:outputFormat value="#{itemAtual.data}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputFormat>                            
-                        </div>
-                    </div>                                                    
-                </p:dataScroller>
-                <div class="col-lg-3"> 
-                    <ul class="list-group">                        
-                        <a class="list-group-item disabled">
-                            Conteúdo
-                        </a>
-                        <a class="list-group-item">
-                            Postagens: <span class="badge pull-right">#{postagemController.timeLine.size()}</span>                                
-                        </a>
-                        <a class="list-group-item">
-                            Vídeos: <span class="badge pull-right">#{videosController.itemsAvailableSelectOne.size()}</span>                                
-                        </a>
-                        <a class="list-group-item">
-                            Palavras: <span class="badge pull-right">#{palavraLatimController.items.size()}</span>                                
-                        </a>
-                        <a class="list-group-item">
-                            Frases: <span class="badge pull-right">#{fraseLatimController.items.size()}</span>                                
-                        </a>
-                        <a class="list-group-item disabled">
-                            Usuário do ARUAGI: <span class="badge pull-right">#{usuarioController.items.size()}</span>                                
-                        </a>
-                    </ul>
-                    <hr/>                    
-                    <div class="fb-like-box"
-                         data-href="https://www.facebook.com/pages/Aruagi-Ensino-de-L%C3%ADngua-Latina/553025198136554"
-                         data-colorscheme="light"
-                         data-show-faces="true"
-                         data-header="false"
-                         data-stream="true"
-                         data-width="250"
-                         data-show-border="false">                             
-                    </div>           
-                    <hr/>                    
+                <div class="container">
+                    <h1>Bem-vindo</h1>
+                    <p>#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento.</p>                    
                 </div>
-                <div class="col-lg-12" style="padding-top: 0;padding-left: 0;border-left: 0;padding-right: 0;border-right: 0">
+            </div>         
+            <div class="container">   
+                <div class="row">
+                    <p:dataScroller id="datalist" styleClass="col-sm-8 blog-main" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
+                        <f:facet name="loader">
+                            <button type="button" class="btn btn-default">Mais postagens</button>
+                        </f:facet>  
+
+                        <div class="blog-post">
+                            <h2 class="blog-post-title">
+                                #{itemAtual.titulo}                                                                
+                            </h2>
+                            <p class="blog-post-meta">
+                                <h:outputFormat value="#{itemAtual.data}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputFormat>  
+                                <p:spacer width="10"/>
+                                <p:outputLabel value="por #{usuarioSessionController.getUsuario(itemAtual.usuario).nome}"/>                                                                
+                                <p:spacer width="10"/>
+                                <p:outputLabel styleClass="badge" rendered="#{!itemAtual.videosPostagems.isEmpty()}">
+                                    <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
+                                </p:outputLabel>
+                            </p>
+                            <p>
+                                <h:outputText value="#{conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
+                            </p>
+                            <p>
+                                <h:button outcome="/public/postagem/index.uag" value="Continuar lendo »" styleClass="btn btn-success">
+                                    <f:param name="id" id="id" value="#{itemAtual.id}"/>
+                                </h:button>
+                            </p>
+                            <hr/>
+                        </div>                                                    
+                    </p:dataScroller>
+                    <div class="col-sm-3 col-sm-offset-1 blog-sidebar"> 
+
+                        <div class="list-group sidebar-module sidebar-module-inset"> 
+                            <h2 class="blog-post-title">
+                                Conteúdo
+                            </h2>
+                            <a >
+                                Postagens: <span class="badge pull-right">#{postagemController.timeLine.size()}</span>                                
+                            </a>
+                            <br/>
+                            <a >
+                                Vídeos: <span class="badge pull-right">#{videosController.itemsAvailableSelectOne.size()}</span>                                
+                            </a>
+                            <br/>
+                            <a >
+                                Palavras: <span class="badge pull-right">#{palavraLatimController.items.size()}</span>                                
+                            </a>
+                            <br/>
+                            <a >
+                                Frases: <span class="badge pull-right">#{fraseLatimController.items.size()}</span>                                
+                            </a>
+                            <br/>
+                            <a >
+                                Usuário do ARUAGI: <span class="badge pull-right">#{usuarioController.items.size()}</span>                                
+                            </a>
+                        </div> 
+                        <div class="sidebar-module">
+                            <h2>Redes sociais</h2>
+                            <div class="fb-like-box"
+                                 data-href="https://www.facebook.com/pages/Aruagi-Ensino-de-L%C3%ADngua-Latina/553025198136554"
+                                 data-colorscheme="light"
+                                 data-show-faces="true"
+                                 data-header="false"
+                                 data-stream="true"
+                                 data-width="250"
+                                 data-show-border="false">                             
+                            </div>           
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-footer" style="padding-top: 0;padding-left: 0;border-left: 0;padding-right: 0;border-right: 0">
                     <div style="border-top: 1px solid #f7f7f7">
                         <div id="quadro_1" class="col-md-3">
                             <div class="h3">                                    
@@ -110,7 +121,9 @@ and open the template in the editor.
                                 Projeto
                             </div>
                             <div class="caption">
-
+                                <a href="https://github.com/israelita-felipe/ARUAGI">
+                                    https://github.com/israelita-felipe/ARUAGI
+                                </a>
                             </div>
                         </div>
                         <div id="quadro_4" class="col-md-3">
@@ -133,7 +146,7 @@ and open the template in the editor.
                                     </h:outputLink>
                                 </p:lightBox>
                                 <p:lightBox iframe="true">
-                                    <h:outputLink value="">
+                                    <h:outputLink value="http://lattes.cnpq.br/4329681764449719">
                                         <h:outputText value="Renan Leandro Fernandes" />
                                     </h:outputLink>
                                 </p:lightBox>
@@ -162,12 +175,12 @@ and open the template in the editor.
                             <p:spacer width="10"/>
                             <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
                         </center>
-                    </div>
-                </div>
+                    </div>                    
+                </div>                
                 <script>
                     googleSearch('busca', 'search', '004159013048277972925:frojtp-ajiy');
                 </script>               
-            </h:form>              
+            </div>              
         </ui:define>        
     </ui:composition>    
 </html>

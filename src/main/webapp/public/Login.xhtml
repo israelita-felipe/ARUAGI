@@ -3,55 +3,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
 
     <!-- HEAD COM IMPORTACAO DO CSS E JAVASCRIPT -->
     <h:head>
         <title><ui:insert name="title">Login</ui:insert></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>        
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
-        <h:outputStylesheet library="css" name="defaultHTML.css"/>
+
+        <h:outputStylesheet library="css" name="signin.css"/>
 
         <h:outputScript library="js" name="bootstrap.js"/>
         <h:outputScript library="js" name="bootstrap.min.js"/>
 
+        <h:outputStylesheet library="css" name="primefaces.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
 
     </h:head>
-    <h:body>        
-        <h:form style="padding-top: 100px" class="container">
-            <p:messages autoUpdate="true" closable="true"/>
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">                
-                <div class="container">
-                    <div class="navbar-header">                        
-                        <a href="/index.uag" class="navbar-brand">ARUAGI</a>
-                    </div>                    
-                </div>                
-            </nav>            
-            <div class="center-block" style="width: 300px">                
-                <div class="caption">
-                    <div >
-                        <p:outputLabel for="login" value="Login"/>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <p:inputText id="login" value="#{usuarioSessionController.selected.login}" styleClass="form-control">
-                                <f:validator validatorId="EmailValidator"/>
-                            </p:inputText>
-                        </div>   
-                        <p:outputLabel for="senha" value="Senha"/>
-                        <div class="input-group">
-                            <span class="input-group-addon"></span>
-                            <h:inputSecret id="senha" value="#{usuarioSessionController.selected.senha}" styleClass="form-control"/>
-                        </div>   
-                    </div>
-                    <hr/>
-                    <p:commandButton styleClass="btn btn-primary" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/>
-                    <p:spacer width="10"/>
-                    <p:commandLink value="Alterar Senha" styleClass="pull-right" action="/public/Redefinir.xhtml?faces-redirect=true"/>
+    <h:body class=" jumbotron">          
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">                
+            <div class="container">
+                <div class="navbar-header">                        
+                    <a href="/index.uag" class="navbar-brand">ARUAGI</a>
+                </div>                    
+            </div>                
+        </nav>      
+        <div class="container" style="padding-top: 70px">
+            <h:form class="form-signin">
+                <h2 class="form-signin-heading">Login</h2>
+                <p:messages autoUpdate="true" closable="true"/>
+                <div class="input-group" style="width: 100%">
+                    <h:inputText class="form-control" id="login" value="#{usuarioSessionController.selected.login}"/>
                 </div>
-            </div>            
-        </h:form>
+                <div class="input-group" style="width: 100%">
+                    <h:inputSecret class="form-control" id="senha" value="#{usuarioSessionController.selected.senha}"/>
+                </div>
+                <p:commandButton styleClass="btn btn-primary" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/>
+                <p:spacer width="10"/>
+                <p:commandLink value="Alterar Senha" styleClass="pull-right" action="/public/Redefinir.xhtml?faces-redirect=true"/>
+            </h:form> 
+
+        </div>        
     </h:body>
 </html>
