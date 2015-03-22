@@ -58,7 +58,7 @@ public class Postagem implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
+    @Column(name = "id", unique = true,nullable = false)
     public int getId() {
         return this.id;
     }
@@ -182,10 +182,7 @@ public class Postagem implements java.io.Serializable {
         if (getUsuario() != other.getUsuario() && (getUsuario() == null || !getUsuario().equals(other.getUsuario()))) {
             return false;
         }
-        if (getStatus() != other.getStatus() && (getStatus() == null || !getStatus().equals(other.getStatus()))) {
-            return false;
-        }
-        return true;
+        return getStatus() == other.getStatus() || (getStatus() != null && getStatus().equals(other.getStatus()));
     }
 
 }

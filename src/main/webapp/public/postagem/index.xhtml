@@ -14,25 +14,25 @@ and open the template in the editor.
         <ui:define name="title">
             <h:outputText value="Home"/>
         </ui:define>
-        <ui:define name="head">
-            <f:metadata>
-                <f:viewParam name="id" id="id" value="#{postagemController.idParametro}"/>
-            </f:metadata>
-        </ui:define>
+        
         <ui:define name="body">
-            <h:form id="PostagemListForm" class="container" style="padding-top: 12px">                    
-
+            <h:form id="PostagemListForm" class="container" style="padding-top: 12px">                                    
                 <h2 class="blog-post-title">
-                    <h:outputText value="#{postagemController.getPostagem(postagemController.idParametro).titulo}" escape="false"/>
+                    <h:outputText value="#{postagemController.selected.titulo}" escape="false"/>
                 </h2>
-                <hr/>
+                <div class="blog-post-meta">
+                    <h:outputFormat value="#{postagemController.selected.data}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputFormat>
+                    <p:spacer width="10"/>
+                    <p:outputLabel value="por #{usuarioSessionController.getUsuario(postagemController.selected.usuario).nome}"/>                
+                </div>
                 <p>
-                    <h:outputText value="#{postagemController.getPostagem(postagemController.idParametro).conteudo}" escape="false"/>
+                    <h:outputText value="#{postagemController.selected.conteudo}" escape="false"/>
                 </p>
-                <p:dataList id="videosDatalist" type="none" value="#{postagemController.getPostagem(postagemController.idParametro).videosPostagems}"
+                <p:dataList id="videosDatalist" type="none" value="#{postagemController.selected.videosPostagems}"
                             var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" rows="1"
-                            rendered="#{!postagemController.getPostagem(postagemController.idParametro).videosPostagems.isEmpty()}">
-
+                            rendered="#{!postagemController.selected.videosPostagems.isEmpty()}">
                     <center>
                         <iframe 
                             src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
@@ -41,13 +41,16 @@ and open the template in the editor.
                         </iframe>                                  
                     </center>
                 </p:dataList >
-                <hr/>
-                <p:outputLabel value="Autor: #{usuarioSessionController.getUsuario(postagemController.getPostagem(postagemController.idParametro).usuario).nome} em "/>
-                <p:spacer width="10"/>
-                <h:outputFormat value="#{postagemController.getPostagem(postagemController.idParametro).data}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputFormat>
-
+                <hr/>                
+                <h:form rendered="#{usuarioSessionController.logged and (postagemController.selected.usuario==usuarioSessionController.selected.id)}">
+                    <div class="btn-group">
+                        <p:commandLink styleClass="btn btn-success" value="#{bundle.AcaoExcluir}" action="/index.uag?faces-redirect=true">
+                            <f:ajax listener="#{postagemController.destroy}"/>
+                        </p:commandLink>
+                        <p:commandLink styleClass="btn btn-success" value="#{bundle.AcaoEditar}" action="/private/professor/postagem/Edit.xhtml?faces-redirect=true"/>
+                        <p:commandLink styleClass="btn btn-success" value="Videos" actionListener="#{videosPostagemController.prepareCreate}"/>
+                    </div>
+                </h:form>
             </h:form>
         </ui:define>
     </ui:composition>

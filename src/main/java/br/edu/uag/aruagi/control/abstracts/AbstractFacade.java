@@ -21,7 +21,7 @@ import org.hibernate.criterion.Property;
  */
 public abstract class AbstractFacade<T, ID extends Serializable> implements Serializable, InterfaceFacade<T, ID> {
 
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;

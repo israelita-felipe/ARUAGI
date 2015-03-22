@@ -1,11 +1,11 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.util.support.DateTime;
 import br.edu.uag.aruagi.control.Facade.PostagemFacade;
 import br.edu.uag.aruagi.control.interfaces.InterfaceController;
-import br.edu.uag.aruagi.model.Postagem;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.util.support.DateTime;
+import br.edu.uag.aruagi.model.Postagem;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,7 +20,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Property;
 
 public class PostagemController implements Serializable, InterfaceController<Postagem, Integer> {
-    
+
     //facade ou DAO para postagem
     private final PostagemFacade facade = new PostagemFacade();
     //elementos manipulados visualmente
@@ -32,6 +32,7 @@ public class PostagemController implements Serializable, InterfaceController<Pos
     private int idParametro;
 
     public PostagemController() {
+        prepareCreate();
     }
 
     public Postagem getSelected() {
@@ -66,17 +67,20 @@ public class PostagemController implements Serializable, InterfaceController<Pos
         } else {
             update();
         }
+        prepareCreate();
     }
 
     @Override
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemAtualizada"));
+        prepareCreate();
     }
 
     @Override
     public void destroy() {
         getSelected().setStatus(Boolean.FALSE);
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPostagemExcluida"));
+        prepareCreate();
     }
 
     @Override

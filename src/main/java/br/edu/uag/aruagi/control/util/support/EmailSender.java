@@ -118,7 +118,7 @@ public class EmailSender {
         email.setTypeText(SmtpMail.TYPE_TEXT_PLAIN);
         //dados do destinatário
         email.setNomeDestinatario(nome);
-        email.setEmailDestinatario("ARUAGI.UFRPE.UAG.ERROS@GMAIL.COM");
+        email.setEmailDestinatario(emailToSend);
 
         return send(email);
     }

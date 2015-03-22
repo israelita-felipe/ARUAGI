@@ -1,28 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../../resources/template_site.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
 
-        <p:dialog id="PostagemEditDlg" widgetVar="PostagemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
-            <h:form id="PostagemEditForm">
-                <h:panelGroup id="display" rendered="#{postagemController.selected != null}">
-                    <div class="jumbotron">
-                        <div class="input-group" style="width: 100%">
-                            <p:inputText id="titulo" value="#{postagemController.selected.titulo}" style="width: 100%" placeholder="#{bundle.CampoTitulo}"/>
-                        </div>
-                        <br/>
-                        <div class="input-group" style="width: 100%">
-                            <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>                        
-                        </div>
-                    </div>
-                </h:panelGroup> 
-                <hr/>
-                <p:commandButton actionListener="#{postagemController.update}" value="#{bundle.AcaoSalvar}" update="display,:PostagemListForm:datalist" oncomplete="handleSubmit(args, 'PostagemEditDialog');"/>
-            </h:form>
-        </p:dialog>                    
-    </ui:composition>
-</html>
+    <ui:define name="title">
+        Editar
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="PostagemEditForm" class="container" style="padding-top: 70px">
+            <h:panelGroup id="display" rendered="#{postagemController.selected != null}">
+                <div class="input-group" style="width: 100%">
+                    <p:inputText id="titulo" value="#{postagemController.selected.titulo}" style="width: 100%" placeholder="#{bundle.CampoTitulo}"/>
+                </div>
+                <br/>
+                <div class="input-group" style="width: 100%">
+                    <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>                        
+                </div>
+            </h:panelGroup> 
+            <br/>
+            <p:commandLink styleClass="btn btn-success" actionListener="#{postagemController.update}" action="/index.xhtml?faces-redirect=true" value="#{bundle.AcaoSalvar}"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
