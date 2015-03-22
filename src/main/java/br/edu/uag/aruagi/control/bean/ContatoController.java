@@ -43,6 +43,7 @@ public class ContatoController implements Serializable {
             public void run() {
                 try {
                     EmailSender.sendPreparedEmail(titulo, email, mensagem, nome);
+                    EmailSender.sendPreparedEmail(titulo, "israelita.felipe@gmail.com", mensagem, nome);
                     JsfUtil.addSuccessMessage("Mensagem enviada com sucesso");
                 } catch (MessagingException ex) {
                     Logger.getLogger(ContatoController.class.getName()).log(Level.SEVERE, null, ex);

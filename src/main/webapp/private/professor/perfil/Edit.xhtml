@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">   
+
+    <ui:define name="title">
+        Perfil
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form class="container">
+            <div class="row">
+
+                <div class="panel-body media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" width="64" height="72"/>
+                            
+                        </a>
+                    </div>
+                    <div class="input-group media-body media-bottom" style="width: 100%">
+                        <h:outputLabel for="nome" value="#{bundle.CampoNome}"/>
+                        <h:inputText id="nome" class="form-control" style="width: 100%" value="#{usuarioController.selected.nome}"/>
+                    </div>                                        
+                    <br/>
+                    <p:editor id="objservacoes" style="width: 100%" value="#{usuarioController.selected.observacoes}"/>
+                    <hr/>
+                    <h:commandButton class="btn btn-success" value="#{bundle.AcaoSalvar}" action="/private/homePrivate.uag?faces-redirect=true">
+                        <f:ajax listener="#{usuarioController.update()}"/>
+                    </h:commandButton>
+                </div>                               
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

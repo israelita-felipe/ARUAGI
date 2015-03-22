@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>br.edu.uag</groupId>
-    <artifactId>ARUAGI-2014</artifactId>
-    <version>1.0</version>
+    <artifactId>ARUAGI-2015</artifactId>
+    <version>2.1</version>
     <packaging>war</packaging>
 
-    <name>ARUAGI-2014</name>
+    <name>ARUAGI-2015</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -196,4 +196,5 @@
             <name>Repository for library PrimeFaces-maven-lib</name>
         </repository>
     </repositories>
+    <description>Continuação projeto de extensão UFRPE/UAG 2014-2015</description>
 </project>

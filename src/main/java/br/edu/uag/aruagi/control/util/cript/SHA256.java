@@ -21,6 +21,6 @@ public class SHA256 {
     }
     
     public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException{
-        System.out.println(SHA256.encode("15091992"));
+        System.out.println(SHA256.encode("1509199215091992"));
     }
 }

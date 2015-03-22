@@ -1,16 +1,15 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.Facade.PostagemFacade;
-import br.edu.uag.aruagi.control.util.cript.SHA256;
 import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
 import br.edu.uag.aruagi.control.Facade.VideosFacade;
+import br.edu.uag.aruagi.control.util.cript.SHA256;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.support.EmailSender;
 import br.edu.uag.aruagi.control.util.support.StringManager;
 import br.edu.uag.aruagi.model.Postagem;
 import br.edu.uag.aruagi.model.Usuario;
 import br.edu.uag.aruagi.model.Videos;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -308,5 +307,4 @@ public class UsuarioSessionController implements Serializable {
         }
 
     }
-
 }
