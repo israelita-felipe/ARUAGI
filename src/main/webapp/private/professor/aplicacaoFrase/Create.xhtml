@@ -18,7 +18,9 @@
             <h:selectOneMenu class="form-control" id="fraseLatim" value="#{aplicacaoFraseController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                 <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"/>
             </h:selectOneMenu>
+            
             <br/>
+            
             <h:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
             <br/>
             <h:selectOneMenu class="form-control" id="palavraLatim" value="#{aplicacaoFraseController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
