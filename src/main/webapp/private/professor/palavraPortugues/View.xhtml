@@ -1,28 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.TituloDetalhes}
+    </ui:define>
 
-        <p:dialog id="PalavraPortuguesViewDlg" widgetVar="PalavraPortuguesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
-            <h:form id="PalavraPortuguesViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{palavraPortuguesController.selected != null}">
-                        <h:outputText value="#{bundle.CampoChave}"/>
-                        <h:outputText value="#{palavraPortuguesController.selected.id}" title="#{bundle.CampoChave}"/>
-                        <h:outputText value="#{bundle.CampoPalavraPortugues}"/>
-                        <h:outputText value="#{palavraPortuguesController.selected.palavra}" title="#{bundle.CampoPalavraPortugues}"/>
-                        <h:outputText value="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{usuarioSessionController.getUsuario(palavraPortuguesController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{bundle.CampoStatus}"/>
-                        <p:selectBooleanCheckbox value="#{palavraPortuguesController.selected.status}" disabled="true"/>
-                    </p:panelGrid>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
+    <ui:define name="body">
+        <h:form id="PalavraPortuguesViewForm" class="container">
+            <h:panelGroup id="display" rendered="#{palavraPortuguesController.selected != null}">
+                <h:outputLabel value="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputText value="#{palavraPortuguesController.selected.id}" title="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoPalavraPortugues}"/>
+                <br/>
+                <h:outputText value="#{palavraPortuguesController.selected.palavra}" title="#{bundle.CampoPalavraPortugues}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoAutor}"/>
+                <br/>
+                <h:outputText value="#{usuarioController.get(palavraPortuguesController.selected.usuario).nome}"/>
+            </h:panelGroup>
+        </h:form>
 
-    </ui:composition>
-</html>
+    </ui:define>
+
+</ui:composition>

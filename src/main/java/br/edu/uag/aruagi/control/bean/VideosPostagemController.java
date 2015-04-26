@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.VideosPostagemFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.VideosPostagem;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,22 +10,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class VideosPostagemController implements Serializable, InterfaceController<VideosPostagem, Integer> {
-
-    private final VideosPostagemFacade facade = new VideosPostagemFacade();
-    private List<VideosPostagem> items = null;
-    private VideosPostagem selected;
+public class VideosPostagemController extends AbstractController<VideosPostagem> implements Serializable {
 
     public VideosPostagemController() {
-        this.selected = new VideosPostagem();
-    }
-
-    public VideosPostagem getSelected() {
-        return selected;
-    }
-
-    public void setSelected(VideosPostagem selected) {
-        this.selected = selected;
+        super(VideosPostagem.class);
+        setCurrent(getSelected());
     }
 
     protected void setEmbeddableKeys() {
@@ -39,82 +23,26 @@ public class VideosPostagemController implements Serializable, InterfaceControll
     protected void initializeEmbeddableKey() {
     }
 
-    private VideosPostagemFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public VideosPostagem prepareCreate() {
-        initializeEmbeddableKey();
-        getSelected().setId(0);
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoPostagemCriado"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoPostagemAtualizado"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoPostagemExcluido"));
-    }
-
-    @Override
-    public List<VideosPostagem> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        try {
-            getFacade().begin();
-            if (selected != null) {
-                setEmbeddableKeys();
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        } finally {
-            getFacade().end();
-            this.selected = new VideosPostagem();
+    public VideosPostagem getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new VideosPostagem());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-    }
-
-    public VideosPostagem getVideosPostagem(int id) {
-        getFacade().begin();
-        VideosPostagem vp = getFacade().find(id);
-        getFacade().end();
-        return vp;
+        return getCurrent();
     }
 
     @Override
-    public List<VideosPostagem> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new VideosPostagem());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<VideosPostagem> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = VideosPostagem.class)
     public static class VideosPostagemControllerConverter implements Converter {
 
         @Override
@@ -124,7 +52,7 @@ public class VideosPostagemController implements Serializable, InterfaceControll
             }
             VideosPostagemController controller = (VideosPostagemController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "videosPostagemController");
-            return controller.getVideosPostagem(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

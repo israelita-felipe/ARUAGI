@@ -1,8 +1,6 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.PostagemFacade;
-import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
-import br.edu.uag.aruagi.control.Facade.VideosFacade;
+import br.edu.uag.aruagi.control.Facade.Facade;
 import br.edu.uag.aruagi.control.util.cript.SHA256;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
 import br.edu.uag.aruagi.control.util.support.EmailSender;
@@ -27,10 +25,8 @@ import org.hibernate.criterion.Property;
  *
  * @author Israel Araújo
  */
-public class UsuarioSessionController implements Serializable {
+public class UsuarioSessionController extends UsuarioController implements Serializable {
 
-    private final UsuarioFacade facade = new UsuarioFacade();
-    private Usuario selected = null;
     private boolean loged = false;
     private boolean admin = false;
 
@@ -42,7 +38,7 @@ public class UsuarioSessionController implements Serializable {
     private String confirmNewPass;
 
     public UsuarioSessionController() {
-        setSelected(new Usuario());
+        setCurrent(getCurrent());
     }
 
     /**
@@ -53,21 +49,19 @@ public class UsuarioSessionController implements Serializable {
      */
     public String doLogin() throws Exception {
         DetachedCriteria query = DetachedCriteria.forClass(Usuario.class)
-                .add(Property.forName("login").eq(selected.getLogin()));
-        getFacade().begin();
+                .add(Property.forName("login").eq(getSelected().getLogin()));
         Usuario u = getFacade().getEntityByDetachedCriteria(query);
-        getFacade().end();
         /**
          * verificando se o usuario existe e sua senha confere
          */
         if (u != null) {
-            if (u.getSenha().equals(SHA256.encode(selected.getSenha()))) {
+            if (u.getSenha().equals(SHA256.encode(getSelected().getSenha()))) {
                 /**
                  * retornamos a pagina de dados
                  */
                 setLogged(true);
-                setSelected(u);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", selected);
+                setCurrent(u);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", getSelected());
                 return "/private/homePrivate.xhtml?faces-redirect=true";
             } else {
                 JsfUtil.addErrorMessage("Senhas não conferem");
@@ -100,7 +94,6 @@ public class UsuarioSessionController implements Serializable {
                 if (nP.equals(cNP)) {
                     getSelected().setSenha(nP);
                     getFacade().edit(getSelected());
-                    getFacade().commit();
                     return doLogout();
                 } else {
                     JsfUtil.addErrorMessage("nova senha e confirmação não correspondem");
@@ -121,13 +114,10 @@ public class UsuarioSessionController implements Serializable {
     public void requestNewPassword() {
         DetachedCriteria query = DetachedCriteria.forClass(Usuario.class)
                 .add(Property.forName("login").eq(getUserLogged().getLogin()));
-        getFacade().begin();
         Usuario u = getFacade().getEntityByDetachedCriteria(query);
-        getFacade().end();
         if (u != null) {
             try {
                 //abrindo uma nova transação
-                getFacade().begin();
                 //gerando uma nova senha
                 u.setSenha(StringManager.sortPassword(10));
                 //encriptado a senha com SHA256
@@ -139,7 +129,6 @@ public class UsuarioSessionController implements Serializable {
                 //gravando alterações no banco                
                 getFacade().edit(u);
                 //finalizando a transação
-                getFacade().end();
                 JsfUtil.addSuccessMessage("Uma nova senha foi enviada para " + u.getLogin() + ", caso não tenha recebido repita o processo.");
 
             } catch (UnsupportedEncodingException e) {
@@ -232,11 +221,11 @@ public class UsuarioSessionController implements Serializable {
     }
 
     public int postCount() {
-        return new PostagemFacade().getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Postagem.class).add(Property.forName("usuario").eq(getSelected().getId())).add(Property.forName("status").eq(Boolean.TRUE))).size();
+        return new Facade<Postagem>(Postagem.class).getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Postagem.class).add(Property.forName("usuario").eq(getSelected().getId())).add(Property.forName("status").eq(Boolean.TRUE))).size();
     }
 
     public int videosCout() {
-        return new VideosFacade().getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Videos.class).add(Property.forName("usuario").eq(getSelected().getId())).add(Property.forName("status").eq(Boolean.TRUE))).size();
+        return new Facade<Videos>(Videos.class).getEntitiesByDetachedCriteria(DetachedCriteria.forClass(Videos.class).add(Property.forName("usuario").eq(getSelected().getId())).add(Property.forName("status").eq(Boolean.TRUE))).size();
     }
 
     public Usuario getCurrentUser() {
@@ -248,26 +237,6 @@ public class UsuarioSessionController implements Serializable {
         return user;
     }
 
-    public Usuario getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Usuario selected) {
-        this.selected = selected;
-    }
-
-    public UsuarioFacade getFacade() {
-        return facade;
-    }
-
-    public Usuario getUsuario(int id) {
-        getFacade().begin();
-        Usuario u = getFacade().find(id);
-        getFacade().end();
-        return u;
-    }
-
-    @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
 
         @Override
@@ -277,7 +246,7 @@ public class UsuarioSessionController implements Serializable {
             }
             UsuarioController controller = (UsuarioController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "usuarioController");
-            return controller.getUsuario(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

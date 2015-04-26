@@ -1,14 +1,9 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.LinksQuestaoFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.LinksQuestao;
 import br.edu.uag.aruagi.model.LinksQuestaoId;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -16,102 +11,39 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class LinksQuestaoController implements Serializable, InterfaceController<LinksQuestao, LinksQuestaoId> {
-
-    private final LinksQuestaoFacade facade = new LinksQuestaoFacade();
-    private List<LinksQuestao> items = null;
-    private LinksQuestao selected;
+public class LinksQuestaoController extends AbstractController<LinksQuestao> implements Serializable {
 
     public LinksQuestaoController() {
-    }
-
-    public LinksQuestao getSelected() {
-        return selected;
-    }
-
-    public void setSelected(LinksQuestao selected) {
-        this.selected = selected;
+        super(LinksQuestao.class);
     }
 
     protected void setEmbeddableKeys() {
     }
 
     protected void initializeEmbeddableKey() {
-        selected.setId(new LinksQuestaoId());
-    }
-
-    private LinksQuestaoFacade getFacade() {
-        return facade;
+        getSelected().setId(new LinksQuestaoId());
     }
 
     @Override
-    public LinksQuestao prepareCreate() {
-        selected = new LinksQuestao();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemLinkCriado"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemLinkAtualizado"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemLinkExcluido"));
-    }
-
-    @Override
-    public List<LinksQuestao> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            }catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public LinksQuestao getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new LinksQuestao());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public LinksQuestao getLinksQuestao(LinksQuestaoId id) {
-        getFacade().begin();
-        LinksQuestao lq = getFacade().find(id);
-        getFacade().end();
-        return lq;
+        return getCurrent();
     }
 
     @Override
-    public List<LinksQuestao> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new LinksQuestao());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<LinksQuestao> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = LinksQuestao.class)
     public static class LinksQuestaoControllerConverter implements Converter {
 
         private static final String SEPARATOR = "#";
@@ -124,7 +56,7 @@ public class LinksQuestaoController implements Serializable, InterfaceController
             }
             LinksQuestaoController controller = (LinksQuestaoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "linksQuestaoController");
-            return controller.getLinksQuestao(getKey(value));
+            return controller.get(getKey(value));
         }
 
         LinksQuestaoId getKey(String value) {

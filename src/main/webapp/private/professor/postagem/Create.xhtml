@@ -6,6 +6,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+
     <ui:define name="title">
         Nova postagem
     </ui:define>
@@ -15,18 +16,18 @@
             <p:messages autoUpdate="true" closable="true"/>
             <h:panelGroup id="display" rendered="#{postagemController.selected != null}">
 
+                <h:outputLabel for="titulo" value="#{bundle.CampoTitulo}"/>
                 <div class="input-group" style="width: 100%">
-                    <p:inputText id="titulo" value="#{postagemController.selected.titulo}" style="width: 100%" placeholder="#{bundle.CampoTitulo}"/>
+                    <h:inputText class="form-control" id="titulo" value="#{postagemController.selected.titulo}" style="width: 100%"/>
                 </div>
                 <br/>
-                <div class="input-group" style="width: 100%">
-                    <p:editor id="conteudo" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>                        
-                </div>
-                <hr/>
-                <p:commandLink styleClass="btn btn-success" action="/index.uag?faces-redirect=true" value="#{bundle.AcaoSalvar}">
-                    <f:ajax listener="#{postagemController.create}"/>
-                </p:commandLink>
-            </h:panelGroup>             
+                <h:outputLabel for="conteudo" value="#{bundle.TituloPostagem}"/>
+                <p:editor immediate="true" id="conteudo" style="width: 100%" value="#{postagemController.selected.conteudo}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>                        
+
+                <br/>
+                <h:commandButton class="btn btn-success" action="#{postagemController.create}" value="#{bundle.AcaoSalvar}"/>
+            </h:panelGroup> 
+
         </h:form>
     </ui:define>
 

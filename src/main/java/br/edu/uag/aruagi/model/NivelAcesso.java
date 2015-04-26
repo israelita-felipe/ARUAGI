@@ -71,10 +71,9 @@ public class NivelAcesso implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + this.id;
-        hash = 17 * hash + (this.linkAcesso != null ? this.linkAcesso.hashCode() : 0);
-        hash = 17 * hash + (this.descricao != null ? this.descricao.hashCode() : 0);
+        int hash = 3;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + (this.linkAcesso != null ? this.linkAcesso.hashCode() : 0);
         return hash;
     }
 
@@ -90,13 +89,14 @@ public class NivelAcesso implements java.io.Serializable {
         if (this.id != other.id) {
             return false;
         }
-        if ((this.linkAcesso == null) ? (other.linkAcesso != null) : !this.linkAcesso.equals(other.linkAcesso)) {
-            return false;
-        }
-        if ((this.descricao == null) ? (other.descricao != null) : !this.descricao.equals(other.descricao)) {
-            return false;
-        }
-        return true;
+        return !((this.linkAcesso == null) ? (other.linkAcesso != null) : !this.linkAcesso.equals(other.linkAcesso));
+    }
+
+    
+
+    @Override
+    public String toString() {
+        return this.descricao;
     }
 
 }

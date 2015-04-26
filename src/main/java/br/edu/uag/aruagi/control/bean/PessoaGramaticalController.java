@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.PessoaGramaticalFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.PessoaGramatical;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,21 +10,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class PessoaGramaticalController implements Serializable, InterfaceController<PessoaGramatical, Integer> {
-    
-    private final PessoaGramaticalFacade facade = new PessoaGramaticalFacade();
-    private List<PessoaGramatical> items = null;
-    private PessoaGramatical selected;
+public class PessoaGramaticalController extends AbstractController<PessoaGramatical> implements Serializable {
     
     public PessoaGramaticalController() {
-    }
-    
-    public PessoaGramatical getSelected() {
-        return selected;
-    }
-    
-    public void setSelected(PessoaGramatical selected) {
-        this.selected = selected;
+        super(PessoaGramatical.class);
     }
     
     protected void setEmbeddableKeys() {
@@ -38,79 +22,30 @@ public class PessoaGramaticalController implements Serializable, InterfaceContro
     protected void initializeEmbeddableKey() {
     }
     
-    private PessoaGramaticalFacade getFacade() {
-        return facade;
-    }
-    
     @Override
-    public PessoaGramatical prepareCreate() {
-        selected = new PessoaGramatical();
-        initializeEmbeddableKey();
-        return selected;
-    }
-    
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPessoaGramaticalCriada"));
-    }
-    
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPessoaGramaticalAtualizada"));
-    }
-    
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPessoaGramaticalExcluida"));
-    }
-    
-    @Override
-    public List<PessoaGramatical> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-    
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public PessoaGramatical getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new PessoaGramatical());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-    
-    public PessoaGramatical getPessoaGramatical(int id) {
-        getFacade().begin();
-        PessoaGramatical pg = getFacade().find(id);
-        getFacade().end();
-        return pg;
+        return getCurrent();
     }
     
     @Override
-    public List<PessoaGramatical> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new PessoaGramatical());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
     
     @Override
-    public List<PessoaGramatical> getItemsAvailableSelectOne() {
-        return getItems();
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
     }
     
     @FacesConverter(forClass = PessoaGramatical.class)
@@ -123,7 +58,7 @@ public class PessoaGramaticalController implements Serializable, InterfaceContro
             }
             PessoaGramaticalController controller = (PessoaGramaticalController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "pessoaGramaticalController");
-            return controller.getPessoaGramatical(getKey(value));
+            return controller.get(getKey(value));
         }
         
         int getKey(String value) {

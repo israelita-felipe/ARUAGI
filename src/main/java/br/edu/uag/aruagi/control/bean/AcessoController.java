@@ -1,16 +1,12 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.control.util.support.DateTime;
 import br.edu.uag.aruagi.model.Acesso;
-import br.edu.uag.aruagi.control.Facade.AcessoFacade;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.text.ParseException;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -18,22 +14,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class AcessoController implements Serializable, InterfaceController<Acesso, Integer> {
-
-    private AcessoFacade facade = new AcessoFacade();
-    private List<Acesso> items = null;
-    private Acesso selected;
+public class AcessoController extends AbstractController<Acesso> implements Serializable {
 
     public AcessoController() throws ParseException {
-        setSelected(atualizaAcesso());
-    }
-
-    public Acesso getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Acesso selected) {
-        this.selected = selected;
+        super(Acesso.class);
+        atualizaAcesso();
     }
 
     protected void setEmbeddableKeys() {
@@ -42,31 +27,32 @@ public class AcessoController implements Serializable, InterfaceController<Acess
     protected void initializeEmbeddableKey() {
     }
 
-    private AcessoFacade getFacade() {
-        if (this.facade == null) {
-            this.facade = new AcessoFacade();
-        }
-        return facade;
+    @Override
+    public String create() {
+        super.create();
+        return null;
+    }
+
+    @Override
+    public String update() {
+        super.update();
+        return null; //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
      * Metodo que retorna o acesso atual
      *
      * @return Acesso
+     * @throws java.text.ParseException
      */
-    private Acesso atualizaAcesso() throws ParseException {
-        Acesso a = getAcesso(DateTime.getCurrentDate());
-        if (a == null) {
-            a = new Acesso(DateTime.getCurrentDate());
-            a.setAcessos(1);
-            setSelected(a);
+    public Acesso atualizaAcesso() throws ParseException {
+        prepareCreate();
+        if (getCurrent().getAcessos() == 1) {
             create();
         } else {
-            setSelected(a);
-            a.setAcessos(a.getAcessos() + 1);
             update();
         }
-        return a;
+        return getCurrent();
     }
 
     /**
@@ -75,79 +61,37 @@ public class AcessoController implements Serializable, InterfaceController<Acess
      * @return Integer, total de acessos ate a data atual
      */
     public Integer totalAcessos() {
-        int i = 0;
-        for (Acesso a : getItems()) {
-            i += a.getAcessos();
+        int total = 0;
+        for(Acesso a:getFacade().findAll()){
+            total+=a.getAcessos();
         }
-        return (i + 1);
+        return total;
     }
 
     @Override
-    public Acesso prepareCreate() {
-        selected = new Acesso();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, null);
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, null);
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, null);
-    }
-
-    @Override
-    public List<Acesso> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
+    public Acesso getSelected() {
+        if (getCurrent() == null) {
             try {
-                if (persistAction == PersistAction.CREATE) {
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                atualizaAcesso();
+            } catch (ParseException ex) {
+                JsfUtil.addErrorMessage("Erro ao acessar aplicação");
             }
         }
-        getFacade().end();
-    }
-
-    public Acesso getAcesso(java.util.Date id) {
-        getFacade().begin();
-        Acesso a = getFacade().find(id);
-        getFacade().end();
-        return a;
+        return getCurrent();
     }
 
     @Override
-    public List<Acesso> getItemsAvailableSelectMany() {
-        return getItems();
-    }
-
-    @Override
-    public List<Acesso> getItemsAvailableSelectOne() {
-        return getItems();
+    public String prepareCreate() {
+        Acesso atual;
+        try {
+            atual = getFacade().find(DateTime.getCurrentDate());
+            atual.setAcessos(atual.getAcessos() + 1);
+        } catch (Exception ex) {
+            atual = new Acesso(DateTime.getCurrentDate(), 1);
+            atual.setStatus(Boolean.TRUE);
+        }
+        setCurrent(atual);
+        return null;
     }
 
     @FacesConverter(forClass = Acesso.class)
@@ -160,7 +104,7 @@ public class AcessoController implements Serializable, InterfaceController<Acess
             }
             AcessoController controller = (AcessoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "acessoController");
-            return controller.getAcesso(getKey(value));
+            return controller.get(getKey(value));
         }
 
         java.util.Date getKey(String value) {

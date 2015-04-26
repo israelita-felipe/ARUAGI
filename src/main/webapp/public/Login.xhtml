@@ -35,15 +35,15 @@
             <h:form class="form-signin">
                 <h2 class="form-signin-heading">Login</h2>
                 <p:messages autoUpdate="true" closable="true"/>
-                <div class="input-group" style="width: 100%">
+                <div class="input-group"  style="width: 100%">
                     <h:inputText class="form-control" id="login" value="#{usuarioSessionController.selected.login}"/>
                 </div>
-                <div class="input-group" style="width: 100%">
+                <div class="input-group" type="password" style="width: 100%">
                     <h:inputSecret class="form-control" id="senha" value="#{usuarioSessionController.selected.senha}"/>
                 </div>
-                <p:commandButton styleClass="btn btn-primary" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/>
+                <h:commandButton styleClass="btn btn-primary" value="#{bundle.AcaoLogar}" action="#{usuarioSessionController.doLogin}"/>
                 <p:spacer width="10"/>
-                <p:commandLink value="Alterar Senha" styleClass="pull-right" action="/public/Redefinir.xhtml?faces-redirect=true"/>
+                <h:commandLink value="Alterar Senha" styleClass="pull-right" action="/public/Redefinir.xhtml?faces-redirect=true"/>
             </h:form> 
 
         </div>        

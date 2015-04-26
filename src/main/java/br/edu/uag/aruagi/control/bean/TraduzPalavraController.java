@@ -1,14 +1,9 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.TraduzPalavraFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.TraduzPalavra;
 import br.edu.uag.aruagi.model.TraduzPalavraId;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -16,103 +11,43 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class TraduzPalavraController implements Serializable, InterfaceController<TraduzPalavra, TraduzPalavraId> {
-    
-    private final TraduzPalavraFacade facade = new TraduzPalavraFacade();
-    private List<TraduzPalavra> items = null;
-    private TraduzPalavra selected;
+public class TraduzPalavraController extends AbstractController<TraduzPalavra> implements Serializable {
     
     public TraduzPalavraController() {
+        super(TraduzPalavra.class);
     }
     
+    @Override
     public TraduzPalavra getSelected() {
-        return selected;
-    }
-    
-    public void setSelected(TraduzPalavra selected) {
-        this.selected = selected;
+        if (getCurrent() == null) {
+            setCurrent(new TraduzPalavra());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
+        }
+        return getCurrent();
     }
     
     protected void setEmbeddableKeys() {
     }
     
     protected void initializeEmbeddableKey() {
-        selected.setId(new TraduzPalavraId());
-    }
-    
-    private TraduzPalavraFacade getFacade() {
-        return facade;
+        getSelected().setId(new TraduzPalavraId());
     }
     
     @Override
-    public TraduzPalavra prepareCreate() {
-        selected = new TraduzPalavra();
+    public String prepareCreate() {
+        setCurrent(new TraduzPalavra());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
         initializeEmbeddableKey();
-        return selected;
+        setSelectedItemIndex(-1);
+        return "Create";
     }
     
     @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTraduzPalavraCriada"));
-    }
-    
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTraduzPalavraAtualizada"));
-    }
-    
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTraduzPalavraExcluida"));
-    }
-    
-    @Override
-    public List<TraduzPalavra> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-    
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getSelected().setStatus(Boolean.TRUE);
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
-        }
-        getFacade().end();
-    }
-    
-    public TraduzPalavra getTraduzPalavra(TraduzPalavraId id) {
-        getFacade().begin();
-        TraduzPalavra tp = getFacade().find(id);
-        getFacade().end();
-        return tp;
-    }
-    
-    @Override
-    public List<TraduzPalavra> getItemsAvailableSelectMany() {
-        return getItems();
-    }
-    
-    @Override
-    public List<TraduzPalavra> getItemsAvailableSelectOne() {
-        return getItems();
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
     }
     
     @FacesConverter(forClass = TraduzPalavra.class)
@@ -128,7 +63,7 @@ public class TraduzPalavraController implements Serializable, InterfaceControlle
             }
             TraduzPalavraController controller = (TraduzPalavraController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "traduzPalavraController");
-            return controller.getTraduzPalavra(getKey(value));
+            return controller.get(getKey(value));
         }
         
         TraduzPalavraId getKey(String value) {

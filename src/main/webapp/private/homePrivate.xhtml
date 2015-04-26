@@ -2,11 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>#{bundle.TituloInicio}</title>
-
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
@@ -24,6 +21,10 @@
         <script>
             fb_root(document, 'script', 'facebook-jssdk');
         </script>        
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        
+        <title>#{bundle.TituloInicio}</title>        
     </h:head>
     <h:body id="body-page" class="jumbotron" style="padding-top: 70px">
         <h:form id="PostagemListForm">                                                            
@@ -61,21 +62,15 @@
                                 </h4>
                             </div>                                
                             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" style="height: 0px;">                                    
-                                <div class="panel-body media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" width="64" height="72"/>
-                                        </a>
-                                    </div>
-                                    <div class="input-group media-body media-bottom" style="width: 100%">
-                                        <p:commandLink action="/private/professor/perfil/Edit.uag?faces-redirect=true" value="#{bundle.MenusAtualizarPerfil}">
-                                            <f:setPropertyActionListener target="#{usuarioController.selected}" value="#{usuarioSessionController.currentUser}"/>
-                                        </p:commandLink>
-                                        <br/>
-                                        <p:commandLink action="/private/professor/senha/Redefinir.uag" value="#{bundle.CampoRedefinirSenha}"/>                                                                                                                                                
-                                    </div>                                        
-                                    <hr/>
-                                    <h:commandLink class="btn btn-warning pull-right" style="border-radius: 0!important"  action="#{usuarioSessionController.doLogout()}" value="#{bundle.AcaoSair}"/>                                                
+                                <div class="panel-body list-group">                                    
+                                    <a href="#">
+                                        <img class="media-object" width="64" height="72"/>
+                                    </a>
+                                    <br/>
+                                    <p:commandLink styleClass="list-group-item" action="/private/professor/perfil/Edit.uag?faces-redirect=true" value="#{bundle.MenusAtualizarPerfil}"/>
+                                    <h:commandLink class="list-group-item" action="/private/professor/senha/Redefinir.uag" value="#{bundle.CampoRedefinirSenha}"/>                                                                                                                                                               
+                                    <br/>
+                                    <h:commandButton class="btn btn-warning pull-right" action="#{usuarioSessionController.doLogout()}" value="#{bundle.AcaoSair}"/>                                                
                                 </div>
                             </div>
                         </div>                                                        
@@ -91,13 +86,11 @@
                                 </h4>
                             </div>                                
                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">                                    
-                                <div class="panel-body">
+                                <div class="panel-body  list-group">
                                     <div class="input-group" style="width: 100%">
-                                        <h:commandLink action="/private/professor/questaoLacuna/List.uag" value="#{bundle.MenusQuestaoLacuna}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/questaoTraduzFrase/List.uag" value="#{bundle.MenusQuestaoTraduzFrase}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/questaoTraduzPalavra/List.uag" value="#{bundle.MenusQuestaoTraduzPalavra}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/questaoLacuna/List.uag" value="#{bundle.MenusQuestaoLacuna}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/questaoTraduzFrase/List.uag" value="#{bundle.MenusQuestaoTraduzFrase}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/questaoTraduzPalavra/List.uag" value="#{bundle.MenusQuestaoTraduzPalavra}"/>
                                     </div>                                        
                                 </div>
                             </div>
@@ -114,23 +107,16 @@
                                 </h4>
                             </div>                                
                             <div id="collapseTree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTree" aria-expanded="false" style="height: 0px;">                                    
-                                <div class="panel-body">
+                                <div class="panel-body  list-group">
                                     <div class="input-group" style="width: 100%">
-                                        <h:commandLink action="/private/professor/aplicacaoFrase/List.uag" value="#{bundle.MenusAplicacaoFrase}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/casoAplicado/List.uag" value="#{bundle.MenusAplicacaoCaso}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/declinacaoAplicada/List.uag" value="#{bundle.MenusAplicacaoDeclinacao}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/indicadorPessoaGramatical/List.uag" value="#{bundle.MenusIndicadorPessoaGramatical}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/indicadorTempoVerbal/List.uag" value="#{bundle.MenusIndicadorTempoVerbal}"/>                                                
-                                        <br/>
-                                        <h:commandLink action="/private/professor/palavrasClassificadas/List.uag" value="#{bundle.MenusClassificacaoPalavras}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/palavrasDeclinadas/List.uag" value="#{bundle.MenusDeclinacaoPalavras}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/radical/List.uag" value="#{bundle.MenusRadical}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/aplicacaoFrase/List.uag" value="#{bundle.MenusAplicacaoFrase}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/casoAplicado/List.uag" value="#{bundle.MenusAplicacaoCaso}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/declinacaoAplicada/List.uag" value="#{bundle.MenusAplicacaoDeclinacao}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/indicadorPessoaGramatical/List.uag" value="#{bundle.MenusIndicadorPessoaGramatical}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/indicadorTempoVerbal/List.uag" value="#{bundle.MenusIndicadorTempoVerbal}"/>                                                
+                                        <h:commandLink class="list-group-item" action="/private/professor/palavrasClassificadas/List.uag" value="#{bundle.MenusClassificacaoPalavras}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/palavrasDeclinadas/List.uag" value="#{bundle.MenusDeclinacaoPalavras}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/radical/List.uag" value="#{bundle.MenusRadical}"/>
                                     </div>                                        
                                 </div>
                             </div>
@@ -147,25 +133,17 @@
                                 </h4>
                             </div>                                
                             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour" aria-expanded="false" style="height: 0px;">                                    
-                                <div class="panel-body">
+                                <div class="panel-body  list-group">
                                     <div class="input-group" style="width: 100%">
-                                        <h:commandLink action="/private/professor/caso/List.uag" value="#{bundle.MenusCasosLatinos}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/classificacaoGramatical/List.uag" value="#{bundle.MenusClassificacaoGramatical}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/declinacao/List.uag" value="#{bundle.MenusDeclinacao}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/fraseLatim/List.uag" value="#{bundle.MenusFraseLatim}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/frasePortugues/List.uag" value="#{bundle.MenusFrasePortugues}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/palavraLatim/List.uag" value="#{bundle.MenusPalavraLatim}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/palavraPortugues/List.uag" value="#{bundle.MenusPalavraPortugues}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/pessoaGramatical/List.uag" value="#{bundle.MenusPessoaGramatical}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/tempoVerbal/List.uag" value="#{bundle.MenusTempoVerbal}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/caso/List.uag" value="#{bundle.MenusCasosLatinos}"/>                                        
+                                        <h:commandLink class="list-group-item" action="/private/professor/classificacaoGramatical/List.uag" value="#{bundle.MenusClassificacaoGramatical}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/declinacao/List.uag" value="#{bundle.MenusDeclinacao}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/fraseLatim/List.uag" value="#{bundle.MenusFraseLatim}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/frasePortugues/List.uag" value="#{bundle.MenusFrasePortugues}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/palavraLatim/List.uag" value="#{bundle.MenusPalavraLatim}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/palavraPortugues/List.uag" value="#{bundle.MenusPalavraPortugues}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/pessoaGramatical/List.uag" value="#{bundle.MenusPessoaGramatical}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/tempoVerbal/List.uag" value="#{bundle.MenusTempoVerbal}"/>
                                     </div>                                        
                                 </div>
                             </div>
@@ -182,11 +160,10 @@
                                 </h4>
                             </div>                                
                             <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix" aria-expanded="false" style="height: 0px;">                                    
-                                <div class="panel-body">
+                                <div class="panel-body  list-group">
                                     <div class="input-group" style="width: 100%">
-                                        <h:commandLink action="/private/professor/traduzFrase/List.uag"  value="#{bundle.MenusTraducaoFrase}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/professor/traduzPalavra/List.uag" value="#{bundle.MenusTraducaoPalavra}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/traduzFrase/List.uag"  value="#{bundle.MenusTraducaoFrase}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/traduzPalavra/List.uag" value="#{bundle.MenusTraducaoPalavra}"/>
                                     </div>                                        
                                 </div>
                             </div>
@@ -203,9 +180,9 @@
                                 </h4>
                             </div>                                
                             <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven" aria-expanded="false" style="height: 0px;">                                    
-                                <div class="panel-body">
+                                <div class="panel-body  list-group">
                                     <div class="input-group" style="width: 100%">
-                                        <h:commandLink action="/private/professor/videos/List.uag" value="#{bundle.MenusVideo}"/>
+                                        <h:commandLink class="list-group-item" action="/private/professor/videos/List.uag" value="#{bundle.MenusVideo}"/>
                                     </div>                                        
                                 </div>
                             </div>
@@ -222,15 +199,12 @@
                                 </h4>
                             </div>                                
                             <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight" aria-expanded="false" style="height: 0px;">                                    
-                                <div class="panel-body">
+                                <div class="panel-body  list-group">
                                     <div class="input-group" style="width: 100%">
-                                        <h:commandLink action="#" value="AtividadeQuestao (pendente)"/>
-                                        <br/>
-                                        <h:commandLink action="#" value="Lacuna (pendente)"/>
-                                        <br/>
-                                        <h:commandLink action="#" value="LinksQuestao (pendente)"/>
-                                        <br/>
-                                        <h:commandLink action="#" value="ListaQuestao (pendente)"/>
+                                        <h:commandLink class="list-group-item" action="#" value="AtividadeQuestao (pendente)"/>
+                                        <h:commandLink class="list-group-item" action="#" value="Lacuna (pendente)"/>
+                                        <h:commandLink class="list-group-item" action="#" value="LinksQuestao (pendente)"/>
+                                        <h:commandLink class="list-group-item" action="#" value="ListaQuestao (pendente)"/>
                                     </div>                                        
                                 </div>
                             </div>
@@ -244,20 +218,19 @@
                                     <a data-toggle="collapse" data-parent="#admin" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive" class="collapsed">                                            
                                         Administração
                                     </a>
+                                    <div class="label label-success pull-right">
+                                        Administrador
+                                    </div>
                                 </h4>
                             </div>                                
                             <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive" aria-expanded="false" style="height: 0px;">                                    
-                                <div class="panel-body">
+                                <div class="panel-body  list-group">
                                     <div class="input-group" style="width: 100%">
-                                        <h:commandLink action="/private/administrador/acesso/List.uag" value="#{bundle.MenusListaAcessos}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/administrador/nivelAcesso/List.uag" value="#{bundle.MenusNiveisAcesso}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/administrador/nivelQuestao/List.uag" value="#{bundle.MenusNiveisQuestao}"/>
-                                        <br/>
-                                        <h:commandLink action="/private/administrador/tipoQuestao/List.uag" value="#{bundle.MenusTiposQuestao}"/>
-                                        <hr/>
-                                        <h:commandLink action="/private/administrador/usuario/List.uag" value="#{bundle.MenusListaUsuarios}"/>
+                                        <h:commandLink class="list-group-item" action="/private/administrador/acesso/List.uag" value="#{bundle.MenusListaAcessos}"/>
+                                        <h:commandLink class="list-group-item" action="/private/administrador/nivelAcesso/List.uag" value="#{bundle.MenusNiveisAcesso}"/>
+                                        <h:commandLink class="list-group-item" action="/private/administrador/nivelQuestao/List.uag" value="#{bundle.MenusNiveisQuestao}"/>
+                                        <h:commandLink class="list-group-item" action="/private/administrador/tipoQuestao/List.uag" value="#{bundle.MenusTiposQuestao}"/>
+                                        <h:commandLink class="list-group-item" action="/private/administrador/usuario/List.uag" value="#{bundle.MenusListaUsuarios}"/>
                                     </div>                                        
                                 </div>
                             </div>

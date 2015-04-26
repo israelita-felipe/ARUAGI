@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.NivelQuestaoFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.NivelQuestao;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,22 +10,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class NivelQuestaoController implements Serializable, InterfaceController<NivelQuestao, Integer> {
-
-    private final NivelQuestaoFacade facade = new NivelQuestaoFacade();
-    private List<NivelQuestao> items = null;
-    private NivelQuestao selected;
+public class NivelQuestaoController extends AbstractController<NivelQuestao> implements Serializable {
 
     public NivelQuestaoController() {
-       
-    }
+        super(NivelQuestao.class);
 
-    public NivelQuestao getSelected() {
-        return selected;
-    }
-
-    public void setSelected(NivelQuestao selected) {
-        this.selected = selected;
     }
 
     protected void setEmbeddableKeys() {
@@ -39,81 +23,26 @@ public class NivelQuestaoController implements Serializable, InterfaceController
     protected void initializeEmbeddableKey() {
     }
 
-    private NivelQuestaoFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public NivelQuestao prepareCreate() {
-        selected = new NivelQuestao();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelQuestaoCriado"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelQuestaoAtualizado"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelQuestaoExcluido"));
-    }
-
-    @Override
-    public List<NivelQuestao> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public NivelQuestao getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new NivelQuestao());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public NivelQuestao getNivelQuestao(int id) {
-        getFacade().begin();
-        NivelQuestao nq = getFacade().find(id);
-        getFacade().end();
-        return nq;
+        return getCurrent();
     }
 
     @Override
-    public List<NivelQuestao> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new NivelQuestao());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<NivelQuestao> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = NivelQuestao.class)
     public static class NivelQuestaoControllerConverter implements Converter {
 
         @Override
@@ -123,7 +52,7 @@ public class NivelQuestaoController implements Serializable, InterfaceController
             }
             NivelQuestaoController controller = (NivelQuestaoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "nivelQuestaoController");
-            return controller.getNivelQuestao(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

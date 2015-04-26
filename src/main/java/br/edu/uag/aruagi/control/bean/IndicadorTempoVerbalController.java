@@ -1,14 +1,9 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.IndicadorTempoVerbalFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.IndicadorTempoVerbal;
 import br.edu.uag.aruagi.model.IndicadorTempoVerbalId;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -16,103 +11,39 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class IndicadorTempoVerbalController implements Serializable, InterfaceController<IndicadorTempoVerbal, IndicadorTempoVerbalId> {
-
-    private final IndicadorTempoVerbalFacade facade = new IndicadorTempoVerbalFacade();
-    private List<IndicadorTempoVerbal> items = null;
-    private IndicadorTempoVerbal selected;
+public class IndicadorTempoVerbalController extends AbstractController<IndicadorTempoVerbal> implements Serializable {
 
     public IndicadorTempoVerbalController() {
-    }
-
-    public IndicadorTempoVerbal getSelected() {
-        return selected;
-    }
-
-    public void setSelected(IndicadorTempoVerbal selected) {
-        this.selected = selected;
+        super(IndicadorTempoVerbal.class);
     }
 
     protected void setEmbeddableKeys() {
     }
 
     protected void initializeEmbeddableKey() {
-        selected.setId(new IndicadorTempoVerbalId());
-    }
-
-    private IndicadorTempoVerbalFacade getFacade() {
-        return facade;
+        getCurrent().setId(new IndicadorTempoVerbalId());
     }
 
     @Override
-    public IndicadorTempoVerbal prepareCreate() {
-        selected = new IndicadorTempoVerbal();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTempoVerbalCriado"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTempoVerbalAtualizado"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTempoVerbalExcluido"));
-    }
-
-    @Override
-    public List<IndicadorTempoVerbal> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public IndicadorTempoVerbal getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new IndicadorTempoVerbal());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public IndicadorTempoVerbal getIndicadorTempoVerbal(IndicadorTempoVerbalId id) {
-        return getFacade().find(id);
+        return getCurrent();
     }
 
     @Override
-    public List<IndicadorTempoVerbal> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new IndicadorTempoVerbal());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<IndicadorTempoVerbal> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = IndicadorTempoVerbal.class)
     public static class IndicadorTempoVerbalControllerConverter implements Converter {
 
         private static final String SEPARATOR = "#";
@@ -125,7 +56,7 @@ public class IndicadorTempoVerbalController implements Serializable, InterfaceCo
             }
             IndicadorTempoVerbalController controller = (IndicadorTempoVerbalController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "indicadorTempoVerbalController");
-            return controller.getIndicadorTempoVerbal(getKey(value));
+            return controller.get(getKey(value));
         }
 
         IndicadorTempoVerbalId getKey(String value) {

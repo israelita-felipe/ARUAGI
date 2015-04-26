@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.TipoQuestaoFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.TipoQuestao;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,21 +10,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class TipoQuestaoController implements Serializable, InterfaceController<TipoQuestao, Integer> {
-
-    private final TipoQuestaoFacade facade = new TipoQuestaoFacade();
-    private List<TipoQuestao> items = null;
-    private TipoQuestao selected;
+public class TipoQuestaoController extends AbstractController<TipoQuestao> implements Serializable {
 
     public TipoQuestaoController() {
-    }
-
-    public TipoQuestao getSelected() {
-        return selected;
-    }
-
-    public void setSelected(TipoQuestao selected) {
-        this.selected = selected;
+        super(TipoQuestao.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -38,82 +22,26 @@ public class TipoQuestaoController implements Serializable, InterfaceController<
     protected void initializeEmbeddableKey() {
     }
 
-    private TipoQuestaoFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public TipoQuestao prepareCreate() {
-        selected = new TipoQuestao();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTipoQuestaoCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTipoQuestaoAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemTipoQuestaoExcluida"));
-    }
-
-    @Override
-    public List<TipoQuestao> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public TipoQuestao getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new TipoQuestao());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public TipoQuestao getTipoQuestao(int id) {
-        getFacade().begin();
-        TipoQuestao tq = getFacade().find(id);
-        getFacade().end();
-        return tq;
+        return getCurrent();
     }
 
     @Override
-    public List<TipoQuestao> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new TipoQuestao());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<TipoQuestao> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = TipoQuestao.class)
     public static class TipoQuestaoControllerConverter implements Converter {
 
         @Override
@@ -123,7 +51,7 @@ public class TipoQuestaoController implements Serializable, InterfaceController<
             }
             TipoQuestaoController controller = (TipoQuestaoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "tipoQuestaoController");
-            return controller.getTipoQuestao(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

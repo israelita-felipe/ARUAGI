@@ -1,14 +1,9 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.PalavrasDeclinadasFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.PalavrasDeclinadas;
 import br.edu.uag.aruagi.model.PalavrasDeclinadasId;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -16,106 +11,39 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class PalavrasDeclinadasController implements Serializable, InterfaceController<PalavrasDeclinadas, PalavrasDeclinadasId> {
-
-    private final PalavrasDeclinadasFacade facade = new PalavrasDeclinadasFacade();
-    private List<PalavrasDeclinadas> items = null;
-    private PalavrasDeclinadas selected;
+public class PalavrasDeclinadasController extends AbstractController<PalavrasDeclinadas> implements Serializable {
 
     public PalavrasDeclinadasController() {
-    }
-
-    public PalavrasDeclinadas getSelected() {
-        return selected;
-    }
-
-    public void setSelected(PalavrasDeclinadas selected) {
-        this.selected = selected;
+        super(PalavrasDeclinadas.class);
     }
 
     protected void setEmbeddableKeys() {
     }
 
     protected void initializeEmbeddableKey() {
-        selected.setId(new PalavrasDeclinadasId());
-    }
-
-    private PalavrasDeclinadasFacade getFacade() {
-        return facade;
+        getCurrent().setId(new PalavrasDeclinadasId());
     }
 
     @Override
-    public PalavrasDeclinadas prepareCreate() {
-        selected = new PalavrasDeclinadas();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraDeclinadaCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraDeclinadaAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemPalavraDeclinadaExcluida"));
-    }
-
-    @Override
-    public List<PalavrasDeclinadas> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public PalavrasDeclinadas getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new PalavrasDeclinadas());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public PalavrasDeclinadas getPalavrasDeclinadas(PalavrasDeclinadasId id) {
-        getFacade().begin();
-        PalavrasDeclinadas pd = getFacade().find(id);
-        getFacade().end();
-        return pd;
+        return getCurrent();
     }
 
     @Override
-    public List<PalavrasDeclinadas> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new PalavrasDeclinadas());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<PalavrasDeclinadas> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = PalavrasDeclinadas.class)
     public static class PalavrasDeclinadasControllerConverter implements Converter {
 
         private static final String SEPARATOR = "#";
@@ -128,7 +56,7 @@ public class PalavrasDeclinadasController implements Serializable, InterfaceCont
             }
             PalavrasDeclinadasController controller = (PalavrasDeclinadasController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "palavrasDeclinadasController");
-            return controller.getPalavrasDeclinadas(getKey(value));
+            return controller.get(getKey(value));
         }
 
         PalavrasDeclinadasId getKey(String value) {

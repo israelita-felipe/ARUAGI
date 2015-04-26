@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.NivelAcessoFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.NivelAcesso;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,21 +10,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class NivelAcessoController implements Serializable, InterfaceController<NivelAcesso, Integer> {
-
-    private final NivelAcessoFacade facade = new NivelAcessoFacade();
-    private List<NivelAcesso> items = null;
-    private NivelAcesso selected;
+public class NivelAcessoController extends AbstractController<NivelAcesso> implements Serializable {
 
     public NivelAcessoController() {
-    }
-
-    public NivelAcesso getSelected() {
-        return selected;
-    }
-
-    public void setSelected(NivelAcesso selected) {
-        this.selected = selected;
+        super(NivelAcesso.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -38,77 +22,23 @@ public class NivelAcessoController implements Serializable, InterfaceController<
     protected void initializeEmbeddableKey() {
     }
 
-    private NivelAcessoFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public NivelAcesso prepareCreate() {
-        selected = new NivelAcesso();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoCriado"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoAtualizado"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemNivelAcessoExcluido"));
-    }
-
-    @Override
-    public List<NivelAcesso> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public NivelAcesso getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new NivelAcesso());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public NivelAcesso getNivelAcesso(int id) {
-        getFacade().begin();
-        NivelAcesso na = getFacade().find(id);
-        getFacade().end();
-        return na;
+        return getCurrent();
     }
 
     @Override
-    public List<NivelAcesso> getItemsAvailableSelectMany() {
-        return getItems();
-    }
-
-    @Override
-    public List<NivelAcesso> getItemsAvailableSelectOne() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new NivelAcesso());
+        getCurrent().setStatus(Boolean.TRUE);
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
     @FacesConverter(forClass = NivelAcesso.class)
@@ -121,7 +51,7 @@ public class NivelAcessoController implements Serializable, InterfaceController<
             }
             NivelAcessoController controller = (NivelAcessoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "nivelAcessoController");
-            return controller.getNivelAcesso(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

@@ -5,58 +5,63 @@
  */
 package br.edu.uag.aruagi.control.interfaces;
 
+import br.edu.uag.aruagi.control.util.jsf.Paginator;
 import java.io.Serializable;
-import java.util.List;
+import javax.faces.model.DataModel;
+import javax.faces.model.SelectItem;
 
 /**
  *
  * @author Israel Araújo
  * @param <T>
- * @param <ID>
  */
-public interface InterfaceController<T, ID extends Serializable> {
+public interface InterfaceController<T> {
 
-    /**
-     * Prepara um objeto <T> para ser inserido no banco
-     *
-     * @return
-     */
-    T prepareCreate();
+    // daqui
+    T getSelected();
 
-    /**
-     * Cria um objeto do tipo <T> preparado pelo método <prepareCreate()>
-     */
-    void create();
+    InterfaceFacade<T> getFacade();
 
-    /**
-     * Atualiza um objeto selecionado
-     */
-    void update();
+    Paginator getPagination();
 
-    /**
-     * Delete um objeto selecionado
-     */
-    void destroy();
+    String prepareList();
 
-    /**
-     * Lista os objetos do tipo <T> presente no banco
-     *
-     * @return
-     */
-    List<T> getItems();
+    String prepareView();
 
-    /**
-     * Lista os objetos possíveis para multi-seleção
-     *
-     * @return
-     */
-    List<T> getItemsAvailableSelectMany();
+    String prepareCreate();
 
-    /**
-     * Lista os objetos possíveis para uni-seleção
-     *
-     * @return
-     */
-    List<T> getItemsAvailableSelectOne();
+    String create();
+
+    String prepareEdit();
+
+    String update();
+
+    String destroy();
+
+    String destroyAndView();
+
+    void performDestroy();
+
+    void updateCurrentItem();
+
+    DataModel getItems();
+
+    void recreateModel();
+
+    void recreatePagination();
+
+    String next();
+
+    String previous();
+
+    String first();
+
+    String last();
+
+    SelectItem[] getItemsAvailableSelectMany();
+
+    SelectItem[] getItemsAvailableSelectOne();
+
+    T get(Serializable id);
 
 }

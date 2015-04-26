@@ -11,10 +11,8 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>        
 
-        <ui:insert name="head"/>
-        <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="bootstrap.css"/>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 
@@ -24,10 +22,14 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="primefaces.css"/>
         <link rel="shortcut icon" href="/resources/images/icon.ico" />
         <h:outputScript library="js" name="jsfcrud.js"/>
+
         <!-- SCRIPT DE REQUISICAO DO FACEBOOK -->
         <script>
             fb_root(document, 'script', 'facebook-jssdk');
         </script>           
+
+        <ui:insert name="head"/>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
     </h:head>
     <h:body style="padding-top: 48px">
         <p:layout fullPage="true" style="padding: 0;border: 0">
@@ -51,10 +53,7 @@ and open the template in the editor.
                             <ul class="nav navbar-nav">
                                 <li>
                                     <a href="/public/vocabulario/index.uag">Vocabulário</a>
-                                </li>
-                                <li>
-                                    <a href="/public/postagem/videos.uag">Vídeos</a>
-                                </li>
+                                </li>                                
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Questões</a>
                                     <ul class="dropdown-menu" role="menu">
@@ -73,18 +72,105 @@ and open the template in the editor.
                                     <a href="/public/informacao/FaleConosco.uag">Contato</a>
                                 </li>                                
                             </ul>  
-                            <form class="navbar-form navbar-right">
+                            <h:form class="navbar-form navbar-right">
                                 <h:button rendered="#{!usuarioSessionController.logged}" outcome="/public/Login.uag" class="btn btn-success" value="Logar"/>
                                 <h:button rendered="#{usuarioSessionController.logged}" outcome="/private/homePrivate.uag" class="btn btn-success" value="Meu espaço"/>
-                            </form>                            
+                                <span class="divider"/>
+                                <h:commandButton rendered="#{usuarioSessionController.logged}" class="btn btn-warning" action="#{usuarioSessionController.doLogout()}" value="#{bundle.AcaoSair}"/>
+                            </h:form>                            
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
                 </nav>                 
                 <ui:insert name="body"/>                
+
+                <div class="blog-footer container" style="padding-top: 0;padding-left: 0;border-left: 0;padding-right: 0;border-right: 0">
+                    <div style="border-top: 1px solid #f7f7f7">
+                        <div id="quadro_1" class="col-md-3">
+                            <div class="h3">                                    
+                                ARUAGI
+                            </div>
+                            <div class="caption">
+                                Universidade Federal Rural de Pernambuco - UFRPE
+                                <hr/>
+                                Unidade Acadêmica de Garanhuns - UAG
+                            </div>
+                        </div>
+                        <div id="quadro_2" class="col-md-3">
+                            <div class="h3">
+                                Parceiros
+                            </div>
+                            <div class="caption">
+
+                            </div>
+                        </div>
+                        <div id="quadro_3" class="col-md-3">
+                            <div class="h3">
+                                Projeto
+                            </div>
+                            <div class="caption">
+                                <a href="https://github.com/israelita-felipe/ARUAGI">
+                                    https://github.com/israelita-felipe/ARUAGI
+                                </a>
+                            </div>
+                        </div>
+                        <div id="quadro_4" class="col-md-3">
+                            <div class="caption">
+                                <div class="h3">
+                                    Orientado por
+                                </div>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/9765841869399460">
+                                        <h:outputText value="Aliete Gomes Carneiro Rosa" />
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <hr/> 
+                                <div class="h3">
+                                    Desenvolvimento
+                                </div>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/0444370129900667">
+                                        <h:outputText value="Israel Felipe de Lima Araújo Silva" />
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/4329681764449719">
+                                        <h:outputText value="Renan Leandro Fernandes" />
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/6385944686814684">
+                                        <h:outputText value="Rafaell Brunno Nogueira Vieira" />
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="">
+                                        <h:outputText value="Gilson Morais" />
+                                    </h:outputLink>
+                                </p:lightBox>                        
+                                <p:lightBox iframe="true">
+                                    <h:outputLink value="http://lattes.cnpq.br/0718728977707198">
+                                        <h:outputText value="Victor Francisco dos Santos Viana" />
+                                    </h:outputLink>
+                                </p:lightBox>                                                                
+                            </div>
+                        </div>
+                    </div>                                            
+                    <div class="col-lg-12" >      
+                        <hr/>
+                        <center>
+                            Todos os direitos reservados
+                            <p:spacer width="10"/>
+                            <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
+                        </center>
+                    </div>                    
+                </div>                
+                <script>
+            googleSearch('busca', 'search', '004159013048277972925:frojtp-ajiy');
+                </script>                 
             </p:layoutUnit>
         </p:layout> 
         <script>
             $('.dropdown-toggle').dropdown();
-        </script>
+        </script>       
     </h:body>    
 </html>

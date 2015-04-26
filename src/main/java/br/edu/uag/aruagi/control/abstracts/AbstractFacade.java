@@ -6,10 +6,9 @@
 package br.edu.uag.aruagi.control.abstracts;
 
 import br.edu.uag.aruagi.control.interfaces.InterfaceFacade;
-import br.edu.uag.aruagi.control.util.hibernate.FacesContextUtil;
 import java.io.Serializable;
 import java.util.List;
-import org.hibernate.Session;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 
@@ -17,48 +16,18 @@ import org.hibernate.criterion.Property;
  *
  * @author Israel Araújo
  * @param <T>
- * @param <ID>
  */
-public abstract class AbstractFacade<T, ID extends Serializable> implements Serializable, InterfaceFacade<T, ID> {
+public abstract class AbstractFacade<T> implements Serializable, InterfaceFacade<T> {
 
     private final Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
-    }    
-
-    @Override
-    public Session getSession() {
-        return FacesContextUtil.getRequestSession();
-    }
-
-    @Override
-    public void begin() {
-        /*FacesContextUtil.setRequestSession(HibernateUtil.getSessionFactory().openSession());
-         getSession().getTransaction().begin();*/
-    }
-
-    @Override
-    public void end() {
-        /* try {
-         getSession().getTransaction().commit();
-         } catch (Exception ex) {
-         if (getSession().getTransaction().isActive()) {
-         getSession().getTransaction().rollback();
-         }
-         } finally {
-         getSession().close();
-         }*/
     }
 
     @Override
     public void create(T entity) {
         getSession().persist(entity);
-    }
-
-    @Override
-    public void commit() {
-        getSession().getTransaction().commit();
     }
 
     @Override
@@ -68,15 +37,12 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
 
     @Override
     public void remove(T entity) {
-        Object o = getSession().merge(entity);
-        if (o != null) {
-            getSession().delete(o);
-        }
+        edit(entity);
     }
 
     @Override
-    public T find(ID id) {
-        return (T) getSession().get(entityClass, id);
+    public T find(Serializable id) {
+        return (T) getSession().load(entityClass, id);
     }
 
     @Override
@@ -84,6 +50,15 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
         DetachedCriteria query = DetachedCriteria.forClass(entityClass);
         query.add(Property.forName("status").eq(Boolean.TRUE));
         return getEntitiesByDetachedCriteria(query);
+    }
+
+    @Override
+    public List<T> findRange(int[] range) {
+        Criteria q = getSession().createCriteria(entityClass);
+        q.setMaxResults(range[1] - range[0] + 1);
+        q.setFirstResult(range[0]);
+        q.add(Property.forName("status").eq(Boolean.TRUE));
+        return q.list();
     }
 
     @Override
@@ -100,4 +75,10 @@ public abstract class AbstractFacade<T, ID extends Serializable> implements Seri
     public List<T> getEntitiesByDetachedCriteria(DetachedCriteria criteria) {
         return (List<T>) criteria.getExecutableCriteria(getSession()).list();
     }
+
+    @Override
+    public Class<T> getFacadeClass(){
+        return entityClass;
+    }
+        
 }

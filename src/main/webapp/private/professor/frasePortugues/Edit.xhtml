@@ -1,25 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoEditar}
+    </ui:define>
 
-        <p:dialog id="FrasePortuguesEditDlg" widgetVar="FrasePortuguesEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
-            <h:form id="FrasePortuguesEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{frasePortuguesController.selected != null}">
+    <ui:define name="body">
+        <h:form id="FrasePortuguesCreateForm" class="container" rendered="#{frasePortuguesController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CampoFrasePortugues}" for="frase" />
-                        <p:inputText id="frase" value="#{frasePortuguesController.selected.frase}" title="#{bundle.CampoFrasePortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <h:outputLabel value="#{bundle.CampoFrasePortugues}" for="frasePortugues" />
+            <br/>
+            <h:inputText id="frasePortugues" class="form-control" value="#{frasePortuguesController.selected.frase}" title="#{bundle.CampoFrasePortugues}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <hr/>
+            <h:commandButton class="btn btn-success" action="#{frasePortuguesController.update}" value="#{bundle.AcaoSalvar}"/>
+        </h:form>        
+    </ui:define>
 
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{frasePortuguesController.update}" value="#{bundle.AcaoSalvar}" update="display,:FrasePortuguesListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FrasePortuguesEditDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

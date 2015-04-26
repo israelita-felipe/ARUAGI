@@ -1,193 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:composition template="/resources/template_site.xhtml">        
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
 
-        <ui:define name="title">
-            <h:outputText value="Início - ARUAGI"/>
-        </ui:define>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="cover.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
 
-        <ui:define name="body">            
-            <div class="jumbotron">
-                <div class="container">
-                    <h1>Bem-vindo</h1>
-                    <p>#{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento.</p>                    
-                    <h:form rendered="#{usuarioSessionController.logged}">
-                        <h:commandButton class="btn btn-success" action="/private/professor/postagem/Create.uag?faces-redirect=true" value="Nova postagem"/>
-                    </h:form>
-                </div>
-            </div>         
-            <div class="container">  
-                <div class="row">                    
-                    <p:dataScroller id="datalist" styleClass="col-sm-8 blog-main" value="#{postagemController.timeLine}" var="itemAtual" chunkSize="10">
-                        <f:facet name="loader">
-                            <button type="button" class="btn btn-default">Mais postagens</button>
-                        </f:facet>  
+        <h:outputScript library="js" name="bootstrap.min.js"/>
 
-                        <div class="blog-post">
-                            <h2 class="blog-post-title">
-                                #{itemAtual.titulo}                                                                
-                            </h2>
-                            <p class="blog-post-meta">
-                                <h:outputFormat value="#{itemAtual.data}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </h:outputFormat>  
-                                <p:spacer width="10"/>
-                                <p:outputLabel value="por #{usuarioSessionController.getUsuario(itemAtual.usuario).nome}"/>                                                                
-                                <p:spacer width="10"/>
-                                <p:outputLabel styleClass="badge" rendered="#{!itemAtual.videosPostagems.isEmpty()}">
-                                    <h:outputText value="#{itemAtual.videosPostagems.size()}" title="Vídeos"/>
-                                </p:outputLabel>
-                            </p>
-                            <p>
-                                <h:outputText value="#{itemAtual.conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
-                            </p>
-                            <p>
-                                <h:form>
-                                    <div class="btn-group">                                                                                
-                                        <h:commandButton action="/public/postagem/index.uag?faces-redirect=true" value="Continuar »" class="btn btn-success">
-                                            <f:setPropertyActionListener target="#{postagemController.selected}" value="#{itemAtual}"/>
-                                        </h:commandButton>                                        
-                                    </div>
-                                </h:form>
-                            </p>
-                            <hr/>
-                        </div>                                                    
-                    </p:dataScroller>
-                    <div class="col-sm-3 col-sm-offset-1 blog-sidebar"> 
+        <title>ARUAGI</title>
+    </h:head>
+    <h:body style="padding-top: 48px">        
+        <h:form class="container marketing">
 
-                        <div class="list-group sidebar-module sidebar-module-inset"> 
-                            <h2 class="blog-post-title">
-                                Conteúdo
-                            </h2>
-                            <a >
-                                Postagens: <span class="badge pull-right">#{postagemController.timeLine.size()}</span>                                
-                            </a>
-                            <br/>
-                            <a >
-                                Vídeos: <span class="badge pull-right">#{videosController.itemsAvailableSelectOne.size()}</span>                                
-                            </a>
-                            <br/>
-                            <a >
-                                Palavras: <span class="badge pull-right">#{palavraLatimController.items.size()}</span>                                
-                            </a>
-                            <br/>
-                            <a >
-                                Frases: <span class="badge pull-right">#{fraseLatimController.items.size()}</span>                                
-                            </a>
-                            <br/>
-                            <a >
-                                Usuário do ARUAGI: <span class="badge pull-right">#{usuarioController.items.size()}</span>                                
-                            </a>
-                        </div> 
-                        <div class="sidebar-module">
-                            <h2>Redes sociais</h2>
-                            <div class="fb-like-box"
-                                 data-href="https://www.facebook.com/pages/Aruagi-Ensino-de-L%C3%ADngua-Latina/553025198136554"
-                                 data-colorscheme="light"
-                                 data-show-faces="true"
-                                 data-header="false"
-                                 data-stream="true"
-                                 data-width="250"
-                                 data-show-border="false">                             
-                            </div>           
-                        </div>
+            <!-- Three columns of text below the carousel -->
+            <div class="row">
+                <div>
+                    <img class="img-circle" src="/resources/images/logo_cut.jpg" alt="Generic placeholder image" width="140" height="140"/>
+                    <h2>ARUAGI</h2>
+                    <h3>
+                        Hoje #{acessoController.selected.acessos} acessos, #{acessoController.totalAcessos()} até o momento.
+                    </h3>
+                    <p>Um projeto para aprendizado de língua latina</p>
+                    <p><h:commandButton action="/public/postagem/List.uag?faces-redirect=true" class="btn btn-lg btn-default" value="Entrar"/></p>                    
+                </div><!-- /.col-lg-4 -->                
+            </div><!-- /.row -->
+
+
+            <h:form rendered="false">
+                <!-- START THE FEATURETTES -->
+
+                <hr/>
+                <div class="row featurette">
+                    <div class="col-md-7">
+                        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
+                        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
                     </div>
-                </div>
-                <div class="blog-footer" style="padding-top: 0;padding-left: 0;border-left: 0;padding-right: 0;border-right: 0">
-                    <div style="border-top: 1px solid #f7f7f7">
-                        <div id="quadro_1" class="col-md-3">
-                            <div class="h3">                                    
-                                ARUAGI
-                            </div>
-                            <div class="caption">
-                                Universidade Federal Rural de Pernambuco - UFRPE
-                                <hr/>
-                                Unidade Acadêmica de Garanhuns - UAG
-                            </div>
-                        </div>
-                        <div id="quadro_2" class="col-md-3">
-                            <div class="h3">
-                                Parceiros
-                            </div>
-                            <div class="caption">
+                    <div class="col-md-5">
+                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE5MC4zMjAzMTI1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MjNwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj41MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true"/>
+                    </div>
+                </div>            
+            </h:form>
+            <!-- /END THE FEATURETTES -->
+            <hr/>
 
-                            </div>
-                        </div>
-                        <div id="quadro_3" class="col-md-3">
-                            <div class="h3">
-                                Projeto
-                            </div>
-                            <div class="caption">
-                                <a href="https://github.com/israelita-felipe/ARUAGI">
-                                    https://github.com/israelita-felipe/ARUAGI
-                                </a>
-                            </div>
-                        </div>
-                        <div id="quadro_4" class="col-md-3">
-                            <div class="caption">
-                                <div class="h3">
-                                    Orientado por
-                                </div>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/9765841869399460">
-                                        <h:outputText value="Aliete Gomes Carneiro Rosa" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <hr/> 
-                                <div class="h3">
-                                    Desenvolvimento
-                                </div>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/0444370129900667">
-                                        <h:outputText value="Israel Felipe de Lima Araújo Silva" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/4329681764449719">
-                                        <h:outputText value="Renan Leandro Fernandes" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/6385944686814684">
-                                        <h:outputText value="Rafaell Brunno Nogueira Vieira" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="">
-                                        <h:outputText value="Gilson Morais" />
-                                    </h:outputLink>
-                                </p:lightBox>                        
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/0718728977707198">
-                                        <h:outputText value="Victor Francisco dos Santos Viana" />
-                                    </h:outputLink>
-                                </p:lightBox>                                                                
-                            </div>
-                        </div>
-                    </div>                                            
-                    <div class="col-lg-12" >      
-                        <hr/>
-                        <center>
-                            Todos os direitos reservados
-                            <p:spacer width="10"/>
-                            <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
-                        </center>
-                    </div>                    
-                </div>                
-                <script>
-                    googleSearch('busca', 'search', '004159013048277972925:frojtp-ajiy');
-                </script>                 
-            </div>        
-        </ui:define>        
-    </ui:composition>    
+            <!-- FOOTER -->
+            <footer>
+                <p class="pull-right"><a href="#" class="img-circle">Topo</a></p>
+                <p>© Universidade Federal Rural de Pernambuco - UFRPE</p>
+            </footer>
+
+        </h:form><!-- /.container -->
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs></defs><text x="0" y="23" style="font-weight:bold;font-size:23pt;font-family:Arial, Helvetica, Open Sans, sans-serif;dominant-baseline:middle">500x500</text>
+        </svg>
+    </h:body>
 </html>

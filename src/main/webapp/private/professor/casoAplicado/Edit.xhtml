@@ -1,39 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoEditar}
+    </ui:define>
 
-        <p:dialog id="CasoAplicadoEditDlg" widgetVar="CasoAplicadoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
-            <h:form id="CasoAplicadoEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{casoAplicadoController.selected != null}">
+    <ui:define name="body">
+        <h:form id="CasoAplicadoCreateForm" class="container" rendered="#{casoAplicadoController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{casoAplicadoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
-                                           var="palavraLatimItem"
-                                           itemLabel="#{palavraLatimItem.palavra}"
-                                           itemValue="#{palavraLatimItem}"/>
-                        </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.CampoCaso}" for="caso" />
-                        <p:selectOneMenu id="caso" filter="true" value="#{casoAplicadoController.selected.caso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{casoController.itemsAvailableSelectOne}"
-                                           var="casoItem"
-                                           itemLabel="#{casoItem.descricao}"
-                                           itemValue="#{casoItem}"/>
-                        </p:selectOneMenu>
+            <h:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="palavraLatim" value="#{casoAplicadoController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoCaso}" for="casoAplicado" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="casoAplicado" value="#{casoAplicadoController.selected.caso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{casoController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
+            <hr/>
+            <h:commandButton class="btn btn-success" action="#{casoAplicadoController.update}" value="#{bundle.AcaoSalvar}"/>
+        </h:form>        
+    </ui:define>
 
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{casoAplicadoController.update}" value="#{bundle.AcaoSalvar}" update="display,:CasoAplicadoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CasoAplicadoEditDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

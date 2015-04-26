@@ -1,25 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoEditar}
+    </ui:define>
 
-        <p:dialog id="PalavraLatimEditDlg" widgetVar="PalavraLatimEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
-            <h:form id="PalavraLatimEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{palavraLatimController.selected != null}">
+    <ui:define name="body">
+        <h:form id="PalavraLatimCreateForm" class="container" rendered="#{palavraLatimController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavra" />
-                        <p:inputText id="palavra" value="#{palavraLatimController.selected.palavra}" title="#{bundle.CampoPalavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <h:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavra" />
+            <br/>
+            <h:inputText id="palavra" class="form-control" value="#{palavraLatimController.selected.palavra}" title="#{bundle.CampoPalavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <hr/>
+            <h:commandButton class="btn btn-success" action="#{palavraLatimController.update}" value="#{bundle.AcaoSalvar}"/>
+        </h:form>        
+    </ui:define>
 
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{palavraLatimController.update}" value="#{bundle.AcaoSalvar}" update="display,:PalavraLatimListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PalavraLatimEditDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

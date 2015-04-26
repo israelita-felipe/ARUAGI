@@ -1,58 +1,36 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <h:head>
-        <title>Redefinição de senha</title>
-        <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
-        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
-        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
-        <h:outputStylesheet library="css" name="defaultHTML.css"/>
+    <ui:define name="title">
+        Redefinição de senha
+    </ui:define>
 
-        <h:outputScript library="js" name="bootstrap.js"/>
-        <h:outputScript library="js" name="bootstrap.min.js"/>
+    <ui:define name="body">
+        <h:form class="container">
+            <h:messages showSummary="true" showDetail="true" class="warning"/>
 
-        <h:outputScript library="js" name="jsfcrud.js"/>
-    </h:head>
-    <h:body>        
-        <h:form style="padding-top: 70px">
-            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">                
-                <div class="container">
-                    <h:link outcome="#{bundle.MenuHomePrivate}">
-                        <h:graphicImage library="images" name="layout/BRASAO-UFRPE.jpg" width="54" height="70"/>                    
-                    </h:link>
-                    #{acessoController.selected.acessos} hoje, #{acessoController.totalAcessos()} acessos até o momento
-                </div>                
-            </nav>
-            <p:growl autoUpdate="true" showDetail="true"/>
-            <div class="jumbotron">
-                <h4>
-                    Redefinição de senha
-                </h4>
-                <div class="caption">
-                    <p:outputLabel for="currentPassword" value="#{bundle.CampoSenhaAtual}"/>
-                    <div class="input-group">
-                        <span class="input-group-addon"></span>
-                        <p:password id="currentPassword" styleClass="form-control" value="#{usuarioSessionController.currentPass}"/>
-                    </div>
-                    <p:outputLabel for="newPassword" value="#{bundle.CampoNovaSenha}"/>
-                    <div class="input-group">
-                        <span class="input-group-addon"></span>
-                        <p:password id="newPassword" styleClass="form-control" value="#{usuarioSessionController.newPass}"/>
-                    </div>
-                    <p:outputLabel for="retryNewPassword" value="#{bundle.CampoRepetirNovaSenha}"/>
-                    <div class="input-group">
-                        <span class="input-group-addon"></span>
-                        <p:password id="retryNewPassword" styleClass="form-control" value="#{usuarioSessionController.confirmNewPass}"/>
-                    </div>
-                </div>                    
-                <hr/>
-                <p:commandButton styleClass="btn btn-primary" value="#{bundle.AcaoSalvar}" ajax="false" action="#{usuarioSessionController.updatePassword}"/>
+            <h:outputLabel for="currentPassword" value="#{bundle.CampoSenhaAtual}"/>
+            <div class="input-group">
+                <span class="input-group-addon" style="border-radius: 0!important"></span>
+                <h:inputSecret style="border-radius: 0!important" id="currentPassword" styleClass="form-control" value="#{usuarioSessionController.currentPass}"/>
             </div>
+            <h:outputLabel for="newPassword" value="#{bundle.CampoNovaSenha}"/>
+            <div class="input-group">
+                <span class="input-group-addon" style="border-radius: 0!important"></span>
+                <h:inputSecret style="border-radius: 0!important" id="newPassword" class="form-control" value="#{usuarioSessionController.newPass}"/>
+            </div>
+            <h:outputLabel for="retryNewPassword" value="#{bundle.CampoRepetirNovaSenha}"/>
+            <div class="input-group">
+                <span class="input-group-addon" style="border-radius: 0!important"></span>
+                <h:inputSecret style="border-radius: 0!important" id="retryNewPassword" class="form-control" value="#{usuarioSessionController.confirmNewPass}"/>
+            </div>
+
+            <hr/>
+            <h:commandButton styleClass="btn btn-primary" value="#{bundle.AcaoSalvar}" action="#{usuarioSessionController.updatePassword}"/>
         </h:form>
-    </h:body>
+    </ui:define>
+
 </ui:composition>

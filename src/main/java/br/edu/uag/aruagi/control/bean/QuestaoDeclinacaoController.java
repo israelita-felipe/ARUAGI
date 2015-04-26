@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.QuestaoDeclinacaoFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.QuestaoDeclinacao;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,21 +10,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class QuestaoDeclinacaoController implements Serializable, InterfaceController<QuestaoDeclinacao, Integer> {
-
-    private final QuestaoDeclinacaoFacade facade = new QuestaoDeclinacaoFacade();
-    private List<QuestaoDeclinacao> items = null;
-    private QuestaoDeclinacao selected;
+public class QuestaoDeclinacaoController extends AbstractController<QuestaoDeclinacao> implements Serializable {
 
     public QuestaoDeclinacaoController() {
-    }
-
-    public QuestaoDeclinacao getSelected() {
-        return selected;
-    }
-
-    public void setSelected(QuestaoDeclinacao selected) {
-        this.selected = selected;
+        super(QuestaoDeclinacao.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -38,82 +22,26 @@ public class QuestaoDeclinacaoController implements Serializable, InterfaceContr
     protected void initializeEmbeddableKey() {
     }
 
-    private QuestaoDeclinacaoFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public QuestaoDeclinacao prepareCreate() {
-        selected = new QuestaoDeclinacao();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoDeclinacaoCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoDeclinacaoAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoDeclinacaoExcluida"));
-    }
-
-    @Override
-    public List<QuestaoDeclinacao> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public QuestaoDeclinacao getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new QuestaoDeclinacao());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public QuestaoDeclinacao getQuestaoDeclinacao(int id) {
-        getFacade().begin();
-        QuestaoDeclinacao qd = getFacade().find(id);
-        getFacade().end();
-        return qd;
+        return getCurrent();
     }
 
     @Override
-    public List<QuestaoDeclinacao> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new QuestaoDeclinacao());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<QuestaoDeclinacao> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = QuestaoDeclinacao.class)
     public static class QuestaoDeclinacaoControllerConverter implements Converter {
 
         @Override
@@ -123,7 +51,7 @@ public class QuestaoDeclinacaoController implements Serializable, InterfaceContr
             }
             QuestaoDeclinacaoController controller = (QuestaoDeclinacaoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "questaoDeclinacaoController");
-            return controller.getQuestaoDeclinacao(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

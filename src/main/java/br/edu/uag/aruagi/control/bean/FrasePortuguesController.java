@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.FrasePortuguesFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.FrasePortugues;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,107 +10,47 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class FrasePortuguesController implements Serializable, InterfaceController<FrasePortugues, Integer> {
-
-    private final FrasePortuguesFacade facade = new FrasePortuguesFacade();
-    private List<FrasePortugues> items = null;
-    private FrasePortugues selected;
-
+public class FrasePortuguesController extends AbstractController<FrasePortugues> implements Serializable {
+    
     public FrasePortuguesController() {
+        super(FrasePortugues.class);
     }
-
-    public FrasePortugues getSelected() {
-        return selected;
-    }
-
-    public void setSelected(FrasePortugues selected) {
-        this.selected = selected;
-    }
-
+    
     protected void setEmbeddableKeys() {
     }
-
+    
     protected void initializeEmbeddableKey() {
     }
-
-    private FrasePortuguesFacade getFacade() {
-        return facade;
-    }
-
+    
     @Override
-    public FrasePortugues prepareCreate() {
-        selected = new FrasePortugues();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFrasePortuguesCriada"));  
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFrasePortuguesAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFrasePortuguesExcluida"));
-    }
-
-    @Override
-    public List<FrasePortugues> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public FrasePortugues getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new FrasePortugues());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
+        return getCurrent();
     }
-
-    public FrasePortugues getFrasePortugues(int id) {
-        getFacade().begin();
-        FrasePortugues fp = getFacade().find(id);
-        getFacade().end();
-        return fp;
-    }
-
+    
     @Override
-    public List<FrasePortugues> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new FrasePortugues());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
-
+    
     @Override
-    public List<FrasePortugues> getItemsAvailableSelectOne() {
-        return getItems();
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @FacesConverter(forClass = FrasePortugues.class)
     public static class FrasePortuguesControllerConverter implements Converter {
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -123,21 +58,21 @@ public class FrasePortuguesController implements Serializable, InterfaceControll
             }
             FrasePortuguesController controller = (FrasePortuguesController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "frasePortuguesController");
-            return controller.getFrasePortugues(getKey(value));
+            return controller.get(getKey(value));
         }
-
+        
         int getKey(String value) {
             int key;
             key = Integer.parseInt(value);
             return key;
         }
-
+        
         String getStringKey(int value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -151,7 +86,7 @@ public class FrasePortuguesController implements Serializable, InterfaceControll
                 return null;
             }
         }
-
+        
     }
-
+    
 }

@@ -14,9 +14,8 @@ import org.hibernate.criterion.DetachedCriteria;
  *
  * @author Israel Araújo
  * @param <T>
- * @param <ID>
  */
-public interface InterfaceFacade<T, ID extends Serializable> {
+public interface InterfaceFacade<T> {
 
     /**
      * Recupera a sessao
@@ -30,22 +29,7 @@ public interface InterfaceFacade<T, ID extends Serializable> {
      *
      * @param entity
      */
-    void create(T entity);
-
-    /**
-     * Inicia uma transação com o banco
-     */
-    void begin();
-
-    /**
-     * Finaliza uma transação com o banco
-     */
-    void end();
-    
-    /**
-     * Grava DEFINITIVAMENTE as alterações no banco de dados
-     */
-    void commit();
+    void create(T entity);    
 
     /**
      * Edita um objeto do tipo <T>
@@ -67,7 +51,7 @@ public interface InterfaceFacade<T, ID extends Serializable> {
      * @param id
      * @return
      */
-    T find(ID id);
+    T find(Serializable id);
 
     /**
      * Lista todos os objetos do tipo <T>
@@ -99,4 +83,8 @@ public interface InterfaceFacade<T, ID extends Serializable> {
      * @return
      */
     List<T> getEntitiesByDetachedCriteria(DetachedCriteria criteria);
+
+    List<T> findRange(int[] range);
+    
+    Class<T> getFacadeClass();
 }

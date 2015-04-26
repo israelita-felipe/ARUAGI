@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.QuestaoGramaticalFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.QuestaoGramatical;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,21 +10,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class QuestaoGramaticalController implements Serializable, InterfaceController<QuestaoGramatical, Integer> {
-
-    private final QuestaoGramaticalFacade facade = new QuestaoGramaticalFacade();
-    private List<QuestaoGramatical> items = null;
-    private QuestaoGramatical selected;
+public class QuestaoGramaticalController extends AbstractController<QuestaoGramatical> implements Serializable {
 
     public QuestaoGramaticalController() {
-    }
-
-    public QuestaoGramatical getSelected() {
-        return selected;
-    }
-
-    public void setSelected(QuestaoGramatical selected) {
-        this.selected = selected;
+        super(QuestaoGramatical.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -38,82 +22,26 @@ public class QuestaoGramaticalController implements Serializable, InterfaceContr
     protected void initializeEmbeddableKey() {
     }
 
-    private QuestaoGramaticalFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public QuestaoGramatical prepareCreate() {
-        selected = new QuestaoGramatical();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoGramaticalCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoGramaticalAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoGramaticalExcluida"));
-    }
-
-    @Override
-    public List<QuestaoGramatical> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public QuestaoGramatical getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new QuestaoGramatical());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public QuestaoGramatical getQuestaoGramatical(int id) {
-        getFacade().begin();
-        QuestaoGramatical qg = getFacade().find(id);
-        getFacade().end();
-        return qg;
+        return getCurrent();
     }
 
     @Override
-    public List<QuestaoGramatical> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new QuestaoGramatical());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<QuestaoGramatical> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = QuestaoGramatical.class)
     public static class QuestaoGramaticalControllerConverter implements Converter {
 
         @Override
@@ -123,7 +51,7 @@ public class QuestaoGramaticalController implements Serializable, InterfaceContr
             }
             QuestaoGramaticalController controller = (QuestaoGramaticalController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "questaoGramaticalController");
-            return controller.getQuestaoGramatical(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

@@ -113,24 +113,13 @@ public class PalavraPortugues implements java.io.Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final PalavraPortugues other = (PalavraPortugues) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if ((this.palavra == null) ? (other.palavra != null) : !this.palavra.equals(other.palavra)) {
-            return false;
-        }
-        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
-            return false;
-        }
+    public boolean equals(Object obj) {       
         return true;
     }
 
+    @Override
+    public String toString() {
+        return ""+id;
+    }
+    
 }

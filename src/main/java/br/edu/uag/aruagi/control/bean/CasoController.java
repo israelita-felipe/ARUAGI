@@ -1,35 +1,20 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.Caso;
-import br.edu.uag.aruagi.control.Facade.CasoFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.model.SelectItem;
 
-public class CasoController implements Serializable, InterfaceController<Caso, Integer> {
-
-    private final CasoFacade facade = new CasoFacade();
-    private List<Caso> items = null;
-    private Caso selected;
+public class CasoController extends AbstractController<Caso> implements Serializable {
 
     public CasoController() {
-    }
-
-    public Caso getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Caso selected) {
-        this.selected = selected;
+        super(Caso.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -38,79 +23,42 @@ public class CasoController implements Serializable, InterfaceController<Caso, I
     protected void initializeEmbeddableKey() {
     }
 
-    private CasoFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public Caso prepareCreate() {
-        selected = new Caso();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemCasoCriado"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemCasoAtualizado"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemCasoExcluido"));
-    }
-
-    @Override
-    public List<Caso> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    selected.setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    selected.setStatus(Boolean.TRUE);
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public Caso getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new Caso());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public Caso getCaso(int id) {
-        getFacade().begin();
-        Caso c = getFacade().find(id);
-        getFacade().end();
-        return c;
+        return getCurrent();
     }
 
     @Override
-    public List<Caso> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new Caso());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
     @Override
-    public List<Caso> getItemsAvailableSelectOne() {
-        return getItems();
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public SelectItem[] getItemsAvailableSelectOne() {
+        int size = getFacade().count() + 1;
+        SelectItem[] items = new SelectItem[size];
+        int i = 1;
+        items[0] = new SelectItem("", "---");
+        for (Caso x : getFacade().findAll()) {
+            items[i++] = new SelectItem(x, x.getDescricao());
+        }
+        return items;
     }
 
     @FacesConverter(forClass = Caso.class)
@@ -123,7 +71,7 @@ public class CasoController implements Serializable, InterfaceController<Caso, I
             }
             CasoController controller = (CasoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "casoController");
-            return controller.getCaso(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

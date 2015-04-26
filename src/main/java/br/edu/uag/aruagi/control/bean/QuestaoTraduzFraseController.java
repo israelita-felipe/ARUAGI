@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.QuestaoTraduzFraseFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.QuestaoTraduzFrase;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,21 +10,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class QuestaoTraduzFraseController implements Serializable, InterfaceController<QuestaoTraduzFrase, Integer> {
-
-    private final QuestaoTraduzFraseFacade facade = new QuestaoTraduzFraseFacade();
-    private List<QuestaoTraduzFrase> items = null;
-    private QuestaoTraduzFrase selected;
+public class QuestaoTraduzFraseController extends AbstractController<QuestaoTraduzFrase> implements Serializable {
 
     public QuestaoTraduzFraseController() {
-    }
-
-    public QuestaoTraduzFrase getSelected() {
-        return selected;
-    }
-
-    public void setSelected(QuestaoTraduzFrase selected) {
-        this.selected = selected;
+        super(QuestaoTraduzFrase.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -38,82 +22,26 @@ public class QuestaoTraduzFraseController implements Serializable, InterfaceCont
     protected void initializeEmbeddableKey() {
     }
 
-    private QuestaoTraduzFraseFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public QuestaoTraduzFrase prepareCreate() {
-        selected = new QuestaoTraduzFrase();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoTraduzFraseCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoTraduzFraseAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemQuestaoTraduzFraseExcluida"));
-    }
-
-    @Override
-    public List<QuestaoTraduzFrase> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public QuestaoTraduzFrase getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new QuestaoTraduzFrase());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public QuestaoTraduzFrase getQuestaoTraduzFrase(int id) {
-        getFacade().begin();
-        QuestaoTraduzFrase qtf = getFacade().find(id);
-        getFacade().end();
-        return qtf;
+        return getCurrent();
     }
 
     @Override
-    public List<QuestaoTraduzFrase> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new QuestaoTraduzFrase());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<QuestaoTraduzFrase> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = QuestaoTraduzFrase.class)
     public static class QuestaoTraduzFraseControllerConverter implements Converter {
 
         @Override
@@ -123,7 +51,7 @@ public class QuestaoTraduzFraseController implements Serializable, InterfaceCont
             }
             QuestaoTraduzFraseController controller = (QuestaoTraduzFraseController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "questaoTraduzFraseController");
-            return controller.getQuestaoTraduzFrase(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

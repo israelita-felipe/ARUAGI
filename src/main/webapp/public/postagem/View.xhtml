@@ -14,7 +14,7 @@ and open the template in the editor.
         <ui:define name="title">
             <h:outputText value="Home"/>
         </ui:define>
-        
+
         <ui:define name="body">
             <h:form id="PostagemListForm" class="container" style="padding-top: 12px">                                    
                 <h2 class="blog-post-title">
@@ -25,32 +25,18 @@ and open the template in the editor.
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputFormat>
                     <p:spacer width="10"/>
-                    <p:outputLabel value="por #{usuarioSessionController.getUsuario(postagemController.selected.usuario).nome}"/>                
+                    <p:outputLabel value="por #{usuarioSessionController.get(postagemController.selected.usuario).nome}"/>                
                 </div>
                 <p>
                     <h:outputText value="#{postagemController.selected.conteudo}" escape="false"/>
-                </p>
-                <p:dataList id="videosDatalist" type="none" value="#{postagemController.selected.videosPostagems}"
-                            var="vpa" emptyMessage="Nenhum vídeos para esta postagem" paginator="true" rows="1"
-                            rendered="#{!postagemController.selected.videosPostagems.isEmpty()}">
-                    <center>
-                        <iframe 
-                            src="//www.youtube.com/embed/#{vpa.videos.link}?feature=player_embedded"
-                            frameborder="0"
-                            allowfullscreen="true">
-                        </iframe>                                  
-                    </center>
-                </p:dataList >
-                <hr/>                
+                </p>                
                 <h:form rendered="#{usuarioSessionController.logged and (postagemController.selected.usuario==usuarioSessionController.selected.id)}">
                     <div class="btn-group">
-                        <p:commandLink styleClass="btn btn-success" value="#{bundle.AcaoExcluir}" action="/index.uag?faces-redirect=true">
-                            <f:ajax listener="#{postagemController.destroy}"/>
-                        </p:commandLink>
-                        <p:commandLink styleClass="btn btn-success" value="#{bundle.AcaoEditar}" action="/private/professor/postagem/Edit.xhtml?faces-redirect=true"/>
-                        <p:commandLink styleClass="btn btn-success" value="Videos" actionListener="#{videosPostagemController.prepareCreate}"/>
+                        <h:commandButton class="btn btn-success" value="#{bundle.AcaoExcluir}" action="#{postagemController.destroyAndView()}"/>
+                        <h:commandButton class="btn btn-success" value="#{bundle.AcaoEditar}" action="/private/professor/postagem/Edit.uag?faces-redirect=true"/>
                     </div>
                 </h:form>
+                <br/>
             </h:form>
         </ui:define>
     </ui:composition>

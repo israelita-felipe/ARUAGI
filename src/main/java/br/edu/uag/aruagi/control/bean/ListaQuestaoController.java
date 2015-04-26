@@ -1,36 +1,19 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.ListaQuestaoFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.ListaQuestao;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class ListaQuestaoController implements Serializable, InterfaceController<ListaQuestao, Integer> {
-
-    private final ListaQuestaoFacade facade = new ListaQuestaoFacade();
-    private List<ListaQuestao> items = null;
-    private ListaQuestao selected;
+public class ListaQuestaoController extends AbstractController<ListaQuestao> implements Serializable {
 
     public ListaQuestaoController() {
-    }
-
-    public ListaQuestao getSelected() {
-        return selected;
-    }
-
-    public void setSelected(ListaQuestao selected) {
-        this.selected = selected;
+        super(ListaQuestao.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -39,89 +22,26 @@ public class ListaQuestaoController implements Serializable, InterfaceController
     protected void initializeEmbeddableKey() {
     }
 
-    private ListaQuestaoFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public ListaQuestao prepareCreate() {
-        selected = new ListaQuestao();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemListaQuestaoCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemListaQuestaoAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemListaQuestaoExcluida"));
-    }
-
-    @Override
-    public List<ListaQuestao> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public ListaQuestao getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new ListaQuestao());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public ListaQuestao getListaQuestao(int id) {
-        getFacade().begin();
-        ListaQuestao lq = getFacade().find(id);
-        getFacade().end();
-        return lq;
+        return getCurrent();
     }
 
     @Override
-    public List<ListaQuestao> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new ListaQuestao());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<ListaQuestao> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = ListaQuestao.class)
     public static class ListaQuestaoControllerConverter implements Converter {
 
         @Override
@@ -131,7 +51,7 @@ public class ListaQuestaoController implements Serializable, InterfaceController
             }
             ListaQuestaoController controller = (ListaQuestaoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "listaQuestaoController");
-            return controller.getListaQuestao(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

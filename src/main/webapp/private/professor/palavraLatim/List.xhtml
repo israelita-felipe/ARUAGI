@@ -14,46 +14,74 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="PalavraLatimListForm">
-                <p:panel>
-                    <p:dataTable id="datalist" value="#{palavraLatimController.items}" var="item"
-                                 selectionMode="single" selection="#{palavraLatimController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+            <h:form class="container">
+                <h:commandLink class="btn btn-success" value="#{bundle.AcaoNovo}" action="#{palavraLatimController.prepareCreate()}"/>
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{palavraLatimController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{palavraLatimController.previous}" value="«" disabled="#{!palavraLatimController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{palavraLatimController.pagination.pageFirstItem + 1} até #{palavraLatimController.pagination.pageLastItem + 1} de #{palavraLatimController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{palavraLatimController.next}" value="»" disabled="#{!palavraLatimController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{palavraLatimController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+                <h:dataTable class="table" columnClasses="col-lg-4" rowClasses="col-sm-6 col-md-4" value="#{palavraLatimController.items}" var="item">
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoPalavraLatim}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.palavra}"/>
-                        </p:column>
+                    <h:column>
+                        <h2 class="blog-post-title">
+                            #{item.palavra}
+                        </h2>
+                        <div class="blog-post-meta">
+                            Por: #{usuarioSessionController.get(item.usuario).nome}                            
+                        </div>                        
+                        <h:commandButton class="btn btn-default" value="V" action="#{palavraLatimController.prepareView()}"/>
+                        <h:commandButton class="btn btn-default" value="E" action="#{palavraLatimController.prepareEdit()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>
+                        <h:commandButton class="btn btn-default" value="X" action="#{palavraLatimController.destroy()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>                            
+                    </h:column>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoAutor}"/>
-                            </f:facet>
-                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
-                        </p:column>
+                </h:dataTable>
 
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{palavraLatimController.prepareCreate}" update=":PalavraLatimCreateForm" oncomplete="PF('PalavraLatimCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.AcaoDetalhar}" update=":PalavraLatimViewForm" oncomplete="PF('PalavraLatimViewDialog').show()" disabled="#{empty palavraLatimController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.AcaoEditar}" update=":PalavraLatimEditForm" oncomplete="PF('PalavraLatimEditDialog').show()" disabled="#{empty palavraLatimController.selected || palavraLatimController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.AcaoExcluir}" actionListener="#{palavraLatimController.destroy}" update=":growl,datalist" disabled="#{empty palavraLatimController.selected || palavraLatimController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{palavraLatimController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{palavraLatimController.previous}" value="«" disabled="#{!palavraLatimController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{palavraLatimController.pagination.pageFirstItem + 1} até #{palavraLatimController.pagination.pageLastItem + 1} de #{palavraLatimController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{palavraLatimController.next}" value="»" disabled="#{!palavraLatimController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{palavraLatimController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
 

@@ -1,25 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoNovo}
+    </ui:define>
 
-        <p:dialog id="ClassificacaoGramaticalCreateDlg" widgetVar="ClassificacaoGramaticalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
-            <h:form id="ClassificacaoGramaticalCreateForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{classificacaoGramaticalController.selected != null}">
+    <ui:define name="body">
+        <h:form id="ClassificacaoGramaticalCreateForm" class="container" rendered="#{classificacaoGramaticalController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CampoNome}" for="nome" />
-                        <p:inputText id="nome" value="#{classificacaoGramaticalController.selected.nome}" title="#{bundle.CampoNome}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <h:outputLabel value="#{bundle.CampoClassificacaoGramatical}" for="classificacaoGramatical" />
+            <br/>
+            <h:inputText id="classificacaoGramatical" class="form-control" value="#{classificacaoGramaticalController.selected.nome}" title="#{bundle.CampoClassificacaoGramatical}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <hr/>
+            <h:commandButton class="btn btn-success" action="#{classificacaoGramaticalController.create}" value="#{bundle.AcaoSalvar}"/>
+        </h:form>        
+    </ui:define>
 
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{classificacaoGramaticalController.create}" value="#{bundle.AcaoSalvar}" update="display,:ClassificacaoGramaticalListForm:datalist,:growl" oncomplete="handleSubmit(args,'ClassificacaoGramaticalCreateDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

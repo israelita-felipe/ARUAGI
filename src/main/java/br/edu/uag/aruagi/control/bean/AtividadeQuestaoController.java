@@ -1,13 +1,8 @@
 package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.AtividadeQuestao;
-import br.edu.uag.aruagi.control.Facade.AtividadeQuestaoFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -15,21 +10,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class AtividadeQuestaoController implements Serializable, InterfaceController<AtividadeQuestao, Integer> {
-
-    private final AtividadeQuestaoFacade facade = new AtividadeQuestaoFacade();
-    private List<AtividadeQuestao> items = null;
-    private AtividadeQuestao selected;
+public class AtividadeQuestaoController extends AbstractController<AtividadeQuestao> implements Serializable {
 
     public AtividadeQuestaoController() {
-    }
-
-    public AtividadeQuestao getSelected() {
-        return selected;
-    }
-
-    public void setSelected(AtividadeQuestao selected) {
-        this.selected = selected;
+        super(AtividadeQuestao.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -38,84 +22,26 @@ public class AtividadeQuestaoController implements Serializable, InterfaceContro
     protected void initializeEmbeddableKey() {
     }
 
-    private AtividadeQuestaoFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public AtividadeQuestao prepareCreate() {
-        selected = new AtividadeQuestao();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemAtividadeQuestaoCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemAtividadeQuestaoAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemAtividadeQuestaoExcluida"));
-    }
-
-    @Override
-    public List<AtividadeQuestao> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public AtividadeQuestao getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new AtividadeQuestao());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public AtividadeQuestao getAtividadeQuestao(int id) {
-        getFacade().begin();
-        AtividadeQuestao aq = getFacade().find(id);
-        getFacade().end();
-        return aq;
+        return getCurrent();
     }
 
     @Override
-    public List<AtividadeQuestao> getItemsAvailableSelectMany() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
+    public String prepareCreate() {
+        setCurrent(new AtividadeQuestao());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<AtividadeQuestao> getItemsAvailableSelectOne() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    @FacesConverter(forClass = AtividadeQuestao.class)
     public static class AtividadeQuestaoControllerConverter implements Converter {
 
         @Override
@@ -125,7 +51,7 @@ public class AtividadeQuestaoController implements Serializable, InterfaceContro
             }
             AtividadeQuestaoController controller = (AtividadeQuestaoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "atividadeQuestaoController");
-            return controller.getAtividadeQuestao(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

@@ -2,58 +2,84 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:composition template="./../../../resources/template.xhtml">
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.TituloClassificacaoGramatical}"></h:outputText>
+            <h:outputText value="#{bundle.TituloListagemClassificacaoGramatical}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="ClassificacaoGramaticalListForm">
-                <p:panel>
-                    <p:dataTable id="datalist" value="#{classificacaoGramaticalController.items}" var="item"
-                                 selectionMode="single" selection="#{classificacaoGramaticalController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+            <h:form class="container">
+                <h:commandLink class="btn btn-success" value="#{bundle.AcaoNovo}" action="#{classificacaoGramaticalController.prepareCreate()}"/>
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{classificacaoGramaticalController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{classificacaoGramaticalController.previous}" value="«" disabled="#{!classificacaoGramaticalController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{classificacaoGramaticalController.pagination.pageFirstItem + 1} até #{classificacaoGramaticalController.pagination.pageLastItem + 1} de #{classificacaoGramaticalController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{classificacaoGramaticalController.next}" value="»" disabled="#{!classificacaoGramaticalController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{classificacaoGramaticalController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+                <h:dataTable class="table" columnClasses="col-lg-4" rowClasses="col-sm-6 col-md-4" value="#{classificacaoGramaticalController.items}" var="item">
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoNome}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nome}"/>
-                        </p:column>
+                    <h:column>
+                        <h2 class="blog-post-title">
+                            #{item.nome}
+                        </h2>
+                        <div class="blog-post-meta">
+                            Por: #{usuarioSessionController.get(item.usuario).nome}                            
+                        </div>                        
+                        <h:commandButton class="btn btn-default" value="V" action="#{classificacaoGramaticalController.prepareView()}"/>
+                        <h:commandButton class="btn btn-default" value="E" action="#{classificacaoGramaticalController.prepareEdit()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>
+                        <h:commandButton class="btn btn-default" value="X" action="#{classificacaoGramaticalController.destroy()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>                            
+                    </h:column>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoAutor}"/>
-                            </f:facet>
-                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
-                        </p:column>
+                </h:dataTable>
 
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{classificacaoGramaticalController.prepareCreate}" update=":ClassificacaoGramaticalCreateForm" oncomplete="PF('ClassificacaoGramaticalCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.AcaoDetalhar}" update=":ClassificacaoGramaticalViewForm" oncomplete="PF('ClassificacaoGramaticalViewDialog').show()" disabled="#{empty classificacaoGramaticalController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.AcaoEditar}" update=":ClassificacaoGramaticalEditForm" oncomplete="PF('ClassificacaoGramaticalEditDialog').show()" disabled="#{empty classificacaoGramaticalController.selected || classificacaoGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.AcaoExcluir}" actionListener="#{classificacaoGramaticalController.destroy}" update=":growl,datalist" disabled="#{empty classificacaoGramaticalController.selected || classificacaoGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{classificacaoGramaticalController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{classificacaoGramaticalController.previous}" value="«" disabled="#{!classificacaoGramaticalController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{classificacaoGramaticalController.pagination.pageFirstItem + 1} até #{classificacaoGramaticalController.pagination.pageLastItem + 1} de #{classificacaoGramaticalController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{classificacaoGramaticalController.next}" value="»" disabled="#{!classificacaoGramaticalController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{classificacaoGramaticalController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
 

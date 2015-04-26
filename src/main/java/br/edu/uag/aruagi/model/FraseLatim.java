@@ -140,26 +140,12 @@ public class FraseLatim implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final FraseLatim other = (FraseLatim) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if ((this.frase == null) ? (other.frase != null) : !this.frase.equals(other.frase)) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
-            return false;
-        }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return this.id+" # "+this.frase;
     }
 
 }

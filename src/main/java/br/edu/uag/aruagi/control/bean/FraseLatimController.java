@@ -1,121 +1,69 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.FraseLatimFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.FraseLatim;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.model.SelectItem;
 
-public class FraseLatimController implements Serializable, InterfaceController<FraseLatim, Integer> {
-
-    private final FraseLatimFacade facade = new FraseLatimFacade();
-    private List<FraseLatim> items = null;
-    private FraseLatim selected;
-
+public class FraseLatimController extends AbstractController<FraseLatim> implements Serializable {
+    
     public FraseLatimController() {
+        super(FraseLatim.class);
     }
-
-    public FraseLatim getSelected() {
-        return selected;
-    }
-
-    public void setSelected(FraseLatim selected) {
-        this.selected = selected;
-    }
-
+    
     protected void setEmbeddableKeys() {
     }
-
+    
     protected void initializeEmbeddableKey() {
     }
-
-    private FraseLatimFacade getFacade() {
-        return facade;
-    }
-
+    
     @Override
-    public FraseLatim prepareCreate() {
-        selected = new FraseLatim();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFraseLatimCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFraseLatimAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemFraseLatimExcluida"));
-    }
-
-    @Override
-    public List<FraseLatim> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public FraseLatim getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new FraseLatim());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
+        return getCurrent();
     }
-
-    public FraseLatim getFraseLatim(int id) {
-        getFacade().begin();
-        FraseLatim fl = getFacade().find(id);
-        getFacade().end();
-        return fl;
+    
+    @Override
+    public String prepareCreate() {
+        setCurrent(new FraseLatim());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
+    }
+    
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<FraseLatim> getItemsAvailableSelectMany() {
-        return getItems();
-    }
-
-    @Override
-    public List<FraseLatim> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
+    public SelectItem[] getItemsAvailableSelectOne() {
+        int size = getFacade().count() + 1;
+        SelectItem[] items = new SelectItem[size];
+        int i = 1;
+        items[0] = new SelectItem("", "---");
+        for (FraseLatim x : getFacade().findAll()) {
+            items[i++] = new SelectItem(x, x.getFrase());
+        }
+        return items;
+    }        
+    
     @FacesConverter(forClass = FraseLatim.class)
     public static class FraseLatimControllerConverter implements Converter {
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -123,21 +71,21 @@ public class FraseLatimController implements Serializable, InterfaceController<F
             }
             FraseLatimController controller = (FraseLatimController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "fraseLatimController");
-            return controller.getFraseLatim(getKey(value));
+            return controller.get(getKey(value));
         }
-
+        
         int getKey(String value) {
             int key;
             key = Integer.parseInt(value);
             return key;
         }
-
+        
         String getStringKey(int value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -151,7 +99,7 @@ public class FraseLatimController implements Serializable, InterfaceController<F
                 return null;
             }
         }
-
+        
     }
-
+    
 }

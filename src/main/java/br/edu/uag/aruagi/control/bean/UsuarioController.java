@@ -1,15 +1,13 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.UsuarioFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.control.util.cript.SHA256;
 import br.edu.uag.aruagi.model.Usuario;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -19,22 +17,12 @@ import javax.faces.convert.FacesConverter;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 
-public class UsuarioController implements Serializable, InterfaceController<Usuario, Integer> {
+public class UsuarioController extends AbstractController<Usuario> implements Serializable {
 
-    private final UsuarioFacade facade = new UsuarioFacade();
-    private List<Usuario> items = null;
-    private Usuario selected;
     private String confirmPass;
 
     public UsuarioController() {
-    }
-
-    public Usuario getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Usuario selected) {
-        this.selected = selected;
+        super(Usuario.class);
     }
 
     public String getConfirmPass() {
@@ -51,97 +39,59 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
     protected void initializeEmbeddableKey() {
     }
 
-    public UsuarioFacade getFacade() {
-        return facade;
-    }
-
     @Override
-    public Usuario prepareCreate() {
-        selected = new Usuario();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
+    public String create() {
         // buscando um usuário com o mesmo login
         DetachedCriteria query = DetachedCriteria.forClass(Usuario.class)
-                .add(Property.forName("login").eq(getSelected().getLogin()));
-        getFacade().begin();
+                .add(Property.forName("login").eq(getCurrent().getLogin()));
         Usuario u = getFacade().getEntityByDetachedCriteria(query);
-        getFacade().end();
         // se não houver cria, caso contrário informa que já existe
         if (u == null) {
-            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemUsuarioCriado"));
+            if (confirmPass.equals(getCurrent().getSenha())) {
+                try {
+                    getCurrent().setSenha(SHA256.encode(getCurrent().getSenha()));
+                    getCurrent().setUsuario(UsuarioSessionController.getUserLogged());
+                    return super.create();
+                } catch (NoSuchAlgorithmException ex) {
+                    JsfUtil.addErrorMessage("Erro de algoritmo ao gerar senha");
+                } catch (UnsupportedEncodingException ex) {
+                    JsfUtil.addErrorMessage("Erro de codificação ao gerar senha");
+                }
+            } else {
+                JsfUtil.addErrorMessage("Senhas não conferem");
+            }
+
         } else {
             JsfUtil.addErrorMessage("E-mail já cadastrado");
         }
+        return null;
     }
 
     @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemUsuarioAtualizado"));
-    }
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }        
 
     @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemUsuarioExcluido"));        
-    }
-
-    @Override
-    public List<Usuario> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    if (confirmPass.equals(getSelected().getSenha())) {
-                        getSelected().setSenha(SHA256.encode(getSelected().getSenha()));
-                        getSelected().setUsuario(UsuarioSessionController.getUserLogged());
-                        getFacade().create(selected);
-                    } else {
-                        throw new Exception("Senhas não conferem");
-                    }
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public Usuario getSelected() {
+       if (getCurrent() == null) {
+            setCurrent(new Usuario());
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public Usuario getUsuario(int id) {
-        getFacade().begin();
-        Usuario u = getFacade().find(id);
-        getFacade().end();
-        return u;
+        return getCurrent();
     }
 
     @Override
-    public List<Usuario> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new Usuario());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<Usuario> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
 
         @Override
@@ -151,7 +101,7 @@ public class UsuarioController implements Serializable, InterfaceController<Usua
             }
             UsuarioController controller = (UsuarioController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "usuarioController");
-            return controller.getUsuario(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

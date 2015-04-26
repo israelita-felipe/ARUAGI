@@ -1,28 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.TituloDetalhes}
+    </ui:define>
 
-        <p:dialog id="FrasePortuguesViewDlg" widgetVar="FrasePortuguesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
-            <h:form id="FrasePortuguesViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{frasePortuguesController.selected != null}">
-                        <h:outputText value="#{bundle.CampoChave}"/>
-                        <h:outputText value="#{frasePortuguesController.selected.id}" title="#{bundle.CampoChave}"/>
-                        <h:outputText value="#{bundle.CampoFrasePortugues}"/>
-                        <h:outputText value="#{frasePortuguesController.selected.frase}" title="#{bundle.CampoFrasePortugues}"/>
-                        <h:outputText value="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{usuarioSessionController.getUsuario(frasePortuguesController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{bundle.CampoStatus}"/>
-                        <p:selectBooleanCheckbox value="#{frasePortuguesController.selected.status}" disabled="true"/>
-                    </p:panelGrid>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
+    <ui:define name="body">
+        <h:form id="FrasePortuguesViewForm" class="container">
+            <h:panelGroup id="display" rendered="#{frasePortuguesController.selected != null}">
+                <h:outputLabel value="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputText value="#{frasePortuguesController.selected.id}" title="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoFrasePortugues}"/>
+                <br/>
+                <h:outputText value="#{frasePortuguesController.selected.frase}" title="#{bundle.CampoFrasePortugues}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoAutor}"/>
+                <br/>
+                <h:outputText value="#{usuarioController.get(frasePortuguesController.selected.usuario).nome}"/>
+            </h:panelGroup>
+        </h:form>
 
-    </ui:composition>
-</html>
+    </ui:define>
+
+</ui:composition>

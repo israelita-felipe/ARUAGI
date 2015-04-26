@@ -81,10 +81,7 @@ public class Acesso implements java.io.Serializable {
         if (this.data != other.data && (this.data == null || !this.data.equals(other.data))) {
             return false;
         }
-        if (this.acessos != other.acessos && (this.acessos == null || !this.acessos.equals(other.acessos))) {
-            return false;
-        }
-        return true;
+        return !(this.acessos != other.acessos && (this.acessos == null || !this.acessos.equals(other.acessos)));
     }
 
 }

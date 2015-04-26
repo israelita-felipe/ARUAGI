@@ -1,65 +1,19 @@
 package br.edu.uag.aruagi.control.bean;
 
-import br.edu.uag.aruagi.control.Facade.VideosFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.model.Videos;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
 import br.edu.uag.aruagi.control.util.support.StringManager;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Property;
-import org.hibernate.criterion.Restrictions;
 
-public class VideosController implements Serializable, InterfaceController<Videos, Integer> {
-
-    private final VideosFacade facade = new VideosFacade();
-    private List<Videos> items = null;
-    private Videos selected;
-    private String pesquisa;
+public class VideosController extends AbstractController<Videos> implements Serializable {
 
     public VideosController() {
-        myVideos(0);
-    }
-
-    public String getPesquisa() {
-        return pesquisa;
-    }
-
-    public void setPesquisa(String pesquisa) {
-        this.pesquisa = pesquisa;
-    }
-
-    public void add() {
-        if (this.items == null) {
-            this.items = new ArrayList<Videos>();
-        }
-        items.add(selected);
-    }
-
-    public void remove() {
-        this.items.remove(selected);
-    }
-
-    public void resetList() {
-        this.items = null;
-    }
-
-    public Videos getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Videos selected) {
-        this.selected = selected;
+        super(Videos.class);
     }
 
     protected void setEmbeddableKeys() {
@@ -68,128 +22,42 @@ public class VideosController implements Serializable, InterfaceController<Video
     protected void initializeEmbeddableKey() {
     }
 
-    private VideosFacade getFacade() {
-        return facade;
+    @Override
+    public String create() {
+        getSelected().setLink(StringManager.prepareLinkVideoIFrame(getSelected().getLink()));
+        getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        getSelected().setStatus(Boolean.TRUE);
+        AutoPostagemController.create(getSelected());
+        return super.create(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Videos prepareCreate() {
-        selected = new Videos();
+    public String update() {
+        getSelected().setLink(StringManager.prepareLinkVideoIFrame(getSelected().getLink()));
+        return super.update(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Videos getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new Videos());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
+        }
+        return getCurrent();
+    }
+
+    @Override
+    public String prepareCreate() {
+        setCurrent(new Videos());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
         initializeEmbeddableKey();
-        return selected;
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoCriado"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoAtualizado"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemVideoExcluido"));
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public List<Videos> getItems() {
-        //retorna apenas os item sem consulta
-        return this.items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    /**
-                     * prepara o link do vídeo para ser adicionado e utilizado
-                     * em um iFrame
-                     */
-                    getSelected().setLink(StringManager.prepareLinkVideoIFrame(getSelected().getLink()));
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getSelected().setStatus(Boolean.TRUE);
-                    getFacade().create(selected);
-
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getSelected().setLink(StringManager.prepareLinkVideoIFrame(getSelected().getLink()));
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
-        }
-        getFacade().end();
-        if (getSelected() != null && persistAction == PersistAction.CREATE) {
-            if (getSelected().getId() != 0) {
-                /**
-                 * criando uma postagem automática para o vídeo
-                 */
-                AutoPostagemController.create(selected);
-            }
-        }
-    }
-
-    public List<Videos> pesquisar() {
-        getFacade().begin();
-        if (!this.pesquisa.trim().equals("") || this.pesquisa != null) {
-            DetachedCriteria query = DetachedCriteria.forClass(Videos.class);
-            query.add(Restrictions.like("descricao", "%"+this.pesquisa+"%").ignoreCase()).add(Property.forName("status").eq(Boolean.TRUE));
-            this.items = getFacade().getEntitiesByDetachedCriteria(query);
-            return this.items;
-        } else {
-            getFacade().end();
-            return getItems();
-        }
-    }
-
-    public Videos getVideos(int id) {
-        getFacade().begin();
-        Videos v = getFacade().find(id);
-        getFacade().end();
-        return v;
-    }
-
-    public void myVideos(int id) {
-        getFacade().begin();
-        if (id == 1) {
-            DetachedCriteria query = DetachedCriteria.forClass(Videos.class);
-            query.add(Property.forName("usuario").eq(UsuarioSessionController.getUserLogged().getId())).add(Property.forName("status").eq(Boolean.TRUE));
-
-            this.items = getFacade().getEntitiesByDetachedCriteria(query);
-        } else {
-            this.items = getFacade().findAll();
-        }
-        getFacade().end();
-    }
-
-    @Override
-    public List<Videos> getItemsAvailableSelectMany() {
-        return getItems();
-    }
-
-    @Override
-    public List<Videos> getItemsAvailableSelectOne() {
-        getFacade().begin();
-        this.items = getFacade().findAll();
-        getFacade().end();
-        return this.items;
-    }
-
-    @FacesConverter(forClass = Videos.class)
+    
     public static class VideosControllerConverter implements Converter {
 
         @Override
@@ -199,7 +67,7 @@ public class VideosController implements Serializable, InterfaceController<Video
             }
             VideosController controller = (VideosController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "videosController");
-            return controller.getVideos(getKey(value));
+            return controller.get(getKey(value));
         }
 
         int getKey(String value) {

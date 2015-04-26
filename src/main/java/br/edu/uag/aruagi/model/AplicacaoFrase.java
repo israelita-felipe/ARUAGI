@@ -106,29 +106,7 @@ public class AplicacaoFrase implements java.io.Serializable {
     }
     
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final AplicacaoFrase other = (AplicacaoFrase) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        if (this.fraseLatim != other.fraseLatim && (this.fraseLatim == null || !this.fraseLatim.equals(other.fraseLatim))) {
-            return false;
-        }
-        if (this.palavraLatim != other.palavraLatim && (this.palavraLatim == null || !this.palavraLatim.equals(other.palavraLatim))) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
-            return false;
-        }
+    public boolean equals(Object obj) {        
         return true;
     }
     

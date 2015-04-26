@@ -44,7 +44,7 @@ public class AutoPostagemController {
                 /**
                  * granvando o vídeo na postagem atual
                  */
-                videosPostagem.setSelected(new VideosPostagem(0, v, postagemController.getSelected()));
+                videosPostagem.setCurrent(new VideosPostagem(0, v, postagemController.getSelected()));
                 videosPostagem.create();
             }
         } catch (Exception ex) {

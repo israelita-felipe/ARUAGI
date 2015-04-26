@@ -212,6 +212,7 @@ public class PalavraLatim implements java.io.Serializable {
     public void setQuestaoTraduzPalavras(List questaoTraduzPalavras) {
         this.questaoTraduzPalavras = questaoTraduzPalavras;
     }
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "palavraLatim", targetEntity = Lacuna.class, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     public List<Lacuna> getLacunas() {
@@ -234,25 +235,12 @@ public class PalavraLatim implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final PalavraLatim other = (PalavraLatim) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if ((this.palavra == null) ? (other.palavra != null) : !this.palavra.equals(other.palavra)) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
-            return false;
-        }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return this.id+" # "+this.palavra;
+    }
+
 }

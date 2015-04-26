@@ -2,13 +2,8 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.model.DeclinacaoAplicada;
 import br.edu.uag.aruagi.model.DeclinacaoAplicadaId;
-import br.edu.uag.aruagi.control.Facade.DeclinacaoAplicadaFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceController;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil.PersistAction;
+import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
@@ -16,106 +11,39 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class DeclinacaoAplicadaController implements Serializable, InterfaceController<DeclinacaoAplicada, DeclinacaoAplicadaId> {
-
-    private final DeclinacaoAplicadaFacade facade = new DeclinacaoAplicadaFacade();
-    private List<DeclinacaoAplicada> items = null;
-    private DeclinacaoAplicada selected;
+public class DeclinacaoAplicadaController extends AbstractController<DeclinacaoAplicada> implements Serializable {
 
     public DeclinacaoAplicadaController() {
-    }
-
-    public DeclinacaoAplicada getSelected() {
-        return selected;
-    }
-
-    public void setSelected(DeclinacaoAplicada selected) {
-        this.selected = selected;
+        super(DeclinacaoAplicada.class);
     }
 
     protected void setEmbeddableKeys() {
     }
 
     protected void initializeEmbeddableKey() {
-        selected.setId(new DeclinacaoAplicadaId());
-    }
-
-    private DeclinacaoAplicadaFacade getFacade() {
-        return facade;
+        getSelected().setId(new DeclinacaoAplicadaId());
     }
 
     @Override
-    public DeclinacaoAplicada prepareCreate() {
-        selected = new DeclinacaoAplicada();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    @Override
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MensagemDeclinacaoAplicadaCriada"));
-    }
-
-    @Override
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemDeclinacaoAplicadaAtualizada"));
-    }
-
-    @Override
-    public void destroy() {
-        getSelected().setStatus(Boolean.FALSE);
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("MensagemDeclinacaoAplicadaExcluida"));
-    }
-
-    @Override
-    public List<DeclinacaoAplicada> getItems() {
-        getFacade().begin();
-        items = getFacade().findAll();
-        getFacade().end();
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        getFacade().begin();
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getSelected().setStatus(Boolean.TRUE);
-                    getSelected().setUsuario(UsuarioSessionController.getUserLogged().getId());
-                    getFacade().create(selected);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
+    public DeclinacaoAplicada getSelected() {
+        if (getCurrent() == null) {
+            setCurrent(new DeclinacaoAplicada());
+            initializeEmbeddableKey();
+            setSelectedItemIndex(-1);
         }
-        getFacade().end();
-    }
-
-    public DeclinacaoAplicada getDeclinacaoAplicada(DeclinacaoAplicadaId id) {
-        getFacade().begin();
-        DeclinacaoAplicada da = getFacade().find(id);
-        getFacade().end();
-        return da;
+        return getCurrent();
     }
 
     @Override
-    public List<DeclinacaoAplicada> getItemsAvailableSelectMany() {
-        return getItems();
+    public String prepareCreate() {
+        setCurrent(new DeclinacaoAplicada());
+        getCurrent().setStatus(Boolean.TRUE);
+        getCurrent().setUsuario(UsuarioSessionController.getUserLogged().getId());
+        initializeEmbeddableKey();
+        setSelectedItemIndex(-1);
+        return "Create";
     }
 
-    @Override
-    public List<DeclinacaoAplicada> getItemsAvailableSelectOne() {
-        return getItems();
-    }
-
-    @FacesConverter(forClass = DeclinacaoAplicada.class)
     public static class DeclinacaoAplicadaControllerConverter implements Converter {
 
         private static final String SEPARATOR = "#";
@@ -128,7 +56,7 @@ public class DeclinacaoAplicadaController implements Serializable, InterfaceCont
             }
             DeclinacaoAplicadaController controller = (DeclinacaoAplicadaController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "declinacaoAplicadaController");
-            return controller.getDeclinacaoAplicada(getKey(value));
+            return controller.get(getKey(value));
         }
 
         DeclinacaoAplicadaId getKey(String value) {
