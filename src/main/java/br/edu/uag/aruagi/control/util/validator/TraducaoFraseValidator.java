@@ -6,7 +6,6 @@
 package br.edu.uag.aruagi.control.util.validator;
 
 import br.edu.uag.aruagi.model.FraseLatim;
-import br.edu.uag.aruagi.model.PalavraLatim;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,6 +16,7 @@ import javax.faces.validator.ValidatorException;
  *
  * @author Israel Araújo
  */
+
 public class TraducaoFraseValidator implements Validator {
 
     @Override

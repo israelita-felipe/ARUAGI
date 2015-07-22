@@ -12,18 +12,18 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 public class IndicadorPessoaGramaticalController extends AbstractController<IndicadorPessoaGramatical> implements Serializable {
-
+    
     public IndicadorPessoaGramaticalController() {
         super(IndicadorPessoaGramatical.class);
     }
-
+    
     protected void setEmbeddableKeys() {
     }
-
+    
     protected void initializeEmbeddableKey() {
         getCurrent().setId(new IndicadorPessoaGramaticalId());
     }
-
+    
     @Override
     public IndicadorPessoaGramatical getSelected() {
         if (getCurrent() == null) {
@@ -33,7 +33,7 @@ public class IndicadorPessoaGramaticalController extends AbstractController<Indi
         }
         return getCurrent();
     }
-
+    
     @Override
     public String prepareCreate() {
         setCurrent(new IndicadorPessoaGramatical());
@@ -43,12 +43,19 @@ public class IndicadorPessoaGramaticalController extends AbstractController<Indi
         setSelectedItemIndex(-1);
         return "Create";
     }
-
+    
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @FacesConverter(forClass = IndicadorPessoaGramatical.class)
     public static class IndicadorPessoaGramaticalControllerConverter implements Converter {
-
+        
         private static final String SEPARATOR = "#";
         private static final String SEPARATOR_ESCAPED = "\\#";
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -58,7 +65,7 @@ public class IndicadorPessoaGramaticalController extends AbstractController<Indi
                     getValue(facesContext.getELContext(), null, "indicadorPessoaGramaticalController");
             return controller.get(getKey(value));
         }
-
+        
         IndicadorPessoaGramaticalId getKey(String value) {
             IndicadorPessoaGramaticalId key;
             String values[] = value.split(SEPARATOR_ESCAPED);
@@ -67,7 +74,7 @@ public class IndicadorPessoaGramaticalController extends AbstractController<Indi
             key.setPessoaGramatical(Integer.parseInt(values[1]));
             return key;
         }
-
+        
         String getStringKey(IndicadorPessoaGramaticalId value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value.getTempoVerbal());
@@ -75,7 +82,7 @@ public class IndicadorPessoaGramaticalController extends AbstractController<Indi
             sb.append(value.getPessoaGramatical());
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -89,7 +96,7 @@ public class IndicadorPessoaGramaticalController extends AbstractController<Indi
                 return null;
             }
         }
-
+        
     }
-
+    
 }

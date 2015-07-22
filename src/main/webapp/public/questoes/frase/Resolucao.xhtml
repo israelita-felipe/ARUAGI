@@ -65,7 +65,7 @@
                 <div class="col-md-9">
                     <p:panel id="questoesPanel" visible="#{resolucaoTraduzFraseController.questaoAtual!=null}">
                         <f:facet name="header">
-                            <h:outputText value="Questão: #{resolucaoTraduzFraseController.questaoAtual.titulo}, por: #{usuarioSessionController.getUsuario(resolucaoTraduzFraseController.questaoAtual.usuario).nome}"/>                                 
+                            <h:outputText value="Questão: #{resolucaoTraduzFraseController.questaoAtual.titulo}, por: #{usuarioSessionController.get(resolucaoTraduzFraseController.questaoAtual.usuario).nome}"/>                                 
                         </f:facet>
                         <f:facet name="actions">
                             <p:outputLabel value="Itens restantes " styleClass="pull-right">

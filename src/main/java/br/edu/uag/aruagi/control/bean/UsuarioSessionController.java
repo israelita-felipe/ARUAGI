@@ -11,12 +11,9 @@ import br.edu.uag.aruagi.model.Videos;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.faces.component.UIComponent;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 import javax.mail.MessagingException;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
@@ -25,6 +22,8 @@ import org.hibernate.criterion.Property;
  *
  * @author Israel Araújo
  */
+@ManagedBean(name = "usuarioSessionController")
+@SessionScoped
 public class UsuarioSessionController extends UsuarioController implements Serializable {
 
     private boolean loged = false;
@@ -213,7 +212,7 @@ public class UsuarioSessionController extends UsuarioController implements Seria
     public boolean isAdmin() {
         this.admin = false;
         if (getSelected() != null) {
-            if (getSelected().getNivelAcesso().getLinkAcesso().equals("administrador")) {
+            if (getSelected().getNivelAcesso().getLinkAcesso().trim().toUpperCase().equals("ADMINISTRADOR")) {
                 this.admin = true;
             }
         }
@@ -235,45 +234,5 @@ public class UsuarioSessionController extends UsuarioController implements Seria
     public static Usuario getUserLogged() {
         Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         return user;
-    }
-
-    public static class UsuarioControllerConverter implements Converter {
-
-        @Override
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            UsuarioController controller = (UsuarioController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "usuarioController");
-            return controller.get(getKey(value));
-        }
-
-        int getKey(String value) {
-            int key;
-            key = Integer.parseInt(value);
-            return key;
-        }
-
-        String getStringKey(int value) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(value);
-            return sb.toString();
-        }
-
-        @Override
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof Usuario) {
-                Usuario o = (Usuario) object;
-                return getStringKey(o.getId());
-            } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Usuario.class.getName()});
-                return null;
-            }
-        }
-
-    }
+    }    
 }

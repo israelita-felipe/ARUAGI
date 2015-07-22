@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">
+        title
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form class="container">
+            <h:outputText class="badge" value="#{resolucaoQuestaoTraduzPalavraController.pontuacao}"/>
+            <h:messages layout="table" showDetail="true"/>
+            <h:dataTable class="table table-responsive" value="#{resolucaoQuestaoTraduzPalavraController.items}" var="item">
+                <h:column>
+                    <h:outputText value="#{item.nivelQuestao.descricao}"/>
+                    <br/>
+                    <h:outputText value="#{item.titulo}"/>
+                    <br/>
+                    <h:outputText value="#{item.enunciado}" escape="false"/>
+                    <br/>
+                    <h:outputText value="#{item.palavraLatim.palavra}"/>
+                    <br/>
+                    <h:outputText value="#{item.palavraPortugues.palavra}"/>
+                    <br/>
+                    <h:outputText value="#{resolucaoQuestaoTraduzPalavraController.find(item)}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

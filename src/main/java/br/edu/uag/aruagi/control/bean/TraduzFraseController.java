@@ -11,21 +11,19 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-public class TraduzFraseController extends AbstractController<TraduzFrase> implements Serializable{
-
-
+public class TraduzFraseController extends AbstractController<TraduzFrase> implements Serializable {
+    
     public TraduzFraseController() {
         super(TraduzFrase.class);
     }
-
-
+    
     protected void setEmbeddableKeys() {
     }
-
+    
     protected void initializeEmbeddableKey() {
         getCurrent().setId(new TraduzFraseId());
     }
-
+    
     @Override
     public TraduzFrase getSelected() {
         if (getCurrent() == null) {
@@ -35,7 +33,7 @@ public class TraduzFraseController extends AbstractController<TraduzFrase> imple
         }
         return getCurrent();
     }
-
+    
     @Override
     public String prepareCreate() {
         setCurrent(new TraduzFrase());
@@ -45,13 +43,19 @@ public class TraduzFraseController extends AbstractController<TraduzFrase> imple
         setSelectedItemIndex(-1);
         return "Create";
     }
-
-
+    
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @FacesConverter(forClass = TraduzFrase.class)
     public static class TraduzFraseControllerConverter implements Converter {
-
+        
         private static final String SEPARATOR = "#";
         private static final String SEPARATOR_ESCAPED = "\\#";
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -61,7 +65,7 @@ public class TraduzFraseController extends AbstractController<TraduzFrase> imple
                     getValue(facesContext.getELContext(), null, "traduzFraseController");
             return controller.get(getKey(value));
         }
-
+        
         TraduzFraseId getKey(String value) {
             TraduzFraseId key;
             String values[] = value.split(SEPARATOR_ESCAPED);
@@ -70,7 +74,7 @@ public class TraduzFraseController extends AbstractController<TraduzFrase> imple
             key.setFrasePortugues(Integer.parseInt(values[1]));
             return key;
         }
-
+        
         String getStringKey(TraduzFraseId value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value.getFraseLatim());
@@ -78,7 +82,7 @@ public class TraduzFraseController extends AbstractController<TraduzFrase> imple
             sb.append(value.getFrasePortugues());
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -92,7 +96,7 @@ public class TraduzFraseController extends AbstractController<TraduzFrase> imple
                 return null;
             }
         }
-
+        
     }
-
+    
 }

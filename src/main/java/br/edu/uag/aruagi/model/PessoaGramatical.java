@@ -152,29 +152,7 @@ public class PessoaGramatical implements java.io.Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final PessoaGramatical other = (PessoaGramatical) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if ((this.descricao == null) ? (other.descricao != null) : !this.descricao.equals(other.descricao)) {
-            return false;
-        }
-        if ((this.flexao == null) ? (other.flexao != null) : !this.flexao.equals(other.flexao)) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
-            return false;
-        }
+    public boolean equals(Object obj) {        
         return true;
     }
 

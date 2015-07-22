@@ -17,11 +17,12 @@
         <h:outputScript library="js" name="bootstrap.min.js"/>
 
         <title>ARUAGI</title>
+
     </h:head>
     <h:body style="padding-top: 48px">        
-        <h:form class="container marketing">
+        <h:form class="marketing container blog-main">
 
-            <!-- Three columns of text below the carousel -->
+
             <div class="row">
                 <div>
                     <img class="img-circle" src="/resources/images/logo_cut.jpg" alt="Generic placeholder image" width="140" height="140"/>
@@ -30,25 +31,61 @@
                         Hoje #{acessoController.selected.acessos} acessos, #{acessoController.totalAcessos()} até o momento.
                     </h3>
                     <p>Um projeto para aprendizado de língua latina</p>
-                    <p><h:commandButton action="/public/postagem/List.uag?faces-redirect=true" class="btn btn-lg btn-default" value="Entrar"/></p>                    
+                    <p><h:commandButton action="/public/postagem/List.uag?faces-redirect=true" class="btn btn-lg btn-default" value="Entrar"/></p>   
+                    
                 </div><!-- /.col-lg-4 -->                
             </div><!-- /.row -->
 
 
-            <h:form rendered="false">
-                <!-- START THE FEATURETTES -->
 
-                <hr/>
-                <div class="row featurette">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-                        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                    </div>
-                    <div class="col-md-5">
-                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE5MC4zMjAzMTI1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MjNwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj41MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true"/>
-                    </div>
-                </div>            
-            </h:form>
+            <!-- START THE FEATURETTES -->
+            <hr/>
+            <div class="row featurette">
+                <img class="pull-right" src="/resources/images/SIGPROJ.jpg"/>
+                <div>
+                    <h3 class="featurette-heading">Projeto de Extensão <span class="text-muted">2015</span></h3>                        
+                    <p>ARUAGI: OBJETO DE APRENDIZAGEM PARA LÍNGUA LATINA</p>
+                    <a href="http://ww4.ufrpe.br/prae/images/projetos_de_extens%C3%A3o_da_uag_2015.pdf">Aqui</a>
+                </div>
+            </div>  
+            <hr/>
+            <div class="row featurette">
+                <img class="pull-right" src="/resources/images/SIED.png"  width="150" height="50"/>
+                <div>
+                    <h3 class="featurette-heading">Simpósio Internacional de Educação a Distância - SIED <span class="text-muted">2014</span></h3>                        
+                    <p >TECNOLOGIAS PARA O ENSINO SUPERIOR: DESAFIOS NA FORMAÇÃO DO PROFESSOR</p>
+                    <a href="http://sistemas3.sead.ufscar.br/ojs/index.php/2014/article/viewFile/805/322">Aqui</a>
+                </div>
+            </div> 
+            <hr/>
+            <div class="row featurette">
+                <img class="pull-right" src="/resources/images/VEPEPE.png"  width="150" height="75"/>
+                <div>
+                    <h3 class="featurette-heading">V Encontro de Pesquisa Educacional em Pernanbuco - EPEPE <span class="text-muted">2014</span></h3>                        
+                    <p >ARUAGI: LINGUAGEM E TECNOLOGIA NO DESENVOLVIMENTO DE SOFTWARE PARA LÍNGUA LATINA</p>
+                    <a href="http://www.yasni.info/ext.php?url=http%3A%2F%2Fwww.epepe.com.br%2Feixo10%2FCO10%2FAlieteGomesCarneiroRosa-CO10.pdf">Aqui</a>
+                </div>
+            </div> 
+            <hr/>
+            <div class="row featurette">
+                <div class="pull-right">
+                    <img src="/resources/images/JEPEX.png" width="150" height="75"/>
+                </div>
+                <div>
+                    <h3 class="featurette-heading">XIV Jornada de Pesquisa e Extensão - JEPEX <span class="text-muted">2014</span></h3>                        
+                    <p ><h3>Apresentação Oral</h3>PROJETO ARUAGI: TECNOLOGIA PARA ENSINO DE LÍNGUA</p>
+                    <a href="http://eventosufrpe.com.br/2014/arquivos/DIVULGACAO_SITE_APRESENTACAO_ORAL.pdf">Aqui</a>
+                </div>
+            </div>  
+            <hr/>
+            <div class="row featurette">
+                <img class="pull-right" src="/resources/images/SIGPROJ.jpg"/>
+                <div>
+                    <h3 class="featurette-heading">Projeto de Extensão <span class="text-muted">2014</span></h3>                        
+                    <p >ARUAGI: LINGUAGEM E TECNOLOGIA NO DESENVOLVIMENTO DE SOFTWARE PARA LÍNGUA LATINA</p>
+                    <a href="http://ww4.ufrpe.br/prae/images/20131219_PROJETOS_E_BOLSISTA_DA_UAG.pdf">Aqui</a>
+                </div>
+            </div>                            
             <!-- /END THE FEATURETTES -->
             <hr/>
 

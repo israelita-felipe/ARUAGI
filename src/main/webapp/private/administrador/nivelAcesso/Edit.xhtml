@@ -1,38 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoEditar}
+    </ui:define>
 
-        <p:dialog id="NivelAcessoEditDlg" widgetVar="NivelAcessoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
+    <ui:define name="body">
+        <h:form id="NivelAcessoCreateForm" class="container" rendered="#{nivelAcessoController.selected != null}">
 
-            <h:form id="NivelAcessoEditForm">
+            <h:panelGroup id="display">
 
-                <h:panelGroup id="display">
 
-                    <p:panelGrid columns="2" rendered="#{nivelAcessoController.selected != null}">
+                <h:outputLabel value="#{bundle.CampoNivel}" for="id" />
+                <br/>
+                <h:inputText class="form-control" id="id" value="#{nivelAcessoController.selected.id}" title="#{bundle.CampoNivel}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoLinkAcesso}" for="linkAcesso" />
+                <br/>
+                <h:inputText class="form-control" id="linkAcesso" value="#{nivelAcessoController.selected.linkAcesso}" title="#{bundle.CampoLinkAcesso}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+                <br/>
+                <p:editor id="descricao" value="#{nivelAcessoController.selected.descricao}" />
+                <hr/>
+                <h:commandButton class="btn btn-success" actionListener="#{nivelAcessoController.update}" value="#{bundle.AcaoSalvar}"/>
+            </h:panelGroup>
+        </h:form>        
+    </ui:define>
 
-                        <p:outputLabel value="#{bundle.CampoNivel}" for="id" />
-                        <p:inputText id="id" value="#{nivelAcessoController.selected.id}" title="#{bundle.CampoNivel}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
-
-                        <p:outputLabel value="#{bundle.CampoLinkAcesso}" for="linkAcesso" />
-                        <p:inputText id="linkAcesso" value="#{nivelAcessoController.selected.linkAcesso}" title="#{bundle.CampoLinkAcesso}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
-
-                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
-                        <p:editor id="descricao" value="#{nivelAcessoController.selected.descricao}"/>
-
-                    </p:panelGrid>
-
-                    <p:commandButton actionListener="#{nivelAcessoController.update}" value="#{bundle.AcaoSalvar}" update="display,:NivelAcessoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'NivelAcessoEditDialog');"/>
-
-                </h:panelGroup>
-
-            </h:form>
-
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

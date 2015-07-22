@@ -44,6 +44,13 @@ public class DeclinacaoAplicadaController extends AbstractController<DeclinacaoA
         return "Create";
     }
 
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @FacesConverter(forClass = DeclinacaoAplicada.class)
     public static class DeclinacaoAplicadaControllerConverter implements Converter {
 
         private static final String SEPARATOR = "#";

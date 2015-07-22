@@ -9,6 +9,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.model.SelectItem;
 
 public class NivelQuestaoController extends AbstractController<NivelQuestao> implements Serializable {
 
@@ -43,6 +44,25 @@ public class NivelQuestaoController extends AbstractController<NivelQuestao> imp
         return "Create";
     }
 
+    @Override
+    public SelectItem[] getItemsAvailableSelectOne() {
+        int size = getFacade().count() + 1;
+        SelectItem[] items = new SelectItem[size];
+        int i = 1;
+        items[0] = new SelectItem("", "---");
+        for (NivelQuestao x : getFacade().findAll()) {
+            items[i++] = new SelectItem(x, x.getDescricao());
+        }
+        return items;
+    }
+
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @FacesConverter(forClass = NivelQuestao.class)
     public static class NivelQuestaoControllerConverter implements Converter {
 
         @Override

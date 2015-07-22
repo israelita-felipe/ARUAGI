@@ -53,21 +53,21 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
-    <managed-bean>
+<!--    <managed-bean>
         <managed-bean-name>usuarioController</managed-bean-name>
         <managed-bean-class>
             br.edu.uag.aruagi.control.bean.UsuarioController
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    </managed-bean>-->
     
-    <managed-bean>
+<!--    <managed-bean>
         <managed-bean-name>usuarioSessionController</managed-bean-name>
         <managed-bean-class>
             br.edu.uag.aruagi.control.bean.UsuarioSessionController
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    </managed-bean>-->
     
     <managed-bean>
         <managed-bean-name>nivelAcessoController</managed-bean-name>
@@ -221,11 +221,11 @@
         <managed-bean-class>br.edu.uag.aruagi.control.bean.TraduzFraseController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    <managed-bean>
+<!--    <managed-bean>
         <managed-bean-name>traduzPalavraController</managed-bean-name>
         <managed-bean-class>br.edu.uag.aruagi.control.bean.TraduzPalavraController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    </managed-bean>-->
     <managed-bean>
         <managed-bean-name>videosPostagemController</managed-bean-name>
         <managed-bean-class>br.edu.uag.aruagi.control.bean.VideosPostagemController</managed-bean-class>
@@ -254,6 +254,25 @@
         <managed-bean-class>br.edu.uag.aruagi.control.bean.ResolucaoQuestaoLacunaController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>contatoController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.bean.ContatoController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <description>Atributos de acessibilidade</description>
+        <managed-bean-name>acessibilidadeController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.bean.AcessibilidadeController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>resolucaoQuestaoTraduzPalavraController</managed-bean-name>
+        <managed-bean-class>br.edu.uag.aruagi.control.bean.ResolucaoQuestaoTraduzPalavraController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
     <!-- VALIDADORES -->
     <validator>
@@ -278,16 +297,5 @@
         <exception-handler-factory>
             br.edu.uag.aruagi.control.util.exceptions.LogExceptionFactory
         </exception-handler-factory>
-    </factory>
-    <managed-bean>
-        <managed-bean-name>contatoController</managed-bean-name>
-        <managed-bean-class>br.edu.uag.aruagi.control.bean.ContatoController</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <description>Atributos de acessibilidade</description>
-        <managed-bean-name>acessibilidadeController</managed-bean-name>
-        <managed-bean-class>br.edu.uag.aruagi.control.bean.AcessibilidadeController</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    </factory>    
 </faces-config>

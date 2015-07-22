@@ -16,7 +16,7 @@ public class PalavrasDeclinadasId implements java.io.Serializable {
     public PalavrasDeclinadasId() {
     }
 
-    public PalavrasDeclinadasId(int palavraLatim, int palavraDeclinada) {
+    public PalavrasDeclinadasId(int palavraLatim, int palavraDeclinada, boolean status) {
         this.palavraLatim = palavraLatim;
         this.palavraDeclinada = palavraDeclinada;
     }
@@ -40,29 +40,29 @@ public class PalavrasDeclinadasId implements java.io.Serializable {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if ((this == other)) {
-            return true;
-        }
-        if ((other == null)) {
-            return false;
-        }
-        if (!(other instanceof PalavrasDeclinadasId)) {
-            return false;
-        }
-        PalavrasDeclinadasId castOther = (PalavrasDeclinadasId) other;
-
-        return (this.getPalavraLatim() == castOther.getPalavraLatim())
-                && (this.getPalavraDeclinada() == castOther.getPalavraDeclinada());
+    public int hashCode() {
+        int hash = 3;
+        hash = 71 * hash + this.palavraLatim;
+        hash = 71 * hash + this.palavraDeclinada;
+        return hash;
     }
 
     @Override
-    public int hashCode() {
-        int result = 17;
-
-        result = 37 * result + this.getPalavraLatim();
-        result = 37 * result + this.getPalavraDeclinada();
-        return result;
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PalavrasDeclinadasId other = (PalavrasDeclinadasId) obj;
+        if (this.palavraLatim != other.palavraLatim) {
+            return false;
+        }
+        if (this.palavraDeclinada != other.palavraDeclinada) {
+            return false;
+        }
+        return true;
     }
 
 }

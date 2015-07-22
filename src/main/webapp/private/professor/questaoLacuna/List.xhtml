@@ -3,80 +3,110 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="./../../../resources/template.xhtml">
 
-        <ui:define name="head">
-            <h:outputStylesheet library="css" name="bootstrap-theme.css"/>
-            <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
-            <h:outputStylesheet library="css" name="bootstrap.css"/>
-            <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 
-            <h:outputScript library="js" name="bootstrap.js"/>
-            <h:outputScript library="js" name="bootstrap.min.js"/>
-
-            <h:outputScript library="js" name="jsfcrud.js"/>        
-        </ui:define>
         <ui:define name="title">
-            <h:outputText value="#{bundle.TituloListagemQuestaoLacuna}"></h:outputText>
+            <h:outputText value="#{bundle.TituloListagemQuestaoTraduzPalavra}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="QuestaoLacunaListForm">
-                <p:panel>
-                    <p:dataTable id="datalist" value="#{questaoLacunaController.items}" var="item"
-                                 selectionMode="single" selection="#{questaoLacunaController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+            <h:form class="container">
+                <h:commandLink class="btn btn-success" value="#{bundle.AcaoNovo}" action="#{questaoLacunaController.prepareCreate()}"/>
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{questaoLacunaController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{questaoLacunaController.previous}" value="«" disabled="#{!questaoLacunaController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{questaoLacunaController.pagination.pageFirstItem + 1} até #{questaoLacunaController.pagination.pageLastItem + 1} de #{questaoLacunaController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{questaoLacunaController.next}" value="»" disabled="#{!questaoLacunaController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{questaoLacunaController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+                <h:dataTable class="table table-responsive" columnClasses="col-lg-4" rowClasses="col-sm-6 col-md-4" value="#{questaoLacunaController.items}" var="item">                        
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoFraseLatim}"/>
-                            </f:facet>
+                    <h:column>
+                        <h2 class="blog-post-title">
+                            #{item.titulo}                            
+                        </h2>
+                        <div class="blog-post-meta">
+                            Por: #{usuarioSessionController.get(item.usuario).nome}                            
+                        </div> 
+                        <br/>
+                        <p>
+                            <h:outputLabel value="#{bundle.CampoFraseLatim}"/>
+                            <br/>
                             <h:outputText value="#{item.fraseLatim.frase}"/>
-                        </p:column>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoNivel}"/>
-                            </f:facet>
+                            <br/>
+                            <h:outputLabel value="#{bundle.CampoNivel}"/>
+                            <br/>
                             <h:outputText value="#{item.nivelQuestao.descricao}"/>
-                        </p:column>
+                            <br/>
+                            <h:outputLabel for="enunciado" value="#{bundle.CampoEnunciado}"/>
+                            <br/>
+                            <h:outputText id="enunciado" value="#{item.enunciado}"/>
+                            <br/>
+                            <h:dataTable id="target" class="table" value="#{item.lacunas}" var="s">                
+                                <h:column>                      
+                                    <f:facet name="header">
+                                        <h:outputText value="Lacunas"/>            
+                                    </f:facet>                                    
+                                    <span class="ui-separator"/>
+                                    <h:outputText value="#{s.palavraLatim.palavra}"/>
+                                </h:column>                
+                            </h:dataTable>  
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoTitulo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.titulo}"/>
-                        </p:column>
+                        </p>
+                        <h:commandButton class="btn btn-default" value="V" action="#{questaoLacunaController.prepareView()}"/>
+                        <h:commandButton class="btn btn-default" value="E" action="#{questaoLacunaController.prepareEdit()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>
+                        <h:commandButton class="btn btn-default" value="X" action="#{questaoLacunaController.destroy()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>                            
+                    </h:column>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoAutor}"/>
-                            </f:facet>
-                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{questaoLacunaController.prepareCreate}" update=":QuestaoLacunaCreateForm" oncomplete="PF('QuestaoLacunaCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.AcaoDetalhar}" update=":QuestaoLacunaViewForm" oncomplete="PF('QuestaoLacunaViewDialog').show()" disabled="#{empty questaoLacunaController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.AcaoEditar}" actionListener="#{questaoLacunaController.prepareEdit()}" update=":QuestaoLacunaEditForm" oncomplete="PF('QuestaoLacunaEditDialog').show()" disabled="#{empty questaoLacunaController.selected || questaoLacunaController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.AcaoExcluir}" actionListener="#{questaoLacunaController.destroy}" update=":growl,datalist" disabled="#{empty questaoLacunaController.selected || questaoLacunaController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
+
+                </h:dataTable>
+
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{questaoLacunaController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{questaoLacunaController.previous}" value="«" disabled="#{!questaoLacunaController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{questaoLacunaController.pagination.pageFirstItem + 1} até #{questaoLacunaController.pagination.pageLastItem + 1} de #{questaoLacunaController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{questaoLacunaController.next}" value="»" disabled="#{!questaoLacunaController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{questaoLacunaController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
 

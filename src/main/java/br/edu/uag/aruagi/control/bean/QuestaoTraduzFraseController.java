@@ -42,6 +42,13 @@ public class QuestaoTraduzFraseController extends AbstractController<QuestaoTrad
         return "Create";
     }
 
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @FacesConverter(forClass = QuestaoTraduzFrase.class)
     public static class QuestaoTraduzFraseControllerConverter implements Converter {
 
         @Override

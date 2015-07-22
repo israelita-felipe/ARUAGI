@@ -1,42 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoNovo}
+    </ui:define>
 
-        <p:dialog id="IndicadorTempoVerbalCreateDlg" widgetVar="IndicadorTempoVerbalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
-            <h:form id="IndicadorTempoVerbalCreateForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{indicadorTempoVerbalController.selected != null}">
+    <ui:define name="body">
+        <h:form id="IndicadorTempoVerbalCreateForm" class="container" rendered="#{indicadorTempoVerbalController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
-                        <p:inputText id="descricao" value="#{indicadorTempoVerbalController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <h:outputLabel value="#{bundle.CampoDescricao}" for="descricao" />
+            <br/>
+            <h:inputText class="form-control" id="descricao" value="#{indicadorTempoVerbalController.selected.descricao}" title="#{bundle.CampoDescricao}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoPessoaGramatical}" for="pessoaGramatical" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="pessoaGramatical" value="#{indicadorTempoVerbalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoTempoVerbal}" for="tempoVerbal" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="tempoVerbal" value="#{indicadorTempoVerbalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.CampoTempoVerbal}">
+                <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
+            <hr/>
+            <h:commandButton action="#{indicadorTempoVerbalController.create}" value="#{bundle.AcaoSalvar}"/>
 
-                        <p:outputLabel value="#{bundle.CampoPessoaGramatical}" for="pessoaGramatical" />
-                        <p:selectOneMenu id="pessoaGramatical" filter="true" value="#{indicadorTempoVerbalController.selected.pessoaGramatical}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{pessoaGramaticalController.itemsAvailableSelectOne}"
-                                           var="pessoaGramaticalItem"
-                                           itemLabel="#{pessoaGramaticalItem.descricao} - #{pessoaGramaticalItem.flexao}"
-                                           itemValue="#{pessoaGramaticalItem}"/>
-                        </p:selectOneMenu>
+        </h:form>        
+    </ui:define>
 
-                        <p:outputLabel value="#{bundle.CampoTempoVerbal}" for="tempoVerbal" />
-                        <p:selectOneMenu id="tempoVerbal" filter="true" value="#{indicadorTempoVerbalController.selected.tempoVerbal}" required="true" requiredMessage="#{bundle.CampoTempoVerbal}">
-                            <f:selectItems value="#{tempoVerbalController.itemsAvailableSelectOne}"
-                                           var="tempoVerbalItem"
-                                           itemLabel="#{tempoVerbalItem.descricao}"
-                                           itemValue="#{tempoVerbalItem}"/>
-                        </p:selectOneMenu>
-
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{indicadorTempoVerbalController.create}" value="#{bundle.AcaoSalvar}" update="display,:IndicadorTempoVerbalListForm:datalist,:growl" oncomplete="handleSubmit(args,'IndicadorTempoVerbalCreateDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

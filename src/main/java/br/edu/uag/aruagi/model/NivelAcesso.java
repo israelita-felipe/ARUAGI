@@ -79,24 +79,14 @@ public class NivelAcesso implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final NivelAcesso other = (NivelAcesso) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return !((this.linkAcesso == null) ? (other.linkAcesso != null) : !this.linkAcesso.equals(other.linkAcesso));
+       return true;
     }
 
     
 
     @Override
     public String toString() {
-        return this.descricao;
+        return ""+this.id;
     }
 
 }

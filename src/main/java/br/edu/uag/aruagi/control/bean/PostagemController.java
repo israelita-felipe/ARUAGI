@@ -41,13 +41,13 @@ public class PostagemController extends AbstractController<Postagem> implements 
         getCurrent().setData(DateTime.getCurrentDate());
         initializeEmbeddableKey();
         setSelectedItemIndex(-1);
-        return "/private/professor/postagem/Create.uag?faces-redirect=true";
+        return "/private/professor/postagem/Create.uag";
     }
 
     @Override
     public String prepareList() {
         super.prepareList();
-        return "/public/postagem/List.uag?faces-redirect=true";
+        return "/public/postagem/List.uag";
     }
 
     @Override
@@ -59,13 +59,13 @@ public class PostagemController extends AbstractController<Postagem> implements 
     @Override
     public String prepareEdit() {
         super.prepareEdit();
-        return "/private/professor/postagem/Edit.uag?faces-redirect=true";
+        return "/private/professor/postagem/Edit.uag";
     }
 
     @Override
     public String update() {
         super.update();
-        return "/public/postagem/View.uag?faces-redirect=true";
+        return "/public/postagem/View.uag";
     }
         
     

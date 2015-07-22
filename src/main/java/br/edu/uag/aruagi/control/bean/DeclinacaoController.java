@@ -9,6 +9,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.model.SelectItem;
 
 public class DeclinacaoController extends AbstractController<Declinacao> implements Serializable {
     
@@ -46,6 +47,18 @@ public class DeclinacaoController extends AbstractController<Declinacao> impleme
     public void performDestroy() {
         getCurrent().setStatus(Boolean.FALSE);
         super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+        @Override
+    public SelectItem[] getItemsAvailableSelectOne() {
+        int size = getFacade().count() + 1;
+        SelectItem[] items = new SelectItem[size];
+        int i = 1;
+        items[0] = new SelectItem("", "---");
+        for (Declinacao x : getFacade().findAll()) {
+            items[i++] = new SelectItem(x, x.getDescricao()+" - "+x.getId()+" declinação");
+        }
+        return items;
     }
     
     @FacesConverter(forClass = Declinacao.class)

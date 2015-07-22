@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.TituloDetalhes}
+    </ui:define>
 
-        <p:dialog id="DeclinacaoAplicadaViewDlg" widgetVar="DeclinacaoAplicadaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
-            <h:form id="DeclinacaoAplicadaViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{declinacaoAplicadaController.selected != null}">
-                        <h:outputText value="#{bundle.CampoPalavraLatim}"/>
-                        <h:outputText value="#{declinacaoAplicadaController.selected.palavraLatim.palavra}" title="#{bundle.CampoPalavraLatim}"/>
-                        <h:outputText value="#{bundle.CampoDeclinacao}"/>
-                        <h:outputText value="#{declinacaoAplicadaController.selected.declinacao.id}#{bundle.SufixoDeclinacao}" title="#{bundle.CampoDeclinacao}"/>
-                        <h:outputText value="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{usuarioSessionController.getUsuario(declinacaoAplicadaController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{bundle.CampoStatus}"/>
-                        <p:selectBooleanCheckbox value="#{declinacaoAplicadaController.selected.status}" disabled="true"/>
-                    </p:panelGrid>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+    <ui:define name="body">
+        <h:form id="DeclinacaoAplicadaViewForm" class="container">
+            <h:panelGroup id="display" rendered="#{casoAplicadoController.selected != null}">
+                <h:outputLabel value="#{bundle.CampoPalavraLatim}"/>
+                <br/>
+                <h:outputText value="#{declinacaoAplicadaController.selected.palavraLatim.palavra}" title="#{bundle.CampoPalavraLatim}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoDeclinacao}"/>
+                <br/>
+                <h:outputText value="#{declinacaoAplicadaController.selected.declinacao.id}#{bundle.SufixoDeclinacao}" title="#{bundle.CampoDeclinacao}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoAutor}"/>
+                <br/>
+                <h:outputText value="#{usuarioSessionController.get(declinacaoAplicadaController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

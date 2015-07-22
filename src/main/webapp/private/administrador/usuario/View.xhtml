@@ -1,42 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.TituloDetalhes}
+    </ui:define>
 
-        <p:dialog id="UsuarioViewDlg" widgetVar="UsuarioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
-            <h:form id="UsuarioViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
+    <ui:define name="body">
+        <h:form id="UsuarioViewForm" class="container">
+            <h:panelGroup id="display" rendered="#{casoController.selected != null}">
+                <h:outputLabel value="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputText value="#{usuarioController.selected.id}" title="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoStatus}"/>
+                <br/>
+                <h:selectBooleanCheckbox value="#{usuarioController.selected.status}" disabled="true"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoIncluidoPor}"/>
+                <br/>
+                <h:outputText value="#{usuarioController.selected.usuario.nome}" title="#{bundle.CampoIncluidoPor}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoNivel}"/>
+                <br/>
+                <h:outputText value="#{usuarioController.selected.nivelAcesso.descricao}" title="#{bundle.CampoNivel}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoNome}"/>
+                <br/>
+                <h:outputText value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoLogin}"/>
+                <br/>
+                <h:outputText value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoObservacao}"/>
+                <br/>
+                <h:outputText value="#{usuarioController.selected.observacoes}" escape="false"/>
+            </h:panelGroup>
+        </h:form>
 
-                        <h:outputText value="#{bundle.CampoChave}"/>
-                        <h:outputText value="#{usuarioController.selected.id}" title="#{bundle.CampoChave}"/>
+    </ui:define>
 
-                        <h:outputText value="#{bundle.CampoStatus}"/>
-                        <p:selectBooleanCheckbox value="#{usuarioController.selected.status}" disabled="true"/>
-
-                        <h:outputText value="#{bundle.CampoIncluidoPor}"/>
-                        <h:outputText value="#{usuarioController.selected.usuario.nome}" title="#{bundle.CampoIncluidoPor}"/>
-
-                        <h:outputText value="#{bundle.CampoNivel}"/>
-                        <h:outputText value="#{usuarioController.selected.nivelAcesso.id}" title="#{bundle.CampoNivel}"/>
-
-                        <h:outputText value="#{bundle.CampoNome}"/>
-                        <h:outputText value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}"/>
-
-                        <h:outputText value="#{bundle.CampoLogin}"/>
-                        <h:outputText value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}"/>
-
-                        <h:outputText value="#{bundle.CampoObservacao}"/>
-                        <p:editor value="#{usuarioController.selected.observacoes}" controls=""/>
-
-                    </p:panelGrid>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

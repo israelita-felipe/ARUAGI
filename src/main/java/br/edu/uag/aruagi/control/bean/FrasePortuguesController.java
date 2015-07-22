@@ -9,19 +9,20 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.model.SelectItem;
 
 public class FrasePortuguesController extends AbstractController<FrasePortugues> implements Serializable {
-    
+
     public FrasePortuguesController() {
         super(FrasePortugues.class);
     }
-    
+
     protected void setEmbeddableKeys() {
     }
-    
+
     protected void initializeEmbeddableKey() {
     }
-    
+
     @Override
     public FrasePortugues getSelected() {
         if (getCurrent() == null) {
@@ -31,7 +32,7 @@ public class FrasePortuguesController extends AbstractController<FrasePortugues>
         }
         return getCurrent();
     }
-    
+
     @Override
     public String prepareCreate() {
         setCurrent(new FrasePortugues());
@@ -41,16 +42,28 @@ public class FrasePortuguesController extends AbstractController<FrasePortugues>
         setSelectedItemIndex(-1);
         return "Create";
     }
-    
+
     @Override
     public void performDestroy() {
         getCurrent().setStatus(Boolean.FALSE);
         super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public SelectItem[] getItemsAvailableSelectOne() {
+        int size = getFacade().count() + 1;
+        SelectItem[] items = new SelectItem[size];
+        int i = 1;
+        items[0] = new SelectItem("", "---");
+        for (FrasePortugues x : getFacade().findAll()) {
+            items[i++] = new SelectItem(x, x.getFrase());
+        }
+        return items;
+    }
+
     @FacesConverter(forClass = FrasePortugues.class)
     public static class FrasePortuguesControllerConverter implements Converter {
-        
+
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -60,19 +73,19 @@ public class FrasePortuguesController extends AbstractController<FrasePortugues>
                     getValue(facesContext.getELContext(), null, "frasePortuguesController");
             return controller.get(getKey(value));
         }
-        
+
         int getKey(String value) {
             int key;
             key = Integer.parseInt(value);
             return key;
         }
-        
+
         String getStringKey(int value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-        
+
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -86,7 +99,7 @@ public class FrasePortuguesController extends AbstractController<FrasePortugues>
                 return null;
             }
         }
-        
+
     }
-    
+
 }

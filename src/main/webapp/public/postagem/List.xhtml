@@ -23,10 +23,10 @@ and open the template in the editor.
         <ui:define name="body">            
             <div class="jumbotron">
                 <div class="container">
-                    <h1>Bem-vindo</h1>
+                    <h1 class="text-center text-info">Bem-vindo</h1>
                     <h:messages layout="table"/>
-                    <h:form rendered="#{usuarioSessionController.logged}">
-                        <h:commandButton class="btn btn-success btn-lg" action="#{postagemController.prepareCreate()}" value="Nova postagem"/>
+                    <h:form class=" text-center" rendered="#{usuarioSessionController.logged}">
+                        <h:commandButton class="btn btn-default btn-lg" action="#{postagemController.prepareCreate()}" value="Nova postagem"/>
                     </h:form>
                 </div>
             </div>         
@@ -81,8 +81,8 @@ and open the template in the editor.
                             <div class="list-group sidebar-module sidebar-module-inset"> 
                                 <h2 class="blog-post-title">
                                     Conteúdo
-                                </h2>
-
+                                </h2>                                
+                                <a rendered="#{usuarioSessionController.logged}">Suas postagens: <span class="badge pull-right">#{usuarioSessionController.postCount()}</span></a>
                             </div> 
                             <div class="sidebar-module">
                                 <h2>Redes sociais</h2>
@@ -114,7 +114,7 @@ and open the template in the editor.
                         </ul>
                     </nav>                            
                 </h:form>
-            </div>        
+            </div>             
         </ui:define>        
     </ui:composition>    
 </html>

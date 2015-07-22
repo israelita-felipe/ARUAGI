@@ -162,26 +162,7 @@ public class NivelQuestao implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final NivelQuestao other = (NivelQuestao) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if ((this.descricao == null) ? (other.descricao != null) : !this.descricao.equals(other.descricao)) {
-            return false;
-        }
-        if ((this.observacoes == null) ? (other.observacoes != null) : !this.observacoes.equals(other.observacoes)) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        return true;
+       return true;
     }
 
 }

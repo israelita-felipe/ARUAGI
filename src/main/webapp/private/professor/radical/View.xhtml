@@ -1,30 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.TituloDetalhes}
+    </ui:define>
 
-        <p:dialog id="RadicalViewDlg" widgetVar="RadicalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
-            <h:form id="RadicalViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{radicalController.selected != null}">
-                        <h:outputText value="#{bundle.CampoChave}"/>
-                        <h:outputText value="#{radicalController.selected.id}" title="#{bundle.CampoChave}"/>
-                        <h:outputText value="#{bundle.CampoPessoaGramatical}"/>
-                        <h:outputText value="#{radicalController.selected.pessoaGramatical.descricao} - #{radicalController.selected.pessoaGramatical.flexao}" title="#{bundle.CampoPessoaGramatical}"/>
-                        <h:outputText value="#{bundle.CampoTempoVerbal}"/>
-                        <h:outputText value="#{radicalController.selected.tempoVerbal.descricao}" title="#{bundle.CampoTempoVerbal}"/>
-                        <h:outputText value="#{bundle.CampoPalavraLatim}"/>
-                        <h:outputText value="#{radicalController.selected.palavraLatim.palavra}" title="#{bundle.CampoPalavraLatim}"/>
-                        <h:outputText value="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{usuarioSessionController.getUsuario(radicalController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
-                    </p:panelGrid>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
+    <ui:define name="body">
+        <h:form id="RadicalViewForm" class="container">
+            <h:panelGroup id="display" rendered="#{radicalController.selected != null}">
+                <h:outputLabel value="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputText value="#{radicalController.selected.id}" title="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoPessoaGramatical}"/>
+                <br/>
+                <h:outputText value="#{radicalController.selected.pessoaGramatical.descricao} - #{radicalController.selected.pessoaGramatical.flexao}" title="#{bundle.CampoPessoaGramatical}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoTempoVerbal}"/>
+                <br/>
+                <h:outputText value="#{radicalController.selected.tempoVerbal.descricao}" title="#{bundle.CampoTempoVerbal}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoPalavraLatim}"/>
+                <br/>
+                <h:outputText value="#{radicalController.selected.palavraLatim.palavra}" title="#{bundle.CampoPalavraLatim}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoAutor}"/>
+                <br/>
+                <h:outputText value="#{usuarioSessionController.get(radicalController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+            </h:panelGroup>
+        </h:form>
 
-    </ui:composition>
-</html>
+    </ui:define>
+
+</ui:composition>

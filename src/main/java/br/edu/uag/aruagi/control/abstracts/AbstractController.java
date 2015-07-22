@@ -45,7 +45,7 @@ public abstract class AbstractController<T> implements InterfaceController<T> {
     @Override
     public Paginator getPagination() {
         if (pagination == null) {
-            pagination = new Paginator(10) {
+            pagination = new Paginator(14) {
 
                 @Override
                 public int getItemsCount() {
@@ -257,39 +257,16 @@ public abstract class AbstractController<T> implements InterfaceController<T> {
         this.current = current;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + (this.current != null ? this.current.hashCode() : 0);
-        hash = 97 * hash + (this.items != null ? this.items.hashCode() : 0);
-        hash = 97 * hash + (this.ejbFacade != null ? this.ejbFacade.hashCode() : 0);
-        hash = 97 * hash + (this.pagination != null ? this.pagination.hashCode() : 0);
-        hash = 97 * hash + this.selectedItemIndex;
-        return hash;
+    public void setSelected(T current) {
+        this.current = current;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final AbstractController<?> other = (AbstractController<?>) obj;
-        if (this.current != other.current && (this.current == null || !this.current.equals(other.current))) {
-            return false;
-        }
-        if (this.items != other.items && (this.items == null || !this.items.equals(other.items))) {
-            return false;
-        }
-        if (this.ejbFacade != other.ejbFacade && (this.ejbFacade == null || !this.ejbFacade.equals(other.ejbFacade))) {
-            return false;
-        }
-        if (this.pagination != other.pagination && (this.pagination == null || !this.pagination.equals(other.pagination))) {
-            return false;
-        }
-        return this.selectedItemIndex == other.selectedItemIndex;
+    public void setPagination(Paginator pagination) {
+        this.pagination = pagination;
+    }
+
+    public void setItems(DataModel items) {
+        this.items = items;
     }
 
 }

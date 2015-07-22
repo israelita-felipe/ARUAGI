@@ -41,7 +41,15 @@ public class RadicalController extends AbstractController<Radical> implements Se
         setSelectedItemIndex(-1);
         return "Create";
     }
+
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
     
+    
+    @FacesConverter(forClass = Radical.class)
     public static class RadicalControllerConverter implements Converter {
         
         @Override

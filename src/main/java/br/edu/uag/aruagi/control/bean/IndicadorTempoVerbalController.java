@@ -12,18 +12,18 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 public class IndicadorTempoVerbalController extends AbstractController<IndicadorTempoVerbal> implements Serializable {
-
+    
     public IndicadorTempoVerbalController() {
         super(IndicadorTempoVerbal.class);
     }
-
+    
     protected void setEmbeddableKeys() {
     }
-
+    
     protected void initializeEmbeddableKey() {
         getCurrent().setId(new IndicadorTempoVerbalId());
     }
-
+    
     @Override
     public IndicadorTempoVerbal getSelected() {
         if (getCurrent() == null) {
@@ -33,7 +33,7 @@ public class IndicadorTempoVerbalController extends AbstractController<Indicador
         }
         return getCurrent();
     }
-
+    
     @Override
     public String prepareCreate() {
         setCurrent(new IndicadorTempoVerbal());
@@ -43,12 +43,19 @@ public class IndicadorTempoVerbalController extends AbstractController<Indicador
         setSelectedItemIndex(-1);
         return "Create";
     }
-
+    
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @FacesConverter(forClass = IndicadorTempoVerbal.class)
     public static class IndicadorTempoVerbalControllerConverter implements Converter {
-
+        
         private static final String SEPARATOR = "#";
         private static final String SEPARATOR_ESCAPED = "\\#";
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -58,7 +65,7 @@ public class IndicadorTempoVerbalController extends AbstractController<Indicador
                     getValue(facesContext.getELContext(), null, "indicadorTempoVerbalController");
             return controller.get(getKey(value));
         }
-
+        
         IndicadorTempoVerbalId getKey(String value) {
             IndicadorTempoVerbalId key;
             String values[] = value.split(SEPARATOR_ESCAPED);
@@ -67,7 +74,7 @@ public class IndicadorTempoVerbalController extends AbstractController<Indicador
             key.setPessoaGramatical(Integer.parseInt(values[1]));
             return key;
         }
-
+        
         String getStringKey(IndicadorTempoVerbalId value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value.getTempoVerbal());
@@ -75,7 +82,7 @@ public class IndicadorTempoVerbalController extends AbstractController<Indicador
             sb.append(value.getPessoaGramatical());
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -89,7 +96,7 @@ public class IndicadorTempoVerbalController extends AbstractController<Indicador
                 return null;
             }
         }
-
+        
     }
-
+    
 }

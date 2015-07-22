@@ -6,7 +6,6 @@
 package br.edu.uag.aruagi.control.util.listeners;
 
 import br.edu.uag.aruagi.control.util.hibernate.FacesContextUtil;
-import br.edu.uag.aruagi.control.util.hibernate.HibernateUtil;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
@@ -26,12 +25,12 @@ public class HibernatePhaseListener implements PhaseListener {
      */
     @Override
     public void beforePhase(PhaseEvent fase) {
-        //if (fase.getPhaseId().equals(PhaseId.RESTORE_VIEW)) {
+        if (fase.getPhaseId().equals(PhaseId.RESTORE_VIEW)) {
             Session session = FacesContextUtil.getRequestSession();
-            session = HibernateUtil.getSessionFactory().openSession();
+            //session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             FacesContextUtil.setRequestSession(session);
-        //}
+        }
     }
 
     /**
@@ -41,7 +40,7 @@ public class HibernatePhaseListener implements PhaseListener {
      */
     @Override
     public void afterPhase(PhaseEvent fase) {
-        //if (fase.getPhaseId().equals(PhaseId.RENDER_RESPONSE)) {
+        if (fase.getPhaseId().equals(PhaseId.RENDER_RESPONSE)) {
             Session session = FacesContextUtil.getRequestSession();
             try {
                 session.getTransaction().commit();
@@ -49,8 +48,10 @@ public class HibernatePhaseListener implements PhaseListener {
                 if (session.getTransaction().isActive()) {
                     session.getTransaction().rollback();
                 }
+            }finally{
+                session.close();
             }
-        //}
+        }
     }
 
     @Override

@@ -12,18 +12,18 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 public class PalavrasDeclinadasController extends AbstractController<PalavrasDeclinadas> implements Serializable {
-
+    
     public PalavrasDeclinadasController() {
         super(PalavrasDeclinadas.class);
     }
-
+    
     protected void setEmbeddableKeys() {
     }
-
+    
     protected void initializeEmbeddableKey() {
         getCurrent().setId(new PalavrasDeclinadasId());
     }
-
+    
     @Override
     public PalavrasDeclinadas getSelected() {
         if (getCurrent() == null) {
@@ -33,7 +33,7 @@ public class PalavrasDeclinadasController extends AbstractController<PalavrasDec
         }
         return getCurrent();
     }
-
+    
     @Override
     public String prepareCreate() {
         setCurrent(new PalavrasDeclinadas());
@@ -43,12 +43,19 @@ public class PalavrasDeclinadasController extends AbstractController<PalavrasDec
         setSelectedItemIndex(-1);
         return "Create";
     }
-
+    
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(false);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @FacesConverter(forClass = PalavrasDeclinadas.class)
     public static class PalavrasDeclinadasControllerConverter implements Converter {
-
+        
         private static final String SEPARATOR = "#";
         private static final String SEPARATOR_ESCAPED = "\\#";
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -58,7 +65,7 @@ public class PalavrasDeclinadasController extends AbstractController<PalavrasDec
                     getValue(facesContext.getELContext(), null, "palavrasDeclinadasController");
             return controller.get(getKey(value));
         }
-
+        
         PalavrasDeclinadasId getKey(String value) {
             PalavrasDeclinadasId key;
             String values[] = value.split(SEPARATOR_ESCAPED);
@@ -67,7 +74,7 @@ public class PalavrasDeclinadasController extends AbstractController<PalavrasDec
             key.setPalavraDeclinada(Integer.parseInt(values[1]));
             return key;
         }
-
+        
         String getStringKey(PalavrasDeclinadasId value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value.getPalavraLatim());
@@ -75,7 +82,7 @@ public class PalavrasDeclinadasController extends AbstractController<PalavrasDec
             sb.append(value.getPalavraDeclinada());
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -89,7 +96,7 @@ public class PalavrasDeclinadasController extends AbstractController<PalavrasDec
                 return null;
             }
         }
-
+        
     }
-
+    
 }

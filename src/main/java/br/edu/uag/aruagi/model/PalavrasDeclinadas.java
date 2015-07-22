@@ -18,29 +18,29 @@ import javax.persistence.Table;
 @Table(name = "palavras_declinadas", schema = "public"
 )
 public class PalavrasDeclinadas implements java.io.Serializable {
-    
+
     private PalavrasDeclinadasId id;
     private PalavraLatim palavraLatimByPalavraDeclinada;
     private PalavraLatim palavraLatimByPalavraLatim;
     private Integer usuario;
     private Boolean status;
-    
+
     public PalavrasDeclinadas() {
     }
-    
+
     public PalavrasDeclinadas(PalavrasDeclinadasId id, PalavraLatim palavraLatimByPalavraDeclinada, PalavraLatim palavraLatimByPalavraLatim) {
         this.id = id;
         this.palavraLatimByPalavraDeclinada = palavraLatimByPalavraDeclinada;
         this.palavraLatimByPalavraLatim = palavraLatimByPalavraLatim;
     }
-    
+
     public PalavrasDeclinadas(PalavrasDeclinadasId id, PalavraLatim palavraLatimByPalavraDeclinada, PalavraLatim palavraLatimByPalavraLatim, Integer usuario) {
         this.id = id;
         this.palavraLatimByPalavraDeclinada = palavraLatimByPalavraDeclinada;
         this.palavraLatimByPalavraLatim = palavraLatimByPalavraLatim;
         this.usuario = usuario;
     }
-    
+
     @EmbeddedId
     @AttributeOverrides({
         @AttributeOverride(name = "palavraLatim", column = @Column(name = "palavra_latim", nullable = false)),
@@ -48,51 +48,51 @@ public class PalavrasDeclinadas implements java.io.Serializable {
     public PalavrasDeclinadasId getId() {
         return this.id;
     }
-    
+
     public void setId(PalavrasDeclinadasId id) {
         this.id = id;
     }
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_declinada", nullable = false, insertable = false, updatable = false)
     public PalavraLatim getPalavraLatimByPalavraDeclinada() {
         return this.palavraLatimByPalavraDeclinada;
     }
-    
+
     public void setPalavraLatimByPalavraDeclinada(PalavraLatim palavraLatimByPalavraDeclinada) {
         this.id.setPalavraDeclinada(palavraLatimByPalavraDeclinada.getId());
         this.palavraLatimByPalavraDeclinada = palavraLatimByPalavraDeclinada;
     }
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "palavra_latim", nullable = false, insertable = false, updatable = false)
-    public PalavraLatim getPalavraLatimByPalavraLatim() {        
+    public PalavraLatim getPalavraLatimByPalavraLatim() {
         return this.palavraLatimByPalavraLatim;
     }
-    
+
     public void setPalavraLatimByPalavraLatim(PalavraLatim palavraLatimByPalavraLatim) {
         this.id.setPalavraLatim(palavraLatimByPalavraLatim.getId());
         this.palavraLatimByPalavraLatim = palavraLatimByPalavraLatim;
     }
-    
+
     @Column(name = "usuario")
     public Integer getUsuario() {
         return this.usuario;
     }
-    
+
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
-    
+
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
+
     @Column(name = "status")
     public Boolean getStatus() {
         return this.status;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -102,29 +102,14 @@ public class PalavrasDeclinadas implements java.io.Serializable {
         hash = 41 * hash + (this.usuario != null ? this.usuario.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        PalavrasDeclinadas p = (PalavrasDeclinadas) obj;
+        if (!p.palavraLatimByPalavraDeclinada.equals(this.palavraLatimByPalavraDeclinada)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final PalavrasDeclinadas other = (PalavrasDeclinadas) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        if (this.palavraLatimByPalavraDeclinada != other.palavraLatimByPalavraDeclinada && (this.palavraLatimByPalavraDeclinada == null || !this.palavraLatimByPalavraDeclinada.equals(other.palavraLatimByPalavraDeclinada))) {
-            return false;
-        }
-        if (this.palavraLatimByPalavraLatim != other.palavraLatimByPalavraLatim && (this.palavraLatimByPalavraLatim == null || !this.palavraLatimByPalavraLatim.equals(other.palavraLatimByPalavraLatim))) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        return true;
+        return p.palavraLatimByPalavraLatim.equals(this.palavraLatimByPalavraLatim);
     }
-    
+
 }

@@ -128,34 +128,16 @@ public class Radical implements java.io.Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        Radical r = (Radical) obj;
+        if(!r.radical.trim().toUpperCase().equals(this.radical.trim().toUpperCase())){
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if(!r.palavraLatim.equals(this.palavraLatim)){
             return false;
         }
-        final Radical other = (Radical) obj;
-        if (this.id != other.id) {
+        if(!r.pessoaGramatical.equals(this.pessoaGramatical)){
             return false;
         }
-        if (this.pessoaGramatical != other.pessoaGramatical && (this.pessoaGramatical == null || !this.pessoaGramatical.equals(other.pessoaGramatical))) {
-            return false;
-        }
-        if (this.tempoVerbal != other.tempoVerbal && (this.tempoVerbal == null || !this.tempoVerbal.equals(other.tempoVerbal))) {
-            return false;
-        }
-        if (this.palavraLatim != other.palavraLatim && (this.palavraLatim == null || !this.palavraLatim.equals(other.palavraLatim))) {
-            return false;
-        }
-        if (this.usuario != other.usuario && (this.usuario == null || !this.usuario.equals(other.usuario))) {
-            return false;
-        }
-        if ((this.radical == null) ? (other.radical != null) : !this.radical.equals(other.radical)) {
-            return false;
-        }
-        if (this.status != other.status && (this.status == null || !this.status.equals(other.status))) {
-            return false;
-        }
-        return true;
+        return r.tempoVerbal.equals(this.tempoVerbal);
     }    
 }

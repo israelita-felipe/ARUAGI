@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <ui:define name="title">
+        Questões de tradução
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form class="container" style="padding-top: 24px">
+            <div class="row'">                
+                <h:form class="col-sm-8 blog-main" rendered="#{resolucaoQuestaoTraduzPalavraController.respondendo}">
+
+                    #{resolucaoQuestaoTraduzPalavraController.pagination.pageFirstItem + 1} de #{resolucaoQuestaoTraduzPalavraController.pagination.itemsCount}                    
+                    <h:dataTable class="table" value="#{resolucaoQuestaoTraduzPalavraController.items}" var="item">
+
+                        <h:column>
+                            <h2 class="blog-post-title">
+                                #{item.titulo}
+                            </h2>
+                            <div class="blog-post-meta">
+                                Por: #{usuarioSessionController.get(item.usuario).nome}                            
+                            </div>   
+                            <br/>
+                            <p>
+                                <h:outputText escape="false" value="#{item.enunciado}"/>
+                            </p>
+                            <h:inputText class="form-control" value="#{resolucaoQuestaoTraduzPalavraController.resposta}"/>
+                        </h:column>                        
+                    </h:dataTable>
+
+                    <h:commandButton class="btn btn-default" value="Próximo" action="#{resolucaoQuestaoTraduzPalavraController.next()}"/>
+                    <h:commandButton class="btn btn-default" value="Anterior" action="#{resolucaoQuestaoTraduzPalavraController.previous()}"/>
+                    <h:commandButton class="btn btn-default" value="Avaliar" action="#{resolucaoQuestaoTraduzPalavraController.avaliar()}"/>                            
+                    <h:commandButton class="btn btn-default" value="Reiniciar" action="#{resolucaoQuestaoTraduzPalavraController.reset()}"/>                            
+
+                </h:form>                
+                <br/>
+                <h:form class="col-sm-3 col-sm-offset-1 blog-sidebar" rendered="#{!resolucaoQuestaoTraduzPalavraController.respondendo}">
+                    <h:outputLabel for="nivel" value="#{bundle.CampoNivel}"/>
+                    <br/>
+                    <h:selectOneMenu class="form-control" id="nivel" value="#{resolucaoQuestaoTraduzPalavraController.nivel}">
+                        <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <br/>
+                    <h:outputLabel value="#{bundle.CampoQuantidade}"/>
+                    <br/>
+                    <input class="form-control" type="number" value="#{resolucaoQuestaoTraduzPalavraController.quantidade}" min="1"/>
+                    <br/>
+                    <h:outputLabel for="nome" value="#{bundle.CampoNome}"/>
+                    <br/>
+                    <h:inputText class="form-control" id="nome" value="#{resolucaoQuestaoTraduzPalavraController.nome}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+                    <hr/>
+                    <h:commandButton class="btn btn-primary" id="prepareButton" value="#{bundle.AcaoGerar}" actionListener="#{resolucaoQuestaoTraduzPalavraController.prepareCreate}"/>                                        
+                </h:form>                
+            </div>
+        </h:form>
+        <br/>
+    </ui:define>
+
+</ui:composition>

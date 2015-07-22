@@ -10,6 +10,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,6 +19,8 @@ import javax.faces.convert.FacesConverter;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 
+@ManagedBean(name = "usuarioController")
+@SessionScoped
 public class UsuarioController extends AbstractController<Usuario> implements Serializable {
 
     private String confirmPass;
@@ -72,7 +76,7 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         getCurrent().setStatus(Boolean.FALSE);
         super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
     }        
-
+    
     @Override
     public Usuario getSelected() {
        if (getCurrent() == null) {
@@ -89,9 +93,10 @@ public class UsuarioController extends AbstractController<Usuario> implements Se
         getCurrent().setUsuario(UsuarioSessionController.getUserLogged());
         initializeEmbeddableKey();
         setSelectedItemIndex(-1);
-        return "Create";
+        return "Create.uag?faces-redirect=true";
     }
-
+    
+    @FacesConverter(forClass = Usuario.class)
     public static class UsuarioControllerConverter implements Converter {
 
         @Override

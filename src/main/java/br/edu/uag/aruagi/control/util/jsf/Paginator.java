@@ -74,4 +74,9 @@ public abstract class Paginator {
     public int getPageSize() {
         return pageSize;
     }
+
+    public int getPage() {
+        return page;
+    }
+    
 }

@@ -1,38 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoNovo}
+    </ui:define>
 
-        <p:dialog id="DeclinacaoAplicadaCreateDlg" widgetVar="DeclinacaoAplicadaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
-            <h:form id="DeclinacaoAplicadaCreateForm">
-                <h:panelGroup id="display">
-                    
-                    <p:panelGrid columns="2" rendered="#{declinacaoAplicadaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
-                        <p:selectOneMenu id="palavraLatim" filter="true" value="#{declinacaoAplicadaController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
-                                           var="palavraLatimItem"
-                                           itemLabel="#{palavraLatimItem.palavra}"
-                                           itemValue="#{palavraLatimItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CampoDeclinacao}" for="declinacao" />
-                        <p:selectOneMenu id="declinacao" filter="true" value="#{declinacaoAplicadaController.selected.declinacao}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{declinacaoController.itemsAvailableSelectOne}"
-                                           var="declinacaoItem"
-                                           itemLabel="#{declinacaoItem.id}#{bundle.SufixoDeclinacao}"                                           
-                                           itemValue="#{declinacaoItem}"/>
-                        </p:selectOneMenu>
+    <ui:define name="body">
+        <h:form id="DeclinacaoAplicadaAplicadoCreateForm" class="container" rendered="#{declinacaoAplicadaController.selected != null}">
 
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{declinacaoAplicadaController.create}" value="#{bundle.AcaoSalvar}" update="display,:DeclinacaoAplicadaListForm:datalist,:growl" oncomplete="handleSubmit(args,'DeclinacaoAplicadaCreateDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
+            <h:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatim" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="palavraLatim" value="#{declinacaoAplicadaController.selected.palavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoDeclinacao}" for="declinacao" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="declinacao" value="#{declinacaoAplicadaController.selected.declinacao}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{declinacaoController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
 
-    </ui:composition>
-</html>
+            <hr/>
+            <h:commandButton class="btn btn-success" action="#{declinacaoAplicadaController.create}" value="#{bundle.AcaoSalvar}"/>
+
+        </h:form>        
+    </ui:define>
+
+</ui:composition>

@@ -1,43 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.TituloUsuario}
+    </ui:define>
 
-        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
-            <h:form id="UsuarioEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
+    <ui:define name="body">
+        <h:form id="UsuarioCreateForm" class="container">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
 
-                        <p:outputLabel value="#{bundle.CampoNivel}" for="nivelAcessoByNivelAcesso" />
-                        <p:selectOneMenu id="nivelAcessoByNivelAcesso" value="#{usuarioController.selected.nivelAcesso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{nivelAcessoController.itemsAvailableSelectOne}"
-                                           var="nivelAcessoByNivelAcessoItem"
-                                           itemLabel="#{nivelAcessoByNivelAcessoItem.descricao}"
-                                           itemValue="#{nivelAcessoByNivelAcessoItem}"/>
-                        </p:selectOneMenu>
+            <h:outputLabel value="#{bundle.CampoNivel}" for="nivelAcessoByNivelAcesso" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="nivelAcessoByNivelAcesso" value="#{usuarioController.selected.nivelAcesso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{nivelAcessoController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoStatus}" for="status" />
+            <br/>
+            <h:selectBooleanCheckbox id="status" value="#{usuarioController.selected.status}" />
+            <br/>
+            <h:outputLabel value="#{bundle.CampoNome}" for="nome" />
+            <br/>
+            <h:inputText class="form-control" id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoLogin}" for="login" />
+            <br/>
+            <h:inputText class="form-control" id="login" value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoObservacao}" for="observacoes" />
+            <br/>
+            <p:editor id="observacoes" value="#{usuarioController.selected.observacoes}"/>
+            <br/>
+            <h:commandButton class="btn btn-success" action="#{usuarioController.update}" value="#{bundle.AcaoSalvar}"/>
+        </h:form>
+    </ui:define>
 
-                        <p:outputLabel value="#{bundle.CampoStatus}" for="status" />
-                        <p:selectBooleanCheckbox id="status" value="#{usuarioController.selected.status}" />
-
-                        <p:outputLabel value="#{bundle.CampoNome}" for="nome" />
-                        <p:inputText id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
-
-                        <p:outputLabel value="#{bundle.CampoLogin}" for="login" />
-                        <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
-
-                        <p:outputLabel value="#{bundle.CampoObservacao}" for="observacoes" />
-                        <p:editor id="observacoes" value="#{usuarioController.selected.observacoes}"/>
-
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{usuarioController.update}" value="#{bundle.AcaoSalvar}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

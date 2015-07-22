@@ -1,39 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoEditar}
+    </ui:define>
 
-        <p:dialog id="PalavrasDeclinadasEditDlg" widgetVar="PalavrasDeclinadasEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoEditar}">
-            <h:form id="PalavrasDeclinadasEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{palavrasDeclinadasController.selected != null}">
+    <ui:define name="body">
+        <h:form id="PalavrasDeclinadasCreateForm" class="container" rendered="#{palavrasDeclinadasController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.CampoPalavraDeclinada}" for="palavraLatimByPalavraDeclinada" />
-                        <p:selectOneMenu id="palavraLatimByPalavraDeclinada" filter="true" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraDeclinada}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
-                                           var="palavraLatimByPalavraDeclinadaItem"
-                                           itemLabel="#{palavraLatimByPalavraDeclinadaItem.palavra}"
-                                           itemValue="#{palavraLatimByPalavraDeclinadaItem}"/>
-                        </p:selectOneMenu>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoPalavraDeclinada}" for="palavraLatimByPalavraDeclinada" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="palavraLatimByPalavraDeclinada" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraDeclinada}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
+            <br/>
+            <h:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatimByPalavraLatim" />
+            <br/>
+            <h:selectOneMenu class="form-control" id="palavraLatimByPalavraLatim" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"/>
+            </h:selectOneMenu>
+            <hr/>
+            <h:commandButton class="btn btn-success" action="#{palavrasDeclinadasController.update}" value="#{bundle.AcaoSalvar}"/>
 
-                        <p:outputLabel value="#{bundle.CampoPalavraLatim}" for="palavraLatimByPalavraLatim" />
-                        <p:selectOneMenu id="palavraLatimByPalavraLatim" filter="true" value="#{palavrasDeclinadasController.selected.palavraLatimByPalavraLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                            <f:selectItems value="#{palavraLatimController.itemsAvailableSelectOne}"
-                                           var="palavraLatimByPalavraLatimItem"
-                                           itemLabel="#{palavraLatimByPalavraLatimItem.palavra}"
-                                           itemValue="#{palavraLatimByPalavraLatimItem}"/>
-                        </p:selectOneMenu>
+        </h:form>        
+    </ui:define>
 
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{palavrasDeclinadasController.update}" value="#{bundle.AcaoSalvar}" update="display,:PalavrasDeclinadasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PalavrasDeclinadasEditDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

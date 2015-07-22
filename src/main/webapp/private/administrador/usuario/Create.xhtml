@@ -16,7 +16,7 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
 
-            <p:outputLabel value="#{bundle.CampoNivel}" for="nivelAcessoByNivelAcesso" />
+            <h:outputLabel value="#{bundle.CampoNivel}" for="nivelAcessoByNivelAcesso" />
             <br/>
             <h:selectOneMenu class="form-control" id="nivelAcessoByNivelAcesso" value="#{usuarioController.selected.nivelAcesso}" required="true" requiredMessage="#{bundle.Obrigatorio}">
                 <f:selectItems value="#{nivelAcessoController.itemsAvailableSelectOne}"
@@ -24,31 +24,31 @@
                                itemValue="#{select.id}"/>
             </h:selectOneMenu>
             <br/>
-            <p:outputLabel value="#{bundle.CampoStatus}" for="status" />
+            <h:outputLabel value="#{bundle.CampoStatus}" for="status" />
             <br/>
-            <p:selectBooleanCheckbox id="status" value="#{usuarioController.selected.status}" />
+            <h:selectBooleanCheckbox id="status" value="#{usuarioController.selected.status}" />
             <br/>
-            <p:outputLabel value="#{bundle.CampoNome}" for="nome" />
+            <h:outputLabel value="#{bundle.CampoNome}" for="nome" />
             <br/>
-            <p:inputText id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <h:inputText class="form-control" id="nome" value="#{usuarioController.selected.nome}" title="#{bundle.CampoNome}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
             <br/>
-            <p:outputLabel value="#{bundle.CampoSenha}" for="senha" />
+            <h:outputLabel value="#{bundle.CampoSenha}" for="senha" />
             <br/>
-            <p:password id="senha" value="#{usuarioController.selected.senha}" title="#{bundle.CampoSenha}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <h:inputSecret class="form-control" id="senha" value="#{usuarioController.selected.senha}" title="#{bundle.CampoSenha}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
             <br/>
-            <p:outputLabel value="#{bundle.CampoConfirmaSenha}" for="senhaConfirm" />
+            <h:outputLabel value="#{bundle.CampoConfirmaSenha}" for="senhaConfirm" />
             <br/>
-            <p:password id="senhaConfirm" value="#{usuarioController.confirmPass}" title="#{bundle.CampoConfirmaSenha}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <h:inputSecret class="form-control" id="senhaConfirm" value="#{usuarioController.confirmPass}" title="#{bundle.CampoConfirmaSenha}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
             <br/>
-            <p:outputLabel value="#{bundle.CampoLogin}" for="login" />
+            <h:outputLabel value="#{bundle.CampoLogin}" for="login" />
             <br/>
-            <p:inputText id="login" value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
+            <h:inputText class="form-control" id="login" value="#{usuarioController.selected.login}" title="#{bundle.CampoLogin}" required="true" requiredMessage="#{bundle.Obrigatorio}"/>
             <br/>
-            <p:outputLabel value="#{bundle.CampoObservacao}" for="observacoes" />
+            <h:outputLabel value="#{bundle.CampoObservacao}" for="observacoes" />
             <br/>
             <p:editor id="observacoes" value="#{usuarioController.selected.observacoes}"/>
             <br/>
-            <h:commandButton action="#{usuarioController.create}" value="#{bundle.AcaoSalvar}"/>
+            <h:commandButton class="btn btn-success" action="#{usuarioController.create}" value="#{bundle.AcaoSalvar}"/>
         </h:form>
     </ui:define>
 

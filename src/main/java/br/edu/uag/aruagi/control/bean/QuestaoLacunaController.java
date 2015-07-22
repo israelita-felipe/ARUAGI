@@ -25,6 +25,7 @@ public class QuestaoLacunaController extends AbstractController<QuestaoLacuna> i
     public QuestaoLacunaController() {
         super(QuestaoLacuna.class);
     }
+    
 
     public void add(DragDropEvent ddEvent) {
         PalavraLatim palavra = ((PalavraLatim) ddEvent.getData());
@@ -44,6 +45,10 @@ public class QuestaoLacunaController extends AbstractController<QuestaoLacuna> i
 
     public void reset() {
         this.palavrasSelecionadas = new ArrayList<PalavraLatim>();
+    }
+    
+    public void parse() {
+        this.getCurrent().setEnunciado(this.getCurrent().getFraseLatim().getFrase());
     }
 
     public PalavraLatim getPalavraEscolhida() {
@@ -154,7 +159,13 @@ public class QuestaoLacunaController extends AbstractController<QuestaoLacuna> i
         return "Create";
     }
 
-     public static class QuestaoLacunaControllerConverter implements Converter {
+    @Override
+    public void performDestroy() {
+        getCurrent().setStatus(Boolean.FALSE);
+        super.performDestroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static class QuestaoLacunaControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {

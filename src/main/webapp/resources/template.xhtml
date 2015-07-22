@@ -53,6 +53,9 @@
         </nav> 
         <ui:insert name="header"/>                  
         <!-- INSERCAO DO CORPO DA PAGINA A SER PRESONALIZADA -->
+        <div class="container">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </div>        
         <ui:insert name="body"/>             
         <script>
             $('.dropdown-toggle').dropdown();

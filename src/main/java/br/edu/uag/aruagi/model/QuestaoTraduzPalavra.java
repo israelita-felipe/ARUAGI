@@ -147,32 +147,7 @@ public class QuestaoTraduzPalavra implements java.io.Serializable, InterfaceQues
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final QuestaoTraduzPalavra other = (QuestaoTraduzPalavra) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (this.palavraLatim != other.palavraLatim && (this.palavraLatim == null || !this.palavraLatim.equals(other.palavraLatim))) {
-            return false;
-        }
-        if (this.nivelQuestao != other.nivelQuestao && (this.nivelQuestao == null || !this.nivelQuestao.equals(other.nivelQuestao))) {
-            return false;
-        }
-        if ((this.getTitulo() == null) ? (other.getTitulo() != null) : !this.titulo.equals(other.titulo)) {
-            return false;
-        }
-        if ((this.getEnunciado() == null) ? (other.getEnunciado() != null) : !this.enunciado.equals(other.enunciado)) {
-            return false;
-        }
-        if (this.status != other.status) {
-            return false;
-        }
+    public boolean equals(Object obj) {        
         return true;
     }
 }

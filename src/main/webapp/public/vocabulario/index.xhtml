@@ -14,9 +14,8 @@ and open the template in the editor.
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="GlossarioForm" class="container">                                    
-                <div>
-                    
+            <h:form id="GlossarioForm" class="container">                                                                    
+                <div>                    
                     <nav>
                         <ul class="pagination">
                             <li>
@@ -32,9 +31,19 @@ and open the template in the editor.
                             </li>                        
                         </ul>                        
                     </nav>   
-                    
+                    <div class="input-group">
+                        <h:inputText class="form-control" value="#{traduzPalavraController.toFind}"/>                        
+                        <span class="input-group-addon">
+                            <h:commandLink action="#{traduzPalavraController.search()}" value="Buscar"/>                            
+                        </span>
+                        <span class="input-group-addon">
+                            <h:commandLink action="#{traduzPalavraController.reset()}" value="Todas"/>
+                        </span>
+                    </div>
                 </div>
-                <div class="row">
+                <br/>
+                <div class="row">                    
+
                     <h:dataTable class="table" columnClasses="col-lg-4" rowClasses="col-sm-6 col-md-4" value="#{traduzPalavraController.items}" var="itemAtual">
                         <h:column>
                             <h2 class="blog-post-title">

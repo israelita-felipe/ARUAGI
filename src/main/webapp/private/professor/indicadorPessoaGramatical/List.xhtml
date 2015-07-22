@@ -2,9 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:composition template="./../../../resources/template.xhtml">
 
@@ -14,62 +12,88 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="IndicadorPessoaGramaticalListForm">
-                <p:panel>
-                    <p:dataTable id="datalist" value="#{indicadorPessoaGramaticalController.items}" var="item"
-                                 selectionMode="single" selection="#{indicadorPessoaGramaticalController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+            <h:form class="container">
+                <h:commandLink class="btn btn-success" value="#{bundle.AcaoNovo}" action="#{indicadorPessoaGramaticalController.prepareCreate()}"/>
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{indicadorPessoaGramaticalController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{indicadorPessoaGramaticalController.previous}" value="«" disabled="#{!indicadorPessoaGramaticalController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{indicadorPessoaGramaticalController.pagination.pageFirstItem + 1} até #{indicadorPessoaGramaticalController.pagination.pageLastItem + 1} de #{indicadorPessoaGramaticalController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{indicadorPessoaGramaticalController.next}" value="»" disabled="#{!indicadorPessoaGramaticalController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{indicadorPessoaGramaticalController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+                <h:dataTable class="table" columnClasses="col-lg-4" rowClasses="col-sm-6 col-md-4" value="#{indicadorPessoaGramaticalController.items}" var="item">                        
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoIndicadorPessoaGramatical}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.pessoaGramatical.descricao}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoFlexao}"/>
-                            </f:facet>
+                    <h:column>
+                        <h2 class="blog-post-title">
+                            #{item.pessoaGramatical.descricao}
+                        </h2>
+                        <div class="blog-post-meta">
+                            Por: #{usuarioSessionController.get(item.usuario).nome}                            
+                        </div> 
+                        <br/>
+                        <p>
+                            <h:outputLabel value="#{bundle.CampoFlexao}"/>
+                            <br/>
                             <h:outputText value="#{item.pessoaGramatical.flexao}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoTempoVerbal}"/>
-                            </f:facet>
+                            <br/>
+                            <h:outputLabel value="#{bundle.CampoTempoVerbal}"/>
+                            <br/>
                             <h:outputText value="#{item.tempoVerbal.descricao}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoDescricao}"/>
-                            </f:facet>
+                            <br/>
+                            <h:outputLabel value="#{bundle.CampoDescricao}"/>
+                            <br/>
                             <h:outputText value="#{item.descricao}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoAutor}"/>
-                            </f:facet>
-                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{indicadorPessoaGramaticalController.prepareCreate}" update=":IndicadorPessoaGramaticalCreateForm" oncomplete="PF('IndicadorPessoaGramaticalCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.AcaoDetalhar}" update=":IndicadorPessoaGramaticalViewForm" oncomplete="PF('IndicadorPessoaGramaticalViewDialog').show()" disabled="#{empty indicadorPessoaGramaticalController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.AcaoEditar}" update=":IndicadorPessoaGramaticalEditForm" oncomplete="PF('IndicadorPessoaGramaticalEditDialog').show()" disabled="#{empty indicadorPessoaGramaticalController.selected || indicadorPessoaGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.AcaoExcluir}" actionListener="#{indicadorPessoaGramaticalController.destroy}" update=":growl,datalist" disabled="#{empty indicadorPessoaGramaticalController.selected || indicadorPessoaGramaticalController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
+                        </p>
+                        <h:commandButton class="btn btn-default" value="V" action="#{indicadorPessoaGramaticalController.prepareView()}"/>
+                        <h:commandButton class="btn btn-default" value="E" action="#{indicadorPessoaGramaticalController.prepareEdit()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>
+                        <h:commandButton class="btn btn-default" value="X" action="#{indicadorPessoaGramaticalController.destroy()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>                            
+                    </h:column>
+
+                </h:dataTable>
+
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{indicadorPessoaGramaticalController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{indicadorPessoaGramaticalController.previous}" value="«" disabled="#{!indicadorPessoaGramaticalController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{indicadorPessoaGramaticalController.pagination.pageFirstItem + 1} até #{indicadorPessoaGramaticalController.pagination.pageLastItem + 1} de #{indicadorPessoaGramaticalController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{indicadorPessoaGramaticalController.next}" value="»" disabled="#{!indicadorPessoaGramaticalController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{indicadorPessoaGramaticalController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
 

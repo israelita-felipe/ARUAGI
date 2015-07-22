@@ -1,45 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.TituloDetalhes}
+    </ui:define>
 
-        <p:dialog id="QuestaoLacunaViewDlg" widgetVar="QuestaoLacunaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoDetalhar}">
-            <h:form id="QuestaoLacunaViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{questaoLacunaController.selected != null}">
+    <ui:define name="body">
+        <h:form id="TraducaoFraseViewForm" class="container">
+            <h:panelGroup id="display" rendered="#{questaoTraduzFraseController.selected != null}">
+                <h:outputLabel value="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputText value="#{questaoLacunaController.selected.id}" title="#{bundle.CampoChave}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoPalavraLatim}"/>
+                <br/>
+                <h:outputText value="#{questaoLacunaController.selected.fraseLatim.frase}" title="#{bundle.CampoPalavraLatim}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoNivel}"/>
+                <br/>
+                <h:outputText value="#{questaoLacunaController.selected.nivelQuestao.descricao}" title="#{bundle.CampoNivel}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoTitulo}"/>
+                <br/>
+                <h:outputText value="#{questaoLacunaController.selected.titulo}" title="#{bundle.CampoTitulo}"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoEnunciado}"/>
+                <br/>
+                <h:outputText value="#{questaoLacunaController.selected.enunciado}" style="width: 100%"/>
+                <br/>
+                <h:outputLabel value="#{bundle.CampoDesejada}"/>
+                <br/>
+                <h:dataTable class="table-responsive" value="#{questaoLacunaController.selected.lacunas}" var="lacunas" >
+                    <h:column>
+                        <h:outputText value="#{lacunas.palavraLatim.palavra}"/>
+                    </h:column>
+                </h:dataTable>
+                
+                <h:outputLabel value="#{bundle.CampoAutor}"/>
+                <br/>
+                <h:outputText value="#{usuarioSessionController.get(questaoLacunaController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
+            </h:panelGroup>
+        </h:form>
 
-                        <h:outputText value="#{bundle.CampoChave}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.id}" title="#{bundle.CampoChave}"/>
+    </ui:define>
 
-                        <h:outputText value="#{bundle.CampoPalavraLatim}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.fraseLatim.frase}" title="#{bundle.CampoPalavraLatim}"/>
-
-                        <h:outputText value="#{bundle.CampoNivel}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.nivelQuestao.descricao}" title="#{bundle.CampoNivel}"/>
-
-                        <h:outputText value="#{bundle.CampoTitulo}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.titulo}" title="#{bundle.CampoTitulo}"/>
-
-                        <h:outputText value="#{bundle.CampoEnunciado}"/>
-                        <h:outputText value="#{questaoLacunaController.selected.enunciado}" style="width: 100%"/>
-
-                        <h:outputText value="#{bundle.CampoDesejada}"/>
-                        <p:dataList value="#{questaoLacunaController.selected.lacunas}" var="lacunas" >
-                            <h:outputText value="#{lacunas.palavraLatim.palavra}"/>
-                        </p:dataList>
-
-                        <h:outputText value="#{bundle.CampoAutor}"/>
-                        <h:outputText value="#{usuarioSessionController.getUsuario(questaoLacunaController.selected.usuario).nome}" title="#{bundle.CampoAutor}"/>
-
-                    </p:panelGrid>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
-
-    </ui:composition>
-</html>
+</ui:composition>

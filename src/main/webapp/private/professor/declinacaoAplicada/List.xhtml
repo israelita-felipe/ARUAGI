@@ -2,65 +2,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:composition template="./../../../resources/template.xhtml">
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.TituloListagemDeclinacaoAplicada}"></h:outputText>
+            <h:outputText value="#{bundle.TituloListagemCasosLatinos}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="DeclinacaoAplicadaListForm">
-                <p:panel>
-                    <p:dataTable id="datalist" value="#{declinacaoAplicadaController.items}" var="item"
-                                 selectionMode="single" selection="#{declinacaoAplicadaController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+            <h:form class="container">
+                <h:commandLink class="btn btn-success" value="#{bundle.AcaoNovo}" action="#{declinacaoAplicadaController.prepareCreate()}"/>
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{declinacaoAplicadaController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{declinacaoAplicadaController.previous}" value="«" disabled="#{!declinacaoAplicadaController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{declinacaoAplicadaController.pagination.pageFirstItem + 1} até #{declinacaoAplicadaController.pagination.pageLastItem + 1} de #{declinacaoAplicadaController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{declinacaoAplicadaController.next}" value="»" disabled="#{!declinacaoAplicadaController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{declinacaoAplicadaController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
+                <h:dataTable class="table" columnClasses="col-lg-4" rowClasses="col-sm-6 col-md-4" value="#{declinacaoAplicadaController.items}" var="item">
+                                        
+                    <h:column>
+                        <h2 class="blog-post-title">
+                            #{item.palavraLatim.palavra}
+                            <h4>                                
+                                #{item.declinacao.descricao} - #{item.declinacao.id}#{bundle.SufixoDeclinacao}
+                            </h4>
+                        </h2>
+                        <div class="blog-post-meta">
+                            Por: #{usuarioSessionController.get(item.usuario).nome}                            
+                        </div>            
+                        <h:commandButton class="btn btn-default" value="V" action="#{declinacaoAplicadaController.prepareView()}"/>
+                        <h:commandButton class="btn btn-default" value="E" action="#{declinacaoAplicadaController.prepareEdit()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>
+                        <h:commandButton class="btn btn-default" value="X" action="#{declinacaoAplicadaController.destroy()}" rendered="#{item.usuario==usuarioSessionController.selected.id}"/>                            
+                    </h:column>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoPalavraLatim}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.palavraLatim.palavra}"/>
-                        </p:column>
+                </h:dataTable>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoDeclinacao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.declinacao.id}#{bundle.SufixoDeclinacao}"/>
-                        </p:column>
+                <div>
+                    <nav>                                      
+                        <ul class="pagination">
+                            <li>
+                                <h:commandLink action="#{declinacaoAplicadaController.first}" value="««"/>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{declinacaoAplicadaController.previous}" value="«" disabled="#{!declinacaoAplicadaController.pagination.hasPreviousPage}"/>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h:outputText value="#{declinacaoAplicadaController.pagination.pageFirstItem + 1} até #{declinacaoAplicadaController.pagination.pageLastItem + 1} de #{declinacaoAplicadaController.pagination.itemsCount}"/>
+                                </a>
+                            </li>
+                            <li>
+                                <h:commandLink action="#{declinacaoAplicadaController.next}" value="»" disabled="#{!declinacaoAplicadaController.pagination.hasNextPage}"/>      
+                            </li>                                  
+                            <li>
+                                <h:commandLink action="#{declinacaoAplicadaController.last}" value="»»"/>
+                            </li>                            
+                        </ul>                        
+                    </nav>                       
+                </div>                                
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.CampoAutor}"/>
-                            </f:facet>
-                            <h:outputText value="#{usuarioSessionController.getUsuario(item.usuario).nome}"/>
-                        </p:column>
-
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.AcaoNovo}" actionListener="#{declinacaoAplicadaController.prepareCreate}" update=":DeclinacaoAplicadaCreateForm" oncomplete="PF('DeclinacaoAplicadaCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.AcaoDetalhar}" update=":DeclinacaoAplicadaViewForm" oncomplete="PF('DeclinacaoAplicadaViewDialog').show()" disabled="#{empty declinacaoAplicadaController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.AcaoEditar}" update=":DeclinacaoAplicadaEditForm" oncomplete="PF('DeclinacaoAplicadaEditDialog').show()" disabled="#{empty declinacaoAplicadaController.selected || declinacaoAplicadaController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.AcaoExcluir}" actionListener="#{declinacaoAplicadaController.destroy}" update=":growl,datalist" disabled="#{empty declinacaoAplicadaController.selected || declinacaoAplicadaController.selected.usuario!=usuarioSessionController.selected.id}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
 

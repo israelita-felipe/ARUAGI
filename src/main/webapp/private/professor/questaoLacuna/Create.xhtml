@@ -1,66 +1,73 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../../resources/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+    <ui:define name="title">
+        #{bundle.AcaoNovo}
+    </ui:define>
 
-        <p:dialog id="QuestaoLacunaCreateDlg" widgetVar="QuestaoLacunaCreateDialog" onHide="#{questaoLacunaController.setSelected(null)}" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.AcaoNovo}">
-            <h:form id="QuestaoLacunaCreateForm">
-                <h:panelGroup id="display" rendered="#{questaoLacunaController.selected!=null}">
-                    <p:inputText value="#{questaoLacunaController.selected.titulo}" style="width: 100%" placeholder="Título"/>
-                    <hr/>
-                    <p:outputLabel for="fraseLatim" value="Frase em latim"/>
-                    <br/>
-                    <p:selectOneMenu id="fraseLatim" styleClass="large" filter="true" value="#{questaoLacunaController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                        <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
-                                       var="fraseLatimItem"
-                                       itemLabel="#{fraseLatimItem.frase}"
-                                       itemValue="#{fraseLatimItem}"/>
-                        <p:ajax listener="#{questaoLacunaController.parse()}" update="enunciado"/>
-                    </p:selectOneMenu>
-                    <br/>
-                    <p:outputLabel for="nivel" value="#{bundle.CampoNivel}"/>
-                    <br/>
-                    <p:selectOneMenu id="nivel" styleClass="large" filter="true" value="#{questaoLacunaController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.Obrigatorio}">
-                        <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
-                                       var="nivelQuestaoItem"
-                                       itemLabel="#{nivelQuestaoItem.descricao}"
-                                       itemValue="#{nivelQuestaoItem}"/>
-                    </p:selectOneMenu>                      
-                    <br/>
-                    <p:outputLabel for="enunciado" value="#{bundle.CampoEnunciado} (Troque a palavra desejada por space _ space)"/>
-                    <br/>
-                    <p:inputText id="enunciado" styleClass="large" value="#{questaoLacunaController.selected.enunciado}" style="width: 100%">
-                        <f:validator validatorId="LacunaValidator"/>
-                    </p:inputText>
-                    <hr/>  
-                    <p:outputLabel value="Lacunas"/>
-                    <br/>
-                    <p:selectOneMenu filter="true" styleClass="large" value="#{questaoLacunaController.palavraEscolhida}">
-                        <f:selectItems value="#{palavraLatimController.items}" var="p"
-                                       itemLabel="#{p.palavra}"
-                                       itemValue="#{p}"/>
-                        <p:ajax listener="#{questaoLacunaController.add()}" update="target"/>
-                    </p:selectOneMenu>
-                    <p:dataScroller id="target" styleClass="large" scrollHeight="80" mode="inline" value="#{questaoLacunaController.palavrasSelecionadas}" var="s">
-                        <f:facet name="header">
-                            <h:outputText value="Respostas"/>
-                        </f:facet>
-                        <p:commandLink styleClass="label label-danger" value="#{bundle.AcaoExcluir}" action="#{questaoLacunaController.remove()}" update="target">
-                            <f:setPropertyActionListener target="#{questaoLacunaController.palavraEscolhida}" value="#{s}"/>
-                        </p:commandLink>
-                        <span class="ui-separator"/>
-                        <h:outputText value="#{s.palavra}"/>
-                    </p:dataScroller>                 
-                    <hr/>
-                    <p:commandButton actionListener="#{questaoLacunaController.create}" value="#{bundle.AcaoSalvar}" update="display,:QuestaoLacunaListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestaoLacunaCreateDialog');"/>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
+    <ui:define name="body">
+        <h:form id="QuestaoLacunaCreateForm" class="container" rendered="#{questaoLacunaController.selected != null}">
 
-    </ui:composition>
-</html>
+
+            <h:inputText value="#{questaoLacunaController.selected.titulo}" class="form-control"/>
+            <hr/>
+            <h:outputLabel for="fraseLatim" value="Frase em latim"/>
+            <br/>
+            <h:selectOneMenu id="fraseLatim" class="form-control" value="#{questaoLacunaController.selected.fraseLatim}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{fraseLatimController.itemsAvailableSelectOne}"
+                               var="fraseLatimItem"
+                               itemLabel="#{fraseLatimItem.frase}"
+                               itemValue="#{fraseLatimItem}"/>
+                <f:ajax listener="#{questaoLacunaController.parse()}" render="enunciado"/>
+            </h:selectOneMenu>
+            <br/>
+            <h:outputLabel for="nivel" value="#{bundle.CampoNivel}"/>
+            <br/>
+            <h:selectOneMenu id="nivel" class="form-control" value="#{questaoLacunaController.selected.nivelQuestao}" required="true" requiredMessage="#{bundle.Obrigatorio}">
+                <f:selectItems value="#{nivelQuestaoController.itemsAvailableSelectOne}"
+                               var="nivelQuestaoItem"
+                               itemLabel="#{nivelQuestaoItem.descricao}"
+                               itemValue="#{nivelQuestaoItem}"/>
+            </h:selectOneMenu>                      
+            <br/>
+            <h:outputLabel for="enunciado" value="#{bundle.CampoEnunciado} (Troque a palavra desejada por space _ space)"/>
+            <br/>
+            <h:inputText id="enunciado" class="form-control" value="#{questaoLacunaController.selected.enunciado}" style="width: 100%">
+                <f:validator validatorId="LacunaValidator"/>
+            </h:inputText>
+            <hr/>  
+            <h:outputLabel value="Lacunas"/>
+            <br/>
+            <h:selectOneMenu class="form-control" value="#{questaoLacunaController.palavraEscolhida}">
+                <f:selectItems value="#{palavraLatimController.items}" var="p"
+                               itemLabel="#{p.palavra}"
+                               itemValue="#{p}"/>
+                <f:ajax listener="#{questaoLacunaController.add()}" render="target"/>
+            </h:selectOneMenu>
+            <br/>
+
+            <h:dataTable id="target" class="table table-responsive" value="#{questaoLacunaController.palavrasSelecionadas}" var="s">                
+                <h:column>                      
+                    <f:facet name="header">
+                        <h:outputText value="Lacunas"/>            
+                    </f:facet>
+                    <h:commandLink class="label label-danger" value="#{bundle.AcaoExcluir}" action="#{questaoLacunaController.remove()}">
+                        <f:setPropertyActionListener target="#{questaoLacunaController.palavraEscolhida}" value="#{s}"/>
+                    </h:commandLink>
+                    <span class="ui-separator"/>
+                    <h:outputText value="#{s.palavra}"/>
+                </h:column>                
+            </h:dataTable>                 
+            <hr/>
+
+            <h:commandButton class="btn btn-success" action="#{questaoLacunaController.create}" value="#{bundle.AcaoSalvar}"/>
+
+        </h:form>        
+    </ui:define>
+
+</ui:composition>
