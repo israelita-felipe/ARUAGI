@@ -6,6 +6,7 @@
 package br.edu.uag.aruagi.control.util.listeners;
 
 import br.edu.uag.aruagi.control.util.hibernate.FacesContextUtil;
+import br.edu.uag.aruagi.control.util.hibernate.HibernateUtil;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
@@ -26,8 +27,7 @@ public class HibernatePhaseListener implements PhaseListener {
     @Override
     public void beforePhase(PhaseEvent fase) {
         if (fase.getPhaseId().equals(PhaseId.RESTORE_VIEW)) {
-            Session session = FacesContextUtil.getRequestSession();
-            //session = HibernateUtil.getSessionFactory().openSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             FacesContextUtil.setRequestSession(session);
         }
