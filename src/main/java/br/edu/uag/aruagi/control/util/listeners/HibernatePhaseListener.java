@@ -26,11 +26,12 @@ public class HibernatePhaseListener implements PhaseListener {
      */
     @Override
     public void beforePhase(PhaseEvent fase) {
-        if (fase.getPhaseId().equals(PhaseId.RESTORE_VIEW)) {
-            Session session = HibernateUtil.getSessionFactory().openSession();
+        //if (fase.getPhaseId().equals(PhaseId.RESTORE_VIEW)) {
+            Session session = FacesContextUtil.getRequestSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             FacesContextUtil.setRequestSession(session);
-        }
+        //}
     }
 
     /**
@@ -40,7 +41,7 @@ public class HibernatePhaseListener implements PhaseListener {
      */
     @Override
     public void afterPhase(PhaseEvent fase) {
-        if (fase.getPhaseId().equals(PhaseId.RENDER_RESPONSE)) {
+        //if (fase.getPhaseId().equals(PhaseId.RENDER_RESPONSE)) {
             Session session = FacesContextUtil.getRequestSession();
             try {
                 session.getTransaction().commit();
@@ -51,7 +52,7 @@ public class HibernatePhaseListener implements PhaseListener {
             }finally{
                 session.close();
             }
-        }
+        //}
     }
 
     @Override
