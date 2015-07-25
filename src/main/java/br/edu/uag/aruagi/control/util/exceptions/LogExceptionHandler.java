@@ -10,11 +10,9 @@ import br.edu.uag.aruagi.control.util.support.EmailSender;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.FacesException;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.FacesContext;
@@ -48,8 +46,8 @@ public class LogExceptionHandler extends ExceptionHandlerWrapper {
             // capturando a exceção do contexto
             final Throwable t = context.getException();
             final FacesContext fc = FacesContext.getCurrentInstance();
-            final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
-            final NavigationHandler nav = fc.getApplication().getNavigationHandler();
+            //final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+            //final NavigationHandler nav = fc.getApplication().getNavigationHandler();
             //fazer os devidos tratamentos
             try {
                 //tratando o erro
@@ -69,14 +67,15 @@ public class LogExceptionHandler extends ExceptionHandlerWrapper {
                         }
                     }
                 }).start();
-                requestMap.put("exceptionMessage", t.getMessage());                
-                nav.handleNavigation(fc, null, "/public/advertencia/Erro.uag");
-                fc.renderResponse();
-                // avisando do erro
-                JsfUtil.addErrorMessage(t.getMessage());
+                //requestMap.put("exceptionMessage", t.getMessage());                
+                //nav.handleNavigation(fc, null, "/public/advertencia/Erro.uag");
+                fc.renderResponse();                
             } finally {
                 //removendo o erro
                 i.remove();
+                // avisando do erro
+                JsfUtil.addErrorMessage(t.getMessage());
+                t.printStackTrace();
             }
         }
         getWrapped().handle();

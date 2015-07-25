@@ -10,10 +10,16 @@
 
     <ui:define name="body">
         <h:form class="container">
-            <h:outputText class="badge" value="#{resolucaoQuestaoTraduzPalavraController.pontuacao}"/>
+            <h:outputText class="badge" value="Nota #{resolucaoQuestaoTraduzPalavraController.pontuacao}"/>
+            <br/>
             <h:messages layout="table" showDetail="true"/>
-            <h:dataTable class="table table-responsive" value="#{resolucaoQuestaoTraduzPalavraController.items}" var="item">
+            <br/>
+            <h:dataTable class="table table-responsive" value="#{resolucaoQuestaoTraduzPalavraController.paraResponder}" var="item">
                 <h:column>
+                    <h:outputText class="label label-success" value="Correto" rendered="#{resolucaoQuestaoTraduzPalavraController.findCorrecao(item).corrige()}"/>                    
+                    <h:outputText class="label label-danger" value="Errado" rendered="#{not resolucaoQuestaoTraduzPalavraController.findCorrecao(item).corrige()}"/>                    
+                    <br/>
+                    <br/>
                     <h:outputText value="#{item.nivelQuestao.descricao}"/>
                     <br/>
                     <h:outputText value="#{item.titulo}"/>
@@ -22,9 +28,11 @@
                     <br/>
                     <h:outputText value="#{item.palavraLatim.palavra}"/>
                     <br/>
-                    <h:outputText value="#{item.palavraPortugues.palavra}"/>
+                    <h:outputText value="#{item.palavraPortugues.palavra}"/>  
                     <br/>
-                    <h:outputText value="#{resolucaoQuestaoTraduzPalavraController.find(item)}"/>
+                    <h:outputLabel value="Sua resposta"/>
+                    <br/>
+                    <h:outputText value="#{resolucaoQuestaoTraduzPalavraController.findCorrecao(item).resposta.palavra}" />                    
                 </h:column>
             </h:dataTable>
         </h:form>

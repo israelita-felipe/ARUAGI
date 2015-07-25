@@ -66,4 +66,8 @@
     <error-page>
         <location>/public/advertencia/Erro.xhtml</location>
     </error-page>   
+    
+    <!-- CDI -->
+    
+    
 </web-app>

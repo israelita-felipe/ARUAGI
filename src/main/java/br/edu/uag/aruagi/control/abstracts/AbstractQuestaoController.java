@@ -7,27 +7,25 @@ package br.edu.uag.aruagi.control.abstracts;
 
 import br.edu.uag.aruagi.control.Facade.Facade;
 import br.edu.uag.aruagi.control.interfaces.InterfaceFacade;
-import br.edu.uag.aruagi.control.interfaces.InterfaceQuestao;
-import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.Paginator;
+import br.edu.uag.aruagi.model.Gabarito;
 import br.edu.uag.aruagi.model.NivelQuestao;
-import br.edu.uag.aruagi.model.QuestaoTraduzPalavra;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 /**
  *
  * @author israel
- * @param <T>
+ * @param <TipoQuestao>
+ * @param <TipoPergunta>
+ * @param <TipoResposta>
  */
-public abstract class AbstractQuestaoController<T> {
+public abstract class AbstractQuestaoController<TipoQuestao, TipoPergunta, TipoResposta> {
 
-    private final InterfaceFacade<T> ejbFacade;
-    private T current;
+    private final InterfaceFacade<TipoQuestao> ejbFacade;
+    private TipoQuestao current;
     private DataModel items = null;
     private Paginator pagination;
 
@@ -35,24 +33,33 @@ public abstract class AbstractQuestaoController<T> {
     private double pontuacao;
     private int quantidade = 1;
     private String nome;
-    private Boolean correcao[];
-    private String respostas[];//melhor criar objeto para guardar boolean,resposta,questao
+
     private String resposta;
-    List<T> paraResponder;
+
+    List<TipoQuestao> paraResponder;
+
     private NivelQuestao nivel;
     private int pageSize = 1;
 
-    public AbstractQuestaoController(Class<T> clazz) {
-        ejbFacade = new Facade<T>(clazz);
-        paraResponder = new LinkedList<T>();
+    // guarda as respostas
+    private Gabarito<TipoQuestao, TipoPergunta, TipoResposta> gabarito;
+
+    public AbstractQuestaoController(Class<TipoQuestao> clazz) {
+        ejbFacade = new Facade<TipoQuestao>(clazz);
+        paraResponder = new LinkedList<TipoQuestao>();
     }
 
-    public InterfaceFacade<T> getFacade() {
+    public InterfaceFacade<TipoQuestao> getFacade() {
         return ejbFacade;
     }
 
+    public abstract void sortQuestoes();
+
+    public abstract Gabarito.Correcao findCorrecao(TipoQuestao questao);
+
     public Paginator getPagination() {
         if (pagination == null) {
+
             pagination = new Paginator(this.pageSize) {
 
                 @Override
@@ -63,25 +70,17 @@ public abstract class AbstractQuestaoController<T> {
                 @Override
                 public DataModel createPageDataModel() {
                     if (paraResponder.isEmpty()) {
-                        correcao = new Boolean[quantidade];
-                        respostas = new String[quantidade];
-                        Random r = new Random();
-                        while (paraResponder.size() < quantidade) {
-                            try {
-                                int id = 0;
-                                while (id == 0) {
-                                    id = r.nextInt(quantidade + 1);
-                                }
-                                T q = getFacade().find(id);
-                                if (q != null && !paraResponder.contains(q)) {
-                                    paraResponder.add(q);
-                                }
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
+
+                        gabarito = new Gabarito<TipoQuestao, TipoPergunta, TipoResposta>(quantidade) {
+
+                            @Override
+                            public Gabarito.Correcao find(TipoQuestao questao) {
+                                return findCorrecao(questao);
                             }
-                        }
+                        };
+                        sortQuestoes();
                     }
-                    T questao = paraResponder.subList(getPageFirstItem(), getPageFirstItem() + getPageSize()).get(0);
+                    TipoQuestao questao = paraResponder.subList(getPageFirstItem(), getPageFirstItem() + getPageSize()).get(0);
                     setCurrent(questao);
                     return new ListDataModel(Arrays.asList(questao));
                 }
@@ -90,7 +89,7 @@ public abstract class AbstractQuestaoController<T> {
         return pagination;
     }
 
-    public DataModel<T> getItems() {
+    public DataModel<TipoQuestao> getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
         }
@@ -108,18 +107,14 @@ public abstract class AbstractQuestaoController<T> {
     public String prepareCreate() {
         items = getPagination().createPageDataModel();
         respondendo = true;
-        return "List";
+        return "List.uag?faces-redirect=true";
     }
 
     abstract public void corrige();
 
-    public String find(T toFind){
-        JsfUtil.addErrorMessage("Erro: "+this.paraResponder.indexOf(toFind));
-        return respostas[this.paraResponder.indexOf(toFind)];
-    }
     private void preparePage() {
-        if (getPagination() != null && getPagination().getPage() > -1 && respostas != null) {
-            this.resposta = respostas[getPagination().getPage()] == null ? "" : respostas[getPagination().getPage()];
+        if (getPagination() != null && getPagination().getPage() > -1 && !gabarito.getCorrecao().isEmpty()) {
+            this.resposta = gabarito.getCorrecao().get(getPagination().getPage()) == null ? "" : gabarito.getCorrecao().get(getPagination().getPage()).getResposta().toString();
         }
     }
 
@@ -127,12 +122,12 @@ public abstract class AbstractQuestaoController<T> {
         corrige();
         if (getPagination().getItemsCount() == getPagination().getPageFirstItem() + getPagination().getPageSize()) {
             avaliar();
-            return "View";
+            return "View.uag?faces-redirect=true";
         }
         getPagination().nextPage();
         preparePage();
         recreateModel();
-        return "List";
+        return "List.uag?faces-redirect=true";
     }
 
     public String previous() {
@@ -140,20 +135,29 @@ public abstract class AbstractQuestaoController<T> {
         getPagination().previousPage();
         preparePage();
         recreateModel();
-        return "List";
+        return "List.uag?faces-redirect=true";
     }
 
     public String avaliar() {
         int acertos = 0;
-        for (Boolean a : correcao) {
-            if (a != null && a) {
-                acertos++;
+        int vazios = 0;
+        for (Gabarito.Correcao c : gabarito.getCorrecao()) {
+            try {
+                if (c.corrige()) {
+                    acertos++;
+                }
+            } catch (Exception ex) {
+                vazios++;
             }
         }
-        pontuacao = ((100 * acertos) / quantidade) / 10;
+        // perde 0.01 por resposta não feita
+        pontuacao = (((100 * acertos) / quantidade) / 10) - (vazios * 0.01);
+        if(pontuacao<0){
+            pontuacao = 0;
+        }
         pageSize = quantidade;
         recreateModel();
-        return "View";
+        return "View.uag?faces-redirect=true";
     }
 
     public void reset() {
@@ -162,22 +166,21 @@ public abstract class AbstractQuestaoController<T> {
         pontuacao = 0;
         quantidade = 1;
         nome = "";
-        correcao = null;
         resposta = "";
-        paraResponder = new LinkedList<T>();
+        paraResponder = new LinkedList<TipoQuestao>();
         recreatePagination();
         recreateModel();
     }
 
-    public T getCurrent() {
+    public TipoQuestao getCurrent() {
         return current;
     }
 
-    public void setCurrent(T current) {
+    public void setCurrent(TipoQuestao current) {
         this.current = current;
     }
 
-    public void setSelected(T current) {
+    public void setSelected(TipoQuestao current) {
         this.current = current;
     }
 
@@ -226,11 +229,16 @@ public abstract class AbstractQuestaoController<T> {
         return respondendo;
     }
 
-    public void setCorrecao(Boolean toSet, int index,String resposta) {
-        if (index > -1 && index < correcao.length) {
-            correcao[index] = toSet;
-            respostas[index] = resposta;
-        }
+    public Gabarito<TipoQuestao, TipoPergunta, TipoResposta> getGabarito() {
+        return gabarito;
+    }
+
+    public List<TipoQuestao> getParaResponder() {
+        return paraResponder;
+    }
+
+    public void setParaResponder(List<TipoQuestao> paraResponder) {
+        this.paraResponder = paraResponder;
     }
 
 }

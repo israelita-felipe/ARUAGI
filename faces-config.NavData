@@ -23,23 +23,23 @@
         <Node id="private/professor/classificacaoGramatical/View.xhtml" x="900" y="2250" zoom="true"/>
         <Node id="private/administrador/tipoQuestao/List.xhtml" x="1150" y="1950" zoom="true"/>
         <Node id="private/administrador/nivelAcesso/Create.xhtml" x="150" y="900" zoom="true"/>
-        <Node id="private/professor/traduzPalavra/Edit.xhtml" x="1150" y="1200" zoom="true"/>
         <Node id="private/administrador/usuario/Edit.xhtml" x="2650" y="600" zoom="true"/>
+        <Node id="private/professor/traduzPalavra/Edit.xhtml" x="1150" y="1200" zoom="true"/>
         <Node id="private/administrador/linksQuestao/List.xhtml" x="1150" y="1350" zoom="true"/>
         <Node id="private/professor/aplicacaoFrase/View.xhtml" x="1400" y="1500" zoom="true"/>
-        <Node id="private/professor/frasePortugues/View.xhtml" x="2400" y="900" zoom="true"/>
         <Node id="private/professor/atividadeQuestao/View.xhtml" x="2650" y="1050" zoom="true"/>
+        <Node id="private/professor/frasePortugues/View.xhtml" x="2400" y="900" zoom="true"/>
         <Node id="private/professor/indicadorTempoVerbal/View.xhtml" x="400" y="1350" zoom="true"/>
-        <Node id="private/professor/palavrasDeclinadas/List.xhtml" x="650" y="1650" zoom="true"/>
         <Node id="private/professor/palavraPortugues/View.xhtml" x="3900" y="450" zoom="true"/>
+        <Node id="private/professor/palavrasDeclinadas/List.xhtml" x="650" y="1650" zoom="true"/>
         <Node id="private/professor/fraseLatim/View.xhtml" x="1400" y="750" zoom="true"/>
         <Node id="public/questoes/frase/Resolucao.xhtml" x="400" y="1950" zoom="true"/>
         <Node id="private/professor/questaoTraduzFrase/List.xhtml" x="900" y="1350" zoom="true"/>
         <Node id="private/professor/declinacao/View.xhtml" x="400" y="150" zoom="true"/>
         <Node id="private/professor/lacuna/List.xhtml" x="1650" y="750" zoom="true"/>
         <Node id="private/professor/palavrasClassificadas/Edit.xhtml" x="400" y="750" zoom="true"/>
-        <Node id="private/professor/questaoGramatical/Edit.xhtml" x="1400" y="450" zoom="true"/>
         <Node id="private/professor/videos/Edit.xhtml" x="2150" y="450" zoom="true"/>
+        <Node id="private/professor/questaoGramatical/Edit.xhtml" x="1400" y="450" zoom="true"/>
         <Node id="private/administrador/nivelQuestao/Edit.xhtml" x="1900" y="300" zoom="true"/>
         <Node id="private/professor/questaoGramatical/Create.xhtml" x="150" y="1800" zoom="true"/>
         <Node id="private/professor/casoAplicado/Edit.xhtml" x="1900" y="1350" zoom="true"/>
@@ -71,30 +71,30 @@
         <Node id="private/professor/perfil/Edit.xhtml" x="3400" y="150" zoom="true"/>
         <Node id="private/professor/indicadorPessoaGramatical/View.xhtml" x="3900" y="150" zoom="true"/>
         <Node id="private/administrador/listaQuestao/Edit.xhtml" x="650" y="450" zoom="true"/>
-        <Node id="private/professor/caso/Create.xhtml" x="650" y="1050" zoom="true"/>
         <Node id="private/administrador/usuario/Create.xhtml" x="2400" y="1200" zoom="true"/>
+        <Node id="private/professor/caso/Create.xhtml" x="650" y="1050" zoom="true"/>
         <Node id="private/professor/questaoTraduzFrase/Edit.xhtml" x="1150" y="1650" zoom="true"/>
-        <Node id="private/professor/frasePortugues/Edit.xhtml" x="150" y="1950" zoom="true"/>
         <Node id="private/professor/indicadorTempoVerbal/Edit.xhtml" x="3400" y="600" zoom="true"/>
+        <Node id="private/professor/frasePortugues/Edit.xhtml" x="150" y="1950" zoom="true"/>
         <Node id="private/professor/atividadeQuestao/Create.xhtml" x="1150" y="1050" zoom="true"/>
-        <Node id="private/professor/declinacaoAplicada/Create.xhtml" x="150" y="2100" zoom="true"/>
         <Node id="private/professor/palavrasClassificadas/Create.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="private/professor/declinacaoAplicada/Create.xhtml" x="150" y="2100" zoom="true"/>
         <Node id="private/professor/videos/View.xhtml" x="3150" y="300" zoom="true"/>
-        <Node id="private/professor/palavraPortugues/Create.xhtml" x="2650" y="450" zoom="true"/>
         <Node id="private/administrador/linksQuestao/Edit.xhtml" x="900" y="750" zoom="true"/>
-        <Node id="private/professor/fraseLatim/Create.xhtml" x="150" y="1650" zoom="true"/>
+        <Node id="private/professor/palavraPortugues/Create.xhtml" x="2650" y="450" zoom="true"/>
         <Node id="private/professor/questaoGramatical/View.xhtml" x="2650" y="1200" zoom="true"/>
+        <Node id="private/professor/fraseLatim/Create.xhtml" x="150" y="1650" zoom="true"/>
         <Node id="private/professor/questaoTraduzFrase/Create.xhtml" x="150" y="2250" zoom="true"/>
-        <Node id="private/professor/frasePortugues/Create.xhtml" x="400" y="2250" zoom="true"/>
         <Node id="public/Redefinir.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="private/professor/frasePortugues/Create.xhtml" x="400" y="2250" zoom="true"/>
         <Node id="private/professor/questaoTraduzPalavra/List.xhtml" x="2900" y="150" zoom="true"/>
         <Node id="private/professor/declinacao/Create.xhtml" x="2900" y="450" zoom="true"/>
         <Node id="private/professor/declinacaoAplicada/Edit.xhtml" x="1650" y="1050" zoom="true"/>
         <Node id="private/administrador/tipoQuestao/Edit.xhtml" x="650" y="1350" zoom="true"/>
         <Node id="private/professor/lacuna/View.xhtml" x="150" y="2550" zoom="true"/>
-        <Node id="private/professor/declinacaoAplicada/View.xhtml" x="400" y="1800" zoom="true"/>
         <Node id="private/professor/palavrasClassificadas/List.xhtml" x="150" y="1350" zoom="true"/>
         <Node id="private/administrador/nivelAcesso/View.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="private/professor/declinacaoAplicada/View.xhtml" x="400" y="1800" zoom="true"/>
         <Node id="private/administrador/listaQuestao/List.xhtml" x="2150" y="300" zoom="true"/>
         <Node id="private/professor/tempoVerbal/List.xhtml" x="1650" y="1500" zoom="true"/>
         <Node id="private/professor/traduzFrase/Edit.xhtml" x="1900" y="1200" zoom="true"/>
@@ -102,8 +102,8 @@
         <Node id="private/professor/lacuna/Edit.xhtml" x="3650" y="150" zoom="true"/>
         <Node id="private/administrador/nivelAcesso/Edit.xhtml" x="2150" y="1350" zoom="true"/>
         <Node id="private/professor/fraseLatim/List.xhtml" x="650" y="1950" zoom="true"/>
-        <Node id="private/professor/palavrasDeclinadas/View.xhtml" x="3150" y="150" zoom="true"/>
         <Node id="private/administrador/usuario/List.xhtml" x="1900" y="1500" zoom="true"/>
+        <Node id="private/professor/palavrasDeclinadas/View.xhtml" x="3150" y="150" zoom="true"/>
         <Node id="private/administrador/nivelQuestao/Create.xhtml" x="900" y="450" zoom="true"/>
         <Node id="private/professor/aplicacaoFrase/Create.xhtml" x="650" y="600" zoom="true"/>
         <Node id="private/administrador/tipoQuestao/View.xhtml" x="650" y="1500" zoom="true"/>
@@ -131,14 +131,14 @@
         <Node id="private/professor/indicadorTempoVerbal/List.xhtml" x="650" y="750" zoom="true"/>
         <Node id="private/professor/frasePortugues/List.xhtml" x="900" y="2100" zoom="true"/>
         <Node id="private/administrador/listaQuestao/Create.xhtml" x="3150" y="750" zoom="true"/>
-        <Node id="public/advertencia/Erro.xhtml" x="400" y="1500" zoom="true"/>
         <Node id="private/professor/pessoaGramatical/Edit.xhtml" x="1150" y="1800" zoom="true"/>
+        <Node id="public/advertencia/Erro.xhtml" x="400" y="1500" zoom="true"/>
         <Node id="private/professor/declinacao/Edit.xhtml" x="2150" y="1200" zoom="true"/>
         <Node id="private/professor/traduzPalavra/Create.xhtml" x="1400" y="1050" zoom="true"/>
         <Node id="private/professor/indicadorPessoaGramatical/Create.xhtml" x="2400" y="450" zoom="true"/>
         <Node id="private/professor/palavraLatim/Edit.xhtml" x="400" y="1650" zoom="true"/>
-        <Node id="private/professor/videosPostagem/View.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="private/professor/casoAplicado/List.xhtml" x="2400" y="1050" zoom="true"/>
+        <Node id="private/professor/videosPostagem/View.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="private/professor/traduzPalavra/List.xhtml" x="2650" y="900" zoom="true"/>
         <Node id="private/professor/caso/View.xhtml" x="650" y="2100" zoom="true"/>
         <Node id="private/professor/videosPostagem/List.xhtml" x="3900" y="300" zoom="true"/>
@@ -149,8 +149,8 @@
         <Node id="private/professor/caso/Edit.xhtml" x="1900" y="900" zoom="true"/>
         <Node id="private/professor/traduzPalavra/View.xhtml" x="400" y="450" zoom="true"/>
         <Node id="private/professor/videosPostagem/Edit.xhtml" x="1150" y="750" zoom="true"/>
-        <Node id="public/postagem/List.xhtml" x="2400" y="150" zoom="true"/>
         <Node id="private/professor/fraseLatim/Edit.xhtml" x="3650" y="600" zoom="true"/>
+        <Node id="public/postagem/List.xhtml" x="2400" y="150" zoom="true"/>
         <Node id="private/professor/radical/Edit.xhtml" x="150" y="600" zoom="true"/>
         <Node id="private/professor/questaoDeclinacao/Create.xhtml" x="900" y="1500" zoom="true"/>
         <Node id="private/professor/palavrasDeclinadas/Create.xhtml" x="150" y="2400" zoom="true"/>
@@ -158,8 +158,8 @@
         <Node id="private/administrador/nivelQuestao/List.xhtml" x="3150" y="600" zoom="true"/>
         <Node id="private/professor/atividadeQuestao/Edit.xhtml" x="2400" y="750" zoom="true"/>
         <Node id="public/informacao/FaleConosco.xhtml" x="900" y="1800" zoom="true"/>
-        <Node id="public/questoes/palavra/Resolucao.xhtml" x="650" y="900" zoom="true"/>
         <Node id="public/postagem/View.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="public/questoes/palavra/Resolucao.xhtml" x="650" y="900" zoom="true"/>
         <Node id="private/administrador/nivelQuestao/View.xhtml" x="1400" y="1800" zoom="true"/>
         <Node id="private/professor/traduzFrase/Create.xhtml" x="900" y="150" zoom="true"/>
     </Scope>

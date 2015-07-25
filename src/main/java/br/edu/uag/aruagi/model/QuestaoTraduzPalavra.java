@@ -147,7 +147,7 @@ public class QuestaoTraduzPalavra implements java.io.Serializable, InterfaceQues
     }
 
     @Override
-    public boolean equals(Object obj) {        
-        return true;
+    public boolean equals(Object obj) {
+        return id == ((QuestaoTraduzPalavra) obj).getId();
     }
 }

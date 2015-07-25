@@ -52,23 +52,7 @@
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    
-<!--    <managed-bean>
-        <managed-bean-name>usuarioController</managed-bean-name>
-        <managed-bean-class>
-            br.edu.uag.aruagi.control.bean.UsuarioController
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>-->
-    
-<!--    <managed-bean>
-        <managed-bean-name>usuarioSessionController</managed-bean-name>
-        <managed-bean-class>
-            br.edu.uag.aruagi.control.bean.UsuarioSessionController
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>-->
-    
+       
     <managed-bean>
         <managed-bean-name>nivelAcessoController</managed-bean-name>
         <managed-bean-class>
@@ -221,11 +205,7 @@
         <managed-bean-class>br.edu.uag.aruagi.control.bean.TraduzFraseController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-<!--    <managed-bean>
-        <managed-bean-name>traduzPalavraController</managed-bean-name>
-        <managed-bean-class>br.edu.uag.aruagi.control.bean.TraduzPalavraController</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>-->
+
     <managed-bean>
         <managed-bean-name>videosPostagemController</managed-bean-name>
         <managed-bean-class>br.edu.uag.aruagi.control.bean.VideosPostagemController</managed-bean-class>
@@ -234,12 +214,6 @@
     <managed-bean>
         <managed-bean-name>videosController</managed-bean-name>
         <managed-bean-class>br.edu.uag.aruagi.control.bean.VideosController</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    
-    <managed-bean>
-        <managed-bean-name>resolucaoTraduzPalavraController</managed-bean-name>
-        <managed-bean-class>br.edu.uag.aruagi.control.bean.ResolucaoTraduzPalavraController</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     

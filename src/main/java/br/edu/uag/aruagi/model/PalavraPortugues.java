@@ -21,22 +21,22 @@ import org.hibernate.annotations.FetchMode;
 @Table(name = "palavra_portugues", schema = "public"
 )
 public class PalavraPortugues implements java.io.Serializable {
-
+    
     private int id;
     private String palavra;
     private Integer usuario;
     private Boolean status;
     private List traduzPalavras = new ArrayList();
     private List questoesTraduzPalavras = new ArrayList();
-
+    
     public PalavraPortugues() {
     }
-
+    
     public PalavraPortugues(int id, String palavra) {
         this.id = id;
         this.palavra = palavra;
     }
-
+    
     public PalavraPortugues(int id, String palavra, Integer usuario, Boolean status, List traduzPalavras) {
         this.id = id;
         this.palavra = palavra;
@@ -44,51 +44,51 @@ public class PalavraPortugues implements java.io.Serializable {
         this.status = status;
         this.traduzPalavras = traduzPalavras;
     }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;
     }
-
+    
     public void setId(int id) {
         this.id = id;
     }
-
+    
     @Column(name = "palavra", nullable = false)
     public String getPalavra() {
         return this.palavra;
     }
-
+    
     public void setPalavra(String palavra) {
         this.palavra = palavra;
     }
-
+    
     @Column(name = "usuario")
     public Integer getUsuario() {
         return this.usuario;
     }
-
+    
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
-
+    
     @Column(name = "status")
     public Boolean getStatus() {
         return this.status;
     }
-
+    
     public void setStatus(Boolean status) {
         this.status = status;
     }
-
+    
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "palavraPortugues", targetEntity = TraduzPalavra.class)
     @Fetch(FetchMode.SUBSELECT)
     public List<TraduzPalavra> getTraduzPalavras() {
         return this.traduzPalavras;
     }
-
+    
     public void setTraduzPalavras(List traduzPalavras) {
         this.traduzPalavras = traduzPalavras;
     }
@@ -98,11 +98,11 @@ public class PalavraPortugues implements java.io.Serializable {
     public List<QuestaoTraduzPalavra> getQuestoesTraduzPalavras() {
         return this.questoesTraduzPalavras;
     }
-
+    
     public void setQuestoesTraduzPalavras(List traduzPalavras) {
         this.questoesTraduzPalavras = traduzPalavras;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -111,15 +111,15 @@ public class PalavraPortugues implements java.io.Serializable {
         hash = 97 * hash + (this.status != null ? this.status.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
-    public boolean equals(Object obj) {       
+    public boolean equals(Object obj) {        
         return true;
     }
-
+    
     @Override
     public String toString() {
-        return ""+id;
+        return palavra;
     }
     
 }

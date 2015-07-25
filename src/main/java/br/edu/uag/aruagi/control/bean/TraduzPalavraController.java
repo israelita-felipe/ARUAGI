@@ -2,7 +2,7 @@ package br.edu.uag.aruagi.control.bean;
 
 import br.edu.uag.aruagi.control.abstracts.AbstractController;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.Paginator;
+import br.edu.uag.aruagi.control.abstracts.Paginator;
 import br.edu.uag.aruagi.model.PalavraLatim;
 import br.edu.uag.aruagi.model.TraduzPalavra;
 import br.edu.uag.aruagi.model.TraduzPalavraId;

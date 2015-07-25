@@ -102,7 +102,7 @@ public class NivelQuestao implements java.io.Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "nivelQuestao", targetEntity = QuestaoTraduzPalavra.class)
     @Fetch(FetchMode.SUBSELECT)
-    public List getQuestaoTraduzPalavras() {
+    public List<QuestaoTraduzPalavra> getQuestaoTraduzPalavras() {
         return this.questaoTraduzPalavras;
     }
 

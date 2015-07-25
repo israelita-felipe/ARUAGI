@@ -5,7 +5,7 @@
  */
 package br.edu.uag.aruagi.control.interfaces;
 
-import br.edu.uag.aruagi.control.util.jsf.Paginator;
+import br.edu.uag.aruagi.control.abstracts.Paginator;
 import java.io.Serializable;
 import javax.faces.model.DataModel;
 import javax.faces.model.SelectItem;

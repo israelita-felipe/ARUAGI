@@ -9,7 +9,6 @@ import br.edu.uag.aruagi.control.Facade.Facade;
 import br.edu.uag.aruagi.control.interfaces.InterfaceController;
 import br.edu.uag.aruagi.control.interfaces.InterfaceFacade;
 import br.edu.uag.aruagi.control.util.jsf.JsfUtil;
-import br.edu.uag.aruagi.control.util.jsf.Paginator;
 import br.edu.uag.aruagi.model.Postagem;
 import br.edu.uag.aruagi.model.Usuario;
 import java.io.Serializable;

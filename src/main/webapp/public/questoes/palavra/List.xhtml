@@ -49,7 +49,9 @@
                     <br/>
                     <h:outputLabel value="#{bundle.CampoQuantidade}"/>
                     <br/>
-                    <input class="form-control" type="number" value="#{resolucaoQuestaoTraduzPalavraController.quantidade}" min="1"/>
+                    <h:inputText class="form-control"  value="#{resolucaoQuestaoTraduzPalavraController.quantidade}" >
+                        <f:converter converterId="javax.faces.Integer"/>
+                    </h:inputText>
                     <br/>
                     <h:outputLabel for="nome" value="#{bundle.CampoNome}"/>
                     <br/>
