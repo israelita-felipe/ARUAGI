@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <!-- BARRA DE MENUS PRINCIPAL-->
+    <div id="menu" class="row">
+
+        <div class="col-md-12">
+        
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+                <div class="container-fluid">
+
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+
+                        <a class="navbar-brand" href="/index.uag">ARUAGI</a>
+
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse"
+                         id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-nav">
+
+                        <li>
+                            <a href="/public/vocabulario/index.uag">Vocabulário</a>
+                        </li>                                
+
+                        <li class="dropdown">
+
+                            <a href="#" class="dropdown-toggle"
+                               data-toggle="dropdown">Questões</a>
+
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li>
+                                    <a href="/public/questoes/palavra/List.uag">
+                                        Tradução de palavras
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/public/questoes/frase/Resolucao.uag">
+                                        Tradução de frases
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/public/questoes/lacuna/Resolucao.uag">
+                                        Lacuna
+                                    </a>
+                                </li>                                        
+
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="/public/informacao/FaleConosco.uag">Contato</a>
+                        </li>                                
+
+                    </ul>  
+
+                    <h:form class="navbar-form navbar-right">
+
+                        <h:button rendered="#{!usuarioSessionController.logged}"
+                                  outcome="/public/Login.uag"
+                                  class="btn btn-success" value="Logar"/>
+
+                        <h:button rendered="#{usuarioSessionController.logged}"
+                                  outcome="/private/homePrivate.uag"
+                                  class="btn btn-success" value="Meu espaço"/>
+
+                        <span class="divider"/>
+
+                        <h:commandButton rendered="#{usuarioSessionController.logged}"
+                                         class="btn btn-warning"
+                                         action="#{usuarioSessionController.doLogout()}"
+                                         value="#{bundle.AcaoSair}"/>
+
+                    </h:form>                            
+
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        
+        </div>
+            
+    </div>
+
+
+</html>
+

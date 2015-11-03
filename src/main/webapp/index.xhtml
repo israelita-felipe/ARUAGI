@@ -1,109 +1,96 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <meta name="description" content=""/>
-        <meta name="author" content=""/>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/resources/template_site.xhtml">        
 
-        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
-        <h:outputStylesheet library="css" name="cover.css"/>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <ui:define name="title">
+            <h:outputText value="Início - ARUAGI"/>
+        </ui:define>
 
-        <h:outputScript library="js" name="bootstrap.min.js"/>
-
-        <title>ARUAGI</title>
-
-    </h:head>
-    <h:body style="padding-top: 48px">        
-        <h:form class="marketing container blog-main">
-
-
-            <div class="row">
-                <div>
-                    <img class="img-circle" src="/resources/images/logo_cut.jpg" alt="Generic placeholder image" width="140" height="140"/>
-                    <h2>ARUAGI</h2>
-                    <h3>
-                        Hoje #{acessoController.selected.acessos} acessos, #{acessoController.totalAcessos()} até o momento.
-                    </h3>
-                    <p>Um projeto para aprendizado de língua latina</p>
-                    <p><h:commandButton action="/public/postagem/List.uag?faces-redirect=true" class="btn btn-lg btn-default" value="Entrar"/></p>   
+        <ui:define name="body">
+            
+            <div class="row text-center">
+                
+                <div class="col-md-3 col-md-offset-1">
                     
-                </div><!-- /.col-lg-4 -->                
-            </div><!-- /.row -->
-
-
-
-            <!-- START THE FEATURETTES -->
-            <hr/>
-            <div class="row featurette">
-                <img class="pull-right" src="/resources/images/SIGPROJ.jpg"/>
-                <div>
-                    <h3 class="featurette-heading">Projeto de Extensão <span class="text-muted">2015</span></h3>                        
-                    <p>ARUAGI: OBJETO DE APRENDIZAGEM PARA LÍNGUA LATINA</p>
-                    <a href="http://ww4.ufrpe.br/prae/images/projetos_de_extens%C3%A3o_da_uag_2015.pdf">Aqui</a>
+                    <h:graphicImage library="images" name="atividades.jpg"
+                                    width="266" height="200"
+                                    alt="ARUAGI logo"/>  
+                    
                 </div>
-            </div>  
-            <hr/>
-            <div class="row featurette">
-                <img class="pull-right" src="/resources/images/SIED.png"  width="150" height="50"/>
-                <div>
-                    <h3 class="featurette-heading">Simpósio Internacional de Educação a Distância - SIED <span class="text-muted">2014</span></h3>                        
-                    <p >TECNOLOGIAS PARA O ENSINO SUPERIOR: DESAFIOS NA FORMAÇÃO DO PROFESSOR</p>
-                    <a href="http://sistemas3.sead.ufscar.br/ojs/index.php/2014/article/viewFile/805/322">Aqui</a>
+                
+                <div class="col-md-7 text-justify">
+                    
+                    <p>
+                        
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        
+                    </p>
+                    
                 </div>
-            </div> 
-            <hr/>
-            <div class="row featurette">
-                <img class="pull-right" src="/resources/images/VEPEPE.png"  width="150" height="75"/>
-                <div>
-                    <h3 class="featurette-heading">V Encontro de Pesquisa Educacional em Pernanbuco - EPEPE <span class="text-muted">2014</span></h3>                        
-                    <p >ARUAGI: LINGUAGEM E TECNOLOGIA NO DESENVOLVIMENTO DE SOFTWARE PARA LÍNGUA LATINA</p>
-                    <a href="http://www.yasni.info/ext.php?url=http%3A%2F%2Fwww.epepe.com.br%2Feixo10%2FCO10%2FAlieteGomesCarneiroRosa-CO10.pdf">Aqui</a>
+                
+            </div>
+            
+            <div class="row text-center">
+                
+                <div class="col-md-10 col-md-offset-1">
+                    
+                    <div class="funcionalidades">
+                    
+                    <figure>
+                    
+                        <h:graphicImage id="traducao_frases"
+                                        library="images" name="traducao_frases.jpg"
+                                        width="266" height="200"
+                                        alt="Tradução de frases"/>
+                    
+                        <figcaption>Tradução de Frases</figcaption>
+                    
+                    </figure>
+                        
                 </div>
-            </div> 
-            <hr/>
-            <div class="row featurette">
-                <div class="pull-right">
-                    <img src="/resources/images/JEPEX.png" width="150" height="75"/>
+                
+                <div class="funcionalidades">
+                    
+                    <figure>
+                    
+                        <h:graphicImage id="traducao_palavras"
+                                        library="images" name="traducao_palavras.jpg"
+                                        width="266" height="200"
+                                        alt="Tradução de palavras"/>
+                    
+                        <figcaption>Tradução de Palavras</figcaption>
+                    
+                    </figure>
+                    
                 </div>
-                <div>
-                    <h3 class="featurette-heading">XIV Jornada de Pesquisa e Extensão - JEPEX <span class="text-muted">2014</span></h3>                        
-                    <p ><h3>Apresentação Oral</h3>PROJETO ARUAGI: TECNOLOGIA PARA ENSINO DE LÍNGUA</p>
-                    <a href="http://eventosufrpe.com.br/2014/arquivos/DIVULGACAO_SITE_APRESENTACAO_ORAL.pdf">Aqui</a>
+                
+                <div class="funcionalidades">
+                    
+                  <figure>
+                    
+                        <h:graphicImage id="atividades"
+                                        library="images" name="atividades.jpg"
+                                        width="266" height="200"
+                                        alt="Atividades"/>
+                    
+                        <figcaption>Tradução de Frases</figcaption>
+                    
+                    </figure>                      
+
                 </div>
-            </div>  
-            <hr/>
-            <div class="row featurette">
-                <img class="pull-right" src="/resources/images/SIGPROJ.jpg"/>
-                <div>
-                    <h3 class="featurette-heading">Projeto de Extensão <span class="text-muted">2014</span></h3>                        
-                    <p >ARUAGI: LINGUAGEM E TECNOLOGIA NO DESENVOLVIMENTO DE SOFTWARE PARA LÍNGUA LATINA</p>
-                    <a href="http://ww4.ufrpe.br/prae/images/20131219_PROJETOS_E_BOLSISTA_DA_UAG.pdf">Aqui</a>
+                    
                 </div>
-            </div>                            
-            <!-- /END THE FEATURETTES -->
-            <hr/>
-
-            <!-- FOOTER -->
-            <footer>
-                <p class="pull-right"><a href="#" class="img-circle">Topo</a></p>
-                <p>© Universidade Federal Rural de Pernambuco - UFRPE</p>
-            </footer>
-
-        </h:form><!-- /.container -->
-
-
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-        <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs></defs><text x="0" y="23" style="font-weight:bold;font-size:23pt;font-family:Arial, Helvetica, Open Sans, sans-serif;dominant-baseline:middle">500x500</text>
-        </svg>
-    </h:body>
+                
+            </div>
+            
+        </ui:define>
+        
+    </ui:composition>  
+    
 </html>

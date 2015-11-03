@@ -9,20 +9,22 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
+    
     <h:head>
+        
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <!--<h:outputStylesheet library="css" name="jsfcrud.css"/>-->
         <h:outputStylesheet library="css" name="primefaces.css"/>
-
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-theme.min.css"/>
+        <h:outputStylesheet library="css" name="bootstrap-aruagi.css"/>
+        <h:outputStylesheet library="css" name="aruagi.css"/>
 
 
-        <h:outputScript library="js" name="bootstrap.js"/>
+        <h:outputScript library="js" name="jquery-2.1.4.min.js"/>
         <h:outputScript library="js" name="bootstrap.min.js"/>
-
         <h:outputScript library="js" name="jsfcrud.js"/>          
 
         <!-- SCRIPT DE REQUISICAO DO FACEBOOK -->
@@ -31,148 +33,39 @@ and open the template in the editor.
         </script>           
 
         <ui:insert name="head"/>
-        <title><ui:insert name="title">Default Title</ui:insert></title>
+        
+        <title>
+            <ui:insert name="title">Default Title</ui:insert>
+        </title>
+        
     </h:head>
-    <h:body style="padding-top: 48px">
-        <p:layout fullPage="true" style="padding: 0;border: 0">
-            <p:layoutUnit style="padding: 0;border: 0" position="center" resizable="true">
-                <!-- BARRA DE MENUS PRINCIPAL-->
-                <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                    <div class="container container-fluid">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" href="/index.uag">ARUAGI</a>
-                        </div>
+    
+    <h:body>
+        
+        <div class="container-fluid">
+                    
+            <ui:insert name="menu" >
+              <ui:include src="menu.xhtml" />
+            </ui:insert>
 
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                                <li>
-                                    <a href="/public/vocabulario/index.uag">Vocabulário</a>
-                                </li>                                
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Questões</a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="/public/questoes/palavra/List.uag">Tradução de palavras</a>
-                                        </li>
-                                        <li>
-                                            <a href="/public/questoes/frase/Resolucao.uag">Tradução de frases</a>
-                                        </li>
-                                        <li>
-                                            <a href="/public/questoes/lacuna/Resolucao.uag">Lacuna</a>
-                                        </li>                                        
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="/public/informacao/FaleConosco.uag">Contato</a>
-                                </li>                                
-                            </ul>  
-                            <h:form class="navbar-form navbar-right">
-                                <h:button rendered="#{!usuarioSessionController.logged}" outcome="/public/Login.uag" class="btn btn-success" value="Logar"/>
-                                <h:button rendered="#{usuarioSessionController.logged}" outcome="/private/homePrivate.uag" class="btn btn-success" value="Meu espaço"/>
-                                <span class="divider"/>
-                                <h:commandButton rendered="#{usuarioSessionController.logged}" class="btn btn-warning" action="#{usuarioSessionController.doLogout()}" value="#{bundle.AcaoSair}"/>
-                            </h:form>                            
-                        </div><!-- /.navbar-collapse -->
-                    </div><!-- /.container-fluid -->
-                </nav>                 
-                <ui:insert name="body"/>                
+            <ui:insert name="body"/>                
 
-                <div class="blog-footer container" style="padding-top: 0;padding-left: 0;border-left: 0;padding-right: 0;border-right: 0">
-                    <div style="border-top: 1px solid #f7f7f7">
-                        <div id="quadro_1" class="col-md-3">
-                            <div class="h3">                                    
-                                ARUAGI
-                            </div>
-                            <div class="caption">
-                                Universidade Federal Rural de Pernambuco - UFRPE
-                                <hr/>
-                                Unidade Acadêmica de Garanhuns - UAG
-                            </div>
-                        </div>
-                        <div id="quadro_2" class="col-md-3">
-                            <div class="h3">
-                                Parceiros
-                            </div>
-                            <div class="caption">
+            <ui:insert name="footer" >
+              <ui:include src="footer.xhtml" />
+            </ui:insert>
 
-                            </div>
-                        </div>
-                        <div id="quadro_3" class="col-md-3">
-                            <div class="h3">
-                                Projeto
-                            </div>
-                            <div class="caption">
-                                <a href="https://github.com/israelita-felipe/ARUAGI">
-                                    https://github.com/israelita-felipe/ARUAGI
-                                </a>
-                            </div>
-                        </div>
-                        <div id="quadro_4" class="col-md-3">
-                            <div class="caption">
-                                <div class="h3">
-                                    Orientado por
-                                </div>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/9765841869399460">
-                                        <h:outputText value="Aliete Gomes Carneiro Rosa" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <hr/> 
-                                <div class="h3">
-                                    Desenvolvimento
-                                </div>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/0444370129900667">
-                                        <h:outputText value="Israel Felipe de Lima Araújo Silva" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/4329681764449719">
-                                        <h:outputText value="Renan Leandro Fernandes" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/6385944686814684">
-                                        <h:outputText value="Rafaell Brunno Nogueira Vieira" />
-                                    </h:outputLink>
-                                </p:lightBox>
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="">
-                                        <h:outputText value="Gilson Morais" />
-                                    </h:outputLink>
-                                </p:lightBox>                        
-                                <p:lightBox iframe="true">
-                                    <h:outputLink value="http://lattes.cnpq.br/0718728977707198">
-                                        <h:outputText value="Victor Francisco dos Santos Viana" />
-                                    </h:outputLink>
-                                </p:lightBox>                                                                
-                            </div>
-                        </div>
-                    </div>                                            
-                    <div class="col-lg-12" >      
-                        <hr/>
-                        <center>
-                            Todos os direitos reservados
-                            <p:spacer width="10"/>
-                            <a href="http://www.ufrpe.br/uag/">UFRPE/UAG</a>
-                        </center>
-                    </div>                    
-                </div>                
-                <script>
-                    googleSearch('busca', 'search', '004159013048277972925:frojtp-ajiy');
-                </script>                 
-            </p:layoutUnit>
-        </p:layout> 
-        <script>
-            $('.dropdown-toggle').dropdown();
-        </script> 
+            <script>
+                googleSearch('busca', 
+                             'search',
+                             '004159013048277972925:frojtp-ajiy');
+            </script>
+
+            <script>
+                $('.dropdown-toggle').dropdown();
+            </script>           
+        
+        </div>
+        
     </h:body>    
+    
 </html>

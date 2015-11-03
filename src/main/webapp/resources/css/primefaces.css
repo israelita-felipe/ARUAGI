@@ -13,7 +13,7 @@ AREA DE COMPONENTES PRIMEFACES NAO EXPLICITOS
 */
 ul.ui-menu-child {
     white-space: nowrap;
-    //min-width: 350px;
+    /*min-width: 350px;*/
     width: 200px !important;
 }
 /*

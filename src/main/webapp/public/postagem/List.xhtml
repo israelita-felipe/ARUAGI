@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
     <ui:composition template="/resources/template_site.xhtml">        
 
         <ui:define name="head">
@@ -20,101 +16,168 @@ and open the template in the editor.
             <h:outputText value="Início - ARUAGI"/>
         </ui:define>
 
-        <ui:define name="body">            
+        <ui:define name="body">
+            
             <div class="jumbotron">
+                
                 <div class="container">
+                    
                     <h1 class="text-center text-info">Bem-vindo</h1>
+                    
                     <h:messages layout="table"/>
-                    <h:form class=" text-center" rendered="#{usuarioSessionController.logged}">
-                        <h:commandButton class="btn btn-default btn-lg" action="#{postagemController.prepareCreate()}" value="Nova postagem"/>
+                    
+                    <h:form class=" text-center"
+                            rendered="#{usuarioSessionController.logged}">
+                        
+                        <h:commandButton class="btn btn-default btn-lg"
+                                         action="#{postagemController.prepareCreate()}"
+                                         value="Nova postagem"/>
+                        
                     </h:form>
                 </div>
-            </div>         
+                
+            </div> 
+            
             <div class="container">  
+                
                 <h:form>
+                    
                     <h:panelGroup id="messagePanel" layout="block">
-                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                        <h:messages errorStyle="color: red"
+                                    infoStyle="color: green" layout="table"/>
                     </h:panelGroup>
-                    <h:outputText escape="false" value="Nehuma postagem" rendered="#{postagemController.items.rowCount == 0}"/>
+                    
+                    <h:outputText escape="false" value="Nehuma postagem"
+                                  rendered="#{postagemController.items.rowCount == 0}"/>
+                    
                     <nav>
+                        
                         <ul class="pagination">
+                            
                             <li>
-                                <h:commandLink action="#{postagemController.previous}" value="« #{postagemController.pagination.pageSize}" disabled="#{!postagemController.pagination.hasPreviousPage}"/>
+                                <h:commandLink action="#{postagemController.previous}"
+                                               value="« #{postagemController.pagination.pageSize}"
+                                               disabled="#{!postagemController.pagination.hasPreviousPage}"/>
                             </li>
+                            
                             <li>
                                 <a href="#">
-                                    <h:outputText value="#{postagemController.pagination.pageFirstItem + 1} até #{postagemController.pagination.pageLastItem + 1} de #{postagemController.pagination.itemsCount}"/>
+                                    <h:outputText value="#{postagemController.pagination.pageFirstItem + 1}
+                                                        até #{postagemController.pagination.pageLastItem + 1}
+                                                        de #{postagemController.pagination.itemsCount}"/>
                                 </a>
                             </li>
+                            
                             <li>
-                                <h:commandLink action="#{postagemController.next}" value="#{postagemController.pagination.pageSize} »" disabled="#{!postagemController.pagination.hasNextPage}"/>      
+                                <h:commandLink action="#{postagemController.next}"
+                                               value="#{postagemController.pagination.pageSize} »"
+                                               disabled="#{!postagemController.pagination.hasNextPage}"/>      
                             </li>
+                            
                         </ul>
-                    </nav>                            
+                        
+                    </nav>         
+                    
                     <h:panelGroup class="row" rendered="#{postagemController.items.rowCount > 0}">                                                                                                  
-                        <h:dataTable class="col-sm-8 blog-main" value="#{postagemController.items}" var="itemAtual">
+                        <h:dataTable class="col-sm-8 blog-main"
+                                     value="#{postagemController.items}"
+                                     var="itemAtual">
 
                             <h:column>
+                                
                                 <div class="blog-post">
+                                
                                     <h2 class="blog-post-title">
                                         #{itemAtual.titulo}                                                                
                                     </h2>
 
                                     <p class="blog-post-meta">
+                                        
                                         <h:outputFormat value="#{itemAtual.data}">
                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                                         </h:outputFormat>  
+                                        
                                         <p:spacer width="10"/>
-                                        <p:outputLabel value="por #{usuarioSessionController.get(itemAtual.usuario).nome}"/>                                                                
+                                        <p:outputLabel value="por #{usuarioSessionController.get(itemAtual.usuario).nome}"/>
+                                    
                                     </p>
 
                                     <p>
-                                        <h:outputText value="#{itemAtual.conteudo.length() > 200 ? itemAtual.conteudo.substring(0,200) : itemAtual.conteudo}" escape="false"/>
+                                        <h:outputText value="#{itemAtual.conteudo.length() > 200
+                                                             ? itemAtual.conteudo.substring(0,200)
+                                                             : itemAtual.conteudo}" escape="false"/>
                                     </p>
-                                    <h:commandButton class="btn btn-success" action="#{postagemController.prepareView}" value="Continuar »"/>
+                                    
+                                    <h:commandButton class="btn btn-success"
+                                                     action="#{postagemController.prepareView}"
+                                                     value="Continuar »"/>
                                 </div>
+                                
                                 <br/>
+                                
                             </h:column>                            
+                            
                         </h:dataTable>
+                        
                         <div class="col-sm-3 col-sm-offset-1 blog-sidebar"> 
 
                             <div class="list-group sidebar-module sidebar-module-inset"> 
+                           
                                 <h2 class="blog-post-title">
                                     Conteúdo
                                 </h2>                                
-                                <a rendered="#{usuarioSessionController.logged}">Suas postagens: <span class="badge pull-right">#{usuarioSessionController.postCount()}</span></a>
+                                
+                                <a rendered="#{usuarioSessionController.logged}">
+                                    Suas postagens: 
+                                    <span class="badge pull-right">
+                                        #{usuarioSessionController.postCount()}
+                                    </span>
+                                </a>
+                                
                             </div> 
-                            <div class="sidebar-module">
-                                <h2>Redes sociais</h2>
-                                <div class="fb-like-box"
-                                     data-href="https://www.facebook.com/pages/Aruagi-Ensino-de-L%C3%ADngua-Latina/553025198136554"
-                                     data-colorscheme="light"
-                                     data-show-faces="true"
-                                     data-header="false"
-                                     data-stream="true"
-                                     data-width="250"
-                                     data-show-border="false">                             
-                                </div>           
-                            </div>
+                            
+                            <ui:insert name="redes_sociais" >
+                                <ui:include src="../../resources/redes_sociais.xhtml" />
+                            </ui:insert>
+                            
                         </div>
+                        
                     </h:panelGroup>
+                    
                     <nav class="center-block" style="width: 100%!important">
+                        
                         <ul class="pagination">
+                            
                             <li>
-                                <h:commandLink action="#{postagemController.previous}" value="« #{postagemController.pagination.pageSize}" disabled="#{!postagemController.pagination.hasPreviousPage}"/>
+                                <h:commandLink action="#{postagemController.previous}"
+                                               value="« #{postagemController.pagination.pageSize}"
+                                               disabled="#{!postagemController.pagination.hasPreviousPage}"/>
                             </li>
+                            
                             <li>
                                 <a href="#">
-                                    <h:outputText value="#{postagemController.pagination.pageFirstItem + 1} até #{postagemController.pagination.pageLastItem + 1} de #{postagemController.pagination.itemsCount}"/>
+                                    <h:outputText value="#{postagemController.pagination.pageFirstItem + 1}
+                                                        até #{postagemController.pagination.pageLastItem + 1}
+                                                        de #{postagemController.pagination.itemsCount}"/>
                                 </a>
                             </li>
+                            
                             <li>
-                                <h:commandLink action="#{postagemController.next}" value="#{postagemController.pagination.pageSize} »" disabled="#{!postagemController.pagination.hasNextPage}"/>      
+                                <h:commandLink action="#{postagemController.next}"
+                                               value="#{postagemController.pagination.pageSize} »"
+                                               disabled="#{!postagemController.pagination.hasNextPage}"/>      
                             </li>
+                            
                         </ul>
-                    </nav>                            
+                        
+                    </nav>   
+                    
                 </h:form>
-            </div>             
-        </ui:define>        
-    </ui:composition>    
+                
+            </div>     
+            
+        </ui:define>
+        
+    </ui:composition>  
+    
 </html>
